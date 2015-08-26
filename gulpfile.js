@@ -15,13 +15,13 @@ gulp.task('css', function() {
 })
 
 gulp.task('scripts', function() {
-	browserify({
+	/*browserify({
         entries: 'src/app.js',
         extensions: ['.js'],
         debug: true
     })			
 		.bundle()		//complie app.js
-		.pipe(gulp.dest('build'));		//save file to 'build' dir
+		.pipe(gulp.dest('build'));		//save file to 'build' dir*/
 })
 
 
