@@ -31,3 +31,4 @@ https://github.com/ria-com/auto-ria-rest-api
 ##plans
 
 add publish/subscribe functions http://davidwalsh.name/pubsub-javascript
+add bower for project if needed http://davidwalsh.name/pubsub-javascript
