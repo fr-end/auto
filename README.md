@@ -1,3 +1,23 @@
+##Install
+
+1) Clone git repo
+
+git clone https://github.com/fr-end/auto
+
+2) Install NodeJS from https://nodejs.org/
+
+3) Install all needed packages
+
+Run from the project directory:
+
+npm install 
+
+4) Run gulp
+
+gulp
+
+##Notes
+
 by evgen zhukov:
 "flow работы с репозиторием.
 в мастер не пушим.
