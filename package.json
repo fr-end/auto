@@ -1,0 +1,30 @@
+{
+  "name": "frend-auto",
+  "version": "1.0.0",
+  "description": "auto search",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fr-end/auto.git"
+  },
+  "keywords": [
+    "auto",
+    "search"
+  ],
+  "author": "fr.end <pinchukd@ua.fm> (https://github.com/fr-end)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/fr-end/auto/issues"
+  },
+  "homepage": "https://github.com/fr-end/auto#readme",
+  "devDependencies": {
+    "browserify": "^11.0.1",
+    "gulp": "^3.9.0",
+    "gulp-concat-css": "^2.2.0",
+    "gulp-connect": "^2.2.0",
+    "gulp-less": "^3.0.3"
+  }
+}
