@@ -2,6 +2,9 @@ var gulp = require('gulp');                 //  main gulp module
 var args = require('yargs').argv;           //  tool for getting the arguments (file paths) in a stream
 var concat = require('gulp-concat');        //  module for concatenation files into one file
 var connect = require('gulp-connect');      //  allow livereload our files in webbrowser
+var connect_for_proxy = require('connect')  //  coonect for proxy
+var url = require('url');                   //  url tool
+var proxy = require('proxy-middleware');    //  proxy
 var sass = require('gulp-sass');            //  module for SASS->CSS convertion
 var concatCss = require('gulp-concat-css')  //  module for concatenation CSS files into one file
 
@@ -56,10 +59,23 @@ gulp.task('connect', function(){
     });
 });
 
-gulp.task('default', [ 'connect', 'concat_js', 'css' ], function(){
+//fist proxy
+gulp.task('proxy', function(){
+    var app = connect_for_proxy();
+    app.use(config.proxy.path, proxy(url.parse(config.proxy.pathto)));
+    var server = app.listen(config.proxy.port);
+    var localproxypath = 'http://localhost:'+config.proxy.port+config.proxy.path;
+    util.log(util.colors.green('proxy for '+config.proxy.pathto+' listen at '+localproxypath));
+    util.log('test url is '+localproxypath+'/'+config.proxy.testurl);
+})
+
+
+gulp.task('default', [ 'connect', 'concat_js', 'css', 'proxy' ], function(){
     gulp.watch( config.alljs, ['concat_js']);       // Watch for changes in all js files in 'src' folder
     gulp.watch( config.allsass, ['css']);
 });
+
+
 
 ////////////////////////////////////////////
 
