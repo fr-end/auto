@@ -33,5 +33,5 @@
     "gulp-util": "^3.0.6",
     "jshint-stylish": "^2.0.1",
     "yargs": "^3.21.0"
-  },
+  }
 }
