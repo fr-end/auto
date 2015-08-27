@@ -1,9 +1,9 @@
-var gulp = require('gulp');
-var args = require('yargs').argv;       //  tool for getting the arguments (file paths) in a stream
-var concat = require('gulp-concat');
-var connect = require('gulp-connect');  //  allow livereload our files in webbrowser
-var sass = require('gulp-sass');
-var concatCss = require('gulp-concat-css')
+var gulp = require('gulp');                 //  main gulp module
+var args = require('yargs').argv;           //  tool for getting the arguments (file paths) in a stream
+var concat = require('gulp-concat');        //  module for concatenation files into one file
+var connect = require('gulp-connect');      //  allow livereload our files in webbrowser
+var sass = require('gulp-sass');            //  module for SASS->CSS convertion
+var concatCss = require('gulp-concat-css')  //  module for concatenation CSS files into one file
 
 // the config object from gulp.config.js file
 var config = require('./gulp.config.js')();
@@ -11,8 +11,6 @@ var config = require('./gulp.config.js')();
 // the following modules are plugins 
 // plugins might be substitutes by one more general tool 'gulp-load-plugins' with flag ({ lazy: true })
 // plugins define what tasks do
-
-
 var jshint = require('gulp-jshint');    //  Detects errors and potential problems in code
 var jscs = require('gulp-jscs');        //  JS code style checker (style guide) 
                                         //  and uses .jscsrc file with rules for checking.
