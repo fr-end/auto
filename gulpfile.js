@@ -2,6 +2,9 @@ var gulp = require('gulp');                 //  main gulp module
 var args = require('yargs').argv;           //  tool for getting the arguments (file paths) in a stream
 var concat = require('gulp-concat');        //  module for concatenation files into one file
 var connect = require('gulp-connect');      //  allow livereload our files in webbrowser
+var connect_for_proxy = require('connect')  //  coonect for proxy
+var url = require('url');                   //  url tool
+var proxy = require('proxy-middleware');    //  proxy
 var sass = require('gulp-sass');            //  module for SASS->CSS convertion
 var concatCss = require('gulp-concat-css')  //  module for concatenation CSS files into one file
 
@@ -54,12 +57,22 @@ gulp.task('connect', function(){
         root: 'build',                              // place where our main files are
         livereload: true                            // livereload for our server
     });
+    connect.use();
 });
 
 gulp.task('default', [ 'connect', 'concat_js', 'css' ], function(){
     gulp.watch( config.alljs, ['concat_js']);       // Watch for changes in all js files in 'src' folder
     gulp.watch( config.allsass, ['css']);
 });
+
+//fist proxy
+//test is http://localhost:9000/proxy/?category_id=1&amp;marka_id=98&amp;model_id=955&amp;state=0#category_id=1&amp;state[0]=0&amp;s_yers[0]=0&amp;po_yers[0]=0&amp;currency=1&amp;marka_id[0]=98&amp;model_id[0]=955&amp;countpage=10&amp;page=1
+gulp.task('proxy', function(){
+    var app = connect_for_proxy();
+    app.use('/proxy', proxy(url.parse('https://auto.ria.com/blocks_search_ajax/search')));
+    var server = app.listen(9000);
+})
+
 
 ////////////////////////////////////////////
 
