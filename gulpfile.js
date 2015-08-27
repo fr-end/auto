@@ -57,21 +57,24 @@ gulp.task('connect', function(){
         root: 'build',                              // place where our main files are
         livereload: true                            // livereload for our server
     });
-    connect.use();
 });
 
-gulp.task('default', [ 'connect', 'concat_js', 'css' ], function(){
+//fist proxy
+gulp.task('proxy', function(){
+    var app = connect_for_proxy();
+    app.use(config.proxy.path, proxy(url.parse(config.proxy.pathto)));
+    var server = app.listen(config.proxy.port);
+    var localproxypath = 'http://localhost:'+config.proxy.port+config.proxy.path;
+    util.log(util.colors.green('proxy for '+config.proxy.pathto+' listen at '+localproxypath));
+    util.log('test url is '+localproxypath+'/'+config.proxy.testurl);
+})
+
+
+gulp.task('default', [ 'connect', 'concat_js', 'css', 'proxy' ], function(){
     gulp.watch( config.alljs, ['concat_js']);       // Watch for changes in all js files in 'src' folder
     gulp.watch( config.allsass, ['css']);
 });
 
-//fist proxy
-//test is http://localhost:9000/proxy/?category_id=1&amp;marka_id=98&amp;model_id=955&amp;state=0#category_id=1&amp;state[0]=0&amp;s_yers[0]=0&amp;po_yers[0]=0&amp;currency=1&amp;marka_id[0]=98&amp;model_id[0]=955&amp;countpage=10&amp;page=1
-gulp.task('proxy', function(){
-    var app = connect_for_proxy();
-    app.use('/proxy', proxy(url.parse('https://auto.ria.com/blocks_search_ajax/search')));
-    var server = app.listen(9000);
-})
 
 
 ////////////////////////////////////////////
