@@ -20,10 +20,10 @@ var gulpif = require('gulp-if');        //  Plugin for adding 'if' condition to 
 
 gulp.task('css', function () {
     return gulp
-        .src('./src/sass/**/*.scss')
+        .src(config.allsass)
         .pipe(sass().on('error', sass.logError))    //  transform sass to css
         .pipe(concatCss("main.css", { rebaseUrls: false } ))
-        .pipe(gulp.dest('build/'))
+        .pipe(gulp.dest('./build/'))
         .pipe(connect.reload());
 });
 
@@ -75,4 +75,3 @@ function log(msg){
     }
 }
 
-//gulp.task('default', ['watch']);
