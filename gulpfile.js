@@ -2,7 +2,7 @@ var gulp = require('gulp');                 //  main gulp module
 var args = require('yargs').argv;           //  tool for getting the arguments (file paths) in a stream
 var concat = require('gulp-concat');        //  module for concatenation files into one file
 var connect = require('gulp-connect');      //  allow livereload our files in webbrowser
-var connect_for_proxy = require('connect')  //  coonect for proxy
+var connect_for_proxy = require('connect'); //  coonect for proxy
 var url = require('url');                   //  url tool
 var proxy = require('proxy-middleware');    //  proxy
 var sass = require('gulp-sass');            //  module for SASS->CSS convertion
@@ -30,7 +30,7 @@ gulp.task('css', function () {
         .pipe(connect.reload());
 });
 
-gulp.task('check_js', function(){
+gulp.task('js', function(){
     log('Analyzing sourse with JSHint and JSCS');   // function at the bottom of our gulpfile.js
     return gulp
         .src(config.alljs)
@@ -38,40 +38,32 @@ gulp.task('check_js', function(){
         //.pipe(jscs()) // if we further specify some code style guide :)
         .pipe(jshint())
         .pipe(jshint.reporter('jshint-stylish'), { verbose: true}) // jshint needs a special reporter
-        .pipe(jshint.reporter('fail'))              // Stop if our code is invalid after previous functions
+        //.pipe(jshint.reporter('fail'))              // Stop if our code is invalid after previous functions
         .pipe(concat('all.js'))                     
-        .pipe(gulp.dest('./build/'));               // Place concatenated file into build folder
-});
-
-gulp.task('concat_js', [ 'check_js' ], function(){
-    return gulp
-        .src(config.alljs)
-        .pipe(concat('all.js'))                     // Concat js files if there in no warnings in js files
         .pipe(gulp.dest('./build/'))                // Place concatenated file into build folder
-        .pipe(connect.reload());                    // Livereload for our all.js file
+        .pipe(connect.reload());                    // Livereload for our all.js file               
 });
 
-gulp.task('connect', function(){
+gulp.task('server', function(){
     connect.server({
         port: 8080,                                 // Server started at http://localhost:8080
         root: 'build',                              // place where our main files are
-        livereload: true                            // livereload for our server
-    });
+        livereload: true,                           // livereload for our server
+        middleware: function(connect, o) {
+            return [ (function() {
+                var url = require('url');
+                var proxy = require('proxy-middleware');
+                var options = url.parse(config.proxy.pathto);
+                options.route = config.proxy.path;
+                return proxy(options);
+            })() ];                     
+        }
+    })
 });
 
-//fist proxy
-gulp.task('proxy', function(){
-    var app = connect_for_proxy();
-    app.use(config.proxy.path, proxy(url.parse(config.proxy.pathto)));
-    var server = app.listen(config.proxy.port);
-    var localproxypath = 'http://localhost:'+config.proxy.port+config.proxy.path;
-    util.log(util.colors.green('proxy for '+config.proxy.pathto+' listen at '+localproxypath));
-    util.log('test url is '+localproxypath+'/'+config.proxy.testurl);
-})
 
-
-gulp.task('default', [ 'connect', 'concat_js', 'css', 'proxy' ], function(){
-    gulp.watch( config.alljs, ['concat_js']);       // Watch for changes in all js files in 'src' folder
+gulp.task('default', [ 'js', 'css', 'server' ], function(){
+    gulp.watch( config.alljs, ['js']);       // Watch for changes in all js files in 'src' folder
     gulp.watch( config.allsass, ['css']);
 });
 

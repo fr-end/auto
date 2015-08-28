@@ -24,3 +24,13 @@ if(xmlhttp.status == 200) {
 }
 
 alert(xmlhttp.status);
+
+
+
+
+
+
+
+
+
+
