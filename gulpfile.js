@@ -21,6 +21,15 @@ var util = require('gulp-util');        //  Helps to write some logs out
 var gulpprint = require('gulp-print');  //  For printing all the files that gulp is 'touching' in a process
 var gulpif = require('gulp-if');        //  Plugin for adding 'if' condition to a stream (process)
 
+var browserify = require('browserify');
+var source = require('vinyl-source-stream');
+
+gulp.task('html', function () {
+    return gulp
+        .src(config.allhtml)
+        .pipe(gulp.dest('./build'));
+})
+
 gulp.task('css', function () {
     return gulp
         .src(config.allsass)
@@ -30,18 +39,24 @@ gulp.task('css', function () {
         .pipe(connect.reload());
 });
 
-gulp.task('js', function(){
+gulp.task('js_check', function(){
     log('Analyzing sourse with JSHint and JSCS');   // function at the bottom of our gulpfile.js
     return gulp
         .src(config.alljs)
         .pipe(gulpif(args.verbose, gulpprint()))    // if specify flag --verbose in console then show all the checked files
         //.pipe(jscs()) // if we further specify some code style guide :)
         .pipe(jshint())
-        .pipe(jshint.reporter('jshint-stylish'), { verbose: true}) // jshint needs a special reporter
+        .pipe(jshint.reporter('jshint-stylish'), { verbose: true}); // jshint needs a special reporter
         //.pipe(jshint.reporter('fail'))              // Stop if our code is invalid after previous functions
-        .pipe(concat('all.js'))                     
-        .pipe(gulp.dest('./build/'))                // Place concatenated file into build folder
-        .pipe(connect.reload());                    // Livereload for our all.js file               
+});
+
+gulp.task('browserify', ['js_check'],  function() {
+    return browserify('./src/app.js')
+        .bundle()
+        // Передаем имя файла, который получим на выходе, vinyl-source-stream
+        .pipe(source('bundle.js'))
+        .pipe(gulp.dest('./build/'))
+        .pipe(connect.reload());
 });
 
 gulp.task('server', function(){
@@ -62,9 +77,10 @@ gulp.task('server', function(){
 });
 
 
-gulp.task('default', [ 'js', 'css', 'server' ], function(){
-    gulp.watch( config.alljs, ['js']);       // Watch for changes in all js files in 'src' folder
+gulp.task('default', [ 'html', 'css', 'browserify', 'server' ], function(){
+    gulp.watch( config.alljs, ['browserify']);       // Watch for changes in all js files in 'src' folder
     gulp.watch( config.allsass, ['css']);
+    gulp.watch( )
 });
 
 

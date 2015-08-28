@@ -4,12 +4,9 @@ module.exports = function(){
          * File paths
         **/
         // all src js files
-        alljs: [
-            './src/**/*.js'
-        ],
-        allsass: [
-            './src/**/*.scss'
-        ],
+        allhtml: ['./src/**/*.html'],
+        alljs:   ['./src/**/*.js'],
+        allsass: ['./src/**/*.scss'],
         proxy: {
             path: '/proxy',
             pathto: 'https://auto.ria.com/blocks_search_ajax/search',
