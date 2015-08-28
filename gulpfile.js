@@ -27,7 +27,8 @@ var source = require('vinyl-source-stream');
 gulp.task('html', function () {
     return gulp
         .src(config.allhtml)
-        .pipe(gulp.dest('./build'));
+        .pipe(gulp.dest('./build'))
+        .pipe(connect.reload());
 })
 
 gulp.task('css', function () {
@@ -80,7 +81,7 @@ gulp.task('server', function(){
 gulp.task('default', [ 'html', 'css', 'browserify', 'server' ], function(){
     gulp.watch( config.alljs, ['browserify']);       // Watch for changes in all js files in 'src' folder
     gulp.watch( config.allsass, ['css']);
-    gulp.watch( )
+    gulp.watch( config.allhtml, ['html']);
 });
 
 
