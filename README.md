@@ -34,5 +34,5 @@ add publish/subscribe functions http://davidwalsh.name/pubsub-javascript
 
 add bower for project if needed http://bower.io/
 
-Gulp + Browserigy doc:
+Gulp + Browserify doc:
 http://frontender.info/gulp-browserify-starter-faq/
