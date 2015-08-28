@@ -21,6 +21,7 @@
   },
   "homepage": "https://github.com/fr-end/auto#readme",
   "devDependencies": {
+    "browserify": "^11.0.1",
     "connect": "^3.4.0",
     "gulp": "^3.9.0",
     "gulp-concat": "^2.6.0",
@@ -34,6 +35,7 @@
     "gulp-util": "^3.0.6",
     "jshint-stylish": "^2.0.1",
     "proxy-middleware": "^0.13.1",
+    "vinyl-source-stream": "^1.1.0",
     "yargs": "^3.21.0"
   }
 }
