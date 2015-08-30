@@ -1,20 +1,18 @@
-##Install
+##Install source code version
 
-1) Clone git repo
+npm install frend-auto
 
-git clone https://github.com/fr-end/auto
+cd node_modules/frend-auto
 
-2) Install NodeJS from https://nodejs.org/
+npm install
 
-3) Install all needed packages
-
-Run from the project directory:
-
-npm install 
-
-4) Run gulp
+##Run
 
 gulp
+
+##Test
+
+After Install nad Run you can see our project at http://localhost:8080/
 
 ##Notes
 
