@@ -58,7 +58,16 @@ module.exports = (function(){
 						'&countpage='   + searchParams.countPage +
 						page;
 			ajax.get( url, success );
+		},
+		getCar: function ( carId, success ) {
+			//https://auto.ria.com/demo/bu/searchPage/v2/view/auto/16110240/?lang_id=2
+			var langId = 2;
+			var url = 'http://localhost:8080/proxy/demo/bu/searchPage/v2/view/auto/'+
+						carId +
+						'/?lang_id=' + langId;
+			ajax.get( url, success );
 		}
+
 	};
 
 	return auto;
