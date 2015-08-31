@@ -8,7 +8,6 @@ module.exports = (function(){
 
 	var ajax = require('../../library/ajax/ajax.js');
 
-
 	var auto = {
 		getCategories: function ( success ) {
 			//https://auto.ria.com/api/categories?langId=2
@@ -67,9 +66,9 @@ module.exports = (function(){
 			ajax.get( url, success );
 		},
 		getCar: function ( carId, success ) {
-			//https://auto.ria.com/demo/bu/searchPage/v2/view/auto/16110240/?lang_id=2
+			//https://auto.ria.com/blocks_search_ajax/view/auto/14356030/?lang_id=2
 			var langId = 2;
-			var url = config.autoRiaUaHost + '/demo/bu/searchPage/v2/view/auto/'+
+			var url = config.autoRiaUaHost + '/blocks_search_ajax/view/auto/'+
 						carId +
 						'/?lang_id=' + langId;
 			ajax.get( url, success );
