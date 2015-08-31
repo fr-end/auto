@@ -1,6 +1,11 @@
 window.app = {
   auto: require('./library/auto/autoModel.js'),
-  events: require('./library/events/events.js')
+  events: require('./library/events/events.js'),
+  searchParams: {
+    categoryId: 1,
+    markaId: 98,
+    modelId: 953
+  }
 };
 
 window.app.events.subscribe('categories',function(data){
@@ -39,17 +44,11 @@ window.app.auto.getModels(1,98,function(data){
     window.app.events.publish('models',data);
 });
 
-var searchParams = {
-    categoryId: 1,
-    markaId: 98,
-    modelId: 953
-};
-
-window.app.auto.getCars(searchParams,function(data){
+window.app.auto.getCarIds(window.app.searchParams,function(data){
     window.app.events.publish('cars',data);
 });
 
-window.app.auto.getCarsCount(searchParams,function(data){
+window.app.auto.getCarsCount(window.app.searchParams,function(data){
     window.app.events.publish('carsCount',data);
 });
 

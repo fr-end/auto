@@ -33,7 +33,7 @@ module.exports = (function(){
 						'/_with_count';
 			ajax.get( url, success );
 		},
-		getCars: function ( searchParams, success ) {
+		getCarIds: function ( searchParams, success ) {
 			//https://auto.ria.com/blocks_search_ajax/search/?category_id=1&state[]=0&s_yers[]=0&po_yers[]=0&currency=1&marka_id[0]=98&model_id[0]=953&countpage=10
 			searchParams.countPage = searchParams.countPage || 10;
 			var page='';
