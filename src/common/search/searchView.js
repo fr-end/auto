@@ -41,7 +41,6 @@ View.prototype.render = function (viewCmd, data) {
         },
         getModels: function(){
             var def = self.$selectModel.firstElementChild;
-            console.log(def);
             var docFragment = document.createDocumentFragment();
             docFragment.appendChild(def);
             data.forEach(function(item, i) {
