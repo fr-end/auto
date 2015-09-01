@@ -1,0 +1,75 @@
+@import "../../const";
+
+/*body{
+	font-family: $font-family;
+}*/
+
+.item{
+	border-radius: $border-radius-big;
+	border: 1px solid $border-color;
+	box-sizing: border-box;
+	height: $item-height;
+	margin: 0 auto $item-margin-bottom;
+	//overflow: hidden;
+	padding: $item-padding;
+	width: $item-width;
+
+	font-family: $font-family;
+
+
+	&-img{
+		display: inline-block;
+		margin-right: $item-padding;
+		vertical-align: top;
+		img{
+			height: $image-height;
+			width: $image-width;
+		}
+	}
+
+	&-content{
+		display: inline-block;
+		vertical-align: top;
+		width: $item-width - $image-width - 3 * $item-padding -10;
+	}
+	&-header{
+		background: $header-bg-color;
+		height: 30px;
+		line-height: 30px;
+		padding-left: 10px;
+
+	}
+
+	&-price{
+
+	}
+
+	&-date{
+
+	}
+	
+	&-description{
+
+	}
+
+	&-parameters{
+
+	}
+
+	&-mileage{
+
+	}
+
+	&-motor{
+
+	}
+
+	&-transmission{
+
+	}
+
+	&-tel{
+
+	}
+}
+

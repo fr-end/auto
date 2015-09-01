@@ -20,7 +20,9 @@ $border-radius-big: 6px;
 $border-radius-small: 4px;
 
 //fonts
-$font-family: Open-Sans;
+$font-family: 'Open Sans', sans-serif, Arial;
 $font-size-main-text: 14px;
 $font-size-date: 12px;
 $font-size-price: 18px;
+
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:400,700);
