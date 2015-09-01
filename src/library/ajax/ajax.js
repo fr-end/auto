@@ -22,13 +22,15 @@ module.exports = (function (){
 
 	var ajax = {
 		get: 
-			function (url,success) {
+			function (url,deferred) {
 				var xmlhttp = getXmlHttp();
 				xmlhttp.open('GET', url, true);
 		      	xmlhttp.onreadystatechange = function() {
 			        if (xmlhttp.readyState === 4) {
 			           if(xmlhttp.status === 200) {
-			                success(xmlhttp.responseText);
+			                deferred.resolve(xmlhttp.responseText);
+			            } else {
+			            	deferred.reject('error');
 			            }
 			        }
 			    };
