@@ -13,7 +13,6 @@
 	//overflow: hidden;
 	padding: $item-padding;
 	width: $item-width;
-
 	font-family: $font-family;
 
 
@@ -21,55 +20,92 @@
 		display: inline-block;
 		margin-right: $item-padding;
 		vertical-align: top;
+		height: $item-image-height;
+		width: $item-image-width;
 		img{
-			height: $image-height;
-			width: $image-width;
+			height: 100%;
+			width: 100%;
 		}
 	}
 
 	&-content{
 		display: inline-block;
 		vertical-align: top;
-		width: $item-width - $image-width - 3 * $item-padding -10;
+		width: $item-content-width;
 	}
+
 	&-header{
 		background: $header-bg-color;
+		font-size: $font-size-header;
 		height: 30px;
 		line-height: 30px;
+		margin-bottom: 10px;
 		padding-left: 10px;
-
 	}
 
 	&-price{
+		display: inline-block;
+		font-size: $font-size-header;
+		margin-bottom: 10px;
+		margin-right: 40px;
+		vertical-align: bottom;
 
+		& .price{
+			color: $price-color;
+			cursor: pointer;
+		}
+		& .cource{
+			color: $course-color;
+			cursor: pointer;
+		}
 	}
 
 	&-date{
-
+		color: $date-color;
+		display: inline-block;
+		margin-bottom: 10px;
+		font-size: $font-size-header;
+		vertical-align: bottom;
 	}
 	
 	&-description{
-
+		font-size: $font-size-main-text;
+		margin-bottom: 15px;
+		height: 40px;
+		overflow: hidden;
 	}
 
 	&-parameters{
+			font-size: $font-size-main-text;
+			display: inline-block;
+			width: 32%;
+			box-sizing: border-box;
+			overflow: hidden;
+			padding-left: 30px;
+			background: url($sprite) no-repeat 0 -424px;
+			height: 20px;
+			cursor: pointer;
+			&-row{
+				margin-bottom: 15px;
+			}
+		}
 
-	}
 
 	&-mileage{
-
+		
 	}
 
 	&-motor{
-
+		background-position-y: -460px; 
 	}
 
 	&-transmission{
-
+		background-position-y: -503px; 
+		padding-left: 20px;
 	}
 
 	&-tel{
-
+		font-size: $font-size-header;
 	}
 }
 
