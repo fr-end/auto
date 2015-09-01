@@ -1,19 +1,27 @@
 module.exports = function(service,view){
 
-	view.$selectCategory.addEventListener('change',function(){
-		search.loadMarks();
-	})
+    function Controller(){
+        var self = this;
+        self.service = service;
+        self.view = view;
 
-	view.$selectMark.addEventListener('change',function(){
-		search.loadModels();
-	})
+        self.view.bind('changeCategory',function(){
+            self.loadMarks();
+        });
 
-	view.$searchContainer.addEventListener('submit',function(event){
-		event.preventDefault();
-		search.searchCars();
-	});
+        self.view.bind('changeMark',function(){
+            self.loadModels();
+        });
 
-	var search = {
+        // refactor it
+        view.$searchContainer.addEventListener('submit',function(event){
+            event.preventDefault();
+            self.searchCars();
+        });
+    }
+
+
+    Controller.prototype = {
 		loadCategories: function(){
 			var self = this;
 			service.getCategories()
@@ -32,8 +40,6 @@ module.exports = function(service,view){
 				.then(function(data){
 					var marks = JSON.parse(data);
                     view.render('getMarks', marks);
-
-
 					self.loadModels();
 			});
 		},		
@@ -46,16 +52,15 @@ module.exports = function(service,view){
             service.getModels(category, mark)
                 .then(function(data) {
                     var models = JSON.parse(data);
-
                     view.render('getModels', models);
             });
 		},
 		searchCars: function(){
-			var categories=view.$selectCategory;
+			var categories = view.$selectCategory;
 			var category = categories.options[categories.selectedIndex].value;
-			var marks=view.$selectMark;
+			var marks = view.$selectMark;
 			var mark = marks.options[marks.selectedIndex].value;
-			var models=view.$selectModel;
+			var models = view.$selectModel;
 			var model = models.options[models.selectedIndex].value;			
 			var	searchParams = {
 					categoryId: category,
@@ -69,7 +74,9 @@ module.exports = function(service,view){
 		}
 	}
 
-	search.loadCategories();		
+    var controller = new Controller();
 
-	return search;
+    controller.loadCategories();
+
+	return controller;
 }
