@@ -7,6 +7,7 @@ module.exports = function(){
         allhtml: ['./src/**/*.html'],
         alljs:   ['./src/**/*.js'],
         allsass: ['./src/**/*.scss'],
+        allpng: ['./src/**/*.png'],
         proxy: {
             path: '/proxy',
             pathto: 'https://auto.ria.com/',
