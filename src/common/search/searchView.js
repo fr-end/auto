@@ -14,7 +14,6 @@ View.prototype.render = function (viewCmd, data) {
     var self = this;
     var viewCommands = {
         getCategories: function () {
-            var select = document.querySelector('[data-select="category"]');
             var docFragment = document.createDocumentFragment();
             data.forEach(function (item, i) {
                 var option = document.createElement('option');
@@ -25,31 +24,30 @@ View.prototype.render = function (viewCmd, data) {
             self.$selectCategory.appendChild(docFragment);
         },
         getMarks: function () {
-            var select = document.querySelector('[data-select="mark"]');
-            var def = select.firstElementChild;
+            var defaultOption = self.$selectMark.firstElementChild;
             var docFragment = document.createDocumentFragment();
-            docFragment.appendChild(def);
+            docFragment.appendChild(defaultOption);
             data.forEach(function (item, i) {
                 var option = document.createElement('option');
                 option.setAttribute('value', item.value);
                 option.innerHTML = item.name + ' (' + item.count + ')';
                 docFragment.appendChild(option);
             });
-            select.innerHTML = '';
+            self.$selectMark.innerHTML = '';
             self.$selectMark.appendChild(docFragment);
 
         },
         getModels: function(){
-            var def = self.$selectModel.firstElementChild;
+            var defaultOption = self.$selectModel.firstElementChild;
             var docFragment = document.createDocumentFragment();
-            docFragment.appendChild(def);
+            docFragment.appendChild(defaultOption);
             data.forEach(function(item, i) {
                 var option = document.createElement('option');
-                option.setAttribute('value',item.value);
-                option.innerHTML=item.name+' ('+item.count+')';
+                option.setAttribute('value', item.value);
+                option.innerHTML = item.name + ' (' + item.count + ')';
                 docFragment.appendChild(option);
             });
-            self.$selectModel.innerHTML='';
+            self.$selectModel.innerHTML = '';
             self.$selectModel.appendChild(docFragment);
         }
     };
@@ -90,6 +88,66 @@ View.prototype.render = function (viewCmd, data) {
     };
 */
     viewCommands[viewCmd]();
+};
+
+View.prototype.bind = function (event, handler) {
+    var self = this;
+
+    if (event === 'changeCategory'){
+        self.$selectCategory.addEventListener('change', function(){
+            handler();
+        });
+    }
+
+    if (event === 'changeMark'){
+        self.$selectMark.addEventListener('change', function(){
+            handler();
+        });
+    }
+
+    // the following code just from todoMVC
+    /*
+
+    if (event === 'newTodo') {
+        $on(self.$newTodo, 'change', function () {
+            handler(self.$newTodo.value);
+        });
+
+    } else if (event === 'removeCompleted') {
+        $on(self.$clearCompleted, 'click', function () {
+            handler();
+        });
+
+    } else if (event === 'toggleAll') {
+        $on(self.$toggleAll, 'click', function () {
+            handler({completed: this.checked});
+        });
+
+    } else if (event === 'itemEdit') {
+        $delegate(self.$todoList, 'li label', 'dblclick', function () {
+            handler({id: self._itemId(this)});
+        });
+
+    } else if (event === 'itemRemove') {
+        $delegate(self.$todoList, '.destroy', 'click', function () {
+            handler({id: self._itemId(this)});
+        });
+
+    } else if (event === 'itemToggle') {
+        $delegate(self.$todoList, '.toggle', 'click', function () {
+            handler({
+                id: self._itemId(this),
+                completed: this.checked
+            });
+        });
+
+    } else if (event === 'itemEditDone') {
+        self._bindItemEditDone(handler);
+
+    } else if (event === 'itemEditCancel') {
+        self._bindItemEditCancel(handler);
+    }
+    */
 };
 
 var view = new View();
