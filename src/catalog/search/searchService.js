@@ -1,9 +1,21 @@
-module.exports = (function(){
+module.exports = function(auto,autoSearch){
 
-	var auto = require('../../library/auto/autoService.js');
+	autoSearch.elements['category'].addEventListener('change',function(){
+		search.loadMarks();
+	})	
+
+	autoSearch.elements['mark'].addEventListener('change',function(){
+		search.loadModels();
+	})
+
+	autoSearch.addEventListener('submit',function(event){
+		event.preventDefault();
+		search.searchCars();
+	});
 
 	var search = {
 		loadCategories: function(){
+			var self = this;			
 			auto.getCategories()
 				.then(function(data){
 					var categories = JSON.parse(data);
@@ -16,10 +28,11 @@ module.exports = (function(){
 						docFragment.appendChild(option);
 					});
 					select.appendChild(docFragment);
-					this.loadMarks();
+					self.loadMarks();
 				});
 		},		
 		loadMarks: function(){
+			var self = this;
 			var categories=autoSearch.elements['category'];
 			var category = categories.options[categories.selectedIndex].value;	
 			auto.getMarks(category)
@@ -37,7 +50,7 @@ module.exports = (function(){
 				});
 				select.innerHTML='';
 				select.appendChild(docFragment);
-				this.loadModels();
+				self.loadModels();
 			});
 		},		
 		loadModels: function(){
@@ -82,22 +95,7 @@ module.exports = (function(){
 		}
 	}
 
-	var autoSearch = document.forms.autoSearch;
-
-	autoSearch.addEventListener('submit',function(event){
-		event.preventDefault();
-		search.searchCars();
-	});
-
-	autoSearch.elements['category'].addEventListener('change',function(){
-		search.loadMarks();
-	})	
-
-	autoSearch.elements['mark'].addEventListener('change',function(){
-		search.loadModels();
-	})
-
-	search.loadCategories();	
+	search.loadCategories();		
 
 	return search;
-})();
+}

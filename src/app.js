@@ -1,5 +1,9 @@
+var auto = require('./library/auto/autoService.js');
+var autoSearch = document.forms.autoSearch;
+
 window.app = {
-  search: require('./catalog/search/searchService.js')
+
+  search: require('./catalog/search/searchService.js')(auto,autoSearch)
   //ents: require('./library/events/events.js'),
 };
 
