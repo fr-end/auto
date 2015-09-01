@@ -16,9 +16,7 @@ View.prototype.render = function (viewCmd, data) {
         getCategories: function () {
             var docFragment = document.createDocumentFragment();
             data.forEach(function (item, i) {
-                var option = document.createElement('option');
-                option.setAttribute('value', item.value);
-                option.innerHTML = item.name;
+                var option = new Option(item.name, item.value);
                 docFragment.appendChild(option);
             });
             self.$selectCategory.appendChild(docFragment);
@@ -28,9 +26,7 @@ View.prototype.render = function (viewCmd, data) {
             var docFragment = document.createDocumentFragment();
             docFragment.appendChild(defaultOption);
             data.forEach(function (item, i) {
-                var option = document.createElement('option');
-                option.setAttribute('value', item.value);
-                option.innerHTML = item.name + ' (' + item.count + ')';
+                var option = new Option(item.name + ' (' + item.count + ')', item.value);
                 docFragment.appendChild(option);
             });
             self.$selectMark.innerHTML = '';
@@ -42,9 +38,7 @@ View.prototype.render = function (viewCmd, data) {
             var docFragment = document.createDocumentFragment();
             docFragment.appendChild(defaultOption);
             data.forEach(function(item, i) {
-                var option = document.createElement('option');
-                option.setAttribute('value', item.value);
-                option.innerHTML = item.name + ' (' + item.count + ')';
+                var option = new Option(item.name + ' (' + item.count + ')', item.value);
                 docFragment.appendChild(option);
             });
             self.$selectModel.innerHTML = '';
