@@ -1,9 +1,9 @@
-var auto = require('./library/auto/autoService.js');
-var autoSearch = document.forms.autoSearch;
+var service = require('./library/auto/autoService.js');
+var view = document.forms.autoSearch;
 
 window.app = {
 
-  search: require('./catalog/search/searchService.js')(auto,autoSearch)
+  search: require('./catalog/search/searchController.js')(service,view)
   //ents: require('./library/events/events.js'),
 };
 
