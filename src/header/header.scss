@@ -1,0 +1,42 @@
+@import "../const";
+
+.header{
+	width: $wrapper-big-width;
+	height: $header-height;
+	border-bottom: 1px solid $border-color;
+	margin: 0 auto;
+
+	&-content{
+		width: $wrapper-small-width;
+		margin: 0 auto;
+	}
+
+	&-logo{
+		display: inline-block;
+		vertical-align: bottom;
+		height: $header-height;
+
+		& img{
+			vertical-align: middle;
+		}
+	}
+	
+	&-menu{
+		display: inline-block;
+		vertical-align: bottom;
+		float: right;
+		bottom: 0;
+		
+		&-item{
+			display: inline-block;
+			width: $header-menu-item-width;
+			background: $header-menu-item-color;
+			text-align: center;
+			color: $background-color;
+			border-radius: $border-radius-small $border-radius-small 0 0;
+		}
+
+	}
+
+
+}
