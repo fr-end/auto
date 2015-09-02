@@ -1,8 +1,8 @@
 ##Install source code version
 
-npm install frend-auto
+git clone https://github.com/fr-end/auto.git
 
-cd node_modules/frend-auto
+cd auto
 
 npm install
 
@@ -12,7 +12,7 @@ gulp
 
 ##Test
 
-After Install nad Run you can see our project at http://localhost:8080/
+After Install and Run you can see our project at http://localhost:8080/
 
 ##Notes
 
@@ -34,3 +34,9 @@ add bower for project if needed http://bower.io/
 
 Gulp + Browserify doc:
 http://frontender.info/gulp-browserify-starter-faq/
+
+##npm install
+
+npm install frend-auto
+
+cd node_modules/frend-auto
