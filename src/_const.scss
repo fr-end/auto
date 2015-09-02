@@ -1,31 +1,38 @@
 //colors
 $background-color: #fff;
 $border-color: #f85d49;
-$price-color: #91cf26;
 $course-color: #69cefa;
-$text-color: #333;
-$header-bg-color: rgba(154,154,154,.1);
 $date-color: rgba(53,53,53,.5);
 $select-color: rgba(93,144,0,.75);
+$header-bg-color: rgba(154,154,154,.1);
+$header-menu-item-color: #686868;
+$price-color: #91cf26;
+$text-color: #333;
+$footer-text-color: #9a9a9a;
+
 
 //sizes
-$wrapper-big-width: 1280px;
-$wrapper-small-width: 1160px;
-$item-width: 740px;
-$item-height: 220px;
-$item-padding: 15px;
-$item-margin-bottom: 50px;
-$item-image-width: 39%;
-$item-content-width: 410px;
 $border-radius-big: 6px;
 $border-radius-small: 4px;
 $search-pannel-width: 1160px;
+$header-height: 120px;
+$item-content-width: 410px;
+$item-height: 220px;
+$item-image-width: 39%;
+$item-margin-bottom: 50px;
+$item-padding: 15px;
+$item-width: 740px;
+$wrapper-big-width: 1280px;
+$wrapper-small-width: 1160px;
+$footer-height: 96px;
+
 
 //fonts
 $font-family: 'Open Sans', sans-serif, Arial;
-$font-size-main-text: 14px;
 $font-size-date: 12px;
 $font-size-header: 18px;
+$font-size-main-text: 14px;
+
 @import url(https://fonts.googleapis.com/css?family=Open+Sans:400,700);
 
 //url
