@@ -8,6 +8,16 @@ window.app = {
   //ents: require('./library/events/events.js'),
 };
 
+
+var searchPanel = document.getElementById('searchPanel');
+
+console.log(searchPanel);
+
+var searchPanelTemplate = require('./common/search/templates/searchPanel.handlebars');
+var html = searchPanelTemplate();
+searchPanel.innerHTML = html;
+
+
 /*
 window.app.auto.getCategories()
                 .then(function(data){
