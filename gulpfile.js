@@ -22,6 +22,7 @@ var gulpprint = require('gulp-print');  //  For printing all the files that gulp
 var gulpif = require('gulp-if');        //  Plugin for adding 'if' condition to a stream (process)
 
 var browserify = require('browserify');
+var browserifyHandlebars = require('browserify-handlebars');
 var source = require('vinyl-source-stream');
 
 gulp.task('html', function () {
@@ -59,7 +60,9 @@ gulp.task('js_check', function(){
 });
 
 gulp.task('browserify', ['js_check'],  function() {
-    return browserify('./src/app.js')
+    return browserify('./src/app.js',{
+          transform: [browserifyHandlebars]
+        })
         .bundle()
         // Передаем имя файла, который получим на выходе, vinyl-source-stream
         .pipe(source('bundle.js'))
