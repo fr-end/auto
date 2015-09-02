@@ -1,42 +1,52 @@
 @import "../const";
 
 .header{
-	width: $wrapper-big-width;
-	height: $header-height;
 	border-bottom: 1px solid $border-color;
+	height: $header-height;
 	margin: 0 auto;
+	position: relative;
+	width: $wrapper-big-width;
 
-	&-content{
-		width: $wrapper-small-width;
+	&-wrapper{
+		height: $header-height;
 		margin: 0 auto;
+		position: relative;
+		width: $wrapper-small-width;
 	}
 
 	&-logo{
-		display: inline-block;
-		vertical-align: bottom;
-		height: $header-height;
-
-		& img{
-			vertical-align: middle;
-		}
+		position: absolute;
+		top: 30px;
 	}
 	
 	&-menu{
-		display: inline-block;
-		vertical-align: bottom;
-		float: right;
 		bottom: 0;
-		
+		position: absolute;
+		right: 0;
+
 		&-item{
-			display: inline-block;
-			width: $header-menu-item-width;
 			background: $header-menu-item-color;
-			text-align: center;
-			color: $background-color;
 			border-radius: $border-radius-small $border-radius-small 0 0;
+			color: $background-color;
+			cursor: pointer;
+			display: inline-block;
+			font-size: $font-size-main-text;
+			height: 25px;
+			line-height: 25px;
+			margin-left: 20px;
+			padding: 5px 20px;
+			text-align: center;
+
+			&-wishlist{
+				padding-right: 40px;
+				background-image: url($sprite);
+				background-repeat: no-repeat;
+				background-position: right -104px;
+			}
+
+			&.active{
+				background-color: $border-color;
+			}
 		}
-
 	}
-
-
 }
