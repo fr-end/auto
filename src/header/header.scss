@@ -1,0 +1,52 @@
+@import "../const";
+
+.header{
+	border-bottom: 1px solid $border-color;
+	height: $header-height;
+	margin: 0 auto;
+	position: relative;
+	width: $wrapper-big-width;
+
+	&-wrapper{
+		height: $header-height;
+		margin: 0 auto;
+		position: relative;
+		width: $wrapper-small-width;
+	}
+
+	&-logo{
+		position: absolute;
+		top: 30px;
+	}
+	
+	&-menu{
+		bottom: 0;
+		position: absolute;
+		right: 0;
+
+		&-item{
+			background: $header-menu-item-color;
+			border-radius: $border-radius-small $border-radius-small 0 0;
+			color: $background-color;
+			cursor: pointer;
+			display: inline-block;
+			font-size: $font-size-main-text;
+			height: 25px;
+			line-height: 25px;
+			margin-left: 20px;
+			padding: 5px 20px;
+			text-align: center;
+
+			&-wishlist{
+				padding-right: 40px;
+				background-image: url($sprite);
+				background-repeat: no-repeat;
+				background-position: right -104px;
+			}
+
+			&.active{
+				background-color: $border-color;
+			}
+		}
+	}
+}
