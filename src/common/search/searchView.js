@@ -14,35 +14,19 @@ View.prototype.render = function (viewCmd, data) {
     var self = this;
     var viewCommands = {
         getCategories: function () {
-            var docFragment = document.createDocumentFragment();
-            data.forEach(function (item, i) {
-                var option = new Option(item.name, item.value);
-                docFragment.appendChild(option);
-            });
-            self.$selectCategory.appendChild(docFragment);
+            var aTemplateFunction = require('./templates/options.handlebars');
+            var html = aTemplateFunction({default: "Любой", items: data});
+            self.$selectCategory.innerHTML = html;
         },
         getMarks: function () {
-            var defaultOption = self.$selectMark.firstElementChild;
-            var docFragment = document.createDocumentFragment();
-            docFragment.appendChild(defaultOption);
-            data.forEach(function (item, i) {
-                var option = new Option(item.name + ' (' + item.count + ')', item.value);
-                docFragment.appendChild(option);
-            });
-            self.$selectMark.innerHTML = '';
-            self.$selectMark.appendChild(docFragment);
-
+            var aTemplateFunction = require('./templates/optionsWithCount.handlebars');
+            var html = aTemplateFunction({default: "Марка", items: data});
+            self.$selectMark.innerHTML = html;
         },
         getModels: function(){
-            var defaultOption = self.$selectModel.firstElementChild;
-            var docFragment = document.createDocumentFragment();
-            docFragment.appendChild(defaultOption);
-            data.forEach(function(item, i) {
-                var option = new Option(item.name + ' (' + item.count + ')', item.value);
-                docFragment.appendChild(option);
-            });
-            self.$selectModel.innerHTML = '';
-            self.$selectModel.appendChild(docFragment);
+            var aTemplateFunction = require('./templates/optionsWithCount.handlebars');
+            var html = aTemplateFunction({default: "Модель", items: data});
+            self.$selectModel.innerHTML = html;
         }
     };
 /*
