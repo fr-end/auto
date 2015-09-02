@@ -1,17 +1,65 @@
-<form name='autoSearch'>
-
-	<select name='category' data-select='category'>
-		<option value='0'>Любой</option>
-	</select>
-
-	<select name='mark' data-select='mark'>
-		<option value='0'>Марка</option>
-	</select>
-
-	<select name='model' data-select='model'>
-		<option value='0'>Модель</option>
-	</select>
-
-	<button data-submit='search' type="submit">поиск</button>
-
-</form>
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<link rel="stylesheet" href="../../main.css">
+</head>
+<body>
+	<div class='search'>	
+		<div class='search-criteria'>
+			<form class='search-form' name='autoSearch'>
+				<h1 class='search-form__caption'>
+					Уточнить критерии поиска
+				</h1>
+				<div class='search-parameters'>
+					<span class='search-parameters__title'>
+						Тип транспорта
+					</span>
+					<select class='search-parameters__select' name='category' data-select='category'>
+						<option value='0'>
+							Любой
+						</option>
+						<option value='0'>
+							Любой
+						</option>
+						<option value='0'>
+							Любой
+						</option>
+					</select>
+					<br>
+					<span class='search-parameters__title search-brand'>
+						Марка
+					</span>
+					<select class='search-parameters__select' name='mark' data-select='mark'>
+						<option value='0'>
+							Марка
+						</option>
+					</select>
+					<br>
+					<span class='search-parameters__title search-model'>
+						Модель
+					</span>
+					<select class='search-parameters__select' name='model' data-select='model'>
+						<option value='0'>
+							Модель
+						</option>
+					</select>
+					<br>
+					<button class='search-parameters__button' data-submit='search' type="submit">поиск</button>
+				</div>
+			</form>
+		</div>
+		<div class="search-shadow-separator">
+			&nbsp
+		</div>
+		<div class='search-info'>
+			<ul class='search-info-list'>
+				<li class='search-info-list__item'>Сохраняйте интересные предложения</li>
+				<li class='search-info-list__item'>Будьте первыми, кто узнает о выгодных предложениях</li><img src="" alt="">
+				<li class='search-info-list__item'>Быстро связывайтесь с продавцами</li>
+			</ul>
+		</div>
+	</div>	
+</body>
+</html>

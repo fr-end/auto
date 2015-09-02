@@ -1,0 +1,218 @@
+@import "../../const";
+
+.search {
+	height: $item-height;
+	margin: 0 auto $item-margin-bottom;
+	padding: $item-padding;
+	position: relative;
+	width: $search-pannel-width;
+
+	&-criteria {
+		float: left;
+		margin-left: $item-margin-bottom+10;
+	}
+
+	&-form {
+
+		&__caption {
+			font-size: $font-size-main-text;
+			font-weight: 200;
+			text-transform: uppercase;
+			color: $border-color;
+		}
+	}
+
+	&-parameters {
+		margin-top: $item-margin-bottom - 20;
+		text-align: right;
+
+		&__title {
+			margin-bottom: 10px;
+		}
+
+		&__select {
+			margin-left: 50px;
+			margin-bottom: 10px;
+			color: $select-color;
+			width: 250px;
+			height: 30px;
+			border-radius: $border-radius-small;
+			cursor: pointer;
+			outline: none;
+			padding-left: 5px;
+			background: url($sprite) no-repeat right -615px;
+			-moz-appearance: window;
+    			-webkit-appearance: none;
+    			appearance: none;
+		}
+
+		&__button {
+			left: -204px;
+			position: relative;
+		}
+	}
+	
+	&-shadow-separator {
+		background: url(img/shadow.png) no-repeat;
+		height: 238px;
+		float: right;
+		left: -555px;
+		width: 15px;
+		position: relative;
+	}
+	
+	&-info {
+		float: right;
+
+		&-list {
+			margin-top: $item-margin-bottom + 10;
+
+			&__item {
+				margin: 12px 0;
+				list-style: none;
+				padding-left: 25px;
+				background: url($sprite) no-repeat left -222px;
+			}
+		}
+	}
+
+
+} 
+
+
+/* 
+.item{
+	border-radius: $border-radius-big;
+	border: 1px solid $border-color;
+	box-sizing: border-box;
+	height: $item-height;
+	margin: 0 auto $item-margin-bottom;
+	padding: $item-padding;
+	position: relative;
+	width: $item-width;
+
+	&-img{
+		display: inline-block;
+		height: 100%;
+		margin-right: $item-padding;
+		vertical-align: top;
+		width: $item-image-width;
+
+		img{
+			height: 100%;
+			width: 100%;
+		}
+	}
+
+	&-content{
+		display: inline-block;
+		vertical-align: top;
+		width: $item-content-width;
+
+	}
+
+	&-header{
+		background: $header-bg-color;
+		border-radius: $border-radius-small;
+		font-size: $font-size-header;
+		height: 30px;
+		line-height: 30px;
+		margin-bottom: 10px;
+		padding-left: 10px;
+	}
+	
+	&-like{
+		background: url($sprite) no-repeat right -380px;
+		cursor: pointer;
+		float: right;
+		height: 100%;
+		width: 13%;
+	}
+
+	&-price{
+		display: inline-block;
+		font-size: $font-size-header;
+		margin-bottom: 10px;
+		margin-right: 40px;
+		vertical-align: bottom;
+
+		& .price{
+			color: $price-color;
+			cursor: pointer;
+		}
+		& .cource{
+			color: $course-color;
+			cursor: pointer;
+		}
+	}
+
+	&-date{
+		color: $date-color;
+		display: inline-block;
+		font-size: $font-size-header;
+		margin-bottom: 10px;
+		vertical-align: bottom;
+	}
+	
+	&-description{
+		font-size: $font-size-main-text;
+		height: 40px;
+		margin-bottom: 15px;
+		overflow: hidden;
+		text-align: justify;
+	}
+
+	&-parameters{
+			background: url($sprite) no-repeat 0 -424px;
+			box-sizing: border-box;
+			display: inline-block;
+			font-size: $font-size-main-text;
+			height: 20px;
+			overflow: hidden;
+			padding-left: 30px;
+			width: 32%;
+
+			&-row{
+				margin-bottom: 12px;
+			}
+		}
+
+	&-motor{
+		background-position-y: -460px; 
+	}
+
+	&-transmission{
+		background-position-y: -503px; 
+		padding-left: 20px;
+	}
+
+	&-tel{
+		display: inline-block;
+		font-size: $font-size-header;
+		vertical-align: bottom;
+		vertical-align: bottom;
+	}
+
+	&-add-note{
+		color: $course-color;
+		cursor: pointer;
+		display: inline-block;
+		float: right; 
+		font-size: $font-size-header;
+		vertical-align: bottom;
+	}
+
+	&::after{
+		background: url($sprite) no-repeat 0 -581px;;
+		border-radius: 50%;
+		content: '';
+		cursor: pointer;
+		display: block;
+		float: right;
+		height: 25px;
+		position: absolute;
+		right: -50px;
+		top: 10px;
+		width: 25px;
+		}
+} */
