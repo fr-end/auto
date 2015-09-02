@@ -1,3 +1,14 @@
+var searchPanel = document.getElementById('searchPanel');
+
+console.log(searchPanel);
+
+var searchPanelTemplate = require('./common/search/templates/searchPanel.handlebars');
+var html = searchPanelTemplate();
+searchPanel.innerHTML = html;
+
+
+
+
 var service = require('./library/auto/autoService.js');
 
 var view = require('./common/search/searchView.js');
@@ -9,13 +20,7 @@ window.app = {
 };
 
 
-var searchPanel = document.getElementById('searchPanel');
 
-console.log(searchPanel);
-
-var searchPanelTemplate = require('./common/search/templates/searchPanel.handlebars');
-var html = searchPanelTemplate();
-searchPanel.innerHTML = html;
 
 
 /*
