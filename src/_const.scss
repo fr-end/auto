@@ -3,10 +3,13 @@ $background-color: #fff;
 $border-color: #f85d49;
 $course-color: #69cefa;
 $date-color: rgba(53,53,53,.5);
+<<<<<<< HEAD
 $header-bg-color: rgba(154,154,154,.1);
 $header-menu-item-color: #686868;
 $price-color: #91cf26;
 $text-color: #333;
+$footer-text-color: #9a9a9a;
+
 
 //sizes
 $border-radius-big: 6px;
@@ -20,12 +23,15 @@ $item-padding: 15px;
 $item-width: 740px;
 $wrapper-big-width: 1280px;
 $wrapper-small-width: 1160px;
+$footer-height: 96px;
+
 
 //fonts
 $font-family: 'Open Sans', sans-serif, Arial;
 $font-size-date: 12px;
 $font-size-header: 18px;
 $font-size-main-text: 14px;
+
 @import url(https://fonts.googleapis.com/css?family=Open+Sans:400,700);
 
 //url
