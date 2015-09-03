@@ -14,7 +14,7 @@ module.exports = function(service,view){
         });
 
         // refactor it
-        view.$searchContainer.addEventListener('submit',function(event){
+        view.$searchForm.addEventListener('submit',function(event){
             event.preventDefault();
             self.searchCars();
         });
