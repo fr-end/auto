@@ -21,11 +21,14 @@ window.app = {
 
 
 (function(){  
-  //render searchResults test
-  var searchResultsController = require('./catalog/searchResults/searchResultsController.js');
-  
-  var srC = new searchResultsController('searchResultsPanel');
 
+  var Model = require('./catalog/searchResults/searchResultsModel.js');
+  var View = require('./catalog/searchResults/searchResultsView.js');
+  var Controller = require('./catalog/searchResults/searchResultsController.js');
+
+  var model = new Model();
+  var view = View('searchResultsPanel');
+  var controller = new Controller(model, view);
 
 })();
 

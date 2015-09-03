@@ -1,21 +1,19 @@
 
 module.exports = (function () {
 
-	function Controller(viewPort) {
+	function Controller(view, model) {
 		var self = this;
-		self.model = require('./searchResultsService.js');
-		view = require('./searchResultsView.js');
-		var searchResultsViewPort = document.getElementById(viewPort);
-		self.view = view(searchResultsViewPort);
+		self.view = view;
+		self.model = model;	
 	}
 
-	Controller.prototype.setViewPort = function(first_argument) {
-		// body...
-	};
+	Controller.prototype = {
 
-	Controller.prototype.showCars = function (data) {
-		var self = this;
-		self.view.render('showCars', data);
+		showCars: function(data){
+			var self = this;
+			self.view.render('showCars', data);
+		}
+	
 	};
 
 	return Controller;
