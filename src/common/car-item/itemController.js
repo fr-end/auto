@@ -23,7 +23,7 @@ module.exports = function(service,view){
 								+ carInfo.result.auto_data.version,
 						priceUSD : carInfo.result.price_data.prices[1],
 						priceUAH : Math.round(carInfo.result.price_data.prices[3]),
-						date : carInfo.result.auto_data.years,
+						date : carInfo.result.date_data.date_add.day+"."+carInfo.result.date_data.date_add.full_month+"."+carInfo.result.date_data.date_add.year,
 						description : carInfo.result.auto_data.description,
 						race : carInfo.result.auto_data.race.race,
 						fuel : carInfo.result.auto_data.fuel_data.name,
