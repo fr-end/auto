@@ -76,11 +76,13 @@ module.exports = (function(){
 		},
 		getCar: function ( carId, success ) {
 			//https://auto.ria.com/blocks_search_ajax/view/auto/14356030/?lang_id=2
+			var deferred=Q.defer();
 			var langId = 2;
 			var url = config.autoRiaUaHost + '/blocks_search_ajax/view/auto/'+
 						carId +
 						'/?lang_id=' + langId;
-			ajax.get( url, success );
+			ajax.get( url, deferred );
+			return deferred.promise;
 		}
 
 	};
