@@ -20,6 +20,16 @@ window.app = {
 };
 
 
+(function(){  
+  //render searchResults test
+  var searchResultsController = require('./catalog/searchResults/searchResultsController.js');
+  
+  var srC = new searchResultsController('searchResultsPanel');
+
+
+})();
+
+
 
 
 

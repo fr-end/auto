@@ -1,0 +1,12 @@
+<div class="search-results"> 
+	<ul class="search-results__list">
+	{{#each cars }}
+		<li data-car-id="{{id}}"></li>
+	{{/each}}
+	</ul>
+	{{#if more}}
+		<div class="serach-results__more">
+			Показать еще {{more}} объявлений
+		</div>
+	{{/if}}
+</div>
