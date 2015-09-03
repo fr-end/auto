@@ -6,6 +6,7 @@ module.exports = function(){
         // all src js files
         allhtml: ['./src/**/*.html'],
         alljs:   ['./src/**/*.js'],
+        alltemplates: ['./src/**/*.handlebars'],
         allsass: ['./src/**/*.scss'],
         allpng: ['./src/**/*.png'],
         proxy: {
