@@ -1,16 +1,42 @@
 
 var service = require('./library/auto/autoService.js');
+var View = require('./common/search/searchView.js');
+var Controller = require('./common/search/searchController.js');
 
-var view = require('./common/search/searchView.js');
+var view = new View();
 
+var controller = new Controller(service, view);
+console.log(view);
+view.$searchForm.addEventListener('submit',function(event){
+    event.preventDefault();
+    controller.searchCars();
+});
+controller.init();
+
+var Router = require('./routes.js');
+/*
 window.app = {
 
-  search: require('./common/search/searchController.js')(service,view)
+  searchController: require('./common/search/searchController.js')(service,view)
   //ents: require('./library/events/events.js'),
 };
+*/
 
 
+// refactor it
 
+
+//route definition
+var route = {
+    path: '#/',
+    on: searchPanel
+}
+
+function searchPanel(){
+
+}
+
+Router.add(route);
 
 
 /*
