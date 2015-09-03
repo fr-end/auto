@@ -2,7 +2,8 @@
     var service = require('./library/auto/autoService.js');
     var SearchView = require('./common/search/searchView.js');
     var SearchController = require('./common/search/searchController.js');
-
+    var CarItemController = require('./common/car-item/itemController.js');
+    
     window.app = {};
 
     app.view = new SearchView();
@@ -15,6 +16,8 @@
     });
 
     controller.init();
+
+    var itemController = new CarItemController(service,require('./common/car-item/itemView'));
 
     // do not consider the following code
     /*
