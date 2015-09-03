@@ -1,6 +1,7 @@
 
-var view = (function() {
+module.exports = (function() {
     function View(/*template*/) {
+
         //this.template = template;
 
         this.$searchForm = document.forms.autoSearch;
@@ -9,7 +10,11 @@ var view = (function() {
         this.$selectModel = document.querySelector('[data-select=model]');
 
     }
+    /*
+    View.prototype.init = function(){
 
+    };
+    */
     View.prototype.render = function (viewCmd, data) {
         var self = this;
         var viewCommands = {
@@ -49,6 +54,14 @@ var view = (function() {
         }
 
     };
+    /*
+    View.prototype._setFilter = function (currentPage) {
+        document.querySelector('.selected').className = '';
+        document.querySelector('[href="#/' + currentPage + '"]').className = 'selected';
+    };
+    */
+
+    //refactor the following piece of code
 
     var searchPanel = document.getElementById('searchPanel');
 
@@ -58,8 +71,6 @@ var view = (function() {
     var html = searchPanelTemplate();
     searchPanel.innerHTML = html;
 
-    return new View();
+    return View;
 
 })();
-
-module.exports = view;
