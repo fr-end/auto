@@ -1,14 +1,25 @@
 (function() {
+
     var service = require('./library/auto/autoService.js');
     var SearchView = require('./common/search/searchView.js');
     var SearchController = require('./common/search/searchController.js');
     var CarItemController = require('./common/car-item/itemController.js');
+
+    var itemController = new CarItemController(service,require('./common/car-item/itemView'));
+
+    var searchResultsModel = require('./catalog/searchResults/searchResultsModel.js');
+    var searchResultsView = require('./catalog/searchResults/searchResultsView.js');
+    var searchResultsController = require('./catalog/searchResults/searchResultsController.js');
+
+    var $searchResultsModel = new searchResultsModel();
+    var $searchResultsView = new searchResultsView('searchResultsPanel');
+    var $searchResultsController = new searchResultsController($searchResultsModel, $searchResultsView, itemController);
     
     window.app = {};
 
     app.view = new SearchView();
 
-    var controller = new SearchController(service, app.view);
+    var controller = new SearchController(service, app.view, $searchResultsController);
 
     app.view.$searchForm.addEventListener('submit', function (event) {
         event.preventDefault();
@@ -17,8 +28,10 @@
 
     controller.init();
 
-    var itemController = new CarItemController(service,require('./common/car-item/itemView'));
-
+    
+/*
+    $searchResultsController.showCars(['16128163','16092934','16145329','16001421','12336790','15550632','11666166','16053415','15433627','16145311']);
+*/
     // do not consider the following code
     /*
     var routes = {};
@@ -51,45 +64,8 @@
     */
 })(window);
 
-/*
-window.app.auto.getCategories()
-                .then(function(data){
-                  document.getElementById('categories').innerHTML=data;
-                });
+(function(){  
 
-window.app.auto.getMarks(1)
-  .then(function(data){
-    document.getElementById('marks').innerHTML=data;
-}); 
 
-window.app.auto.getModels(1, 98)
-  .then(function(data){
-    document.getElementById('models').innerHTML=data;
-});                
 
-window.app.auto.getCategories(function(data){
-    window.app.events.publish('categories',data);
-});
-
-window.app.auto.getMarks(1,function(data){
-    window.app.events.publish('marks',data);
-});
-
-window.app.auto.getModels(1,98,function(data){
-    window.app.events.publish('models',data);
-});
-
-window.app.auto.getCarIds(window.app.searchParams,function(data){
-    window.app.events.publish('cars',data);
-});
-
-window.app.auto.getCarsCount(window.app.searchParams,function(data){
-    window.app.events.publish('carsCount',data);
-});
-
-window.app.auto.getCar(16001421,function(data){
-    window.app.events.publish('car',data);
-});
-
-*/
-
+})();
