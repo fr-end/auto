@@ -1,43 +1,52 @@
+(function() {
+    var service = require('./library/auto/autoService.js');
+    var SearchView = require('./common/search/searchView.js');
+    var SearchController = require('./common/search/searchController.js');
 
-var service = require('./library/auto/autoService.js');
-var View = require('./common/search/searchView.js');
-var Controller = require('./common/search/searchController.js');
+    window.app = {};
 
-var view = new View();
+    app.view = new SearchView();
 
-var controller = new Controller(service, view);
-console.log(view);
-view.$searchForm.addEventListener('submit',function(event){
-    event.preventDefault();
-    controller.searchCars();
-});
-controller.init();
+    var controller = new SearchController(service, app.view);
 
-var Router = require('./routes.js');
-/*
-window.app = {
+    app.view.$searchForm.addEventListener('submit', function (event) {
+        event.preventDefault();
+        controller.searchCars();
+    });
 
-  searchController: require('./common/search/searchController.js')(service,view)
-  //ents: require('./library/events/events.js'),
-};
-*/
+    controller.init();
 
+    // do not consider the following code
+    /*
+    var routes = {};
+    //
+    function route(path, view, controller) {
+        routes[path] = {view: view, controller: controller};
+    }
+    var el = null;
+    function router () {
+        // Lazy load view element:
+        el = el || document.getElementById('cars');
+        console.log(el)
+        // Current route url (getting rid of '#' in hash as well):
+        var url = location.hash.slice(1) || '/';
+        console.log(url);
+        // Get route by url:
+        var route = routes[url];
+        // Do we have both a view and a route?
+        if (el && route.controller) {
+            // Render route template with John Resig's template engine:
+            el.innerHTML = 'HELLO';//tmpl(route.templateId, new route.controller());
+        }
+    }
 
-// refactor it
+    window.addEventListener('hashchange', router);
+    // Listen on page load:
+    window.addEventListener('load', router);
 
-
-//route definition
-var route = {
-    path: '#/',
-    on: searchPanel
-}
-
-function searchPanel(){
-
-}
-
-Router.add(route);
-
+    route('/', app.view, controller);
+    */
+})(window);
 
 /*
 window.app.auto.getCategories()
