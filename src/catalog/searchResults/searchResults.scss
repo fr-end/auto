@@ -1,9 +1,13 @@
 .search-results {
+
 	width: 100%;
 
-	&__list {
+	&-list {
 		width: 100%;
-		list-style: none;
+
+		&__item {
+
+		}
 	}
 
 	&__more {

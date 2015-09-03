@@ -23,6 +23,8 @@ module.exports = (function () {
 				self.viewPort.innerHTML = self.loading;
 			},
 			showCars : function(data){
+				console.log('render data');
+				console.dir(data);
 				self.viewPort.innerHTML = self.template(data);
 			}
 

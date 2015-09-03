@@ -4,19 +4,6 @@
     var SearchView = require('./common/search/searchView.js');
     var SearchController = require('./common/search/searchController.js');
     var CarItemController = require('./common/car-item/itemController.js');
-    
-    window.app = {};
-
-    app.view = new SearchView();
-
-    var controller = new SearchController(service, app.view);
-
-    app.view.$searchForm.addEventListener('submit', function (event) {
-        event.preventDefault();
-        controller.searchCars();
-    });
-
-    controller.init();
 
     var itemController = new CarItemController(service,require('./common/car-item/itemView'));
 
@@ -27,9 +14,24 @@
     var $searchResultsModel = new searchResultsModel();
     var $searchResultsView = new searchResultsView('searchResultsPanel');
     var $searchResultsController = new searchResultsController($searchResultsModel, $searchResultsView, itemController);
+    
+    window.app = {};
 
-    $searchResultsController.showCars('16128163,16092934,16145329,16001421,12336790,15550632,11666166,16053415,15433627,16145311');
+    app.view = new SearchView();
 
+    var controller = new SearchController(service, app.view, $searchResultsController);
+
+    app.view.$searchForm.addEventListener('submit', function (event) {
+        event.preventDefault();
+        controller.searchCars();
+    });
+
+    controller.init();
+
+    
+/*
+    $searchResultsController.showCars(['16128163','16092934','16145329','16001421','12336790','15550632','11666166','16053415','15433627','16145311']);
+*/
     // do not consider the following code
     /*
     var routes = {};

@@ -6,20 +6,16 @@ module.exports = (function () {
 		self.view = view;
 		self.model = model;	
 		self.itemController = itemController;
-
-		console.dir(view);
-
-		self.view.render('showLoading',{});
 	}
 
 	Controller.prototype = {
 
 		showCars: function(data){
 			var self = this;
-			var cars = data.split(',');
-			self.view.render('showCars', { cars : cars });
-			cars.forEach(function(carId){
-				console.log(carId);
+			console.log('input data');
+			console.dir(data);
+			self.view.render('showCars', { cars : data });
+			data.forEach(function(carId){
 				var viewPort = document.querySelector('[data-car-id="' + carId + '"]');
 				self.itemController.showCar(carId,viewPort);
 			});

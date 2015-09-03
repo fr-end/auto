@@ -1,9 +1,10 @@
 module.exports = (function(){
 
-    function Controller(service,view){
+    function Controller(service, view, searchResultsController){
         var self = this;
         self.service = service;
         self.view = view;
+        self.searchResultsController = searchResultsController;
 
         self.view.bind('changeCategory',function(){
             self.loadMarks();
@@ -65,7 +66,8 @@ module.exports = (function(){
 			};
 			self.service.getCarIds(searchParams)
 				.then(function(data){
-					document.getElementById('cars').innerHTML=JSON.parse(data).result.search_result.ids;
+					var cars = JSON.parse(data).result.search_result.ids;
+					self.searchResultsController.showCars(cars);
 				});
 		}
 
