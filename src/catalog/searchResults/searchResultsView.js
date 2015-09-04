@@ -5,7 +5,7 @@ module.exports = (function () {
 		self.template = require('./searchResults.handlebars');
 		self.loading = 'loading...';
 
-		viewPortElement = document.querySelector('[class="search-results"]');
+		var viewPortElement = document.querySelector('[class="search-results"]');
 
 		if (viewPortElement instanceof HTMLElement) {
 			self.viewPort = viewPortElement;
@@ -30,7 +30,7 @@ module.exports = (function () {
 				self.viewPort.innerHTML = self.template(data);
 			}
 
-    	}
+    	};
 
     	viewCommands[viewCmd](data);
 	};

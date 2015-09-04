@@ -1,7 +1,7 @@
-module.exports = (function(itemController){
+module.exports = function ( itemController ) {
 
     var Model       = require('./searchResultsModel.js');
-    var View        = require('./searchResultsView.js')
+    var View        = require('./searchResultsView.js');
     var Controller  = require('./searchResultsController.js');
 
     var model       = new Model();
@@ -10,4 +10,4 @@ module.exports = (function(itemController){
 
     return controller;
     
-});
+};

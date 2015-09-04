@@ -23,7 +23,7 @@
         searchResults   : searchResultsHtml,
         main            : mainpageHtml,
         footer          : footerHtml
-    }
+    };
 
     var bodyTemplate            = require('./body.handlebars');
     var bodyHtml                = bodyTemplate(data);
@@ -45,11 +45,11 @@
     
     window.app.catalog.SearchResults = require('./catalog/searchResults/searchResults.js')(itemController);
 
-    app.view = new SearchView();
+    window.app.view = new SearchView();
 
-    var controller = new SearchController(service, app.view, window.app.catalog.SearchResults);
+    var controller = new SearchController(service, window.app.view, window.app.catalog.SearchResults);
 
-    app.view.$searchForm.addEventListener('submit', function (event) {
+    window.app.view.$searchForm.addEventListener('submit', function (event) {
         event.preventDefault();
         controller.searchCars();
     });
