@@ -11,7 +11,6 @@ module.exports = (function () {
 	Controller.prototype = {
 
 		showCars: function(data){
-			alert(data);
 			var self = this;
 			console.log('input data');
 			console.dir(data);
