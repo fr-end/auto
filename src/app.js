@@ -11,7 +11,7 @@
 
     window.app.catalog = {};
     
-    window.app.catalog.SearchResults = require('./catalog/searchResults/searchResults.js')(service, itemController);
+    window.app.catalog.SearchResults = require('./catalog/searchResults/searchResults.js')(itemController);
 
     app.view = new SearchView();
 
