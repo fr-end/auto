@@ -1,4 +1,4 @@
-module.exports = (function(){
+module.exports = (function(service){
 
 	function Model(service){
 		var self = this;
@@ -15,6 +15,8 @@ module.exports = (function(){
 		});
 	};
 
-	return Model;
+	var model = new Model(service);
+
+	return model;
 	
-})();
+});
