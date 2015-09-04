@@ -1,5 +1,37 @@
 (function(window) {
 
+    /*render body*/
+
+    var headerTemplate          = require('./header/header.handlebars');
+    var headerHtml              = headerTemplate();
+
+    var searchPanelTemplate     = require('./common/search/templates/searchPanel.handlebars');
+    var searchPanelHtml         = searchPanelTemplate();
+
+    var searchResultsTemplate   = require('./catalog/searchResults/searchResults.handlebars');
+    var searchResultsHtml       = searchResultsTemplate();
+
+    var mainpageTemplate        = require('./mainpage/mainpage.handlebars');
+    var mainpageHtml            = mainpageTemplate();
+
+    var footerTemplate          = require('./footer/footer.handlebars');
+    var footerHtml              = footerTemplate();
+
+    var data = {
+        header          : headerHtml,
+        searchPanel     : searchPanelHtml,
+        searchResults   : searchResultsHtml,
+        main            : mainpageHtml,
+        footer          : footerHtml
+    }
+
+    var bodyTemplate            = require('./body.handlebars');
+    var bodyHtml                = bodyTemplate(data);
+
+    document.body.innerHTML     = bodyHtml;    
+
+    /*compile app*/
+
     window.app = {};
 
     var service = require('./library/auto/autoService.js');
@@ -23,6 +55,8 @@
     });
 
     controller.init();
+
+
 
     
 /*
