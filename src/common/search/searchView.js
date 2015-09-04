@@ -63,13 +63,7 @@ module.exports = (function() {
 
     //refactor the following piece of code
 
-    var searchPanel = document.getElementById('searchPanel');
-
-    console.log(searchPanel);
-
-    var searchPanelTemplate = require('./templates/searchPanel.handlebars');
-    var html = searchPanelTemplate();
-    searchPanel.innerHTML = html;
+ 
 
     return View;
 

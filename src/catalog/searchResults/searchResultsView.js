@@ -1,11 +1,11 @@
 module.exports = (function () {
 
-	function View(viewPortId) {
+	function View() {
 		var self = this;
 		self.template = require('./searchResults.handlebars');
 		self.loading = 'loading...';
 
-		viewPortElement = document.getElementById(viewPortId);
+		viewPortElement = document.querySelector('[class="search-results"]');
 
 		if (viewPortElement instanceof HTMLElement) {
 			self.viewPort = viewPortElement;
@@ -25,6 +25,8 @@ module.exports = (function () {
 			showCars : function(data){
 				console.log('render data');
 				console.dir(data);
+				console.log('viewPort');
+				console.dir(self.viewPort);
 				self.viewPort.innerHTML = self.template(data);
 			}
 
