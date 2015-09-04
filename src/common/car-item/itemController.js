@@ -9,7 +9,7 @@ module.exports = function(service,view){
 
 
     Controller.prototype = {
-		showCar: function(carId,viewPort){
+		showCar: function(carId){
 			var self = this;
 			service.getCar(carId)
 				.then(function(data){
@@ -32,7 +32,7 @@ module.exports = function(service,view){
 						tel : carInfo.result.user_phones[0].phone_formatted,
 						city : carInfo.result.location_data.state.region_name,
 					};
-					view.render(carInfoNeeded,viewPort);
+					view.render(carInfoNeeded);
 			});
 		}
 	}

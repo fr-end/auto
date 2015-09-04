@@ -16,8 +16,7 @@ module.exports = (function () {
 			console.dir(data);
 			self.view.render('showCars', { cars : data });
 			data.forEach(function(carId){
-				var viewPort = document.querySelector('[data-car-id="' + carId + '"]');
-				self.itemController.showCar(carId,viewPort);
+				self.itemController.showCar(carId);
 			});
 		}
 	
