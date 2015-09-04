@@ -15,7 +15,7 @@ module.exports = function(service,view){
 				.then(function(data){
 					var carInfo = JSON.parse(data);
 					var imgUrl = carInfo.result.photo_data.photo.url;
-					imgUrl = imgUrl.replace(".","fx.");
+					imgUrl = imgUrl.replace(".","f.");
 					var carInfoNeeded = {
 						img : "https://cdn.riastatic.com/photos/" + imgUrl,
 						carId : carInfo.result.auto_data.auto_id,
