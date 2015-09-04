@@ -7,19 +7,19 @@
 
     var itemController = new CarItemController(service,require('./common/car-item/itemView'));
 
-    var searchResultsModel = require('./catalog/searchResults/searchResultsModel.js');
-    var searchResultsView = require('./catalog/searchResults/searchResultsView.js');
-    var searchResultsController = require('./catalog/searchResults/searchResultsController.js');
+    var SearchResultsModel = require('./catalog/searchResults/searchResultsModel.js');
+    var SearchResultsView = require('./catalog/searchResults/searchResultsView.js');
+    var SearchResultsController = require('./catalog/searchResults/searchResultsController.js');
 
-    var $searchResultsModel = new searchResultsModel();
-    var $searchResultsView = new searchResultsView('searchResultsPanel');
-    var $searchResultsController = new searchResultsController($searchResultsModel, $searchResultsView, itemController);
+    var searchResultsModel = new SearchResultsModel();
+    var searchResultsView = new SearchResultsView('searchResultsPanel');
+    var searchResultsController = new SearchResultsController(searchResultsModel, searchResultsView, itemController);
     
     window.app = {};
 
     app.view = new SearchView();
 
-    var controller = new SearchController(service, app.view, $searchResultsController);
+    var controller = new SearchController(service, app.view, searchResultsController);
 
     app.view.$searchForm.addEventListener('submit', function (event) {
         event.preventDefault();
