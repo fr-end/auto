@@ -1,0 +1,100 @@
+@import "../const";
+
+.main {
+	margin: 0 auto;
+	width: $wrapper-small-width;
+
+	&-wrapper {
+		position: relative;
+		height: $header-height;
+		margin: 0 auto;
+	}
+
+	&-items {
+		float: left;
+		width:  $wrapper-small-width -60;
+	}
+
+	&-caption {
+		margin-bottom: 30px;
+		margin-top: 30px;
+		font-size: $font-size-main-text + 2;
+		font-weight: 200;
+		text-transform: uppercase;
+		color: $border-color;
+	}
+
+	&-arrow-left, &-arrow-right  {
+		float: left;
+		width: 85px;
+		height: 360px;
+		background: #f9f9f9;
+		text-decoration: none;
+	}
+
+	&-big {
+		float: left;
+		margin: 10px 10px 10px 20px;
+
+		&-link {
+			text-decoration: none;
+			color: $background-color;
+
+		}
+	}
+
+	&-liner {
+		position: relative;
+		padding: 5px 25px;
+		background: $linear-bg-color;
+		margin-top: -110px;
+
+		&-name {
+			margin: 0;
+		}
+	}
+
+	&-small {
+		float: left;
+		width:490px;
+
+		&-link {
+			display: block;
+			text-decoration: none;
+		}
+
+		&-img {
+			height: 170px;
+			margin: 10px;
+			width: 220px;
+			display:block;
+			float: left;
+		}
+
+		&-liner {
+			position: relative; 
+			display: block;
+			margin-top: -70px;
+			background: $linear-bg-color;
+			padding: 5px;
+		}
+	}
+
+	&-liner-name, &-liner-price {
+		color: $background-color;
+		font-weight: 100;
+	}
+
+	&-arrow-link {
+		text-decoration: none;
+		&-left {
+			text-decoration: none;
+		}
+	}
+
+	&-content {
+		clear: both;
+		text-align: justify;
+		margin-top: 450px;
+	}
+}
