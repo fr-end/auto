@@ -1,4 +1,4 @@
-module.exports = function ( itemController ) {
+module.exports = (function () {
 
     var Model       = require('./searchResultsModel.js');
     var View        = require('./searchResultsView.js');
@@ -6,8 +6,10 @@ module.exports = function ( itemController ) {
 
     var model       = new Model();
     var view        = new View('searchResultsPanel');
-    var controller  = new Controller(model,view,itemController);
+    var item 		= require('../../common/car-item/item');
+
+    var controller  = new Controller(model, view, item);
 
     return controller;
     
-};
+})();

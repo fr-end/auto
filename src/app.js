@@ -37,17 +37,14 @@
     var service = require('./library/auto/autoService.js');
     var SearchView = require('./common/search/searchView.js');
     var SearchController = require('./common/search/searchController.js');
-    var CarItemController = require('./common/car-item/itemController.js');
-
-    var itemController = new CarItemController(service,require('./common/car-item/itemView'));
 
     window.app.catalog = {};
     
-    window.app.catalog.SearchResults = require('./catalog/searchResults/searchResults.js')(itemController);
+    var searchResults = require('./catalog/searchResults/searchResults.js');
 
     window.app.view = new SearchView();
 
-    var controller = new SearchController(service, window.app.view, window.app.catalog.SearchResults);
+    var controller = new SearchController(service, window.app.view, searchResults);
 
     window.app.view.$searchForm.addEventListener('submit', function (event) {
         event.preventDefault();
