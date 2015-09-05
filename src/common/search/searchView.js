@@ -1,13 +1,16 @@
 
 module.exports = (function() {
-    function View(/*template*/) {
 
-        //this.template = template;
+    function View(templates) {
 
-        this.$searchForm = document.forms.autoSearch;
-        this.$selectCategory = document.querySelector('[data-select=category]');
-        this.$selectMark = document.querySelector('[data-select=mark]');
-        this.$selectModel = document.querySelector('[data-select=model]');
+        var self = this;
+
+        self.templates = templates;
+
+        self.$searchForm        = document.forms.autoSearch;
+        self.$selectCategory    = document.querySelector('[data-select=category]');
+        self.$selectMark        = document.querySelector('[data-select=mark]');
+        self.$selectModel       = document.querySelector('[data-select=model]');
 
     }
     /*
@@ -19,19 +22,13 @@ module.exports = (function() {
         var self = this;
         var viewCommands = {
             getCategories: function () {
-                var aTemplateFunction = require('./templates/options.handlebars');
-                var html = aTemplateFunction({default: "Любой", items: data});
-                self.$selectCategory.innerHTML = html;
+                self.$selectCategory.innerHTML = self.templates.options({default: 'Любой', items: data});
             },
             getMarks: function () {
-                var aTemplateFunction = require('./templates/optionsWithCount.handlebars');
-                var html = aTemplateFunction({default: "Марка", items: data});
-                self.$selectMark.innerHTML = html;
+                self.$selectMark.innerHTML = self.templates.optionsWithCount({default: 'Марка', items: data});
             },
             getModels: function () {
-                var aTemplateFunction = require('./templates/optionsWithCount.handlebars');
-                var html = aTemplateFunction({default: "Модель", items: data});
-                self.$selectModel.innerHTML = html;
+                self.$selectModel.innerHTML = self.templates.optionsWithCount({default: 'Модель', items: data});
             }
         };
 
