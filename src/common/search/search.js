@@ -2,7 +2,7 @@ module.exports = (function(){
 
 	var View 			= require('./searchView.js');
 	var Controller 		= require('./searchController.js');	
-	
+
 	var templates		= {
 		main: 				require('./templates/searchPanel.handlebars'),
 		options: 			require('./templates/options.handlebars'),

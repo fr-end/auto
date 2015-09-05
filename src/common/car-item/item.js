@@ -10,6 +10,6 @@ module.exports = (function () {
 
 	var controller 	= new Controller(service, view);
 
-    return controller;
+	return controller;
     
 })();
