@@ -25,7 +25,7 @@ module.exports = (function(){
 			self.service.getCategories()
 				.then(function(data){
 					var categoriesArray = JSON.parse(data);
-					self.view.render('getCategories', categoriesArray);
+					self.view.render('categories', categoriesArray);
 					self.loadMarks();
 				});
 		},
@@ -38,7 +38,7 @@ module.exports = (function(){
 			self.service.getMarks(category)
 				.then(function(data){
 					var marks = JSON.parse(data);
-					self.view.render('getMarks', marks);
+					self.view.render('marks', marks);
 					self.loadModels();
 			});
 		},
@@ -51,7 +51,7 @@ module.exports = (function(){
 			self.service.getModels(category, mark)
                 .then(function(data) {
                     var models = JSON.parse(data);
-					self.view.render('getModels', models);
+					self.view.render('models', models);
             });
 		},
 		searchCars: function(){

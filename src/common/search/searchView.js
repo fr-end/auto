@@ -21,13 +21,13 @@ module.exports = (function() {
     View.prototype.render = function (viewCmd, data) {
         var self = this;
         var viewCommands = {
-            getCategories: function () {
+            categories: function () {
                 self.$selectCategory.innerHTML = self.templates.options({default: 'Любой', items: data});
             },
-            getMarks: function () {
+            marks: function () {
                 self.$selectMark.innerHTML = self.templates.optionsWithCount({default: 'Марка', items: data});
             },
-            getModels: function () {
+            models: function () {
                 self.$selectModel.innerHTML = self.templates.optionsWithCount({default: 'Модель', items: data});
             }
         };
