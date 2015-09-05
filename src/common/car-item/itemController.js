@@ -1,6 +1,6 @@
-module.exports = function(service,view){
+module.exports = (function(){
 
-    function Controller(){
+    function Controller(service,view){
         var self = this;
         self.service = service;
         self.view = view;
@@ -10,8 +10,9 @@ module.exports = function(service,view){
 
     Controller.prototype = {
 		showCar: function(carId){
+			console.log(carId);
 			var self = this;
-			service.getCar(carId)
+			self.service.getCar(carId)
 				.then(function(data){
 					var carInfo = JSON.parse(data);
 					var imgUrl = carInfo.result.photo_data.photo ? carInfo.result.photo_data.photo.url : "";
@@ -32,12 +33,11 @@ module.exports = function(service,view){
 						tel : carInfo.result.user_phones[0].phone_formatted,
 						city : carInfo.result.location_data.state.region_name,
 					};
-					view.render(carInfoNeeded);
+					self.view.render(carInfoNeeded);
 			});
 		}
 	}
 
-    var controller = new Controller();
+	return Controller;
 
-	return controller;
-}
+})();

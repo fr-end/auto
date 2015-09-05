@@ -1,11 +1,12 @@
 module.exports = (function () {
 
-	var service = require('../../library/auto/autoService');
-	var view 	= require('./itemView');
-    var Item = require('./itemController');	
+	var View 		= require('./itemView');
+    var Controller 	= require('./itemController');	
 
-	var item = new Item(service, view);
+	var service 	= require('../../library/auto/autoService');
+	var view 		= new View();
+	var controller 	= new Controller(service, view);
 
-    return item;
+    return controller;
     
 })();
