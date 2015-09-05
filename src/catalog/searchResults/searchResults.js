@@ -4,8 +4,10 @@ module.exports = (function () {
     var View        = require('./searchResultsView.js');
     var Controller  = require('./searchResultsController.js');
 
+    var template 	= require('./searchResults.handlebars');
+
     var model       = new Model();
-    var view        = new View('searchResultsPanel');
+    var view        = new View(template);
     var item 		= require('../../common/car-item/item');
 
     var controller  = new Controller(model, view, item);
