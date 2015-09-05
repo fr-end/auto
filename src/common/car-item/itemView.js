@@ -1,8 +1,8 @@
 module.exports = (function () {
 
-	function View() {
+	function View(template) {
 		var self = this;
-		self.template = require('./car-item.handlebars');
+		self.template = template;
 
 	}
 

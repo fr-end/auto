@@ -1,8 +1,8 @@
 module.exports = (function () {
 
-	function View() {
+	function View(template) {
 		var self = this;
-		self.template = require('./searchResults.handlebars');
+		self.template = template;
 		self.loading = 'loading...';
 
 		var viewPortElement = document.querySelector('[class="search-results"]');
