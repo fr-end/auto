@@ -63,9 +63,6 @@ module.exports = (function(){
 					self.searchResultsController.showCars(cars);
 				});
 		}
-
-
-
 	};
 	/*
 	Controller.prototype.setView = function (locationHash) {

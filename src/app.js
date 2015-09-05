@@ -32,19 +32,37 @@
 
     /*compile app*/
     window.app = {};
-    window.app = require('./common/search/search');
-
-    window.app.init();
-
+    window.app.common = {};
     window.app.library = {};
+
+    window.app.common.searchPanelController = require('./common/search/search');
+
+
+
+
     window.app.library.events = require('./library/events/events.js');
 
-    window.addEventListener('hashchange', function(){
-        if (window.location.hash === '#searchResults'){
-            console.log('cool');
-        }
-    });
 
+    app.routes = {};
+
+    function route(path, controller){
+        app.routes[path] = {controller: controller};
+    }
+
+    function router(){
+        var url = location.hash.slice(1) || '/';
+        var route = app.routes[url];
+        
+        if (route.controller.init) {
+            route.controller.init();
+        };
+
+    }
+    window.addEventListener('hashchange', router);
+    window.addEventListener('load', router);
+
+    route('/', app.common.searchPanelController);
+    route('searchResults', app.common.searchPanelController.searchResultsController);
     // do not consider the following code
     /*
     var routes = {};
