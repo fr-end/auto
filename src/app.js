@@ -32,33 +32,11 @@
 
     /*compile app*/
 
-    window.app = {};
+    window.app = require('./common/search/search');
 
-    var service = require('./library/auto/autoService.js');
-    var SearchView = require('./common/search/searchView.js');
-    var SearchController = require('./common/search/searchController.js');
-
-    window.app.catalog = {};
-    
-    var searchResults = require('./catalog/searchResults/searchResults.js');
-
-    window.app.view = new SearchView();
-
-    var controller = new SearchController(service, window.app.view, searchResults);
-
-    window.app.view.$searchForm.addEventListener('submit', function (event) {
-        event.preventDefault();
-        controller.searchCars();
-    });
-
-    controller.init();
-
-
+    window.app.init();
 
     
-/*
-    $searchResultsController.showCars(['16128163','16092934','16145329','16001421','12336790','15550632','11666166','16053415','15433627','16145311']);
-*/
     // do not consider the following code
     /*
     var routes = {};

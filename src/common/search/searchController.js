@@ -19,6 +19,10 @@ module.exports = (function(){
     Controller.prototype = {
 		init: function(){
 			var self = this;
+		    self.view.$searchForm.addEventListener('submit', function (event) {
+		        event.preventDefault();
+		        self.searchCars();
+		    });  			
 			self.service.getCategories()
 				.then(function(data){
 					var categoriesArray = JSON.parse(data);
