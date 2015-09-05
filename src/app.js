@@ -31,10 +31,13 @@
     document.body.innerHTML     = bodyHtml;    
 
     /*compile app*/
-
+    window.app = {};
     window.app = require('./common/search/search');
 
     window.app.init();
+
+    window.app.library = {};
+    window.app.library.events = require('./library/events/events.js');
 
     window.addEventListener('hashchange', function(){
         if (window.location.hash === '#searchResults'){

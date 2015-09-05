@@ -15,7 +15,7 @@ module.exports = (function(){
         });
 
 		self.view.bind('clickSubmit',function(){
-			self.searchCars();
+            self.searchCars();
 		});
     }
 
@@ -41,7 +41,7 @@ module.exports = (function(){
 					self.view.render('getMarks', marks);
 					self.loadModels();
 			});
-		},		
+		},
 		loadModels: function(){
             var self = this;
             var categories = self.view.$selectCategory;
@@ -56,17 +56,7 @@ module.exports = (function(){
 		},
 		searchCars: function(){
 			var self = this;
-			var categories = self.view.$selectCategory;
-			var category = categories.options[categories.selectedIndex].value;
-			var marks = self.view.$selectMark;
-			var mark = marks.options[marks.selectedIndex].value;
-			var models = self.view.$selectModel;
-			var model = models.options[models.selectedIndex].value;			
-			var	searchParams = {
-					categoryId: category,
-				    markaId: mark,
-				    modelId: model
-			};
+			var searchParams = self.view.getParams();
 			self.service.getCarIds(searchParams)
 				.then(function(data){
 					var cars = JSON.parse(data).result.search_result.ids;

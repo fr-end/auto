@@ -52,14 +52,28 @@ module.exports = (function() {
 
         if (event === 'clickSubmit') {
             self.$searchForm.addEventListener('submit', function(event){
-
-
                 event.preventDefault();
                 window.location.href = '#searchResults';
                 handler();
             });
         }
 
+    };
+
+    View.prototype.getParams = function(){
+        var self = this;
+        var categories = self.$selectCategory;
+        var category = categories.options[categories.selectedIndex].value;
+        var marks = self.$selectMark;
+        var mark = marks.options[marks.selectedIndex].value;
+        var models = self.$selectModel;
+        var model = models.options[models.selectedIndex].value;
+        var	searchParams = {
+            categoryId: category,
+                markaId: mark,
+                modelId: model
+        };
+        return searchParams;
     };
     /*
     View.prototype._setFilter = function (currentPage) {
@@ -73,5 +87,4 @@ module.exports = (function() {
  
 
     return View;
-
 })();

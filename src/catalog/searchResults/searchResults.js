@@ -8,7 +8,7 @@ module.exports = (function () {
 	var view        = new View(template);
 
     var item 		= require('../../common/car-item/item');
-	
+
 	var Controller  = require('./searchResultsController.js');
     var controller  = new Controller(model, view, item);
 
