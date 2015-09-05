@@ -1,20 +1,22 @@
+module.exports = (function () {
 
+	function View() {
+		var self = this;
+		self.template = require('./car-item.handlebars');
 
-function View(/*template*/) {
+	}
 
-}
+	View.prototype.render = function (data) {
+		var self = this;		
+		var viewPort = document.querySelector('[data-car-id="' + data.carId + '"]');
+	    var html = self.template(data);
+	    viewPort.innerHTML = html;
+	};
 
-View.prototype.render = function (data) {
-	var viewPort = document.querySelector('[data-car-id="' + data.carId + '"]');
-    var aTemplateFunction = require('./car-item.handlebars');
-    var html = aTemplateFunction(data);
-    viewPort.innerHTML = html;
-};
+	View.prototype.bind = function (event, handler) {
 
-View.prototype.bind = function (event, handler) {
+	};
 
-};
+	return View;
 
-var view = new View();
-
-module.exports = view;
+})();
