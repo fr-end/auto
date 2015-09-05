@@ -7,7 +7,7 @@ module.exports = (function() {
 
         self.templates = templates;
 
-        self.$searchForm        = document.forms.autoSearch;
+        self.$searchForm        = document.querySelector('[data-search=form]');
         self.$selectCategory    = document.querySelector('[data-select=category]');
         self.$selectMark        = document.querySelector('[data-select=mark]');
         self.$selectModel       = document.querySelector('[data-select=model]');
@@ -46,6 +46,16 @@ module.exports = (function() {
 
         if (event === 'changeMark') {
             self.$selectMark.addEventListener('change', function () {
+                handler();
+            });
+        }
+
+        if (event === 'clickSubmit') {
+            self.$searchForm.addEventListener('submit', function(event){
+
+
+                event.preventDefault();
+                window.location.href = '#searchResults';
                 handler();
             });
         }

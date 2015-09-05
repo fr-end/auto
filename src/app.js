@@ -36,7 +36,12 @@
 
     window.app.init();
 
-    
+    window.addEventListener('hashchange', function(){
+        if (window.location.hash === '#searchResults'){
+            console.log('cool');
+        }
+    });
+
     // do not consider the following code
     /*
     var routes = {};
