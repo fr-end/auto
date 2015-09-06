@@ -52,27 +52,15 @@
     function router(){
         var hashLessURL = location.hash.slice(1) || '/';
 
-        var positionOfFirstSlash = hashLessURL.search(/\//);
 
-        var routeName = '/';
-
-        if (positionOfFirstSlash){
-            routeName = hashLessURL.slice(0, positionOfFirstSlash);
-        };
-        //console.log(routeName);
-
-        var paramsWithSlashes = hashLessURL.slice(positionOfFirstSlash + 1);
-
-        var arrayWithParams = paramsWithSlashes.split('/');
+        var hashLessURLArray = hashLessURL.split('/');
+        var routeName = hashLessURLArray[0] || '/';
 
         var searchParamsObject = {};
-
-        for (var i = 0; i < arrayWithParams.length; i = i + 2){
-            searchParamsObject[arrayWithParams[i]] = arrayWithParams[i + 1];
+        for (var i = 1; i < hashLessURLArray.length; i = i + 2){
+            searchParamsObject[hashLessURLArray[i]] = hashLessURLArray[i + 1];
         }
-
-        //console.log(arrayWithParams);
-        //console.log(searchParamsObject);
+        console.log(searchParamsObject);
 
         var route = app.routes[routeName];
         
