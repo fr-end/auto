@@ -33,12 +33,21 @@
     /*compile app*/
     window.app = {};
     window.app.common = {};
+    window.app.catalog = {};
     window.app.library = {};
 
-    window.app.common.searchPanelController = require('./common/search/search');
-    var searchResultsController = require('./catalog/searchResults/searchResults.js')
+    app.common.searchPanelController = require('./common/search/search');
+    app.catalog.searchResultsController = require('./catalog/searchResults/searchResults.js')
 
+    var commonModulesControllers = [app.common.searchPanelController];
 
+    function checkCommonModulesControllers(){
+        for (var i = 0; i < commonModulesControllers.length; j++){
+            if (!commonModulesControllers[i].started){
+                commonModulesControllers[i].init();
+            }
+        }
+    }
 
     window.app.library.events = require('./library/events/events.js');
 
@@ -63,25 +72,33 @@
 
         var route = app.routes[routeName];
         
-        if (route.controller && route.controller.init) {
+        if (route.controller && route.controller.init && !route.controller.started) {
             route.controller.init();
         };
 
+        if (routeName === '/'){
+            route.controller.init();
+        }
+
         if (routeName === 'search') {
-            //hardcoded app.common.searchPanelController
+            checkCommonModulesControllers();
+
+            //hardcoded searchPanelController
             var self = app.common.searchPanelController;
             self.service.getCarIds(searchParams)
                 .then(function (data) {
                     var cars = JSON.parse(data).result.search_result.ids;
-                    searchResultsController.showCars(cars);
+                    route.controller.showCars(cars);
                 });
         }
     }
+
+
     window.addEventListener('hashchange', router);
     window.addEventListener('load', router);
 
     route('/', app.common.searchPanelController);
-    route('search', app.common.searchPanelController.searchResultsController);
+    route('search', app.catalog.searchResultsController);
     // do not consider the following code
     /*
     var routes = {};

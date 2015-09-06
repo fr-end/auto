@@ -16,6 +16,8 @@ module.exports = (function(){
 		self.view.bind('clickSubmit',function(){
             self.searchCars();
 		});
+
+		self.started = false;
     }
 
     Controller.prototype = {
@@ -27,6 +29,7 @@ module.exports = (function(){
 					self.view.render('showCategories', categoriesArray);
 					self.loadMarks();
 				});
+			self.started = true;
 		},
 
 		loadMarks: function(){
