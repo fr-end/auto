@@ -53,32 +53,6 @@ module.exports = (function() {
         if (event === 'clickSubmit') {
             self.$searchForm.addEventListener('submit', function(event){
                 event.preventDefault();
-                var categories = self.$selectCategory;
-                var category = categories.options[categories.selectedIndex].value;
-                var marks = self.$selectMark;
-                var mark = marks.options[marks.selectedIndex].value;
-                var models = self.$selectModel;
-                var model = models.options[models.selectedIndex].value;
-                var	searchParams = {
-                    categoryId: category,
-                    markaId: mark,
-                    modelId: model
-                };
-                console.log('searchParams.markaId',searchParams.markaId )
-                var href = '#searchResults';
-
-                if (searchParams.categoryId !== '0') {
-                    href += '/category/' + searchParams.categoryId;
-                }
-                if (searchParams.markaId !== '0'){
-                    href += '/mark/' + searchParams.markaId;
-                }
-                if (searchParams.modelId !== '0'){
-                    href += '/model/' + searchParams.modelId;
-                }
-
-                window.location.href =  href;
-
                 handler();
             });
         }
@@ -86,8 +60,6 @@ module.exports = (function() {
     };
 
     View.prototype.getParams = function(){
-        // maybe refactor if because of code redundancy
-
         var self = this;
         var categories = self.$selectCategory;
         var category = categories.options[categories.selectedIndex].value;

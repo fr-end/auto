@@ -57,6 +57,20 @@ module.exports = (function(){
 		searchCars: function(){
 			var self = this;
 			var searchParams = self.view.getParams();
+
+			var href = '#searchResults';
+			if (searchParams.categoryId !== '0') {
+				href += '/category/' + searchParams.categoryId;
+			}
+			if (searchParams.markaId !== '0'){
+				href += '/mark/' + searchParams.markaId;
+			}
+			if (searchParams.modelId !== '0'){
+				href += '/model/' + searchParams.modelId;
+			}
+
+			window.location.href =  href;
+
 			self.service.getCarIds(searchParams)
 				.then(function(data){
 					var cars = JSON.parse(data).result.search_result.ids;
