@@ -50,8 +50,31 @@
     }
 
     function router(){
-        var url = location.hash.slice(1) || '/';
-        var route = app.routes[url];
+        var hashLessURL = location.hash.slice(1) || '/';
+
+        var positionOfFirstSlash = hashLessURL.search(/\//);
+
+        var routeName = '/';
+
+        if (positionOfFirstSlash){
+            routeName = hashLessURL.slice(0, positionOfFirstSlash);
+        };
+        //console.log(routeName);
+
+        var paramsWithSlashes = hashLessURL.slice(positionOfFirstSlash + 1);
+
+        var arrayWithParams = paramsWithSlashes.split('/');
+
+        var searchParamsObject = {};
+
+        for (var i = 0; i < arrayWithParams.length; i = i + 2){
+            searchParamsObject[arrayWithParams[i]] = arrayWithParams[i + 1];
+        }
+
+        //console.log(arrayWithParams);
+        //console.log(searchParamsObject);
+
+        var route = app.routes[routeName];
         
         if (route.controller.init) {
             route.controller.init();
