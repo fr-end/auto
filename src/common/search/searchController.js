@@ -1,10 +1,9 @@
 module.exports = (function(){
 
-    function Controller(service, view, searchResultsController){
+    function Controller(service, view){
         var self = this;
         self.service = service;
         self.view = view;
-        self.searchResultsController = searchResultsController;
 
         self.view.bind('changeCategory',function(){
             self.loadMarks();
@@ -58,7 +57,7 @@ module.exports = (function(){
 			var self = this;
 			var searchParams = self.view.getParams();
 
-			var href = '#searchResults';
+			var href = '#search';
 			if (searchParams.categoryId !== '0') {
 				href += '/category/' + searchParams.categoryId;
 			}
@@ -71,11 +70,6 @@ module.exports = (function(){
 
 			window.location.href =  href;
 
-			self.service.getCarIds(searchParams)
-				.then(function(data){
-					var cars = JSON.parse(data).result.search_result.ids;
-					self.searchResultsController.showCars(cars);
-				});
 		}
 	};
 	/*

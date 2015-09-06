@@ -9,11 +9,9 @@ module.exports = (function(){
 		optionsWithCount: 	require('./templates/optionsWithCount.handlebars')
 	};
 	var view 			= new View(templates);
-	
-	var searchResults 	= require('../../catalog/searchResults/searchResults.js');
-	
+
 	var Controller 		= require('./searchController.js');
-	var controller 		= new Controller(service, view, searchResults);
+	var controller 		= new Controller(service, view);
 
 	return controller;
 
