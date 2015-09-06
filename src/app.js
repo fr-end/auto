@@ -72,11 +72,9 @@
 
         var route = app.routes[routeName];
         
-        if (route.controller && route.controller.init && !route.controller.started) {
+        if (!route.controller.started && route.controller.init) {
             route.controller.init();
-        };
-
-        if (routeName === '/'){
+        } else if (routeName === '/'){
             route.controller.init();
         }
 
