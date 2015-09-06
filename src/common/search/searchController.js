@@ -62,13 +62,13 @@ module.exports = (function(){
 
 			var href = '#search';
 			if (searchParams.categoryId !== '0') {
-				href += '/category/' + searchParams.categoryId;
+				href += '/categoryId/' + searchParams.categoryId;
 			}
 			if (searchParams.markaId !== '0'){
-				href += '/mark/' + searchParams.markaId;
+				href += '/markaId/' + searchParams.markaId;
 			}
 			if (searchParams.modelId !== '0'){
-				href += '/model/' + searchParams.modelId;
+				href += '/modelId/' + searchParams.modelId;
 			}
 
 			window.location.href =  href;

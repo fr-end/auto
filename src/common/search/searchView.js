@@ -69,8 +69,8 @@ module.exports = (function() {
         var model = models.options[models.selectedIndex].value;
         var	searchParams = {
             categoryId: category,
-                markaId: mark,
-                modelId: model
+            markaId: mark,
+            modelId: model
         };
         return searchParams;
     };

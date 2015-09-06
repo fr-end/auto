@@ -82,14 +82,14 @@
 
         if (routeName === 'search') {
             checkCommonModulesControllers();
-
-            //hardcoded searchPanelController
-            var self = app.common.searchPanelController;
-            self.service.getCarIds(searchParams)
+            route.controller.getCarIDsFromURL(searchParams);
+            /*
+            route.controller.service.getCarIds(searchParams)
                 .then(function (data) {
                     var cars = JSON.parse(data).result.search_result.ids;
                     route.controller.showCars(cars);
                 });
+            */
         }
     }
 
