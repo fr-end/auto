@@ -42,7 +42,7 @@
     var commonModulesControllers = [app.common.searchPanelController];
 
     function checkCommonModulesControllers(){
-        for (var i = 0; i < commonModulesControllers.length; j++){
+        for (var i = 0; i < commonModulesControllers.length; i++){
             if (!commonModulesControllers[i].started){
                 commonModulesControllers[i].init();
             }
