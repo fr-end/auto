@@ -53,7 +53,6 @@ module.exports = (function() {
         if (event === 'clickSubmit') {
             self.$searchForm.addEventListener('submit', function(event){
                 event.preventDefault();
-                window.location.href = '#searchResults';
                 handler();
             });
         }

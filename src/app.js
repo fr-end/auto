@@ -36,7 +36,7 @@
     window.app.library = {};
 
     window.app.common.searchPanelController = require('./common/search/search');
-
+    var searchResultsController = require('./catalog/searchResults/searchResults.js')
 
 
 
@@ -50,19 +50,38 @@
     }
 
     function router(){
-        var url = location.hash.slice(1) || '/';
-        var route = app.routes[url];
+        var hashLessURL = location.hash.slice(1) || '/';
+
+
+        var hashLessURLArray = hashLessURL.split('/');
+        var routeName = hashLessURLArray[0] || '/';
+
+        var searchParams = {};
+        for (var i = 1; i < hashLessURLArray.length; i = i + 2){
+            searchParams[hashLessURLArray[i]] = hashLessURLArray[i + 1];
+        }
+
+        var route = app.routes[routeName];
         
-        if (route.controller.init) {
+        if (route.controller && route.controller.init) {
             route.controller.init();
         };
 
+        if (routeName === 'search') {
+            //hardcoded app.common.searchPanelController
+            var self = app.common.searchPanelController;
+            self.service.getCarIds(searchParams)
+                .then(function (data) {
+                    var cars = JSON.parse(data).result.search_result.ids;
+                    searchResultsController.showCars(cars);
+                });
+        }
     }
     window.addEventListener('hashchange', router);
     window.addEventListener('load', router);
 
     route('/', app.common.searchPanelController);
-    route('searchResults', app.common.searchPanelController.searchResultsController);
+    route('search', app.common.searchPanelController.searchResultsController);
     // do not consider the following code
     /*
     var routes = {};

@@ -1,10 +1,9 @@
 module.exports = (function(){
 
-    function Controller(service, view, searchResultsController){
+    function Controller(service, view){
         var self = this;
         self.service = service;
         self.view = view;
-        self.searchResultsController = searchResultsController;
 
         self.view.bind('changeCategory',function(){
             self.loadMarks();
@@ -57,11 +56,20 @@ module.exports = (function(){
 		searchCars: function(){
 			var self = this;
 			var searchParams = self.view.getParams();
-			self.service.getCarIds(searchParams)
-				.then(function(data){
-					var cars = JSON.parse(data).result.search_result.ids;
-					self.searchResultsController.showCars(cars);
-				});
+
+			var href = '#search';
+			if (searchParams.categoryId !== '0') {
+				href += '/category/' + searchParams.categoryId;
+			}
+			if (searchParams.markaId !== '0'){
+				href += '/mark/' + searchParams.markaId;
+			}
+			if (searchParams.modelId !== '0'){
+				href += '/model/' + searchParams.modelId;
+			}
+
+			window.location.href =  href;
+
 		}
 	};
 	/*
