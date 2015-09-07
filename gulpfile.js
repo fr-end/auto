@@ -32,9 +32,9 @@ gulp.task('html', function () {
         .pipe(connect.reload());
 })
 
-gulp.task('png', function () {
+gulp.task('img', function () {
     return gulp
-        .src(config.allpng)
+        .src(config.allimg)
         .pipe(gulp.dest('./build'))
         .pipe(connect.reload());
 })
@@ -88,7 +88,7 @@ gulp.task('server', function(){
 });
 
 
-gulp.task('default', [ 'html', 'png', 'css', 'browserify', 'server' ], function(){
+gulp.task('default', [ 'html', 'img', 'css', 'browserify', 'server' ], function(){
     gulp.watch( config.alljs, ['browserify']);       // Watch for changes in all js files in 'src' folder
     gulp.watch( config.allsass, ['css']);
     gulp.watch( config.allhtml, ['html']);
