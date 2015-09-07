@@ -30,21 +30,56 @@
 
     document.body.innerHTML     = bodyHtml;    
 
+    // describe classes for modules
+
     /*compile app*/
     window.app = {};
     window.app.common = {};
     window.app.catalog = {};
     window.app.library = {};
 
-    app.common.searchPanelController = require('./common/search/search');
-    app.catalog.searchResultsController = require('./catalog/searchResults/searchResults.js')
+    var commonService = require('./library/auto/autoService.js');
 
-    var commonModulesControllers = [app.common.searchPanelController];
+    var SearchPanelView 			= require('./common/search/searchView.js');
+    var searchPanelTemplates		= {
+        options: 			require('./common/search/templates/options.handlebars'),
+        optionsWithCount: 	require('./common/search/templates/optionsWithCount.handlebars')
+    };
+    var SearchPanelController 		= require('./common/search/searchController.js');
+
+
+    function SearchPanel(service, templates, View, Controller){
+        this.service = service;
+        this.view = new View(templates);
+        this.controller = new Controller(this.service, this.view);
+    }
+
+    app.common.searchPanel = new SearchPanel(commonService, searchPanelTemplates, SearchPanelView, SearchPanelController);
+
+    var CarListModel       = require('./catalog/searchResults/searchResultsModel.js');
+    var CarListView        = require('./catalog/searchResults/searchResultsView.js');
+    var carListTemplate 	= require('./catalog/searchResults/searchResults.handlebars');
+
+    var item 		= require('./common/car-item/item');
+
+    var CarListController  = require('./catalog/searchResults/searchResultsController.js')
+
+    function CarList(service, template, Model,  View, Controller, item){
+        this.service = service;
+        this.model = new Model(service);
+        this.view = new View(template);
+        this.item = item;
+        this.controller = new Controller(this.service, this.model, this.view, this.item);
+    }
+
+    app.catalog.CarList = new CarList(commonService, carListTemplate, CarListModel, CarListView, CarListController, item );
+
+    var commonModules = [app.common.searchPanel];
 
     function checkCommonModulesControllers(){
-        for (var i = 0; i < commonModulesControllers.length; i++){
-            if (!commonModulesControllers[i].started){
-                commonModulesControllers[i].init();
+        for (var i = 0; i < commonModules.length; i++){
+            if (!commonModules[i].controller.started){
+                commonModules[i].controller.init();
             }
         }
     }
@@ -54,13 +89,12 @@
 
     app.routes = {};
 
-    function route(path, controller){
-        app.routes[path] = {controller: controller};
+    function route(path, module){
+        app.routes[path] = {module: module};
     }
 
     function router(){
         var hashLessURL = location.hash.slice(1) || '/';
-
 
         var hashLessURLArray = hashLessURL.split('/');
         var routeName = hashLessURLArray[0] || '/';
@@ -72,22 +106,15 @@
 
         var route = app.routes[routeName];
         
-        if (!route.controller.started && route.controller.init) {
-            route.controller.init();
+        if (!route.module.controller.started && route.module.controller.init) {
+            route.module.controller.init();
         } else if (routeName === '/'){
-            route.controller.init();
+            route.module.controller.init();
         }
 
         if (routeName === 'search') {
             checkCommonModulesControllers();
-            route.controller.getCarIDsFromURL(searchParams);
-            /*
-            route.controller.service.getCarIds(searchParams)
-                .then(function (data) {
-                    var cars = JSON.parse(data).result.search_result.ids;
-                    route.controller.showCars(cars);
-                });
-            */
+            route.module.controller.getCarIDsFromURL(searchParams);
         }
     }
 
@@ -95,8 +122,8 @@
     window.addEventListener('hashchange', router);
     window.addEventListener('load', router);
 
-    route('/', app.common.searchPanelController);
-    route('search', app.catalog.searchResultsController);
+    route('/', app.common.searchPanel);
+    route('search', app.catalog.CarList);
     // do not consider the following code
     /*
     var routes = {};
