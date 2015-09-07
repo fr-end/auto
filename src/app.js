@@ -2,6 +2,16 @@
 
     /*render body*/
 
+    var localService = require('./library/local/localService');
+    console.log(localService);
+    var new_car = {
+        id: 123123,
+        name: 'CarTitle'
+    };
+    localService.addCar(new_car);
+    console.log(localService.getCar('123123'));
+    localService.delCar('123123');
+
     var headerTemplate          = require('./header/header.handlebars');
     var headerHtml              = headerTemplate();
 
