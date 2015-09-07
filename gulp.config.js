@@ -4,11 +4,11 @@ module.exports = function(){
          * File paths
         **/
         // all src js files
-        allhtml: ['./src/**/*.html'],
+        allhtml: ['./src/index.html'],
         alljs:   ['./src/**/*.js'],
         alltemplates: ['./src/**/*.handlebars'],
         allsass: ['./src/**/*.scss'],
-        allpng: ['./src/**/*.png'],
+        allimg: ['./src/**/*.png','./src/**/*.jpg'],
         proxy: {
             path: '/proxy',
             pathto: 'https://auto.ria.com/',
