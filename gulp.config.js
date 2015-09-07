@@ -9,6 +9,7 @@ module.exports = function(){
         alltemplates: ['./src/**/*.handlebars'],
         allsass: ['./src/**/*.scss'],
         allpng: ['./src/**/*.png'],
+        alljpg: ['./src/**/*.jpg'],
         proxy: {
             path: '/proxy',
             pathto: 'https://auto.ria.com/',
