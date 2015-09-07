@@ -5,45 +5,49 @@
 					Уточнить критерии поиска
 				</h1>
 				<div class='search-parameters'>
-					<span class='search-parameters__title'>
-						Тип транспорта
-					</span>
-					<select class='search-parameters__select' name='category' data-select='category'>
-						<option value='0'>
-							Любой
-						</option>
-						<option value='0'>
-							Любой
-						</option>
-						<option value='0'>
-							Любой
-						</option>
-					</select>
-					<br>
-					<span class='search-parameters__title search-brand'>
-						Марка
-					</span>
-					<select class='search-parameters__select' name='mark' data-select='mark'>
-						<option value='0'>
+					<div class="search-parameters-type">
+						<label class='search-parameters__type'>
+							Тип транспорта
+						</label>
+						<select class='search-parameters__select' name='category' data-select='category'>
+							<option value='0'>
+								Любой
+							</option>
+							<option value='0'>
+								Любой
+							</option>
+							<option value='0'>
+								Любой
+							</option>
+						</select>
+					</div>
+					<div class="search-parameters-brand">
+						<label class='search-parameters__brand'>
 							Марка
-						</option>
-					</select>
-					<br>
-					<span class='search-parameters__title search-model'>
-						Модель
-					</span>
-					<select class='search-parameters__select' name='model' data-select='model'>
-						<option value='0'>
+						</label>
+						<select class='search-parameters__select' name='mark' data-select='mark'>
+							<option value='0'>
+								Марка
+							</option>
+						</select>
+					</div>
+					<div class="search-parameters-model">
+						<label class='search-parameters__model'>
 							Модель
-						</option>
-					</select>
-					<br>
-					<button class='search-parameters__button' data-submit='search' type="submit">поиск</button>
+						</label>
+						<select class='search-parameters__select' name='model' data-select='model'>
+							<option value='0'>
+								Модель
+							</option>
+						</select>
+					</div>
+					<div class="search-parameters-button">
+						<button class='search-parameters__button' data-submit='search' type="submit">
+							поиск
+						</button>
+					</div>
 				</div>
 			</form>
-		</div>
-		<div class="search-shadow-separator">
-			&nbsp
 		</div>
 		<div class='search-info'>
 			<ul class='search-info-list'>
