@@ -40,6 +40,8 @@
 
     var commonService = require('./library/auto/autoService.js');
 
+    // SearchPanel
+
     var SearchPanelView 			= require('./common/search/searchView.js');
     var searchPanelTemplates		= {
         options: 			require('./common/search/templates/options.handlebars'),
@@ -56,13 +58,25 @@
 
     app.common.searchPanel = new SearchPanel(commonService, searchPanelTemplates, SearchPanelView, SearchPanelController);
 
+    // CarItem
+    var carItemView 		= require('./common/car-item/itemView.js');
+    var carItemTemplate	= require('./common/car-item/car-item.handlebars');
+    var carItemController 	= require('./common/car-item/itemController.js');
+
+    function CarItem(commonService, template, View, Controller){
+        this.commonService = commonService;
+        this.view = new View(template);
+        this.controller = new Controller(this.commonService, this.view);
+    }
+
+    var carItem = new CarItem(commonService, carItemTemplate, carItemView, carItemController );
+
+    // CarList
+
     var CarListModel       = require('./catalog/searchResults/searchResultsModel.js');
     var CarListView        = require('./catalog/searchResults/searchResultsView.js');
     var carListTemplate 	= require('./catalog/searchResults/searchResults.handlebars');
-
-    var item 		= require('./common/car-item/item');
-
-    var CarListController  = require('./catalog/searchResults/searchResultsController.js')
+    var CarListController  = require('./catalog/searchResults/searchResultsController.js');
 
     function CarList(service, template, Model,  View, Controller, item){
         this.service = service;
@@ -72,7 +86,7 @@
         this.controller = new Controller(this.service, this.model, this.view, this.item);
     }
 
-    app.catalog.CarList = new CarList(commonService, carListTemplate, CarListModel, CarListView, CarListController, item );
+    app.catalog.CarList = new CarList(commonService, carListTemplate, CarListModel, CarListView, CarListController, carItem.controller );
 
     var commonModules = [app.common.searchPanel];
 
