@@ -42,3 +42,11 @@ $sprite: "img/sprite.png";
 body{
 	font-family: $font-family;
 }
+
+.clearfix::after {
+	visibility: hidden;
+	display: block;
+	content: "";
+	clear: both;
+	height: 0;
+}
