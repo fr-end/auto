@@ -37,6 +37,7 @@
     window.app.common = {};
     window.app.catalog = {};
     window.app.library = {};
+    window.app.library.events = require('./library/events/events.js');
 
     var commonService = require('./library/auto/autoService.js');
 
@@ -63,13 +64,13 @@
     var carItemTemplate	= require('./common/car-item/car-item.handlebars');
     var carItemController 	= require('./common/car-item/itemController.js');
 
-    function CarItem(commonService, template, View, Controller){
+    function CarItem(commonService, template, View, Controller, events){
         this.commonService = commonService;
         this.view = new View(template);
-        this.controller = new Controller(this.commonService, this.view);
+        this.controller = new Controller(this.commonService, this.view, events);
     }
 
-    var carItem = new CarItem(commonService, carItemTemplate, carItemView, carItemController );
+    var carItem = new CarItem(commonService, carItemTemplate, carItemView, carItemController, app.library.events );
 
     // CarList
 
@@ -78,15 +79,14 @@
     var carListTemplate 	= require('./catalog/searchResults/searchResults.handlebars');
     var CarListController  = require('./catalog/searchResults/searchResultsController.js');
 
-    function CarList(service, template, Model,  View, Controller, item){
+    function CarList(service, template, Model,  View, Controller, events){
         this.service = service;
         this.model = new Model(service);
         this.view = new View(template);
-        this.item = item;
-        this.controller = new Controller(this.service, this.model, this.view, this.item);
+        this.controller = new Controller(this.service, this.model, this.view, events);
     }
 
-    app.catalog.CarList = new CarList(commonService, carListTemplate, CarListModel, CarListView, CarListController, carItem.controller );
+    app.catalog.CarList = new CarList(commonService, carListTemplate, CarListModel, CarListView, CarListController, app.library.events );
 
     var commonModules = [app.common.searchPanel];
 
@@ -97,9 +97,6 @@
             }
         }
     }
-
-    window.app.library.events = require('./library/events/events.js');
-
 
     app.routes = {};
 
