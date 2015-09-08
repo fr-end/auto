@@ -136,6 +136,12 @@
             checkCommonModulesControllers();
             route.module.controller.getCarIDsFromURL(searchParams);
         }
+        /*
+        if (routeName === 'wishlist'){
+            checkCommonModulesControllers();
+            route.module.controller.doSomething();
+        }
+        */
     }
 
 

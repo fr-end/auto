@@ -12,6 +12,13 @@ module.exports = (function(){
 				self.showCar(carId);
 			});
 		});
+
+		self.view.bind('clickAddToWishListButton',function(event, carID){
+			console.log(carID);
+			console.log('handle in controller');
+			//self.toggleToWishList(carID);
+		});
+
     }
 
 

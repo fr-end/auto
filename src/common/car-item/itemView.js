@@ -15,6 +15,17 @@ module.exports = (function () {
 
 	View.prototype.bind = function (event, handler) {
 
+		var self = this;
+
+		if (event === 'clickAddToWishListButton') {
+			document.body.addEventListener('click', function (evt) {
+				if (evt.target.hasAttribute('data-item-id')){
+					console.log(evt.target);
+					var carID = evt.target.getAttribute('data-item-id');
+					handler(evt, carID);
+				}
+			});
+		}
 	};
 
 	return View;
