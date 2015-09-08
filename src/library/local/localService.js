@@ -1,12 +1,31 @@
 module.exports = (function(){
-
+	
 	var auto = {
-		addCar: function ( car ) {
-			localStorage.setItem( String( car.carId ), JSON.stringify( car ));
+		addUser: function ( email, pas ){
+			var users = JSON.parse( localStorage.getItem( "users" ) );
+			if ( !users[email] ) {
+				users[email].pas = pas;
+				users[email].wishlist = [];
+				localStorage.setItem( "users", JSON.stringify( users ) );
+				console.log('User added ' + email);
+				return true;
+			} 
+			console.log('User not added' + email);
+			return false;
+		},
+		addCar: function ( car, user ) {
+			if ( !localStorage.getItem( car.carId ) ){
+				localStorage.setItem( String( car.carId ), JSON.stringify( car ));
+			}
+			var users = JSON.parse( localStorage.getItem( "users" ) );
+			users[user].wishlist.push( car.carId );
+			localStorage.setItem( "users", JSON.stringify( users ) );
+
 			console.log('Added car');
 		},
 		delCar: function ( car ) {
 			localStorage.removeItem( String( car.carId ));
+
 			console.log('Deleted car');
 		},
 		getCar: function ( car ) {
@@ -14,6 +33,7 @@ module.exports = (function(){
 			return JSON.parse( localStorage.getItem( String( car.carId )));
 		},
 		getCategories: function () {
+
 			return JSON.parse( localStorage.getItem( 'categories' ));
 		},
 		getMarks: function ( categoryId ) {
