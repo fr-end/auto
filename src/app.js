@@ -8,7 +8,7 @@
     var searchPanelTemplate     = require('./common/search/templates/searchPanel.handlebars');
     var searchPanelHtml         = searchPanelTemplate();
 
-    var searchResultsTemplate   = require('./catalog/searchResults/searchResults.handlebars');
+    var searchResultsTemplate   = require('./catalog/CarList/CarList.handlebars');
     var searchResultsHtml       = searchResultsTemplate();
 
     var mainpageTemplate        = require('./mainpage/mainpage.handlebars');
@@ -43,12 +43,12 @@
 
     // SearchPanel
 
-    var SearchPanelView 			= require('./common/search/searchView.js');
+    var SearchPanelView 			= require('./common/search/SearchPanelView.js');
     var searchPanelTemplates		= {
         options: 			require('./common/search/templates/options.handlebars'),
         optionsWithCount: 	require('./common/search/templates/optionsWithCount.handlebars')
     };
-    var SearchPanelController 		= require('./common/search/searchController.js');
+    var SearchPanelController 		= require('./common/search/SearchPanelController.js');
 
 
     function SearchPanel(service, templates, View, Controller){
@@ -70,14 +70,18 @@
         this.controller = new Controller(this.commonService, this.view, events);
     }
 
-    var carItem = new CarItem(commonService, carItemTemplate, carItemView, carItemController, app.library.events );
+    var carItem = new CarItem(  commonService,
+                                carItemTemplate,
+                                carItemView,
+                                carItemController,
+                                app.library.events );
 
     // CarList
 
-    var CarListModel       = require('./catalog/searchResults/searchResultsModel.js');
-    var CarListView        = require('./catalog/searchResults/searchResultsView.js');
-    var carListTemplate 	= require('./catalog/searchResults/searchResults.handlebars');
-    var CarListController  = require('./catalog/searchResults/searchResultsController.js');
+    var CarListModel       = require('./catalog/CarList/CarListModel.js');
+    var CarListView        = require('./catalog/CarList/CarListView.js');
+    var carListTemplate 	= require('./catalog/CarList/CarList.handlebars');
+    var CarListController  = require('./catalog/CarList/CarListController.js');
 
     function CarList(service, template, Model,  View, Controller, events){
         this.service = service;
@@ -86,7 +90,12 @@
         this.controller = new Controller(this.service, this.model, this.view, events);
     }
 
-    app.catalog.CarList = new CarList(commonService, carListTemplate, CarListModel, CarListView, CarListController, app.library.events );
+    app.catalog.CarList = new CarList(  commonService,
+                                        carListTemplate,
+                                        CarListModel,
+                                        CarListView,
+                                        CarListController,
+                                        app.library.events );
 
     var commonModules = [app.common.searchPanel];
 
