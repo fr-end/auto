@@ -131,3 +131,9 @@
 		text-indent: 50px;
 	}
 }
+
+@media screen and (max-width: 480px) {
+	.main{
+		display: none;
+	}
+}

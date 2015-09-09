@@ -25,3 +25,9 @@
 		}
 	}
 }
+
+@media screen and (max-width: 480px) {
+	.footer{
+		visibility: hidden;
+	}
+}

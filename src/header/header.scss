@@ -50,3 +50,29 @@
 		}
 	}
 }
+
+@media screen and (max-width: 480px) {
+
+body{
+	margin: 0;
+}
+
+.header {
+	width: 400px;
+	min-width: 400px;
+
+	&-wrapper{
+		margin: 0 auto;
+		position: relative;
+		width: 480px;
+	}
+
+	&-logo{
+		top: 10px;
+	}
+
+	&-menu{
+		right: 100px;
+	}
+}
+}
