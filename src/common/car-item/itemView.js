@@ -29,7 +29,7 @@ module.exports = (function () {
 	};
 
 	View.prototype.toggleClass = function (event, result){
-		event.target.classList.toggle('inList', result);
+		event.target.classList.toggle('in-list', result);
 	};
 
 	return View;
