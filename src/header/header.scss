@@ -58,21 +58,23 @@ body{
 }
 
 .header {
-	width: 400px;
-	min-width: 400px;
+	width: 480px;
+	min-width: 480px;
+	margin: auto;
 
 	&-wrapper{
 		margin: 0 auto;
 		position: relative;
-		width: 480px;
+		width: 400px;
 	}
 
 	&-logo{
 		top: 10px;
+
 	}
 
 	&-menu{
-		right: 100px;
+		right: 0px;
 	}
 }
 }
