@@ -9,3 +9,16 @@ body {
 	background: #fff;
 	width: 1280px;
 }
+
+@media screen and (max-width: 480px) {
+
+	body{
+		margin: 0;
+		background: none;
+	}
+
+	.content-wraper{
+		margin: 0;
+		width: 100%;
+	}
+}
