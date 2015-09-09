@@ -3,7 +3,7 @@
 module.exports = (function(){
 
 	var config = {
-		autoRiaUaHost: 'http://localhost:8080/proxy'
+		autoRiaUaHost: '/proxy'
 	};
 
 	var ajax = require('../../library/ajax/ajax.js');
