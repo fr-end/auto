@@ -14,17 +14,17 @@ module.exports = (function(){
 		});
 
 		self.view.bind('clickAddToWishListButton',function(event, carID){
-			console.log(carID);
-			self.toggleToWishList(carID);
-			console.log(localStorage['cars'])
+			var result = self.toggleToWishList(carID);
+			self.view.toggleClass(event, result);
 		});
+
+
 
     }
 
 
     Controller.prototype = {
 		showCar: function(carId){
-			console.log(carId);
 			var self = this;
 			self.service.getCar2(carId)
 				.then(function(data){
@@ -33,22 +33,23 @@ module.exports = (function(){
 			});
 		},
 		toggleToWishList:function(carId){
+			var self = this;
 			if (!localStorage['cars']) {
 				localStorage['cars'] = '["' + carId + '"]';
-				return;
+				return true;
 			}
 			var carsInLocalStorage = JSON.parse(localStorage['cars']);
 			for (var i = 0; i < carsInLocalStorage.length; i++){
 				if (carsInLocalStorage[i] === carId){
 					carsInLocalStorage.splice(i, 1);
 					localStorage['cars'] = JSON.stringify(carsInLocalStorage);
-					return;
+					return false;
 				} 
 			}
 			carsInLocalStorage.push(carId);
 			
 			localStorage['cars'] = JSON.stringify(carsInLocalStorage);
-
+			return true;
 		}
 	};
 

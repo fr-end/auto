@@ -20,12 +20,16 @@ module.exports = (function () {
 		if (event === 'clickAddToWishListButton') {
 			document.body.addEventListener('click', function (evt) {
 				if (evt.target.hasAttribute('data-item-id')){
-					console.log(evt.target);
 					var carID = evt.target.getAttribute('data-item-id');
 					handler(evt, carID);
 				}
 			});
 		}
+
+	};
+
+	View.prototype.toggleClass = function (event, result){
+		event.target.classList.toggle('inList', result);
 	};
 
 	return View;
