@@ -91,3 +91,17 @@
 		}
 	}
 } 
+
+@media screen and (max-width: 480px) {
+	.search {
+		width: 440px;
+		background: none;
+		&-info {
+			display: none;
+		}
+
+		&-criteria{
+			width: 440px;
+		}
+	}
+}
