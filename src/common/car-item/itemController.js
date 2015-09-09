@@ -35,19 +35,23 @@ module.exports = (function(){
 		toggleToWishList:function(carId){
 			var self = this;
 			if (!localStorage['cars']) {
-				localStorage['cars'] = '["' + carId + '"]';
-				return true;
+				localStorage['cars'] = '[]';
 			}
 			var carsInLocalStorage = JSON.parse(localStorage['cars']);
 			for (var i = 0; i < carsInLocalStorage.length; i++){
 				if (carsInLocalStorage[i] === carId){
 					carsInLocalStorage.splice(i, 1);
+					delete localStorage['auto_'+carId];
 					localStorage['cars'] = JSON.stringify(carsInLocalStorage);
 					return false;
 				} 
 			}
 			carsInLocalStorage.push(carId);
-			
+			self.service.getCar2(carId)
+				.then(function(data){
+					localStorage['auto_'+carId]=JSON.stringify(data);
+				});
+
 			localStorage['cars'] = JSON.stringify(carsInLocalStorage);
 			return true;
 		}
