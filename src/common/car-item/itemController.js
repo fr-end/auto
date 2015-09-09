@@ -15,8 +15,8 @@ module.exports = (function(){
 
 		self.view.bind('clickAddToWishListButton',function(event, carID){
 			console.log(carID);
-			console.log('handle in controller');
-			//self.toggleToWishList(carID);
+			self.toggleToWishList(carID);
+			console.log(localStorage['cars'])
 		});
 
     }
@@ -31,6 +31,24 @@ module.exports = (function(){
 					data.inList = !!localStorage.getItem( carId );
 					self.view.render(data);
 			});
+		},
+		toggleToWishList:function(carId){
+			if (!localStorage['cars']) {
+				localStorage['cars'] = '["' + carId + '"]';
+				return;
+			}
+			var carsInLocalStorage = JSON.parse(localStorage['cars']);
+			for (var i = 0; i < carsInLocalStorage.length; i++){
+				if (carsInLocalStorage[i] === carId){
+					carsInLocalStorage.splice(i, 1);
+					localStorage['cars'] = JSON.stringify(carsInLocalStorage);
+					return;
+				} 
+			}
+			carsInLocalStorage.push(carId);
+			
+			localStorage['cars'] = JSON.stringify(carsInLocalStorage);
+
 		}
 	};
 
