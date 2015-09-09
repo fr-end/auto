@@ -1,16 +1,19 @@
-<div class="item">
+<section class="item">
 	<div class="item-img">
-		<img src="{{img}}" alt="car image"></div>
+		<img src="{{img}}" alt="car image">
+	</div>
 	<div class="item-content">
-		<div class="item-header">
-			{{title}}
-			<div class="item-like" data-item-id="{{carId}}"></div>
-		</div>
-		<div class="item-price">
-			<span class="price">{{price.usd}} $ / {{price.uah}}</span> грн <span class="cource">по курсу</span>
-		</div>
-		<div class="item-date">
-			{{date}}
+		<header class="item-header">
+			<div class="item-header-text">{{title}}</div>
+			<div class="item-header-like" data-item-id="{{carId}}"></div>
+		</header>
+		<div class="clearfix">
+			<div class="item-price">
+				<span class="price">{{price.usd}} $ / {{price.uah}}</span> грн <span class="cource">по курсу</span>
+			</div>
+			<div class="item-date">
+				{{date}}
+			</div>
 		</div>
 		<div class="item-description">
 			{{description}}
@@ -26,11 +29,11 @@
 				{{gearBox}}
 			</div>
 		</div>
-		<div>
+		<div class="clearfix"> 
 			<div class="item-tel">{{phone}} / {{city}}</div>
 			<div class="item-add-note">Добавить заметку</div>
 		</div>
 
 
 	</div>
-</div>
+</section>

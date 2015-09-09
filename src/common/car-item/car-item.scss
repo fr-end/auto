@@ -27,7 +27,6 @@
 		display: inline-block;
 		vertical-align: top;
 		width: $item-content-width;
-
 	}
 
 	&-header{
@@ -38,22 +37,37 @@
 		line-height: 30px;
 		margin-bottom: 10px;
 		padding-left: 10px;
+		position: relative;
+
+		&-text{
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+		width: 360px;
+		}
+
+		&-like{
+			background: url($sprite) no-repeat right -380px;
+			cursor: pointer;
+			float: right;
+			height: 30px;
+			width: 13%;
+			position: absolute;
+			right: 0;
+			top: 0;
+		}
 	}
 	
-	&-like{
-		background: url($sprite) no-repeat right -380px;
-		cursor: pointer;
-		float: right;
-		height: 100%;
-		width: 13%;
-	}
+
 
 	&-price{
-		display: inline-block;
+		float: left;
 		font-size: $font-size-header;
-		margin-bottom: 10px;
-		margin-right: 40px;
+		height: 30px;
+		overflow: hidden;
 		vertical-align: bottom;
+		white-space: nowrap;
+		width: 310px;
 
 		& .price{
 			color: $price-color;
@@ -67,18 +81,19 @@
 
 	&-date{
 		color: $date-color;
-		display: inline-block;
+		float: right;
 		font-size: $font-size-header;
-		margin-bottom: 10px;
 		vertical-align: bottom;
+		width: 100px;
 	}
 	
 	&-description{
 		font-size: $font-size-main-text;
-		height: 40px;
-		margin-bottom: 15px;
+		height: 60px;
+		margin-bottom: 10px;
 		overflow: hidden;
-		text-align: justify;
+		text-overflow: ellipsis;
+		position: relative;
 	}
 
 	&-parameters{
@@ -90,6 +105,9 @@
 			overflow: hidden;
 			padding-left: 30px;
 			width: 32%;
+			text-align: center;
+			white-space: nowrap;
+			text-overflow: ellipsis;
 
 			&-row{
 				margin-bottom: 12px;
@@ -98,6 +116,7 @@
 
 	&-motor{
 		background-position-y: -460px; 
+
 	}
 
 	&-transmission{
@@ -106,32 +125,34 @@
 	}
 
 	&-tel{
-		display: inline-block;
+		float: left;
 		font-size: $font-size-header;
-		vertical-align: bottom;
-		vertical-align: bottom;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+		width: 245px;
 	}
 
 	&-add-note{
 		color: $course-color;
 		cursor: pointer;
-		display: inline-block;
-		float: right; 
+		float: right;
 		font-size: $font-size-header;
-		vertical-align: bottom;
+		width: 160px;
 	}
 
-	&::after{
-		background: url($sprite) no-repeat 0 -581px;;
-		border-radius: 50%;
-		content: '';
-		cursor: pointer;
-		display: block;
-		float: right;
-		height: 25px;
-		position: absolute;
-		right: -50px;
-		top: 10px;
-		width: 25px;
+//for items in wishlist
+	.in-list &{
+		&-like{
+			background-position: right -143px;
 		}
+		&-add-note{
+			display: none;
+		}
+		&-tel{
+			width: 100%;
+		}
+	}
 }
+
+
