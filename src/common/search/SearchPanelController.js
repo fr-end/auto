@@ -5,18 +5,6 @@ module.exports = (function(){
         self.service = service;
         self.view = view;
 
-        self.view.bind('changeCategory',function(){
-            self.loadMarks();
-        });
-
-        self.view.bind('changeMark',function(){
-            self.loadModels();
-        });
-
-		self.view.bind('clickSubmit',function(){
-            self.searchCars();
-		});
-
 		self.started = false;
     }
 
@@ -36,6 +24,17 @@ module.exports = (function(){
 					self.loadMarks(searchParams);
 				});
 			self.started = true;
+			self.view.bind('changeCategory',function(){
+				self.loadMarks({});
+			});
+
+			self.view.bind('changeMark',function(){
+				self.loadModels({});
+			});
+
+			self.view.bind('clickSubmit',function(){
+				self.searchCars({});
+			});
 		},
 
 		loadMarks: function(searchParams){
