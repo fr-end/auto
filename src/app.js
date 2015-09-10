@@ -41,22 +41,7 @@
 
     var commonService = require('./library/auto/autoService.js');
     var localService = require('./library/local/localService.js');
-    //localService.addUser('new_user2');
-  
-/*
-    var carId = "12880553";
-    commonService.getCar2(carId)
-                .then(function(data){
-                    localService.addCar(data, 'new_user2');
-            });
-*/
-    //localService.delCar('6329925', 'new_user2');
-    //console.log(localService.getCar("6329925"));
-    //console.log(localService.getCategories("new_user2"));
-    //console.log(localService.getMarks('1','new_user2'));
-    //console.log(localService.getModels('1','48','new_user2'));
-    //console.log(localService.getCarIds({categoryId : '1', markaId : '48', modelId : ''}, 'new_user2'));
-    //console.log(localService.getCarCount({categoryId : '1', markaId : '48', modelId : ''}, 'new_user2'));
+    localService.initLocalService();
 
     // SearchPanel
 

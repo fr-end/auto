@@ -97,13 +97,17 @@ module.exports = (function(){
 						var autoData = carInfo.result.auto_data;
 						var imgUrl = carInfo.result.photo_data.photo ? carInfo.result.photo_data.photo.url : '';
 						imgUrl = imgUrl.replace('.','f.');
+						
 						var carInfoNeeded = {
 							carId 		: autoData.auto_id,
 							title 		: autoData.marka_data.name + ' ' + autoData.model_data.name +
 								 ' ' + autoData.version,							
 							categoryId 	: carInfo.result.category_data.category_id,
+							categoryName : carInfo.result.category_data.category_name,
 							markaId 	: autoData.marka_id,
+							markaName 	: autoData.marka_data.name,
 							modelId 	: autoData.model_id,
+							modelName 	: autoData.model_data.name,
 							version		: autoData.version,
 							race 		: autoData.race.race,
 							fuel 		: autoData.fuel_data ? autoData.fuel_data.name : '---',

@@ -1,7 +1,15 @@
 module.exports = (function(){
 	
 	var auto = {
-		addUser: function ( username ){
+		initLocalService: function () {
+			if (!localStorage.getItem('defaultUser')){
+				localStorage.setItem('defaultUser', JSON.stringify([]));
+			}
+			if (!localStorage.getItem('users')){
+				localStorage.setItem('users', JSON.stringify(['defaultUser']));
+			}
+		},
+		addUser: function ( username ) {
 			var user = JSON.parse( localStorage.getItem( username ) );
 			if ( !user ) {
 				localStorage.setItem( username, JSON.stringify( [] ) );
@@ -18,7 +26,7 @@ module.exports = (function(){
 			return false;
 		},
 		addCar: function ( car, username ) {
-			username = username || 'dafeultUser';
+			username = username || 'defaultUser';
 			if ( !localStorage.getItem( String(car.carId) ) ){
 				localStorage[String(car.carId)] = JSON.stringify( car );
 				console.log('Car added to storage');
@@ -35,7 +43,7 @@ module.exports = (function(){
 			console.log('Car in wishlist');
 		},
 		delCar: function ( carId, username ) {
-			username = username || 'dafeultUser';
+			username = username || 'defaultUser';
 			var wishlist = JSON.parse( localStorage.getItem( username ) );
 			var carIndex = wishlist.indexOf( carId );
 			console.log(carIndex);
@@ -65,54 +73,70 @@ module.exports = (function(){
 			return JSON.parse( localStorage.getItem( carId ) );
 		},
 		getCategories: function ( username ) {
-			username = username || 'dafeultUser';
+			username = username || 'defaultUser';
 			var wishlist = JSON.parse( localStorage.getItem( username ));
 			var categoriesIds = [];
+			var categories = [];
 
 			wishlist.forEach(function(carId, i, wishlist){
 				var item = auto.getCar(carId);
 				if (categoriesIds.indexOf(item.categoryId) === -1){
 					categoriesIds.push(item.categoryId);
+					var category = {};
+					category['name'] = item.categoryName;
+					category['value'] = String(item.categoryId);
+					categories.push(category);
 				}
 			});
-			return categoriesIds; //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!11
+			return categories;
 		},
 		getMarks: function ( categoryId, username ) {
-			username = username || 'dafeultUser';
+			username = username || 'defaultUser';
 			var wishlist = JSON.parse( localStorage.getItem( username ));
 			var marksIds = [];
+			var marks = [];
 
 			wishlist.forEach(function(carId, index){
 				var item = auto.getCar(carId);
 				if ( String(item.categoryId) === categoryId){
-					if (marksIds.indexOf( String(item.markaId) ) === -1){
+					if (marksIds.indexOf( item.markaId ) === -1){
 						marksIds.push(item.markaId);
+						var marka = {};
+						marka['name'] = item.markaName;
+						marka['value'] = String(item.markaId);
+						marks.push(marka);
 					}
 				}
 
 			});
 
-			return marksIds;//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
+			return marks;
 		},
 		getModels: function ( categoryId, markaId, username ) {
-			username = username || 'dafeultUser';
+			username = username || 'defaultUser';
 			var wishlist = JSON.parse( localStorage.getItem( username ));
 			var modelsIds = [];
+			var models = [];
 
 			wishlist.forEach(function(carId, index){
 				var item = auto.getCar(carId);
 				if (( String(item.categoryId) === categoryId ) && ( String(item.markaId) === markaId )){
-					if (modelsIds.indexOf( String(item.modelId) ) === -1){
+					if (modelsIds.indexOf( item.modelId ) === -1){
 						modelsIds.push(item.modelId);
+						var model = {};
+						model['name'] = item.modelName;
+						model['value'] = String(item.modelId);
+						models.push(model);
+
 					}
 				}
 
 			});
 
-			return modelsIds; //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+			return models;
 		},
 		getCarIds: function ( searchParams, username ) {
-			username = username || 'dafeultUser';
+			username = username || 'defaultUser';
 			var wishlist = JSON.parse( localStorage.getItem( username ));
 			var carsIds = [];
 			if ((searchParams.categoryId)&&(searchParams.markaId)&&(searchParams.modelId)){
@@ -146,7 +170,7 @@ module.exports = (function(){
 			return wishlist;
 		},
 		getCarCount: function ( searchParams, username  ) {
-			username = username || 'dafeultUser';
+			username = username || 'defaultUser';
 			var wishlist = JSON.parse( localStorage.getItem( username ));
 			var carsCount = 0;
 			if ((searchParams.categoryId)&&(searchParams.markaId)&&(searchParams.modelId)){
