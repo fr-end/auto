@@ -28,6 +28,8 @@ module.exports = (function(){
 			var self = this;
 			self.service.getCar2(carId)
 				.then(function(data){
+					data.price.usd = data.price.usd.toFixed(0);
+					data.price.uah = data.price.uah.toFixed(0);
 					data.inList = self.inList( carId );
 					self.view.render(data);
 			});
