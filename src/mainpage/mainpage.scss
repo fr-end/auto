@@ -24,7 +24,7 @@
 	}
 
 	&-arrow-left, &-arrow-right  {
-		margin-top: 166px;
+		margin-top: 174px;
 		float: left;
 		width: 85px;
 		height: 34px;
@@ -34,6 +34,7 @@
 
 	&-arrow-right {
 		transform: rotate(180deg);
+		margin-top: 168px;
 	}
 
 	&-big {
@@ -129,5 +130,48 @@
 
 	&-bottom-text {
 		text-indent: 50px;
+	}
+}
+
+// Apple iPad/iPad Mini (portrait)
+@media (max-width: 768px) {
+	.main{
+		width: 100%;
+
+		&-wraper {
+			padding: 5px 20px;
+		}
+
+		&-slider {
+			width: 100%;
+		}
+
+		&-items {
+			width: 460px;
+			margin-left: 50px;
+		}
+
+		&-arrow-right {
+			float: right;
+		}
+
+		&-big {
+			display: none;
+		}
+
+		&-small {
+			margin-left: -10px;
+		}
+
+		&-bottom-text {
+			padding: 0 20px;
+		}
+	}
+}
+
+
+@media screen and (max-width: 480px) {
+	.main{
+		display: none;
 	}
 }

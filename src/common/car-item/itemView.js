@@ -15,6 +15,22 @@ module.exports = (function () {
 
 	View.prototype.bind = function (event, handler) {
 
+		var self = this;
+
+		if (event === 'clickAddToWishListButton') {
+			document.body.addEventListener('click', function (evt) {
+				if (evt.target.hasAttribute('data-item-id')){
+					var carID = evt.target.getAttribute('data-item-id');
+					handler(carID);
+				}
+			});
+		}
+
+	};
+
+	View.prototype.toggleClass = function (carId, result){
+		var viewPort = document.querySelector('[data-car-id="' + carId + '"] .item');
+		viewPort.classList.toggle('in-list', result);
 	};
 
 	return View;

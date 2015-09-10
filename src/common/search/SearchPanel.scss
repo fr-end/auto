@@ -91,3 +91,35 @@
 		}
 	}
 } 
+
+// Apple iPad/iPad Mini (portrait)
+@media (max-width: 768px) {
+	
+	.search {
+		width: 100%;
+		padding: 0;
+		background: none;
+
+		&-criteria {
+			padding: 15px 20px;
+		}
+
+		&-info {
+			display: none;
+		}
+	}
+}
+
+@media screen and (max-width: 480px) {
+	.search {
+		width: 440px;
+		background: none;
+		&-info {
+			display: none;
+		}
+
+		&-criteria{
+			width: 440px;
+		}
+	}
+}
