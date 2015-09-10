@@ -131,15 +131,13 @@
 		overflow: hidden;
 		text-overflow: ellipsis;
 		white-space: nowrap;
-		width: 245px;
+	  	width: 100%;
 	}
 
+
+
 	&-add-note{
-		color: $course-color;
-		cursor: pointer;
-		float: right;
-		font-size: $font-size-header;
-		width: 160px;
+	  display: none;
 	}
 
 //for items in wishlist
@@ -148,10 +146,15 @@
 			background-position: right -143px;
 		}
 		&-add-note{
-			display: none;
+		  display: block;
+		  color: $course-color;
+		  cursor: pointer;
+		  float: right;
+		  font-size: $font-size-header;
+		  width: 160px;
 		}
 		&-tel{
-			width: 100%;
+		  width: 245px;
 		}
 	}
 }

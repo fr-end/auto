@@ -13,9 +13,9 @@ module.exports = (function(){
 			});
 		});
 
-		self.view.bind('clickAddToWishListButton',function(event, carID){
+		self.view.bind('clickAddToWishListButton',function(carID){
 			var result = self.toggleToWishList(carID);
-			self.view.toggleClass(event, result);
+			self.view.toggleClass(carID, result);
 		});
 
 

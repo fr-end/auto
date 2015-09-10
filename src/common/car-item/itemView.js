@@ -21,15 +21,16 @@ module.exports = (function () {
 			document.body.addEventListener('click', function (evt) {
 				if (evt.target.hasAttribute('data-item-id')){
 					var carID = evt.target.getAttribute('data-item-id');
-					handler(evt, carID);
+					handler(carID);
 				}
 			});
 		}
 
 	};
 
-	View.prototype.toggleClass = function (event, result){
-		event.target.classList.toggle('in-list', result);
+	View.prototype.toggleClass = function (carId, result){
+		var viewPort = document.querySelector('[data-car-id="' + carId + '"]');
+		viewPort.classList.toggle('in-list', result);
 	};
 
 	return View;
