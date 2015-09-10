@@ -28,9 +28,21 @@ module.exports = (function(){
 			var self = this;
 			self.service.getCar2(carId)
 				.then(function(data){
-					data.inList = !!localStorage.getItem( carId );
+					data.inList = self.inList( carId );
 					self.view.render(data);
 			});
+		},
+		inList: function(carId){
+			if (!localStorage['cars']) {
+				localStorage['cars'] = '[]';
+			}
+			var carsInLocalStorage = JSON.parse(localStorage['cars']);
+			for (var i = 0; i < carsInLocalStorage.length; i++){
+				if (carsInLocalStorage[i] === carId){
+					return true;
+				}
+			}
+			return false;
 		},
 		toggleToWishList:function(carId){
 			var self = this;

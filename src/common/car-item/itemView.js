@@ -29,7 +29,7 @@ module.exports = (function () {
 	};
 
 	View.prototype.toggleClass = function (carId, result){
-		var viewPort = document.querySelector('[data-car-id="' + carId + '"]');
+		var viewPort = document.querySelector('[data-car-id="' + carId + '"] .item');
 		viewPort.classList.toggle('in-list', result);
 	};
 
