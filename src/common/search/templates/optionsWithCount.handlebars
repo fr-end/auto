@@ -1,4 +1,4 @@
 <option value='0'>{{default}}</option>
 {{#each items}}
-<option value='{{value}}'>{{name}} ({{count}})</option>
+<option value='{{value}}'{{#if selected}} selected{{/if}}>{{name}} ({{count}})</option>
 {{/each}}

@@ -21,18 +21,18 @@ module.exports = (function() {
     View.prototype.render = function (viewCmd, data) {
         var self = this;
         var viewCommands = {
-            showCategories: function () {
+            showCategories: function (data) {
                 self.$selectCategory.innerHTML = self.templates.options({default: 'Любой', items: data});
             },
-            showMarks: function () {
+            showMarks: function (data) {
                 self.$selectMark.innerHTML = self.templates.optionsWithCount({default: 'Марка', items: data});
             },
-            showModels: function () {
+            showModels: function (data) {
                 self.$selectModel.innerHTML = self.templates.optionsWithCount({default: 'Модель', items: data});
             }
         };
 
-        viewCommands[viewCmd]();
+        viewCommands[viewCmd](data);
     };
 
     View.prototype.bind = function (event, handler) {
@@ -57,6 +57,10 @@ module.exports = (function() {
             });
         }
 
+    };
+
+    View.prototype.setParams = function(params){
+        this.$selectCategory
     };
 
     View.prototype.getParams = function(){

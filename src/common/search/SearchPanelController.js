@@ -21,18 +21,24 @@ module.exports = (function(){
     }
 
     Controller.prototype = {
-		init: function(){
+		init: function(searchParams){
+			searchParams = searchParams || {};
 			var self = this;
 			self.service.getCategories()
 				.then(function(data){
 					var categoriesArray = JSON.parse(data);
+					categoriesArray.forEach(function(item){
+						if(item.value == searchParams.categoryId){
+							item.selected = true;
+						}
+					});
 					self.view.render('showCategories', categoriesArray);
-					self.loadMarks();
+					self.loadMarks(searchParams);
 				});
 			self.started = true;
 		},
 
-		loadMarks: function(){
+		loadMarks: function(searchParams){
 			var self = this;
 			var categories = self.view.$selectCategory;
 			var category = categories.options[categories.selectedIndex].value;
@@ -40,11 +46,16 @@ module.exports = (function(){
 			self.service.getMarks(category)
 				.then(function(data){
 					var marks = JSON.parse(data);
+					marks.forEach(function(item){
+						if(item.value == searchParams.markaId){
+							item.selected = true;
+						}
+					})
 					self.view.render('showMarks', marks);
-					self.loadModels();
+					self.loadModels(searchParams);
 			});
 		},
-		loadModels: function(){
+		loadModels: function(searchParams){
             var self = this;
             var categories = self.view.$selectCategory;
             var category = categories.options[categories.selectedIndex].value;
@@ -53,6 +64,11 @@ module.exports = (function(){
 			self.service.getModels(category, mark)
                 .then(function(data) {
                     var models = JSON.parse(data);
+					models.forEach(function(item){
+						if(item.value == searchParams.modelId){
+							item.selected = true;
+						}
+					})
 					self.view.render('showModels', models);
             });
 		},

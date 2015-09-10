@@ -99,10 +99,10 @@
 
     var commonModules = [app.common.searchPanel];
 
-    function checkCommonModulesControllers(){
+    function checkCommonModulesControllers(searchParams){
         for (var i = 0; i < commonModules.length; i++){
             if (!commonModules[i].controller.started){
-                commonModules[i].controller.init();
+                commonModules[i].controller.init(searchParams);
             }
         }
     }
@@ -133,7 +133,7 @@
         }
 
         if (routeName === 'search') {
-            checkCommonModulesControllers();
+            checkCommonModulesControllers(searchParams);
             route.module.controller.getCarIDsFromURL(searchParams);
         }
         /*
