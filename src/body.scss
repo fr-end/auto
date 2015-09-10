@@ -2,12 +2,23 @@ body {
 	background: url(../img/background.jpg);
 	background-attachment: fixed;
 	background-size: cover;
+	margin: 0;
+	padding: 0;
 }
 
 .content-wraper {
 	margin: 50px auto;
 	background: #fff;
 	width: 1280px;
+}
+
+// Apple iPad/iPad Mini (portrait)
+@media screen and (max-width: 768px) {
+	
+	.content-wraper {
+		margin: 0;
+		width: 768px;
+	}
 }
 
 @media screen and (max-width: 480px) {
