@@ -1,6 +1,7 @@
 module.exports = (function(){
 
 	var autoService = require('../auto/autoService');
+	var Q = require('../../../node_modules/q/q.js');
 	
 	var auto = {
 		initLocalService: function () {
@@ -84,6 +85,8 @@ module.exports = (function(){
 			return JSON.parse( localStorage.getItem( carId ) );
 		},
 		getCategories: function ( username ) {
+			var deferred=Q.defer();
+			console.log('localStorage-getCategories');
 			username = username || 'defaultUser';
 			var wishlist = JSON.parse( localStorage.getItem( username ));
 			var categoriesIds = [];
@@ -99,7 +102,9 @@ module.exports = (function(){
 					categories.push(category);
 				}
 			});
-			return categories;
+			deferred.resolve(categories);
+			console.log(categories);
+			return deferred.promise;
 		},
 		getMarks: function ( categoryId, username ) {
 			username = username || 'defaultUser';

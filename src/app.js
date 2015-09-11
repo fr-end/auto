@@ -59,7 +59,20 @@
         this.controller = new Controller(this.service, this.view);
     }
 
-    app.common.searchPanel = new SearchPanel(commonService, searchPanelTemplates, SearchPanelView, SearchPanelController);
+    window.app.common.searchPanel = new SearchPanel(commonService, searchPanelTemplates, SearchPanelView, SearchPanelController);
+
+    console.log('searchPanel created');
+
+    // WishList
+
+    function WishList(service, templates, View, Controller){
+        this.service = service;
+        this.view = new View(templates);
+        this.controller = new Controller(this.service, this.view);
+    }
+
+    window.app.common.wishList = new WishList(localService, searchPanelTemplates, SearchPanelView, SearchPanelController);
+
 
     // CarItem
     var carItemView 		= require('./common/car-item/itemView.js');
@@ -99,7 +112,7 @@
                                         CarListController,
                                         app.library.events );
 
-    var commonModules = [app.common.searchPanel];
+ /*   var commonModules = [app.common.searchPanel];
 
     function checkCommonModulesControllers(searchParams){
         for (var i = 0; i < commonModules.length; i++){
@@ -108,7 +121,7 @@
             }
         }
     }
-
+*/
     app.routes = {};
 
     function route(path, module){
@@ -116,6 +129,7 @@
     }
 
     function router(){
+
         var hashLessURL = location.hash.slice(1) || '/';
 
         var hashLessURLArray = hashLessURL.split('/');
@@ -127,7 +141,7 @@
         }
 
         var route = app.routes[routeName];
-        
+
         if (!route.module.controller.started && route.module.controller.init) {
             route.module.controller.init();
         } else if (routeName === '/'){
@@ -135,23 +149,27 @@
         }
 
         if (routeName === 'search') {
-            checkCommonModulesControllers(searchParams);
+           // checkCommonModulesControllers(searchParams);
             route.module.controller.getCarIDsFromURL(searchParams);
         }
-        /*
+
         if (routeName === 'wishlist'){
-            checkCommonModulesControllers();
-            route.module.controller.doSomething();
+            //alert('wishlist');
+           // checkCommonModulesControllers();
+            //route.module.controller.init();
         }
-        */
+
     }
 
-
+    console.log('before hash track');
     window.addEventListener('hashchange', router);
     window.addEventListener('load', router);
 
     route('/', app.common.searchPanel);
     route('search', app.catalog.CarList);
+    route('wishlist', window.app.common.wishList);
+
+    console.log('routes inited');
     // do not consider the following code
     /*
     var routes = {};

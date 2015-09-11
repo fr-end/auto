@@ -10,6 +10,7 @@ module.exports = (function(){
 
     Controller.prototype = {
 		init: function(searchParams){
+			console.log('searchPanel-init');
 			searchParams = searchParams || {};
 			var self = this;
 			self.service.getCategories()
