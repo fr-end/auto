@@ -1,4 +1,6 @@
 module.exports = (function(){
+
+	var autoService = require('../auto/autoService');
 	
 	var auto = {
 		initLocalService: function () {
@@ -25,22 +27,31 @@ module.exports = (function(){
 			console.log( username + ' has wishlist and in userslist' );
 			return false;
 		},
-		addCar: function ( car, username ) {
+		inList: function (carId, username) {
 			username = username || 'defaultUser';
-			if ( !localStorage.getItem( String(car.carId) ) ){
-				localStorage[String(car.carId)] = JSON.stringify( car );
-				console.log('Car added to storage');
-			}
-			console.log('Car in storage');
-			
 			var wishlist = JSON.parse( localStorage.getItem( username ) );
+			return wishlist.indexOf(carId) !== -1;
+		},
+		addCar: function ( carId, username ) {
+			autoService.getCar2(carId)
+				.then(function (data) {
+					var car = data;
+					username = username || 'defaultUser';
+					if ( !localStorage.getItem( String(car.carId) ) ){
+						localStorage[String(car.carId)] = JSON.stringify( car );
+						console.log('Car added to storage');
+					}
+					console.log('Car in storage');
 
-			if (wishlist.indexOf(String(car.carId)) === -1){
-				wishlist.push( String(car.carId) );
-				localStorage.setItem( username, JSON.stringify( wishlist ) );
-				console.log('Car added to wishlist');
-			}
-			console.log('Car in wishlist');
+					var wishlist = JSON.parse( localStorage.getItem( username ) );
+
+					if (wishlist.indexOf(String(car.carId)) === -1){
+						wishlist.push( String(car.carId) );
+						localStorage.setItem( username, JSON.stringify( wishlist ) );
+						console.log('Car added to wishlist');
+					}
+					console.log('Car in wishlist');
+				});
 		},
 		delCar: function ( carId, username ) {
 			username = username || 'defaultUser';
