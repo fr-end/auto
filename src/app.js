@@ -112,6 +112,17 @@
                                         CarListController,
                                         app.library.events );
 
+    // WhishList CarList
+
+    app.catalog.WhishListCarList = new CarList(  localService,
+        carListTemplate,
+        CarListModel,
+        CarListView,
+        CarListController,
+        app.library.events );
+
+
+
  /*   var commonModules = [app.common.searchPanel];
 
     function checkCommonModulesControllers(searchParams){
@@ -155,6 +166,10 @@
         }
 
         if (routeName === 'wishlist'){
+            window.app.catalog.WhishListCarList.controller.getCarIDsFromURL(searchParams);
+            console.log('searchParams');
+            console.log(searchParams);
+
             //alert('wishlist');
            // checkCommonModulesControllers();
             //route.module.controller.init();

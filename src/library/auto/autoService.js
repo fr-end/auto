@@ -57,7 +57,10 @@ module.exports = (function(){
 						'&countpage='   + searchParams.countPage +
 						page;
 			ajax.get( url, deferred );	
-			return deferred.promise;					
+			return deferred.promise.then(function(data){
+				var carIDs = JSON.parse(data).result.search_result.ids;
+				return carIDs;
+			});
 		},
 		getCarsCount: function ( searchParams, success ) {
 			//https://auto.ria.com/blocks_search_ajax/search/?category_id=1&state[]=0&s_yers[]=0&po_yers[]=0&currency=1&marka_id[0]=98&model_id[0]=953&countpage=10

@@ -159,6 +159,7 @@ module.exports = (function(){
 			return deferred.promise;
 		},
 		getCarIds: function ( searchParams, username ) {
+			var deferred=Q.defer();
 			username = username || 'defaultUser';
 			var wishlist = JSON.parse( localStorage.getItem( username ));
 			var carsIds = [];
@@ -190,7 +191,8 @@ module.exports = (function(){
 				});
 				return carsIds;
 			} 
-			return wishlist;
+			deferred.resolve(wishlist);
+			return deferred.promise;
 		},
 		getCarCount: function ( searchParams, username  ) {
 			username = username || 'defaultUser';
