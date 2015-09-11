@@ -124,6 +124,12 @@ module.exports = (function(){
 						marka['value'] = String(item.markaId);
 						marka['count'] = 1;
 						marks.push(marka);
+					} else {
+						marks.some(function (marka) {
+							if (marka.value == item.markaId) {
+								marka.count += 1;
+							}
+						});
 					}
 				}
 
@@ -150,6 +156,12 @@ module.exports = (function(){
 						model['value'] = String(item.modelId);
 						model['count'] = 1;
 						models.push(model);
+					} else {
+						models.some(function (model) {
+							if (model.value == item.modelId) {
+								model.count += 1;
+							}
+						});
 					}
 				}
 
