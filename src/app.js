@@ -61,7 +61,8 @@
 
     window.app.common.searchPanel = new SearchPanel(commonService, searchPanelTemplates, SearchPanelView, SearchPanelController);
 
-    console.log('searchPanel created');
+    window.app.buttonSearch = document.getElementById('header-menu-item__search');
+
 
     // WishList
 
@@ -73,6 +74,7 @@
 
     window.app.common.wishList = new WishList(localService, searchPanelTemplates, SearchPanelView, SearchPanelController);
 
+    window.app.buttonWishList = document.getElementById('header-menu-item__wish-list');
 
     // CarItem
     var carItemView 		= require('./common/car-item/itemView.js');
@@ -154,21 +156,25 @@
         var route = app.routes[routeName];
 
         if (!route.module.controller.started && route.module.controller.init) {
-            route.module.controller.init();
+            route.module.controller.init(searchParams);
         } else if (routeName === '/'){
+            window.app.buttonSearch.classList.toggle('active',true);
+            window.app.buttonWishList.classList.toggle('active',false);
             route.module.controller.init();
         }
 
         if (routeName === 'search') {
            // checkCommonModulesControllers(searchParams);
+            window.app.buttonSearch.classList.toggle('active',true);
+            window.app.buttonWishList.classList.toggle('active',false);
             window.app.common.searchPanel.controller.init(searchParams);
             route.module.controller.getCarIDsFromURL(searchParams);
         }
 
         if (routeName === 'wishlist'){
+            window.app.buttonSearch.classList.toggle('active',false);
+            window.app.buttonWishList.classList.toggle('active',true);
             window.app.catalog.WhishListCarList.controller.getCarIDsFromURL(searchParams);
-            console.log('searchParams');
-            console.log(searchParams);
 
             //alert('wishlist');
            // checkCommonModulesControllers();

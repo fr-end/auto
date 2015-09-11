@@ -172,7 +172,6 @@ module.exports = (function(){
 							carsIds.push(String(carId));
 					}
 				});
-				return carsIds;
 			} else if((searchParams.categoryId)&&(searchParams.markaId)&&(!searchParams.modelId)){
 				wishlist.forEach(function(carId, index){
 					var item = auto.getCar(carId);
@@ -181,7 +180,6 @@ module.exports = (function(){
 							carsIds.push(String(carId));
 					}
 				});
-				return carsIds;
 			} else if((searchParams.categoryId)&&(!searchParams.markaId)&&(!searchParams.modelId)){
 				wishlist.forEach(function(carId, index){
 					var item = auto.getCar(carId);
@@ -189,9 +187,8 @@ module.exports = (function(){
 							carsIds.push(carId);
 					}
 				});
-				return carsIds;
-			} 
-			deferred.resolve(wishlist);
+			}
+			deferred.resolve(carsIds);
 			return deferred.promise;
 		},
 		getCarCount: function ( searchParams, username  ) {
