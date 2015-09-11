@@ -150,6 +150,7 @@
 
         if (routeName === 'search') {
            // checkCommonModulesControllers(searchParams);
+            window.app.common.searchPanel.controller.init(searchParams);
             route.module.controller.getCarIDsFromURL(searchParams);
         }
 

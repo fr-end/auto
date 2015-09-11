@@ -15,6 +15,8 @@ module.exports = (function(){
 			var self = this;
 			self.service.getCategories()
 				.then(function(data){
+					console.log('getCategories data');
+					console.log(data);
 					var categoriesArray = JSON.parse(data);
 					categoriesArray.forEach(function(item){
 						if(item.value == searchParams.categoryId){

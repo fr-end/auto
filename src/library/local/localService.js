@@ -102,11 +102,13 @@ module.exports = (function(){
 					categories.push(category);
 				}
 			});
-			deferred.resolve(categories);
-			console.log(categories);
+			var categoriesString = JSON.stringify(categories);
+			deferred.resolve(categoriesString);
+			console.log(categoriesString);
 			return deferred.promise;
 		},
 		getMarks: function ( categoryId, username ) {
+			var deferred=Q.defer();
 			username = username || 'defaultUser';
 			var wishlist = JSON.parse( localStorage.getItem( username ));
 			var marksIds = [];
@@ -125,10 +127,13 @@ module.exports = (function(){
 				}
 
 			});
-
-			return marks;
+			var marksString = JSON.stringify(marks);
+			deferred.resolve(marksString);
+			console.log(marksString);
+			return deferred.promise;
 		},
 		getModels: function ( categoryId, markaId, username ) {
+			var deferred=Q.defer();
 			username = username || 'defaultUser';
 			var wishlist = JSON.parse( localStorage.getItem( username ));
 			var modelsIds = [];
@@ -148,8 +153,10 @@ module.exports = (function(){
 				}
 
 			});
-
-			return models;
+			var modelsString = JSON.stringify(models);
+			deferred.resolve(modelsString);
+			console.log(modelsString);
+			return deferred.promise;
 		},
 		getCarIds: function ( searchParams, username ) {
 			username = username || 'defaultUser';
