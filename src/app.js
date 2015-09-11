@@ -174,6 +174,7 @@
         if (routeName === 'wishlist'){
             window.app.buttonSearch.classList.toggle('active',false);
             window.app.buttonWishList.classList.toggle('active',true);
+            window.app.common.wishList.controller.init(searchParams);
             window.app.catalog.WhishListCarList.controller.getCarIDsFromURL(searchParams);
 
             //alert('wishlist');
