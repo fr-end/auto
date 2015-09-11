@@ -60,20 +60,9 @@
     }
 
     window.app.common.searchPanel = new SearchPanel(commonService, searchPanelTemplates, SearchPanelView, SearchPanelController);
+    window.app.common.wishList = new SearchPanel(localService, searchPanelTemplates, SearchPanelView, SearchPanelController);
 
     window.app.buttonSearch = document.getElementById('header-menu-item__search');
-
-
-    // WishList
-
-    function WishList(service, templates, View, Controller){
-        this.service = service;
-        this.view = new View(templates);
-        this.controller = new Controller(this.service, this.view);
-    }
-
-    window.app.common.wishList = new WishList(localService, searchPanelTemplates, SearchPanelView, SearchPanelController);
-
     window.app.buttonWishList = document.getElementById('header-menu-item__wish-list');
 
     // CarItem
