@@ -122,6 +122,7 @@ module.exports = (function(){
 						var marka = {};
 						marka['name'] = item.markaName;
 						marka['value'] = String(item.markaId);
+						marka['count'] = 1;
 						marks.push(marka);
 					}
 				}
@@ -147,8 +148,8 @@ module.exports = (function(){
 						var model = {};
 						model['name'] = item.modelName;
 						model['value'] = String(item.modelId);
+						model['count'] = 1;
 						models.push(model);
-
 					}
 				}
 
@@ -187,7 +188,7 @@ module.exports = (function(){
 							carsIds.push(carId);
 					}
 				});
-			}
+			} else carsIds = wishlist;
 			deferred.resolve(carsIds);
 			return deferred.promise;
 		},
