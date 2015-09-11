@@ -78,7 +78,12 @@ module.exports = (function(){
 			var self = this;
 			var searchParams = self.view.getParams();
 
-			var href = '#search';
+			var hashLessURL = location.hash.slice(1) || '/';
+
+			var hashLessURLArray = hashLessURL.split('/');
+			var routeName = hashLessURLArray[0] || 'search';
+
+			var href = '#' + routeName;
 			if (searchParams.categoryId !== '0') {
 				href += '/categoryId/' + searchParams.categoryId;
 			}
