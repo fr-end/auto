@@ -66,6 +66,8 @@ module.exports = (function(){
 			self.service.getModels(category, mark)
                 .then(function(data) {
                     var models = JSON.parse(data);
+					console.log('getModels');
+					console.log(data);
 					models.forEach(function(item){
 						if(item.value == searchParams.modelId){
 							item.selected = true;
