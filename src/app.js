@@ -82,36 +82,6 @@
                                 carItemController,
                                 app.library.events );
 
-    // CarList
-
-    var CarListModel       = require('./catalog/CarList/CarListModel.js');
-    var CarListView        = require('./catalog/CarList/CarListView.js');
-    var carListTemplate 	= require('./catalog/CarList/CarList.handlebars');
-    var CarListController  = require('./catalog/CarList/CarListController.js');
-
-    function CarList(service, template, Model,  View, Controller, events){
-        this.service = service;
-        this.model = new Model(service);
-        this.view = new View(template);
-        this.controller = new Controller(this.service, this.model, this.view, events);
-    }
-
-    app.catalog.CarList = new CarList(  commonService,
-                                        carListTemplate,
-                                        CarListModel,
-                                        CarListView,
-                                        CarListController,
-                                        app.library.events );
-
-    // WhishList CarList
-
-    app.catalog.WhishListCarList = new CarList(  localService,
-        carListTemplate,
-        CarListModel,
-        CarListView,
-        CarListController,
-        app.library.events );
-
 
 
  /*   var commonModules = [app.common.searchPanel];
@@ -149,7 +119,7 @@
         } else if (routeName === '/'){
             window.app.buttonSearch.classList.toggle('active',true);
             window.app.buttonWishList.classList.toggle('active',false);
-            route.module.controller.init();
+            app.common.searchPanel.controller.init();
         }
 
         if (routeName === 'search') {
@@ -157,18 +127,12 @@
             window.app.buttonSearch.classList.toggle('active',true);
             window.app.buttonWishList.classList.toggle('active',false);
             window.app.common.searchPanel.controller.init(searchParams);
-            route.module.controller.getCarIDsFromURL(searchParams);
         }
 
         if (routeName === 'wishlist'){
             window.app.buttonSearch.classList.toggle('active',false);
             window.app.buttonWishList.classList.toggle('active',true);
             window.app.common.wishList.controller.init(searchParams);
-            window.app.catalog.WhishListCarList.controller.getCarIDsFromURL(searchParams);
-
-            //alert('wishlist');
-           // checkCommonModulesControllers();
-            //route.module.controller.init();
         }
 
     }
@@ -177,8 +141,8 @@
     window.addEventListener('hashchange', router);
     window.addEventListener('load', router);
 
-    route('/', app.common.searchPanel);
-    route('search', app.catalog.CarList);
+    route('/', window.app.common.searchPanel);
+    route('search', window.app.common.searchPanel);
     route('wishlist', window.app.common.wishList);
 
     console.log('routes inited');
