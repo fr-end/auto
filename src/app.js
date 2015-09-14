@@ -141,8 +141,8 @@
     window.addEventListener('hashchange', router);
     window.addEventListener('load', router);
 
-    route('/', app.common.searchPanel);
-    route('search', app.catalog.CarList);
+    route('/', window.app.common.searchPanel);
+    route('search', window.app.common.searchPanel);
     route('wishlist', window.app.common.wishList);
 
     console.log('routes inited');

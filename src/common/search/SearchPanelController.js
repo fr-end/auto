@@ -3,11 +3,10 @@ module.exports = (function(){
     var CarListController  = require('../../catalog/CarList/CarListController.js');
 
     function Controller(service, view){
-        var self = this;
-        self.service = service;
-        self.view = view;
-		self.started = false;
-        app.catalog.CarList = new CarListController(  service, app.library.events );
+        this.service = service;
+        this.view = view;
+        this.started = false;
+        this.carList = new CarListController(  service, app.library.events );
     }
 
     Controller.prototype = {
@@ -28,7 +27,7 @@ module.exports = (function(){
 					this.view.render('showCategories', categoriesArray);
 					this.loadMarks(searchParams);
 				}).bind(this,searchParams));
-            app.catalog.CarList.getCarIDsFromURL(searchParams);
+            this.carList.getCarIDsFromURL(searchParams);
 			self.started = true;
 			self.view.bind('changeCategory',function(){
 				self.loadMarks({});
