@@ -47,6 +47,8 @@ module.exports = (function(){
         }
     };
 
-    return Router;
+    var router = new Router();
+
+    return router;
 
 })();
