@@ -39,15 +39,8 @@
     window.app.library = {};
     window.app.library.events = require('./library/events/events.js');
 
-    var commonService = require('./library/auto/autoService.js');
+    var autoService = require('./library/auto/autoService.js');
     var localService = require('./library/local/localService.js');
-
-    // SearchPanel
-
-    var SearchPanelController 		= require('./common/search/SearchPanelController.js');
-
-    window.app.common.searchPanel = new SearchPanelController(commonService);
-    window.app.common.wishList = new SearchPanelController(localService)
 
     window.app.buttonSearch = document.getElementById('header-menu-item__search');
     window.app.buttonWishList = document.getElementById('header-menu-item__wish-list');
@@ -63,29 +56,14 @@
         this.controller = new Controller(this.commonService, this.view, events);
     }
 
-    var carItem = new CarItem(  commonService,
+    var carItem = new CarItem(  autoService,
                                 carItemTemplate,
                                 carItemView,
                                 carItemController,
                                 app.library.events );
 
 
-
- /*   var commonModules = [app.common.searchPanel];
-
-    function checkCommonModulesControllers(searchParams){
-        for (var i = 0; i < commonModules.length; i++){
-            if (!commonModules[i].controller.started){
-                commonModules[i].controller.init(searchParams);
-            }
-        }
-    }
-*/
     app.routes = {};
-
-    function route(path, module){
-        app.routes[path] = {module: module};
-    }
 
     function router(){
 
@@ -101,66 +79,45 @@
 
         var route = app.routes[routeName];
 
-        if (!route.module.started && route.module.init) {
-            route.module.init(searchParams);
+        var routeController = new route.Controller(route.params);
+
+        if (!routeController.started && routeController.init) {
+            routeController.init(searchParams);
         } else if (routeName === '/'){
             window.app.buttonSearch.classList.toggle('active',true);
             window.app.buttonWishList.classList.toggle('active',false);
-            app.common.searchPanel.init();
+            routeController.init();
         }
 
         if (routeName === 'search') {
            // checkCommonModulesControllers(searchParams);
             window.app.buttonSearch.classList.toggle('active',true);
             window.app.buttonWishList.classList.toggle('active',false);
-            window.app.common.searchPanel.init(searchParams);
+            routeController.init(searchParams);
         }
 
         if (routeName === 'wishlist'){
             window.app.buttonSearch.classList.toggle('active',false);
             window.app.buttonWishList.classList.toggle('active',true);
-            window.app.common.wishList.init(searchParams);
+            routeController.init(searchParams);
         }
 
     }
 
-    console.log('before hash track');
+    function route(path, Controller, params){
+        app.routes[path] = { Controller: Controller, params: params };
+    }
+
+
+    var SearchPanelController = require('./common/search/SearchPanelController.js');
+
+    route('/', SearchPanelController,autoService);
+    route('search', SearchPanelController,autoService);
+    route('wishlist', SearchPanelController,localService);
+
     window.addEventListener('hashchange', router);
     window.addEventListener('load', router);
 
-    route('/', window.app.common.searchPanel);
-    route('search', window.app.common.searchPanel);
-    route('wishlist', window.app.common.wishList);
 
-    console.log('routes inited');
-    // do not consider the following code
-    /*
-    var routes = {};
-    //
-    function route(path, view, controller) {
-        routes[path] = {view: view, controller: controller};
-    }
-    var el = null;
-    function router () {
-        // Lazy load view element:
-        el = el || document.getElementById('cars');
-        console.log(el)
-        // Current route url (getting rid of '#' in hash as well):
-        var url = location.hash.slice(1) || '/';
-        console.log(url);
-        // Get route by url:
-        var route = routes[url];
-        // Do we have both a view and a route?
-        if (el && route.controller) {
-            // Render route template with John Resig's template engine:
-            el.innerHTML = 'HELLO';//tmpl(route.templateId, new route.controller());
-        }
-    }
 
-    window.addEventListener('hashchange', router);
-    // Listen on page load:
-    window.addEventListener('load', router);
-
-    route('/', app.view, controller);
-    */
 })(window);
