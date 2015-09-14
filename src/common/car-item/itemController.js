@@ -1,13 +1,16 @@
 module.exports = (function(){
 
 	var localService = require('../../library/local/localService');
+    var View 		= require('./itemView.js');
+    var template	= require('./car-item.handlebars');
 
-    function Controller(service,view, events){
-        var self = this;
 
-		self.events = events;
-        self.service = service;
-        self.view = view;
+    function Controller(service, events){
+		this.events = events;
+        this.service = service;
+        this.view = new View(template);
+
+        self = this;
 
 		self.events.subscribe('search ids', function(ids){
 			ids.forEach(function (carId) {

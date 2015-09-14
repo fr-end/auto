@@ -46,19 +46,14 @@
     window.app.buttonWishList = document.getElementById('header-menu-item__wish-list');
 
     // CarItem
-    var carItemView 		= require('./common/car-item/itemView.js');
-    var carItemTemplate	= require('./common/car-item/car-item.handlebars');
     var carItemController 	= require('./common/car-item/itemController.js');
 
-    function CarItem(commonService, template, View, Controller, events){
+    function CarItem(commonService, Controller, events){
         this.commonService = commonService;
-        this.view = new View(template);
-        this.controller = new Controller(this.commonService, this.view, events);
+        this.controller = new Controller(this.commonService, events);
     }
 
     var carItem = new CarItem(  autoService,
-                                carItemTemplate,
-                                carItemView,
                                 carItemController,
                                 window.app.library.events );
 
