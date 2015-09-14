@@ -1,10 +1,14 @@
 module.exports = (function () {
 
-	function Controller(service, model, view, events) {
+    var Model       = require('./CarListModel.js');
+    var View        = require('./CarListView.js');
+    var template 	= require('./CarList.handlebars');
+
+	function Controller(service, events) {
 		var self = this;
 		self.service = service;
-		self.model = model;
-		self.view = view;
+		self.model = new Model(service);
+		self.view = new View(template);;
 		self.events = events;
 	}
 
