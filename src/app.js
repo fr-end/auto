@@ -60,11 +60,9 @@
                                 carItemTemplate,
                                 carItemView,
                                 carItemController,
-                                app.library.events );
+                                window.app.library.events );
 
-    var Router = require('./common/router/router.js');
-
-    var router = new Router();
+    var router = require('./common/router/router.js');
 
     var SearchPanelController = require('./common/search/SearchPanelController.js');
 
