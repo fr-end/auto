@@ -19,7 +19,7 @@ module.exports = (function(){
 		});
 
 		self.view.bind('clickAddToWishListButton',function(carID){
-			var result = self.toggleToWishList(carID);
+			var result = self.toggleWishList(carID);
 			self.view.toggleClass(carID, result);
 		});
 
@@ -40,7 +40,7 @@ module.exports = (function(){
 		inList: function(carId){
 			return localService.inList(carId);
 		},
-		toggleToWishList: function(carId){
+		toggleWishList: function(carId){
 			if(this.inList(carId)){
 				localService.delCar(carId);
 				return false;
