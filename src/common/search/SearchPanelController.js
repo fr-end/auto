@@ -1,11 +1,30 @@
 module.exports = (function(){
 
+    // CarList
+
+    var CarListModel       = require('../../catalog/CarList/CarListModel.js');
+    var CarListView        = require('../../catalog/CarList/CarListView.js');
+    var carListTemplate 	= require('../../catalog/CarList/CarList.handlebars');
+    var CarListController  = require('../../catalog/CarList/CarListController.js');
+
+    function CarList(service, template, Model,  View, Controller, events){
+        this.service = service;
+        this.model = new Model(service);
+        this.view = new View(template);
+        this.controller = new Controller(this.service, this.model, this.view, events);
+    }
+
     function Controller(service, view){
         var self = this;
         self.service = service;
         self.view = view;
-
 		self.started = false;
+        app.catalog.CarList = new CarList(  service,
+            carListTemplate,
+            CarListModel,
+            CarListView,
+            CarListController,
+            app.library.events );
     }
 
     Controller.prototype = {
@@ -14,7 +33,7 @@ module.exports = (function(){
 			searchParams = searchParams || {};
 			var self = this;
 			self.service.getCategories()
-				.then(function(data){
+				.then((function(searchParams, data){
 					console.log('getCategories data');
 					console.log(data);
 					var categoriesArray = JSON.parse(data);
@@ -23,9 +42,10 @@ module.exports = (function(){
 							item.selected = true;
 						}
 					});
-					self.view.render('showCategories', categoriesArray);
-					self.loadMarks(searchParams);
-				});
+					this.view.render('showCategories', categoriesArray);
+					this.loadMarks(searchParams);
+				}).bind(this,searchParams));
+            app.catalog.CarList.controller.getCarIDsFromURL(searchParams);
 			self.started = true;
 			self.view.bind('changeCategory',function(){
 				self.loadMarks({});
