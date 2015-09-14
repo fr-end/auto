@@ -62,24 +62,15 @@
                                 carItemController,
                                 app.library.events );
 
-    var router = require('./common/router/router.js');
+    var Router = require('./common/router/router.js');
 
-    app.routes = {};
-
-    function route(path, Controller, params){
-        app.routes[path] = { Controller: Controller, params: params };
-    }
-
+    var router = new Router();
 
     var SearchPanelController = require('./common/search/SearchPanelController.js');
 
-    route('/', SearchPanelController,autoService);
-    route('search', SearchPanelController,autoService);
-    route('wishlist', SearchPanelController,localService);
-
-    window.addEventListener('hashchange', router);
-    window.addEventListener('load', router);
-
+    router.route('/', SearchPanelController,autoService);
+    router.route('search', SearchPanelController,autoService);
+    router.route('wishlist', SearchPanelController,localService);
 
 
 })(window);
