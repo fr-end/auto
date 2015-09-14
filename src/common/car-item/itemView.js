@@ -9,6 +9,8 @@ module.exports = (function () {
 	View.prototype.render = function (data) {
 		var self = this;		
 		var viewPort = document.querySelector('[data-car-id="' + data.carId + '"]');
+        data.price.usd = data.price.usd.toFixed(0);
+        data.price.uah = data.price.uah.toFixed(0);
 	    var html = self.template(data);
 	    viewPort.innerHTML = html;
 	};
