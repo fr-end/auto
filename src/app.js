@@ -41,7 +41,6 @@
 
     var commonService = require('./library/auto/autoService.js');
     var localService = require('./library/local/localService.js');
-    localService.initLocalService();
 
     // SearchPanel
 

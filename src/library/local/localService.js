@@ -4,7 +4,7 @@ module.exports = (function(){
 	var Q = require('../../../node_modules/q/q.js');
 	
 	var auto = {
-		initLocalService: function () {
+		init: function () {
 			if (!localStorage.getItem('defaultUser')){
 				localStorage.setItem('defaultUser', JSON.stringify([]));
 			}
@@ -239,6 +239,8 @@ module.exports = (function(){
 			return wishlist.length;
 		}
 	};
+
+    auto.init();
 
 	return auto;
 }());
