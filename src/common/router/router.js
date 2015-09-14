@@ -25,24 +25,21 @@ module.exports = (function(){
 
             var routeController = new route.Controller(route.params);
 
-            if (!routeController.started && routeController.init) {
-                routeController.init(searchParams);
-            } else if (routeName === '/'){
+            routeController.init(searchParams);
+
+            if (routeName === '/'){
                 window.app.buttonSearch.classList.toggle('active',true);
                 window.app.buttonWishList.classList.toggle('active',false);
-                routeController.init();
             }
 
             if (routeName === 'search') {
                 window.app.buttonSearch.classList.toggle('active',true);
                 window.app.buttonWishList.classList.toggle('active',false);
-                routeController.init(searchParams);
             }
 
             if (routeName === 'wishlist'){
                 window.app.buttonSearch.classList.toggle('active',false);
                 window.app.buttonWishList.classList.toggle('active',true);
-                routeController.init(searchParams);
             }
         }
     };
