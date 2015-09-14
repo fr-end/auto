@@ -1,10 +1,16 @@
 module.exports = (function(){
 
+    var View 			= require('./SearchPanelView.js');
+    var templates		= {
+        options: 			require('./templates/options.handlebars'),
+        optionsWithCount: 	require('./templates/optionsWithCount.handlebars')
+    };
+
     var CarListController  = require('../../catalog/CarList/CarListController.js');
 
-    function Controller(service, view){
+    function Controller(service){
         this.service = service;
-        this.view = view;
+        this.view = new View(templates);
         this.started = false;
         this.carList = new CarListController(  service, app.library.events );
     }

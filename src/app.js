@@ -44,22 +44,10 @@
 
     // SearchPanel
 
-    var SearchPanelView 			= require('./common/search/SearchPanelView.js');
-    var searchPanelTemplates		= {
-        options: 			require('./common/search/templates/options.handlebars'),
-        optionsWithCount: 	require('./common/search/templates/optionsWithCount.handlebars')
-    };
     var SearchPanelController 		= require('./common/search/SearchPanelController.js');
 
-
-    function SearchPanel(service, templates, View, Controller){
-        this.service = service;
-        this.view = new View(templates);
-        this.controller = new Controller(this.service, this.view);
-    }
-
-    window.app.common.searchPanel = new SearchPanel(commonService, searchPanelTemplates, SearchPanelView, SearchPanelController);
-    window.app.common.wishList = new SearchPanel(localService, searchPanelTemplates, SearchPanelView, SearchPanelController);
+    window.app.common.searchPanel = new SearchPanelController(commonService);
+    window.app.common.wishList = new SearchPanelController(localService)
 
     window.app.buttonSearch = document.getElementById('header-menu-item__search');
     window.app.buttonWishList = document.getElementById('header-menu-item__wish-list');
@@ -113,25 +101,25 @@
 
         var route = app.routes[routeName];
 
-        if (!route.module.controller.started && route.module.controller.init) {
-            route.module.controller.init(searchParams);
+        if (!route.module.started && route.module.init) {
+            route.module.init(searchParams);
         } else if (routeName === '/'){
             window.app.buttonSearch.classList.toggle('active',true);
             window.app.buttonWishList.classList.toggle('active',false);
-            app.common.searchPanel.controller.init();
+            app.common.searchPanel.init();
         }
 
         if (routeName === 'search') {
            // checkCommonModulesControllers(searchParams);
             window.app.buttonSearch.classList.toggle('active',true);
             window.app.buttonWishList.classList.toggle('active',false);
-            window.app.common.searchPanel.controller.init(searchParams);
+            window.app.common.searchPanel.init(searchParams);
         }
 
         if (routeName === 'wishlist'){
             window.app.buttonSearch.classList.toggle('active',false);
             window.app.buttonWishList.classList.toggle('active',true);
-            window.app.common.wishList.controller.init(searchParams);
+            window.app.common.wishList.init(searchParams);
         }
 
     }
