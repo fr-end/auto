@@ -48,14 +48,7 @@
     // CarItem
     var carItemController 	= require('./common/car-item/itemController.js');
 
-    function CarItem(commonService, Controller, events){
-        this.commonService = commonService;
-        this.controller = new Controller(this.commonService, events);
-    }
-
-    var carItem = new CarItem(  autoService,
-                                carItemController,
-                                window.app.library.events );
+    var carItem = new carItemController(  autoService, window.app.library.events );
 
     var router = require('./common/router/router.js');
 
