@@ -8,11 +8,11 @@ module.exports = (function(){
 
     var CarListController  = require('../../catalog/CarList/CarListController.js');
 
-    function Controller(service){
+    function Controller(service, events){
         this.service = service;
         this.view = new View(templates);
         this.started = false;
-        this.carList = new CarListController(  service, app.library.events );
+        this.carList = new CarListController(service, events );
     }
 
     Controller.prototype = {

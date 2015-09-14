@@ -34,10 +34,8 @@
 
     /*compile app*/
     window.app = {};
-    window.app.common = {};
-    window.app.catalog = {};
-    window.app.library = {};
-    window.app.library.events = require('./library/events/events.js');
+
+    var events = require('./library/events/events.js');
 
     var autoService = require('./library/auto/autoService.js');
     var localService = require('./library/local/localService.js');
@@ -48,15 +46,15 @@
     // CarItem
     var carItemController 	= require('./common/car-item/itemController.js');
 
-    var carItem = new carItemController(  autoService, window.app.library.events );
+    var carItem = new carItemController(  autoService, events );
 
     var router = require('./common/router/router.js');
 
     var SearchPanelController = require('./common/search/SearchPanelController.js');
 
-    router.route('/', SearchPanelController,autoService);
-    router.route('search', SearchPanelController,autoService);
-    router.route('wishlist', SearchPanelController,localService);
+    router.route('/', SearchPanelController, autoService, events);
+    router.route('search', SearchPanelController, autoService, events);
+    router.route('wishlist', SearchPanelController, localService, events);
 
 
 })(window);

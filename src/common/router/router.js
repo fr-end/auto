@@ -7,8 +7,8 @@ module.exports = (function(){
     }
 
     Router.prototype = {
-        route: function(path, Controller, params){
-            this.routes[path] = { Controller: Controller, params: params };
+        route: function(path, Controller, params, events){
+            this.routes[path] = { Controller: Controller, params: params, events: events };
         },
         router: function(){
             var hashLessURL = location.hash.slice(1) || '/';
@@ -23,7 +23,7 @@ module.exports = (function(){
 
             var route = this.routes[routeName];
 
-            var routeController = new route.Controller(route.params);
+            var routeController = new route.Controller(route.params, route.events);
 
             routeController.init(searchParams);
 
