@@ -13,6 +13,7 @@ module.exports = (function () {
         data.price.uah = data.price.uah.toFixed(0);
 	    var html = self.template(data);
 	    viewPort.innerHTML = html;
+        return html;
 	};
 
 	View.prototype.bind = function (event, handler) {

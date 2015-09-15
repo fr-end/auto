@@ -78,7 +78,7 @@ module.exports = (function(){
 						page;
 			ajax.get( url, success );
 		},
-		getCar: function ( carId, success ) {
+		getCar0: function ( carId, success ) {
 			//https://auto.ria.com/blocks_search_ajax/view/auto/14356030/?lang_id=2
 			var deferred=Q.defer();
 			var langId = 2;
@@ -88,7 +88,7 @@ module.exports = (function(){
 			ajax.get( url, deferred );
 			return deferred.promise;
 		},		
-		getCar2: function ( carId ) {
+		getCar: function ( carId ) {
 			//https://auto.ria.com/blocks_search_ajax/view/auto/14356030/?lang_id=2
 			var deferred=Q.defer();
 			var langId = 2;
