@@ -15,21 +15,14 @@ module.exports = (function () {
 	Controller.prototype = {
 
 		getCarIDsFromURL: function(searchParams){
-			var self = this;
-			self.service.getCarIds(searchParams).then(function(data){
-				console.log('getCarIDsFromURL');
-				console.log(data);
-				//var carIDs = JSON.parse(data).result.search_result.ids;
-				self.showCars(data);
-			});
+			this.service.getCarIds(searchParams).then((function(data){
+				this.showCars(data);
+			}).bind(this));
 		},
 
 		showCars: function(data) {
-			console.log('showCars');
-			console.log(data);
-			var self = this;
-			self.view.render('showCars', { cars : data });
-			self.events.publish('search ids', data);
+			this.view.render('showCars', { cars : data });
+			this.events.publish('search ids', data);
 		}
 	
 	};
