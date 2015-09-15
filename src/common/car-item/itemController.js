@@ -5,7 +5,7 @@ module.exports = (function(){
     var template	= require('./car-item.handlebars');
 
 
-    function Controller(service, events){
+    function itemController(service, events){
 		this.events = events;
         this.service = service;
         this.view = new View(template);
@@ -26,12 +26,12 @@ module.exports = (function(){
     }
 
 
-    Controller.prototype = {
+    itemController.prototype = {
 		showCar: function(carId){
-			this.service.getCar2(carId)
+			return this.service.getCar(carId)
 				.then((function(data){
 					data.inList = this.inList( carId );
-					this.view.render(data);
+					return this.view.render(data);
 			}).bind(this));
 		},
 		inList: function(carId){
@@ -48,6 +48,6 @@ module.exports = (function(){
 		}
 	};
 
-	return Controller;
+	return itemController;
 
 })();

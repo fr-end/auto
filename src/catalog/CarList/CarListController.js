@@ -1,18 +1,22 @@
 module.exports = (function () {
 
-    var Model       = require('./CarListModel.js');
-    var View        = require('./CarListView.js');
-    var template 	= require('./CarList.handlebars');
+    var CarListModel       = require('./CarListModel.js');
+    var CarListView        = require('./CarListView.js');
+    var templateCarList 	= require('./CarList.handlebars');
 
-	function Controller(service, events) {
+    var Car = require('../../common/car-item/itemController.js');
+
+    var Q = require('../../../node_modules/q/q.js');
+
+	function CarListController(service, events) {
 		var self = this;
 		self.service = service;
-		self.model = new Model(service);
-		self.view = new View(template);;
+		self.model = new CarListModel(service);
+		self.view = new CarListView(templateCarList);;
 		self.events = events;
 	}
 
-	Controller.prototype = {
+    CarListController.prototype = {
 
 		getCarIDsFromURL: function(searchParams){
 			this.service.getCarIds(searchParams).then((function(data){
@@ -20,13 +24,24 @@ module.exports = (function () {
 			}).bind(this));
 		},
 
-		showCars: function(data) {
-			this.view.render('showCars', { cars : data });
-			this.events.publish('search ids', data);
+		showCars: function(carIds) {
+            carGets = [];
+            carIds.forEach((function(carId){
+                var car = new Car(this.service,this.events);
+                carGets.push(car.showCar(carId));
+            }).bind(this));
+            Q.allSettled(carGets)
+                .then(function(data){
+                    console.log('allSettled');
+                    data.forEach(function(item){
+                        console.log(item.value);
+                    });
+                });
+			this.view.render('showCars', { cars : carIds});
 		}
 	
 	};
 
-	return Controller;
+	return CarListController;
 
 })();

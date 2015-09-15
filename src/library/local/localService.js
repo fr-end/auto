@@ -81,8 +81,9 @@ module.exports = (function(){
 			console.log('Deleted car from storage');
 		},	
 		getCar: function ( carId ) {
-			console.log('Getting car');
-			return JSON.parse( localStorage.getItem( carId ) );
+            var deferred=Q.defer();
+            deferred.resolve(JSON.parse( localStorage.getItem( carId ) ));
+            return deferred.promise;
 		},
 		getCategories: function ( username ) {
 			var deferred=Q.defer();
