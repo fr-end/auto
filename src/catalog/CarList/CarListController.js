@@ -33,11 +33,22 @@ module.exports = (function () {
             Q.allSettled(carGets)
                 .then(function(data){
                     console.log('allSettled');
-                    data.forEach(function(item){
-                        console.log(item.value);
+                    var cars=[];
+                    console.log(data,'data');
+                    data.forEach(function(result){
+                        if (result.state === "fulfilled") {
+                            cars.push(result.value);
+                        } else {
+                          //  var reason = result.reason;
+                        }
                     });
-                });
-			this.view.render('showCars', { cars : carIds});
+                    console.log(cars,'cars');
+                    return cars;
+                })
+                .then((function(cars){
+                    console.log(cars,'cars');
+                    this.view.render('showCars', { cars : cars});
+                }).bind(this));
 		}
 	
 	};

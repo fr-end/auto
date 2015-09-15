@@ -1,7 +1,9 @@
 <div class="search-results"> 
 	<ul class="search-results-list">
 	{{#each cars}}
-		<li class="search-results-list__item" data-car-id="{{{this}}}"></li>
+		<li class="search-results-list__item">
+            {{{this}}}
+        </li>
 	{{/each}}
 	</ul>
 	{{#if more}}
