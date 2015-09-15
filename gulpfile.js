@@ -8,6 +8,12 @@ var proxy = require('proxy-middleware');    //  proxy
 var sass = require('gulp-sass');            //  module for SASS->CSS convertion
 var concatCss = require('gulp-concat-css')  //  module for concatenation CSS files into one file
 
+// unit testing
+//var jasminePhantomJs = require('gulp-jasmine2-phantomjs');
+var jasmine = require('gulp-jasmine');
+//var jasmine = require('gulp-jasmine-phantom');
+//var jasmineBrowser = require('gulp-jasmine-browser');
+
 // the config object from gulp.config.js file
 var config = require('./gulp.config.js')();
 
@@ -30,14 +36,14 @@ gulp.task('html', function () {
         .src(config.allhtml)
         .pipe(gulp.dest('./build'))
         .pipe(connect.reload());
-})
+});
 
 gulp.task('img', function () {
     return gulp
         .src(config.allimg)
         .pipe(gulp.dest('./build'))
         .pipe(connect.reload());
-})
+});
 
 gulp.task('css', function () {
     return gulp
@@ -47,6 +53,14 @@ gulp.task('css', function () {
         .pipe(gulp.dest('./build/'))
         .pipe(connect.reload());
 });
+
+
+gulp.task('specs', function(){
+    // Test JS
+    return gulp.src(['specs/js/**/*_spec.js']) //  //'test/*.html' ///*, 'specs/spec/lib/*.js'
+        .pipe(jasmine()); //jasminePhantomJs()
+});
+
 
 gulp.task('js_check', function(){
     log('Analyzing sourse with JSHint and JSCS');   // function at the bottom of our gulpfile.js
@@ -88,7 +102,7 @@ gulp.task('server', function(){
 });
 
 
-gulp.task('default', [ 'html', 'img', 'css', 'browserify', 'server' ], function(){
+gulp.task('default', [ 'html', 'img', 'css', 'specs', 'browserify', 'server' ], function(){
     gulp.watch( config.alljs, ['browserify']);       // Watch for changes in all js files in 'src' folder
     gulp.watch( config.allsass, ['css']);
     gulp.watch( config.allhtml, ['html']);
