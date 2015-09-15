@@ -78,16 +78,6 @@ module.exports = (function(){
 						page;
 			ajax.get( url, success );
 		},
-		getCar0: function ( carId, success ) {
-			//https://auto.ria.com/blocks_search_ajax/view/auto/14356030/?lang_id=2
-			var deferred=Q.defer();
-			var langId = 2;
-			var url = config.autoRiaUaHost + '/blocks_search_ajax/view/auto/'+
-						carId +
-						'/?lang_id=' + langId;
-			ajax.get( url, deferred );
-			return deferred.promise;
-		},		
 		getCar: function ( carId ) {
 			//https://auto.ria.com/blocks_search_ajax/view/auto/14356030/?lang_id=2
 			var deferred=Q.defer();

@@ -4,6 +4,7 @@ module.exports = (function(){
     var View 		= require('./itemView.js');
     var template	= require('./car-item.handlebars');
 
+    var evented = false;
 
     function itemController(service, events){
 		this.events = events;
@@ -16,12 +17,13 @@ module.exports = (function(){
 			}).bind(this));
 		}).bind(this));
 
-		this.view.bind('clickAddToWishListButton',(function(carID){
-			var result = this.toggleWishList(carID);
-			this.view.toggleClass(carID, result);
-		}).bind(this));
-
-
+        if(!evented) {
+            this.view.bind('clickAddToWishListButton', (function (carId) {
+                var result = this.toggleWishList(carId);
+                this.view.toggleClass(carId, result);
+            }).bind(this));
+            evented = true;
+        }
 
     }
 

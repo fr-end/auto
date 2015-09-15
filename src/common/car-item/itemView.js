@@ -8,11 +8,9 @@ module.exports = (function () {
 
 	View.prototype.render = function (data) {
 		var self = this;		
-		var viewPort = document.querySelector('[data-car-id="' + data.carId + '"]');
         data.price.usd = data.price.usd.toFixed(0);
         data.price.uah = data.price.uah.toFixed(0);
 	    var html = self.template(data);
-	    viewPort.innerHTML = html;
         return html;
 	};
 
@@ -21,7 +19,7 @@ module.exports = (function () {
 		var self = this;
 
 		if (event === 'clickAddToWishListButton') {
-			document.body.addEventListener('click', function (evt) {
+            document.body.addEventListener('click', function (evt) {
 				if (evt.target.hasAttribute('data-item-id')){
 					var carID = evt.target.getAttribute('data-item-id');
 					handler(carID);
@@ -32,7 +30,7 @@ module.exports = (function () {
 	};
 
 	View.prototype.toggleClass = function (carId, result){
-		var viewPort = document.querySelector('[data-car-id="' + carId + '"] .item');
+		var viewPort = document.querySelector('.item[data-car-id="' + carId + '"]');
 		viewPort.classList.toggle('in-list', result);
 	};
 

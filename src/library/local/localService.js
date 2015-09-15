@@ -34,7 +34,7 @@ module.exports = (function(){
 			return wishlist.indexOf(carId) !== -1;
 		},
 		addCar: function ( carId, username ) {
-			autoService.getCar2(carId)
+			autoService.getCar(carId)
 				.then(function (data) {
 					var car = data;
 					username = username || 'defaultUser';
