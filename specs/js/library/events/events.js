@@ -33,6 +33,8 @@ module.exports = (function(){
     }
   };
   */
+
+    /*
   return {
 
     subscribers: {
@@ -69,5 +71,5 @@ module.exports = (function(){
    }
 
   }
-
+*/
 })();

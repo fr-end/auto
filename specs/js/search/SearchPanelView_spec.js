@@ -1,25 +1,11 @@
 
-var pathToSrcFolder =   '../../../src/';
 
-var window = {};
-var document = {};
-document.querySelector = function(){
-    return;
-}
+var env = require('./../libs_spec/test_config.js');
 
-var View = require(pathToSrcFolder + 'common/search/SearchPanelView.js')(window, document);
+var View = require(env.closestPathToSrcFolder + 'common/search/SearchPanelView.js')(env.window, env.window.document);
 
-console.log(View);
-// maybe pass somehow window to View func
-
-console.log(expect);
 describe('View', function(){
     /*
-    var document = {};
-    document.querySelector = function(){
-        return;
-    };
-
     var templates = {};
     templates.options = {}
     */

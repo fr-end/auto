@@ -1,4 +1,4 @@
-module.exports = (function (){
+module.exports = function (XMLHttpRequest){
 
 	function getXmlHttp(){
 
@@ -40,5 +40,5 @@ module.exports = (function (){
 
 	return ajax;
 
-}());
+}
 

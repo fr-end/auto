@@ -11,6 +11,7 @@ var concatCss = require('gulp-concat-css')  //  module for concatenation CSS fil
 // unit testing
 //var jasminePhantomJs = require('gulp-jasmine2-phantomjs');
 var jasmine = require('gulp-jasmine');
+var reporters = require('jasmine-reporters');
 //var jasmine = require('gulp-jasmine-phantom');
 //var jasmineBrowser = require('gulp-jasmine-browser');
 
@@ -57,8 +58,11 @@ gulp.task('css', function () {
 
 gulp.task('specs', function(){
     // Test JS
-    return gulp.src(['specs/js/**/*_spec.js']) //  //'test/*.html' ///*, 'specs/spec/lib/*.js'
-        .pipe(jasmine()); //jasminePhantomJs()
+    return gulp.src(['specs/js/**/*_spec.js'])  //'test/*.html' ///*, 'specs/spec/lib/*.js'
+        .pipe(gulpif(args.verbose, gulpprint()))
+        .pipe(jasmine({
+            reporter: new reporters.TerminalReporter()
+        })); //jasminePhantomJs()
 });
 
 
