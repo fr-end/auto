@@ -1,15 +1,13 @@
 
 var env = require('../../libs_spec/test_config.js');
 
-var ajax = require(env.furtherPathToSrcFolder + 'library/ajax/ajax.js')(env.window.XMLHttpRequest);
-
 var JasmineHelpers = require('../../libs_spec/jasmineHelpers.js')();
 //console.log(ajax);
 var xmlhttp = new env.window.XMLHttpRequest();
 
 describe('ajax.', function(){
 
-	spyOn(ajax.get);
+	spyOn(env.library.ajax.get);
 
 	describe('get function', function(){
 
@@ -23,7 +21,7 @@ describe('ajax.', function(){
 				var deffered = env.library.Q.defer();
 				xmlhttp.readyState = 4;
 				xmlhttp.status = 200;
-				ajax.get('some url', deffered);
+				env.library.ajax.get('some url', deffered);
 				JasmineHelpers.deferredSuccess(xmlhttp.responseText);
 			});
 
