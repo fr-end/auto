@@ -4,25 +4,21 @@ module.exports = (function(){
     var View 		= require('./itemView.js');
     var template	= require('./car-item.handlebars');
 
-    var evented = false;
-
     function itemController(service){
         this.service = service;
         this.view = new View(template);
 
-		if(!evented) {
-            this.view.bind('clickAddToWishListButton', (function (carId) {
-                var result = this.toggleWishList(carId);
-                this.view.toggleClass(carId, result);
-            }).bind(this));
-            evented = true;
-        }
+        this.view.bind('clickAddToWishListButton', (function () {
+            var result = this.toggleWishList(this.carId);
+            this.view.toggleClass(this.carId, result);
+        }).bind(this));
 
     }
 
 
     itemController.prototype = {
 		showCar: function(carId){
+            this.carId = carId;
 			return this.service.getCar(carId)
 				.then((function(data){
 					data.inList = this.inList( carId );
