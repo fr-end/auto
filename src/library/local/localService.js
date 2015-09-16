@@ -82,88 +82,65 @@ module.exports = (function(){
 		},	
 		getCar: function ( carId ) {
             var deferred=Q.defer();
-            deferred.resolve(JSON.parse( localStorage.getItem( carId ) ));
+            deferred.resolve(this.readCar(carId));
             return deferred.promise;
 		},
+        readCar: function(carId){
+            return JSON.parse( localStorage.getItem( carId ) );
+        },
 		getCategories: function ( username ) {
 			var deferred=Q.defer();
 			console.log('localStorage-getCategories');
 			username = username || 'defaultUser';
 			var wishlist = JSON.parse( localStorage.getItem( username ));
-            var carsQueue = [];
-			wishlist.forEach((function(carId, i, wishlist){
-                carsQueue.push(this.getCar(carId));
-			}).bind(this));
-            Q.allSettled(carsQueue)
-                .then(function(carsQueue) {
-                    console.log('allSettled');
-                    var cars = [];
-                    console.log(carsQueue, 'data');
-                    carsQueue.forEach(function (result) {
-                        if (result.state === "fulfilled") {
-                            cars.push(result.value);
-                        } else {
-                            //  var reason = result.reason;
-                        }
-                    });
-                    console.log(cars, 'cars');
-                    var categoriesIds = [];
-                    var categories = [];
-                    cars.forEach(function(item){
-                        if (categoriesIds.indexOf(item.categoryId) === -1){
-                            categoriesIds.push(item.categoryId);
-                            var category = {};
-                            category['name'] = item.categoryName;
-                            category['value'] = String(item.categoryId);
-                            categories.push(category);
-                        }
-                    });
-                    var categoriesString = JSON.stringify(categories);
-                    deferred.resolve(categoriesString);
-                });
+			var categoriesIds = [];
+			var categories = [];
+
+			wishlist.forEach(function(carId, i, wishlist){
+				var item = auto.readCar(carId);
+				if (categoriesIds.indexOf(item.categoryId) === -1){
+					categoriesIds.push(item.categoryId);
+					var category = {};
+					category['name'] = item.categoryName;
+					category['value'] = String(item.categoryId);
+					categories.push(category);
+				}
+			});
+			var categoriesString = JSON.stringify(categories);
+			deferred.resolve(categoriesString);
+			console.log(categoriesString);
 			return deferred.promise;
 		},
 		getMarks: function ( categoryId, username ) {
 			var deferred=Q.defer();
 			username = username || 'defaultUser';
-            var wishlist = JSON.parse( localStorage.getItem( username ));
-            var carsQueue = [];
-            wishlist.forEach((function(carId, i, wishlist){
-                carsQueue.push(this.getCar(carId));
-            }).bind(this));
-            Q.allSettled(carsQueue)
-                .then(function(carsQueue){
-                    var cars = [];
-                    carsQueue.forEach(function (result) {
-                        if (result.state === "fulfilled") {
-                            cars.push(result.value);
-                        } else {
-                            //  var reason = result.reason;
-                        }
-                    });
-                    var marksIds= [];
-                    var marks = [];
-                    cars.forEach(function(item){
-                        if ( item.categoryId == categoryId){
-                            if (marksIds.indexOf( item.markaId ) === -1){
-                                marksIds.push(item.markaId);
-                                var marka = {};
-                                marka['name'] = item.markaName;
-                                marka['value'] = String(item.markaId);
-                                marka['count'] = 1;
-                                marks.push(marka);
-                            } else {
-                                marks.some(function (marka) {
-                                    if (marka.value == item.markaId) {
-                                        marka.count += 1;
-                                    }
-                                });
-                            }
-                        }
-                    });
-                    var marksString = JSON.stringify(marks);
-                    deferred.resolve(marksString);
-                });
+			var wishlist = JSON.parse( localStorage.getItem( username ));
+			var marksIds = [];
+			var marks = [];
+
+			wishlist.forEach(function(carId, index){
+				var item = auto.readCar(carId);
+				if ( String(item.categoryId) === categoryId){
+					if (marksIds.indexOf( item.markaId ) === -1){
+						marksIds.push(item.markaId);
+						var marka = {};
+						marka['name'] = item.markaName;
+						marka['value'] = String(item.markaId);
+						marka['count'] = 1;
+						marks.push(marka);
+					} else {
+						marks.some(function (marka) {
+							if (marka.value == item.markaId) {
+								marka.count += 1;
+							}
+						});
+					}
+				}
+
+			});
+			var marksString = JSON.stringify(marks);
+			deferred.resolve(marksString);
+			console.log(marksString);
 			return deferred.promise;
 		},
 		getModels: function ( categoryId, markaId, username ) {
@@ -174,7 +151,7 @@ module.exports = (function(){
 			var models = [];
 
 			wishlist.forEach(function(carId, index){
-				var item = auto.getCar(carId);
+				var item = auto.readCar(carId);
 				if (( String(item.categoryId) === categoryId ) && ( String(item.markaId) === markaId )){
 					if (modelsIds.indexOf( item.modelId ) === -1){
 						modelsIds.push(item.modelId);
@@ -205,7 +182,7 @@ module.exports = (function(){
 			var carsIds = [];
 			if ((searchParams.categoryId)&&(searchParams.markaId)&&(searchParams.modelId)){
 				wishlist.forEach(function(carId, index){
-					var item = auto.getCar(carId);
+					var item = auto.readCar(carId);
 					if (( String(item.categoryId) === searchParams.categoryId ) && 
 						( String(item.markaId) === searchParams.markaId ) &&
 						( String(item.modelId) === searchParams.modelId )){
@@ -213,18 +190,16 @@ module.exports = (function(){
 					}
 				});
 			} else if((searchParams.categoryId)&&(searchParams.markaId)&&(!searchParams.modelId)){
-				wishlist.forEach((function(carId, index){
-					this.getCar(carId)
-                        .then(function(data){
-                            if (( String(item.categoryId) === searchParams.categoryId ) &&
-                                ( String(item.markaId) === searchParams.markaId )){
-                                carsIds.push(String(carId));
-                            }
-                        });
-				}).bind(this));
+				wishlist.forEach(function(carId, index){
+					var item = auto.readCar(carId);
+					if (( String(item.categoryId) === searchParams.categoryId ) && 
+						( String(item.markaId) === searchParams.markaId )){
+							carsIds.push(String(carId));
+					}
+				});
 			} else if((searchParams.categoryId)&&(!searchParams.markaId)&&(!searchParams.modelId)){
 				wishlist.forEach(function(carId, index){
-					var item = auto.getCar(carId);
+					var item = auto.readCar(carId);
 					if ( String(item.categoryId) === searchParams.categoryId ){
 							carsIds.push(carId);
 					}
@@ -239,7 +214,7 @@ module.exports = (function(){
 			var carsCount = 0;
 			if ((searchParams.categoryId)&&(searchParams.markaId)&&(searchParams.modelId)){
 				wishlist.forEach(function(carId, index){
-					var item = auto.getCar(carId);
+					var item = auto.readCar(carId);
 					if (( String(item.categoryId) === searchParams.categoryId ) && 
 						( String(item.markaId) === searchParams.markaId ) &&
 						( String(item.modelId) === searchParams.modelId )){
@@ -249,7 +224,7 @@ module.exports = (function(){
 				return carsCount;
 			} else if((searchParams.categoryId)&&(searchParams.markaId)&&(!searchParams.modelId)){
 				wishlist.forEach(function(carId, index){
-					var item = auto.getCar(carId);
+					var item = auto.readCar(carId);
 					if (( String(item.categoryId) === searchParams.categoryId ) && 
 						( String(item.markaId) === searchParams.markaId )){
 							++carsCount;
@@ -258,7 +233,7 @@ module.exports = (function(){
 				return carsCount;
 			} else if((searchParams.categoryId)&&(!searchParams.markaId)&&(!searchParams.modelId)){
 				wishlist.forEach(function(carId, index){
-					var item = auto.getCar(carId);
+					var item = auto.readCar(carId);
 					if ( String(item.categoryId) === searchParams.categoryId ){
 							++carsCount;
 					}
