@@ -82,9 +82,12 @@ module.exports = (function(){
 		},	
 		getCar: function ( carId ) {
             var deferred=Q.defer();
-            deferred.resolve(JSON.parse( localStorage.getItem( carId ) ));
+            deferred.resolve(this.readCar(carId));
             return deferred.promise;
 		},
+        readCar: function(carId){
+            return JSON.parse( localStorage.getItem( carId ) );
+        },
 		getCategories: function ( username ) {
 			var deferred=Q.defer();
 			console.log('localStorage-getCategories');
@@ -94,7 +97,7 @@ module.exports = (function(){
 			var categories = [];
 
 			wishlist.forEach(function(carId, i, wishlist){
-				var item = auto.getCar(carId);
+				var item = auto.readCar(carId);
 				if (categoriesIds.indexOf(item.categoryId) === -1){
 					categoriesIds.push(item.categoryId);
 					var category = {};
@@ -116,7 +119,7 @@ module.exports = (function(){
 			var marks = [];
 
 			wishlist.forEach(function(carId, index){
-				var item = auto.getCar(carId);
+				var item = auto.readCar(carId);
 				if ( String(item.categoryId) === categoryId){
 					if (marksIds.indexOf( item.markaId ) === -1){
 						marksIds.push(item.markaId);
@@ -148,7 +151,7 @@ module.exports = (function(){
 			var models = [];
 
 			wishlist.forEach(function(carId, index){
-				var item = auto.getCar(carId);
+				var item = auto.readCar(carId);
 				if (( String(item.categoryId) === categoryId ) && ( String(item.markaId) === markaId )){
 					if (modelsIds.indexOf( item.modelId ) === -1){
 						modelsIds.push(item.modelId);
@@ -179,7 +182,7 @@ module.exports = (function(){
 			var carsIds = [];
 			if ((searchParams.categoryId)&&(searchParams.markaId)&&(searchParams.modelId)){
 				wishlist.forEach(function(carId, index){
-					var item = auto.getCar(carId);
+					var item = auto.readCar(carId);
 					if (( String(item.categoryId) === searchParams.categoryId ) && 
 						( String(item.markaId) === searchParams.markaId ) &&
 						( String(item.modelId) === searchParams.modelId )){
@@ -188,7 +191,7 @@ module.exports = (function(){
 				});
 			} else if((searchParams.categoryId)&&(searchParams.markaId)&&(!searchParams.modelId)){
 				wishlist.forEach(function(carId, index){
-					var item = auto.getCar(carId);
+					var item = auto.readCar(carId);
 					if (( String(item.categoryId) === searchParams.categoryId ) && 
 						( String(item.markaId) === searchParams.markaId )){
 							carsIds.push(String(carId));
@@ -196,7 +199,7 @@ module.exports = (function(){
 				});
 			} else if((searchParams.categoryId)&&(!searchParams.markaId)&&(!searchParams.modelId)){
 				wishlist.forEach(function(carId, index){
-					var item = auto.getCar(carId);
+					var item = auto.readCar(carId);
 					if ( String(item.categoryId) === searchParams.categoryId ){
 							carsIds.push(carId);
 					}
@@ -211,7 +214,7 @@ module.exports = (function(){
 			var carsCount = 0;
 			if ((searchParams.categoryId)&&(searchParams.markaId)&&(searchParams.modelId)){
 				wishlist.forEach(function(carId, index){
-					var item = auto.getCar(carId);
+					var item = auto.readCar(carId);
 					if (( String(item.categoryId) === searchParams.categoryId ) && 
 						( String(item.markaId) === searchParams.markaId ) &&
 						( String(item.modelId) === searchParams.modelId )){
@@ -221,7 +224,7 @@ module.exports = (function(){
 				return carsCount;
 			} else if((searchParams.categoryId)&&(searchParams.markaId)&&(!searchParams.modelId)){
 				wishlist.forEach(function(carId, index){
-					var item = auto.getCar(carId);
+					var item = auto.readCar(carId);
 					if (( String(item.categoryId) === searchParams.categoryId ) && 
 						( String(item.markaId) === searchParams.markaId )){
 							++carsCount;
@@ -230,7 +233,7 @@ module.exports = (function(){
 				return carsCount;
 			} else if((searchParams.categoryId)&&(!searchParams.markaId)&&(!searchParams.modelId)){
 				wishlist.forEach(function(carId, index){
-					var item = auto.getCar(carId);
+					var item = auto.readCar(carId);
 					if ( String(item.categoryId) === searchParams.categoryId ){
 							++carsCount;
 					}
