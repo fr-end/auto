@@ -12,7 +12,7 @@ module.exports = (function () {
 		var self = this;
 		self.service = service;
 		self.model = new CarListModel(service);
-		self.view = new CarListView(templateCarList);;
+		self.view = new CarListView(templateCarList);
 		self.events = events;
 	}
 

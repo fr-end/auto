@@ -2,13 +2,12 @@
 var pathToSrcFolder =   '../../../src/';
 
 var window = {};
-window.document = {};
-var document = window.document;
+var document = {};
 document.querySelector = function(){
     return;
 }
 
-var View = require(pathToSrcFolder + 'common/search/SearchPanelView.js');
+var View = require(pathToSrcFolder + 'common/search/SearchPanelView.js')(window, document);
 
 console.log(View);
 // maybe pass somehow window to View func
@@ -26,8 +25,8 @@ describe('View', function(){
     */
     var templates = {template1: 1};
     var view = new View(templates/*, document*/);
-    it('should have templates prperty', function(){
-        expect(true).toBeTruthy(true);
+    it('should have templates property', function(){
+        expect(view.templates).toBeTruthy();
     });
 });
 

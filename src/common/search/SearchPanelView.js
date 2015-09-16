@@ -1,5 +1,5 @@
 
-module.exports = (function() {
+module.exports = function(window, document) {
 
     function View(templates) {
 
@@ -90,4 +90,4 @@ module.exports = (function() {
  
 
     return View;
-})();
+}

@@ -1,6 +1,6 @@
 module.exports = (function(){
 
-    var View 			= require('./SearchPanelView.js');
+    var View 			= require('./SearchPanelView.js')(window, window.document);
     var templates		= {
         options: 			require('./templates/options.handlebars'),
         optionsWithCount: 	require('./templates/optionsWithCount.handlebars')
