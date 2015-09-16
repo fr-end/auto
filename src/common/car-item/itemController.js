@@ -6,18 +6,11 @@ module.exports = (function(){
 
     var evented = false;
 
-    function itemController(service, events){
-		this.events = events;
+    function itemController(service){
         this.service = service;
         this.view = new View(template);
 
-		this.events.subscribe('search ids', (function(ids){
-			ids.forEach((function (carId) {
-				this.showCar(carId);
-			}).bind(this));
-		}).bind(this));
-
-        if(!evented) {
+		if(!evented) {
             this.view.bind('clickAddToWishListButton', (function (carId) {
                 var result = this.toggleWishList(carId);
                 this.view.toggleClass(carId, result);
