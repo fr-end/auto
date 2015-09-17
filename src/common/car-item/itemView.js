@@ -1,6 +1,8 @@
 module.exports = (function () {
 
-	function View(template) {
+    var template	= require('./car-item.handlebars');
+
+	function View() {
 		this.template = template;
         this.viewPortSelector = undefined;
         this.$viewPort = undefined;

@@ -1,7 +1,13 @@
-
 module.exports = (function() {
 
-    function View(templates) {
+    var templates		= {
+        self:               require('./templates/searchPanel.handlebars'),
+        options: 			require('./templates/options.handlebars'),
+        optionsWithCount: 	require('./templates/optionsWithCount.handlebars')
+    };
+
+
+    function View() {
 
         this.templates = templates;
         this.init();
