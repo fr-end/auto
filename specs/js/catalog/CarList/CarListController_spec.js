@@ -2,8 +2,19 @@ var env = require('../../libs_spec/test_config.js');
 
 describe('CarListController',function(){
     var Q = env.library.Q;
-    var localStorage = {};
-//    var CarList = require(env.furtherPathToSrcFolder+'catalog/CarList/CarListController.js')(localStorage);
+    var localStorage = {
+        getItem: function(){
+
+        },
+        setItem: function(){
+
+        },
+        removeItem: function(){
+            
+        }
+    };
+    var XMLHttpRequest = {};
+    var CarList = require(env.furtherPathToSrcFolder+'catalog/CarList/CarListController.js')(localStorage, XMLHttpRequest);
     var events = {};
     var service = {
         getCarIds: function (searchParams, username) {

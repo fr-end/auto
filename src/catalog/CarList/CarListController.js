@@ -1,9 +1,9 @@
-module.exports = function (localStorage) {
+module.exports = function (localStorage, XMLHttpRequest) {
 
     var Model       = require('./CarListModel.js');
     var View        = require('./CarListView.js');
 
-    var Car = require('../../common/car-item/itemController.js')(localStorage);
+    var Car = require('../../common/car-item/itemController.js')(localStorage, XMLHttpRequest);
 
     var Q = require('../../../node_modules/q/q.js');
 
