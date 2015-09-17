@@ -37,8 +37,10 @@ module.exports = (function () {
         },
 
 		showCars: function(carIds) {
+            if(!Array.isArray(carIds))throw new Error('carIds is not Array in CarListController.showCars');
             carGets = [];
             carIds.forEach((function(carId){
+                if(isNaN(+carId))throw new Error('carIds must contain Array of numbers in CarListController.showCars');
                 var car = new Car(this.service,this.events);
                 carGets.push(car.showCar(carId));
             }).bind(this));
