@@ -1,16 +1,18 @@
 module.exports = (function () {
 
-	function View(template) {
-		var self = this;
-		self.template = template;
-		self.loading = 'loading...';
+    var template 	= require('./CarList.handlebars');
+
+	function View() {
+
+        this.template = template;
+        this.loading = 'loading...';
 
 		var viewPortElement = document.querySelector('[class="search-results"]');
 
 		if (viewPortElement instanceof HTMLElement) {
-			self.viewPort = viewPortElement;
+            this.$viewPort = viewPortElement;
 		} else {
-			self.viewPort = document.createDocumentFragment();
+            this.$viewPort = document.createDocumentFragment();
 		}
 	}
 
@@ -20,14 +22,14 @@ module.exports = (function () {
 
 		var viewCommands = {
 			showLoading : function() {
-				self.viewPort.innerHTML = self.loading;
+				self.$viewPort.innerHTML = self.loading;
 			},
 			showCars : function(data){
 				console.log('render data');
 				console.dir(data);
 				console.log('viewPort');
 				console.dir(self.viewPort);
-				self.viewPort.innerHTML = self.template(data);
+				self.$viewPort.innerHTML = self.template(data);
 			}
 
     	};

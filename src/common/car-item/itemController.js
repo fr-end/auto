@@ -1,12 +1,11 @@
 module.exports = (function(){
 
 	var localService = require('../../library/local/localService');
-    var View 		= require('./itemView.js');
-    var template	= require('./car-item.handlebars');
+    var ItemView 		= require('./itemView.js');
 
-    function itemController(service){
+    function ItemController(service){
         this.service = service;
-        this.view = new View(template);
+        this.view = new ItemView();
 
         this.view.bind('clickAddToWishListButton', (function () {
             var result = this.toggleWishList(this.carId);
@@ -16,7 +15,7 @@ module.exports = (function(){
     }
 
 
-    itemController.prototype = {
+    ItemController.prototype = {
 		showCar: function(carId){
             this.carId = carId;
 			return this.service.getCar(carId)
@@ -39,6 +38,6 @@ module.exports = (function(){
 		}
 	};
 
-	return itemController;
+	return ItemController;
 
 })();

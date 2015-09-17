@@ -2,18 +2,16 @@ module.exports = (function () {
 
     var CarListModel       = require('./CarListModel.js');
     var CarListView        = require('./CarListView.js');
-    var templateCarList 	= require('./CarList.handlebars');
 
     var Car = require('../../common/car-item/itemController.js');
 
     var Q = require('../../../node_modules/q/q.js');
 
 	function CarListController(service, events) {
-		var self = this;
-		self.service = service;
-		self.model = new CarListModel(service);
-		self.view = new CarListView(templateCarList);;
-		self.events = events;
+        this.service = service;
+        this.model = new CarListModel(service);
+        this.view = new CarListView();
+        this.events = events;
 	}
 
     CarListController.prototype = {
