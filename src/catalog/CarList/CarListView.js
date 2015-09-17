@@ -1,4 +1,4 @@
-module.exports = (function () {
+module.exports = function (document) {
 
     var template 	= require('./CarList.handlebars');
 
@@ -45,4 +45,4 @@ module.exports = (function () {
 
 	return View;
 
-})();
+};

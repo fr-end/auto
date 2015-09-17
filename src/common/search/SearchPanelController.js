@@ -3,7 +3,7 @@ module.exports = (function(){
 
     var View 			= require('./SearchPanelView.js')(window, window.document);
 
-    var CarList  = require('../../catalog/CarList/CarListController.js')(localStorage, XMLHttpRequest);
+    var CarList  = require('../../catalog/CarList/CarListController.js')(document, localStorage, XMLHttpRequest);
 
     function Controller(service, events){
         this.service = service;
