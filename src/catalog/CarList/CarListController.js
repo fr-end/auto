@@ -12,6 +12,10 @@ module.exports = (function () {
         this.model = new Model(service);
         this.view = new View();
         this.events = events;
+
+        this.view.bind("showNextPage",(function(){
+            this.getNextCars();
+        }).bind(this));
 	}
 
     CarListController.prototype = {
