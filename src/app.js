@@ -38,13 +38,13 @@
     var events = require('./library/events/events.js');
 
     var autoService = require('./library/auto/autoService.js')(XMLHttpRequest);
-    var localService = require('./library/local/localService.js')(localStorage);
+    var localService = require('./library/local/localService.js')(localStorage,XMLHttpRequest);
 
     window.app.buttonSearch = document.getElementById('header-menu-item__search');
     window.app.buttonWishList = document.getElementById('header-menu-item__wish-list');
 
     // CarItem
-    var carItemController 	= require('./common/car-item/itemController.js')(localStorage);
+    var carItemController 	= require('./common/car-item/itemController.js')(localStorage,XMLHttpRequest);
 
     var carItem = new carItemController(  autoService, events );
 

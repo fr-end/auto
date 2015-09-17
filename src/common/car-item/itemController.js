@@ -1,6 +1,6 @@
-module.exports = function(localStorage){
+module.exports = function(localStorage, XMLHttpRequest){
 
-	var localService = require('../../library/local/localService')(localStorage);
+	var localService = require('../../library/local/localService')(localStorage, XMLHttpRequest);
     var View 		= require('./itemView.js');
 
     function ItemController(service){

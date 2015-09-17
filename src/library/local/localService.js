@@ -1,4 +1,4 @@
-module.exports = function(localStorage){
+module.exports = function(localStorage,XMLHttpRequest){
 
 	var autoService = require('../auto/autoService')(XMLHttpRequest);
 	var Q = require('../../../node_modules/q/q.js');
