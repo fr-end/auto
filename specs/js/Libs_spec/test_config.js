@@ -6,9 +6,6 @@ env.window.document.querySelector = function(){
     return;
 }
 
-var window = {};
-
-
 env.closestPathToSrcFolder = '../../../src/';
 env.furtherPathToSrcFolder = '../../../../src/';
 env.closestPathToNodeModules = '../../../node_modules/';
@@ -41,7 +38,7 @@ env.window.XMLHttpRequest = function(){
 env.library = {};
 env.library.Q = require(env.closestPathToNodeModules + 'q/q.js');
 env.library.ajax = require( env.closestPathToSrcFolder + 'library/ajax/ajax.js')(env.window.XMLHttpRequest);
-env.library.commonService = require( env.closestPathToSrcFolder + 'library/auto/autoService.js')(env.library.ajax, env.library.Q);
+env.library.commonService = require( env.closestPathToSrcFolder + 'library/auto/autoService.js');
 
 
 env.deferredSuccess = function (args) {

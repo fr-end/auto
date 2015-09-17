@@ -1,13 +1,15 @@
 //https://auto.ria.com/api/categories
 
-var config = {
-	autoRiaUaHost: '/proxy'
-};
 
-var ajax = require('../../library/ajax/ajax.js');
-var Q = require('../../../node_modules/q/q.js');
 
-module.exports = function(ajax, Q){
+module.exports = (function(){
+
+    var config = {
+        autoRiaUaHost: '/proxy'
+    };
+
+    var ajax = require('../../library/ajax/ajax.js');
+    var Q = require('../../../node_modules/q/q.js');
 
 	var auto = {
 		getCategories: function () {
@@ -129,6 +131,6 @@ module.exports = function(ajax, Q){
 
 	return auto;
 
-};
+})();
 
 

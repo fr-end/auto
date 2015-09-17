@@ -58,7 +58,7 @@ gulp.task('css', function () {
 
 gulp.task('specs', function(){
     // Test JS
-    return gulp.src(['specs/js/Libs_spec/*.js', 'specs/js/**/*_spec.js'])  //'test/*.html' ///*, 'specs/spec/lib/*.js'
+    return gulp.src(['specs/js/**/*_spec.js'])  //'test/*.html' ///*, 'specs/spec/lib/*.js'
         .pipe(gulpif(args.verbose, gulpprint()))
         .pipe(jasmine({
             reporter: new reporters.TerminalReporter()

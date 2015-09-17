@@ -39,11 +39,11 @@ describe('ajax.', function(){
 		});
 
 		describe('after successful request', function(){
-			console.log(deferred)
-			var xmlhttp = new env.window.XMLHttpRequest();
-			xmlhttp.readyState = 4;
-			xmlhttp.status = 200;
-			xmlhttp.responseText = someJSONData;
+			//console.log(deferred)
+			//var xmlhttp = new env.window.XMLHttpRequest();
+			//xmlhttp.readyState = 4;
+			//xmlhttp.status = 200;
+			//xmlhttp.responseText = someJSONData;
 			//xmlhttp.onreadystatechange(url1, deferred);
 
 			it('should call deferred.resolve response text', function(){
