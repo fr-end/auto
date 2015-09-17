@@ -33,7 +33,8 @@ module.exports = (function () {
 	};
 
 	View.prototype.toggleClass = function (carId, result){
-		document.querySelector(this.viewPortSelector).classList.toggle('in-list', result);
+        this.$viewPort = this.$viewPort || document.querySelector(this.viewPortSelector);
+        this.$viewPort.classList.toggle('in-list', result);
 	};
 
 	return View;

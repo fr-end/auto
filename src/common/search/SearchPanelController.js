@@ -2,6 +2,7 @@ module.exports = (function(){
 
     var View 			= require('./SearchPanelView.js');
     var templates		= {
+        self:               require('./templates/searchPanel.handlebars'),
         options: 			require('./templates/options.handlebars'),
         optionsWithCount: 	require('./templates/optionsWithCount.handlebars')
     };
@@ -17,6 +18,7 @@ module.exports = (function(){
 
     Controller.prototype = {
 		init: function(searchParams){
+            this.view.render('self');
 			console.log('searchPanel-init');
 			searchParams = searchParams || {};
 			var self = this;
