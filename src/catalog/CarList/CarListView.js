@@ -39,7 +39,7 @@ module.exports = (function () {
 
 	View.prototype.bind = function (event, handler) {
         if(event === "showNextPage"){
-            this.$viewPort.addEventListener("click",handler);
+            //this.$viewPort.addEventListener("click",handler);
         }
 	};
 

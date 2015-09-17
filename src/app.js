@@ -37,7 +37,7 @@
 
     var events = require('./library/events/events.js');
 
-    var autoService = require('./library/auto/autoService.js');
+    var autoService = require('./library/auto/autoService.js')(XMLHttpRequest);
     var localService = require('./library/local/localService.js');
 
     window.app.buttonSearch = document.getElementById('header-menu-item__search');

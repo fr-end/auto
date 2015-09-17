@@ -1,20 +1,36 @@
+/* globals describe it */
+
+var pathToSrcFolder =   '../../../../src/';
+/*
+var View 			= require('./SearchPanelView.js');
+var templates		= {
+	options: 			require('./templates/options.handlebars'),
+	optionsWithCount: 	require('./templates/optionsWithCount.handlebars')
+};
+
+var CarListController  = require('../../catalog/CarList/CarListController.js');
+
+*/
+/*
 module.exports = (function(){
 
+    var View 			= require('./SearchPanelView.js');
+    var templates		= {
+        options: 			require('./templates/options.handlebars'),
+        optionsWithCount: 	require('./templates/optionsWithCount.handlebars')
+    };
 
-    var View 			= require('./SearchPanelView.js')(window, window.document);
-
-    var CarList  = require('../../catalog/CarList/CarListController.js');
+    var CarListController  = require('../../catalog/CarList/CarListController.js');
 
     function Controller(service, events){
         this.service = service;
-        this.view = new View();
+        this.view = new View(templates);
         this.started = false;
-        this.carList = new CarList(service, events);
+        this.carList = new CarListController(service, events );
     }
 
     Controller.prototype = {
 		init: function(searchParams){
-            this.view.render('self');
 			console.log('searchPanel-init');
 			searchParams = searchParams || {};
 			var self = this;
@@ -106,27 +122,6 @@ module.exports = (function(){
 
 		}
 	};
-	/*
-	Controller.prototype.setView = function (locationHash) {
-		var self = this;
-
-		var route = locationHash.split('/')[1];
-		var page = route || '';
-		self._updateFilterState(page);
-	};
-
-	Controller.prototype._updateFilterState = function (currentPage) {
-		// Store a reference to the active route, allowing us to re-filter todo
-		// items as they are marked complete or incomplete.
-		this._activeRoute = currentPage;
-
-		if (currentPage === '') {
-			this._activeRoute = 'All';
-		}
-
-		this.view.render('setFilter', currentPage);
-	};
-	*/
 
 	return Controller;
-})();
+})();*/
