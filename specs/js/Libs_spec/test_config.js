@@ -12,6 +12,13 @@ env.closestPathToSrcFolder = '../../../src/';
 env.furtherPathToSrcFolder = '../../../../src/';
 env.closestPathToNodeModules = '../../../node_modules/';
 
+
+
+env.library = {};
+env.library.Q = require(env.closestPathToNodeModules + 'q/q.js');
+env.library.ajax = require( env.closestPathToSrcFolder + 'library/ajax/ajax.js')(env.window.XMLHttpRequest);
+env.library.commonService = require( env.closestPathToSrcFolder + 'library/auto/autoService.js')(env.library.ajax, env.library.Q);
+
 env.window.XMLHttpRequest = function(){
     var self = this;
 
@@ -25,7 +32,7 @@ env.window.XMLHttpRequest = function(){
     this.onreadystatechange = function(url, deffered){
         if (self.readyState === 4) {
             if(self.status === 200) {
-                deferred.resolve(xmlhttp.responseText);
+                deferred.resolve(self.responseText);
             } else {
                 deferred.reject('error');
             }
@@ -37,9 +44,17 @@ env.window.XMLHttpRequest = function(){
     }
 };
 
-env.library = {};
-env.library.Q = require(env.closestPathToNodeModules + 'q/q.js');
-env.library.ajax = require( env.closestPathToSrcFolder + 'library/ajax/ajax.js')(env.window.XMLHttpRequest);
-env.library.commonService = require( env.closestPathToSrcFolder + 'library/auto/autoService.js')(env.library.ajax, env.library.Q);
+env.deferredSuccess = function (args) {
+        var deferred = Q.defer();
+        deferred.resolve(args);
+        return deferred.promise();
+};
+
+env.deferredFailure = function (args) {
+    var deferred = Q.defer();
+    deferred.reject(args);
+    return deferred.promise();
+};
+
 
 module.exports = env;

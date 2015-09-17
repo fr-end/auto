@@ -1,10 +1,10 @@
 
 var env = require('../../libs_spec/test_config.js');
 
-var JasmineHelpers = require('../../libs_spec/jasmineHelpers.js')();
-
-console.log(JasmineHelpers.deferredSuccess);
-
+//var JasmineHelpers = require('../../libs_spec/jasmineHelpers.js')();
+//
+//console.log(JasmineHelpers.deferredSuccess);
+/*
 describe('commonService', function(){
 
     spyOn(env.library.ajax.get);
@@ -15,7 +15,7 @@ describe('commonService', function(){
 
     it('should have getCategories function', function(){
         expect(env.library.commonService.getCategories).toEqual(jasmine.any(Function));
-        //expect(commonService.getCategories).not.toThrow();
+        //expect(env.library.commonService.getCategories).not.toThrow();
     });
 
     describe('getCategories function', function(){
@@ -31,6 +31,7 @@ describe('commonService', function(){
     });
 
 });
+*/
 
 //module.exports = (function(){
 //
@@ -50,6 +51,6 @@ describe('commonService', function(){
 //            ajax.get( url, deferred );
 //            console.log("autoService-getCategories");
 //            return deferred.promise;
-//        },
+//        }
 //      return auto;
 //})();
