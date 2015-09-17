@@ -3,24 +3,29 @@ module.exports = (function() {
 
     function View(templates) {
 
-        var self = this;
-
-        self.templates = templates;
-
-        self.$searchForm        = document.querySelector('[data-search=form]');
-        self.$selectCategory    = document.querySelector('[data-select=category]');
-        self.$selectMark        = document.querySelector('[data-select=mark]');
-        self.$selectModel       = document.querySelector('[data-select=model]');
+        this.templates = templates;
+        this.init();
 
     }
-    /*
-    View.prototype.init = function(){
 
+    View.prototype.init = function(){
+        this.$viewPort              = document.querySelector('.search');
+        this.$searchForm        = document.querySelector('[data-search=form]');
+        this.$selectCategory    = document.querySelector('[data-select=category]');
+        this.$selectMark        = document.querySelector('[data-select=mark]');
+        this.$selectModel       = document.querySelector('[data-select=model]');
     };
-    */
+
     View.prototype.render = function (viewCmd, data) {
         var self = this;
         var viewCommands = {
+            self: function (data) {
+                var html = self.templates.self(data);
+                var selfFragment = document.createElement('div');
+                selfFragment.innerHTML = html;
+                self.$viewPort.parentNode.replaceChild(selfFragment.firstElementChild,self.$viewPort);
+                self.init();
+            },
             showCategories: function (data) {
                 self.$selectCategory.innerHTML = self.templates.options({default: 'Любой', items: data});
             },
