@@ -2,6 +2,14 @@ var env = require('../../libs_spec/test_config.js');
 
 describe('CarListController',function(){
     var Q = env.library.Q;
+    var document = {
+        querySelector: function(){
+
+        },
+        createDocumentFragment: function(){
+
+        }
+    };
     var localStorage = {
         getItem: function(){
 
@@ -10,11 +18,11 @@ describe('CarListController',function(){
 
         },
         removeItem: function(){
-            
+
         }
     };
     var XMLHttpRequest = {};
-    var CarList = require(env.furtherPathToSrcFolder+'catalog/CarList/CarListController.js')(localStorage, XMLHttpRequest);
+    //var CarList = require(env.furtherPathToSrcFolder+'catalog/CarList/CarListController.js')(document, localStorage, XMLHttpRequest);
     var events = {};
     var service = {
         getCarIds: function (searchParams, username) {
@@ -25,11 +33,10 @@ describe('CarListController',function(){
         }
     };
 
-/*    beforeEach(function(){
-        var carList = new CarList(service,events);
+    beforeEach(function(){
+        //var carList = new CarList(service,events);
     });
 
-    */
 
     it('true expect to be true', function(){
         expect(true).toBe(true);

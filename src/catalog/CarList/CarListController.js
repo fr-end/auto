@@ -1,7 +1,7 @@
-module.exports = function (localStorage, XMLHttpRequest) {
+module.exports = function (document, localStorage, XMLHttpRequest) {
 
     var Model       = require('./CarListModel.js');
-    var View        = require('./CarListView.js');
+    var View        = require('./CarListView.js')(document);
 
     var Car = require('../../common/car-item/itemController.js')(localStorage, XMLHttpRequest);
 
