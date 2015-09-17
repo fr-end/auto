@@ -17,10 +17,20 @@ module.exports = (function () {
     CarListController.prototype = {
 
 		getCarIDsFromURL: function(searchParams){
-			this.service.getCarIds(searchParams).then((function(data){
-				this.showCars(data);
-			}).bind(this));
+            this.model.setSearchParams(searchParams);
+            this.getCarIds();
 		},
+
+        getNextCars: function(){
+            this.model.nextPage();
+            this.getCarIds();
+        },
+
+        getCarIds: function(){
+            this.service.getCarIds(this.model.getSearchParams()).then((function(data){
+                this.showCars(data);
+            }).bind(this));
+        },
 
 		showCars: function(carIds) {
             carGets = [];
