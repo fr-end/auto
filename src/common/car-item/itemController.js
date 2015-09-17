@@ -1,11 +1,11 @@
 module.exports = (function(){
 
 	var localService = require('../../library/local/localService');
-    var ItemView 		= require('./itemView.js');
+    var View 		= require('./itemView.js');
 
     function ItemController(service){
         this.service = service;
-        this.view = new ItemView();
+        this.view = new View();
 
         this.view.bind('clickAddToWishListButton', (function () {
             var result = this.toggleWishList(this.carId);

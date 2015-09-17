@@ -1,14 +1,14 @@
 module.exports = (function(){
 
-    var View 			= require('./SearchPanelView.js');
+    var View 	 = require('./SearchPanelView.js');
 
-    var CarListController  = require('../../catalog/CarList/CarListController.js');
+    var CarList  = require('../../catalog/CarList/CarListController.js');
 
     function Controller(service, events){
         this.service = service;
         this.view = new View();
         this.started = false;
-        this.carList = new CarListController(service, events );
+        this.carList = new CarList(service, events);
     }
 
     Controller.prototype = {
