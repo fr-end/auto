@@ -1,6 +1,6 @@
-module.exports = (function(){
+module.exports = function(localStorage){
 
-	var localService = require('../../library/local/localService');
+	var localService = require('../../library/local/localService')(localStorage);
     var View 		= require('./itemView.js');
 
     function ItemController(service){
@@ -40,4 +40,4 @@ module.exports = (function(){
 
 	return ItemController;
 
-})();
+};

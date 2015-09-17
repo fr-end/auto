@@ -1,9 +1,9 @@
-module.exports = (function () {
+module.exports = function (localStorage) {
 
     var Model       = require('./CarListModel.js');
     var View        = require('./CarListView.js');
 
-    var Car = require('../../common/car-item/itemController.js');
+    var Car = require('../../common/car-item/itemController.js')(localStorage);
 
     var Q = require('../../../node_modules/q/q.js');
 
@@ -69,4 +69,4 @@ module.exports = (function () {
 
 	return CarListController;
 
-})();
+};

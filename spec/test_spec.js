@@ -8,7 +8,7 @@ var searchPanelTemplates		= {
 };
 var SearchPanelController 		= require('../src/common/search/SearchPanelController.js');
 */
-var commonService = require('../src/library/auto/autoService.js');
+var commonService = require('../src/library/auto/autoService.js')(XMLHttpRequest);
 
 
 /*
