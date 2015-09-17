@@ -1,7 +1,7 @@
 module.exports = (function () {
 
-    var CarListModel       = require('./CarListModel.js');
-    var CarListView        = require('./CarListView.js');
+    var Model       = require('./CarListModel.js');
+    var View        = require('./CarListView.js');
 
     var Car = require('../../common/car-item/itemController.js');
 
@@ -9,8 +9,8 @@ module.exports = (function () {
 
 	function CarListController(service, events) {
         this.service = service;
-        this.model = new CarListModel(service);
-        this.view = new CarListView();
+        this.model = new Model(service);
+        this.view = new View();
         this.events = events;
 	}
 
