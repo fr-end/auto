@@ -1,16 +1,21 @@
 module.exports = (function () {
 
-	function View(template) {
-		var self = this;
-		self.template = template;
+    var template	= require('./car-item.handlebars');
 
+	function View() {
+		this.template = template;
+        this.viewPortSelector = undefined;
+        this.$viewPort = undefined;
+        this.inListSelector = undefined;
+        this.$inList = undefined;
 	}
 
 	View.prototype.render = function (data) {
-		var self = this;		
         data.price.usd = data.price.usd.toFixed(0);
         data.price.uah = data.price.uah.toFixed(0);
-	    var html = self.template(data);
+        this.viewPortSelector = '.item[data-car-id="' + data.carId + '"]';
+        this.inListSelector = this.viewPortSelector + ' .item-header-like';
+	    var html = this.template(data);
         return html;
 	};
 
@@ -19,19 +24,19 @@ module.exports = (function () {
 		var self = this;
 
 		if (event === 'clickAddToWishListButton') {
-            document.body.addEventListener('click', function (evt) {
-				if (evt.target.hasAttribute('data-item-id')){
-					var carID = evt.target.getAttribute('data-item-id');
-					handler(carID);
+            document.body.addEventListener('click', (function (evt) {
+                this.$inList = this.$inList || document.querySelector(this.inListSelector);
+                if (evt.target === this.$inList){
+					handler();
 				}
-			});
+			}).bind(this));
 		}
 
 	};
 
 	View.prototype.toggleClass = function (carId, result){
-		var viewPort = document.querySelector('.item[data-car-id="' + carId + '"]');
-		viewPort.classList.toggle('in-list', result);
+        this.$viewPort = this.$viewPort || document.querySelector(this.viewPortSelector);
+        this.$viewPort.classList.toggle('in-list', result);
 	};
 
 	return View;

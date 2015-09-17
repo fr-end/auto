@@ -1,22 +1,20 @@
 module.exports = (function(){
 
-    var View 			= require('./SearchPanelView.js')(window, window.document);
-    var templates		= {
-        options: 			require('./templates/options.handlebars'),
-        optionsWithCount: 	require('./templates/optionsWithCount.handlebars')
-    };
 
-    var CarListController  = require('../../catalog/CarList/CarListController.js');
+    var View 			= require('./SearchPanelView.js')(window, window.document);
+
+    var CarList  = require('../../catalog/CarList/CarListController.js');
 
     function Controller(service, events){
         this.service = service;
-        this.view = new View(templates);
+        this.view = new View();
         this.started = false;
-        this.carList = new CarListController(service, events );
+        this.carList = new CarList(service, events);
     }
 
     Controller.prototype = {
 		init: function(searchParams){
+            this.view.render('self');
 			console.log('searchPanel-init');
 			searchParams = searchParams || {};
 			var self = this;

@@ -2,13 +2,13 @@
 
 
 
-module.exports = (function(){
+module.exports = function(XMLHttpRequest){
 
     var config = {
         autoRiaUaHost: '/proxy'
     };
 
-    var ajax = require('../../library/ajax/ajax.js');
+    var ajax = require('../../library/ajax/ajax.js')(XMLHttpRequest);
     var Q = require('../../../node_modules/q/q.js');
 
 	var auto = {
@@ -131,6 +131,6 @@ module.exports = (function(){
 
 	return auto;
 
-})();
+};
 
 

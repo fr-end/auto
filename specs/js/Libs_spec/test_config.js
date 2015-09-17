@@ -38,7 +38,7 @@ env.window.XMLHttpRequest = function(){
 env.library = {};
 env.library.Q = require(env.closestPathToNodeModules + 'q/q.js');
 env.library.ajax = require( env.closestPathToSrcFolder + 'library/ajax/ajax.js')(env.window.XMLHttpRequest);
-env.library.commonService = require( env.closestPathToSrcFolder + 'library/auto/autoService.js');
+env.library.commonService = require( env.closestPathToSrcFolder + 'library/auto/autoService.js')(env.window.XMLHttpRequest);
 
 
 env.deferredSuccess = function (args) {

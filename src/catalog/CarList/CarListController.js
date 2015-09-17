@@ -1,28 +1,40 @@
 module.exports = (function () {
 
-    var CarListModel       = require('./CarListModel.js');
-    var CarListView        = require('./CarListView.js');
-    var templateCarList 	= require('./CarList.handlebars');
+    var Model       = require('./CarListModel.js');
+    var View        = require('./CarListView.js');
 
     var Car = require('../../common/car-item/itemController.js');
 
     var Q = require('../../../node_modules/q/q.js');
 
 	function CarListController(service, events) {
-		var self = this;
-		self.service = service;
-		self.model = new CarListModel(service);
-		self.view = new CarListView(templateCarList);
-		self.events = events;
+        this.service = service;
+        this.model = new Model(service);
+        this.view = new View();
+        this.events = events;
+
+        this.view.bind("showNextPage",(function(){
+            this.getNextCars();
+        }).bind(this));
 	}
 
     CarListController.prototype = {
 
 		getCarIDsFromURL: function(searchParams){
-			this.service.getCarIds(searchParams).then((function(data){
-				this.showCars(data);
-			}).bind(this));
+            this.model.setSearchParams(searchParams);
+            this.getCarIds();
 		},
+
+        getNextCars: function(){
+            this.model.nextPage();
+            this.getCarIds();
+        },
+
+        getCarIds: function(){
+            this.service.getCarIds(this.model.getSearchParams()).then((function(data){
+                this.showCars(data);
+            }).bind(this));
+        },
 
 		showCars: function(carIds) {
             carGets = [];
