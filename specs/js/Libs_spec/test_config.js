@@ -45,13 +45,13 @@ env.library.commonService = require( env.closestPathToSrcFolder + 'library/auto/
 env.deferredSuccess = function (args) {
         var deferred = env.library.Q.defer();
         deferred.resolve(args);
-        return deferred.promise();
+        return deferred.promise; // might be deferred.promise();
 };
 
 env.deferredFailure = function (args) {
     var deferred = env.library.Q.defer();
     deferred.reject(args);
-    return deferred.promise();
+    return deferred.promise;
 };
 
 
