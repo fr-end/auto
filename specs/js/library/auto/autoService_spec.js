@@ -1,37 +1,60 @@
 
 var env = require('../../libs_spec/test_config.js');
 
-//var JasmineHelpers = require('../../libs_spec/jasmineHelpers.js')();
-//
-//console.log(JasmineHelpers.deferredSuccess);
-/*
+//console.log(env.library.commonService);
+
 describe('commonService', function(){
 
-    spyOn(env.library.ajax.get);
-
-    beforeEach(function(){
-        env.library.ajax.get('some url', 'some promise');
-    });
 
     it('should have getCategories function', function(){
         expect(env.library.commonService.getCategories).toEqual(jasmine.any(Function));
-        //expect(env.library.commonService.getCategories).not.toThrow();
+        expect(env.library.commonService.getCategories).not.toThrow();
+    });
+
+    it('should have getMarks function', function(){
+        expect(env.library.commonService.getMarks).toEqual(jasmine.any(Function));
+        expect(env.library.commonService.getMarks).not.toThrow();
     });
 
     describe('getCategories function', function(){
 
-        it('should call ajax.get function', function(){
+        var url = 'some url';
+
+        var deferred;
+        var someJSONData = '{"method":"GET", "url":"some url", "boolean":"true"}';
+
+        beforeEach(function(){
+            deferred = env.library.Q.defer();
+            spyOn(env.library.ajax, 'get'); //.and.stub(deferred.resolve(someJSONData)); .and.returnValue(deferred.resolve(someJSONData));
+        });
+
+        afterEach(function(){
+            deferred = null;
+            env.library.ajax.get.calls.reset();
+        });
+
+        it('should call ajax.get function once', function(){
+
+            env.library.ajax.get('some url', deferred);
+
             expect(env.library.ajax.get).toHaveBeenCalled();
+            expect(env.library.ajax.get.calls.count()).toEqual(1);
         });
 
         it('should return deferred.promise object', function(){
 
+            env.library.ajax.get('some url', deferred);
+
+            //console.log(env.library.commonService.getCategories());
+            //console.log(deferred.promise);
+
+            //expect(env.library.commonService.getCategories()).toEqual(deferred.promise)
         });
 
     });
 
 });
-*/
+
 
 //module.exports = (function(){
 //

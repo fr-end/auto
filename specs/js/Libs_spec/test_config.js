@@ -17,7 +17,8 @@ env.window.XMLHttpRequest = function(){
     this.status = 100500;
 
     this.open = function(method, url, boolean){
-        self.responseText = '{' + '"method":"' + method + ',"url":"' + url + ',"boolean":"' + boolean +'"}';
+        //self.responseText = '{' + '"method":"' + method + ',"url":"' + url + ',"boolean":"' + boolean +'"}';
+        self.responseText = '{"method":"GET", "url":"some url", "boolean":"true"}';
     };
 
     this.onreadystatechange = function(url, deffered){
@@ -42,13 +43,13 @@ env.library.commonService = require( env.closestPathToSrcFolder + 'library/auto/
 
 
 env.deferredSuccess = function (args) {
-        var deferred = Q.defer();
+        var deferred = env.library.Q.defer();
         deferred.resolve(args);
         return deferred.promise();
 };
 
 env.deferredFailure = function (args) {
-    var deferred = Q.defer();
+    var deferred = env.library.Q.defer();
     deferred.reject(args);
     return deferred.promise();
 };
