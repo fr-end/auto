@@ -106,7 +106,7 @@ gulp.task('server', function(){
 });
 
 
-gulp.task('default', [ 'html', 'img', 'css', 'specs', 'browserify', 'server' ], function(){
+gulp.task('default', [ 'html', 'img', 'css', 'browserify', 'server' ], function(){
     gulp.watch( config.alljs, ['browserify']);       // Watch for changes in all js files in 'src' folder
     gulp.watch( config.allsass, ['css']);
     gulp.watch( config.allhtml, ['html']);

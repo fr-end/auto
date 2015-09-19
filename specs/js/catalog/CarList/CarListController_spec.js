@@ -22,7 +22,7 @@ describe('CarListController',function(){
         }
     };
     var XMLHttpRequest = {};
-    //var CarList = require(env.furtherPathToSrcFolder+'catalog/CarList/CarListController.js')(document, localStorage, XMLHttpRequest);
+    var CarList = require(env.furtherPathToSrcFolder+'catalog/CarList/CarListController.js')(document, localStorage, XMLHttpRequest);
     var events = {};
     var service = {
         getCarIds: function (searchParams, username) {
