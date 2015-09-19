@@ -130,7 +130,7 @@ module.exports = function(localStorage,XMLHttpRequest){
 						marks.push(marka);
 					} else {
 						marks.some(function (marka) {
-							if (marka.value == item.markaId) {
+							if (String(marka.value) === String(item.markaId)) {
 								marka.count += 1;
 							}
 						});
@@ -162,7 +162,7 @@ module.exports = function(localStorage,XMLHttpRequest){
 						models.push(model);
 					} else {
 						models.some(function (model) {
-							if (model.value == item.modelId) {
+							if (String(model.value) === String(item.modelId)) {
 								model.count += 1;
 							}
 						});
@@ -204,7 +204,9 @@ module.exports = function(localStorage,XMLHttpRequest){
 							carsIds.push(carId);
 					}
 				});
-			} else carsIds = wishlist;
+			} else {
+                carsIds = wishlist;
+            }
 			deferred.resolve(carsIds);
 			return deferred.promise;
 		},

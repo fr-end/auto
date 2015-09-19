@@ -70,7 +70,7 @@ module.exports = function(window, document) {
     };
 
     View.prototype.setParams = function(params){
-        this.$selectCategory
+        var dum = 1;
     };
 
     View.prototype.getParams = function(){
@@ -100,4 +100,4 @@ module.exports = function(window, document) {
  
 
     return View;
-}
+};

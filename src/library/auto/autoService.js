@@ -18,7 +18,7 @@ module.exports = function(XMLHttpRequest){
 			var langId = 2;
 			var url = config.autoRiaUaHost + '/api/categories?langId=' + langId;
 			ajax.get( url, deferred );
-			console.log("autoService-getCategories");
+			console.log('autoService-getCategories');
 			return deferred.promise;
 		},
 		getMarks: function ( categoryId) {

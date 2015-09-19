@@ -24,7 +24,7 @@ module.exports = (function(){
 					console.log(data);
 					var categoriesArray = JSON.parse(data);
 					categoriesArray.forEach(function(item){
-						if(item.value == searchParams.categoryId){
+						if(String(item.value) === String(searchParams.categoryId)){
 							item.selected = true;
 						}
 					});
@@ -55,10 +55,10 @@ module.exports = (function(){
 				.then(function(data){
 					var marks = JSON.parse(data);
 					marks.forEach(function(item){
-						if(item.value == searchParams.markaId){
+						if(String(item.value) === String(searchParams.markaId)){
 							item.selected = true;
 						}
-					})
+					});
 					self.view.render('showMarks', marks);
 					self.loadModels(searchParams);
 			});
@@ -75,10 +75,10 @@ module.exports = (function(){
 					console.log('getModels');
 					console.log(data);
 					models.forEach(function(item){
-						if(item.value == searchParams.modelId){
+						if(String(item.value) === String(searchParams.modelId)){
 							item.selected = true;
 						}
-					})
+					});
 					self.view.render('showModels', models);
             });
 		},

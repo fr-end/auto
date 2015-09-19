@@ -34,11 +34,12 @@ module.exports = function (XMLHttpRequest){
 			            }
 			        }
 			    };
-	      		xmlhttp.send(null);			
+	      		xmlhttp.send(null);
+                return xmlhttp;
 			}
 	};
 
 	return ajax;
 
-}
+};
 
