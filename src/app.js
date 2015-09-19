@@ -43,11 +43,6 @@
     window.app.buttonSearch = document.getElementById('header-menu-item__search');
     window.app.buttonWishList = document.getElementById('header-menu-item__wish-list');
 
-    // CarItem
-    var carItemController 	= require('./common/car-item/itemController.js')(localStorage,XMLHttpRequest);
-
-    var carItem = new carItemController(  autoService, events );
-
     var router = require('./common/router/router.js');
 
     var SearchPanelController = require('./common/search/SearchPanelController.js');

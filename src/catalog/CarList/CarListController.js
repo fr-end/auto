@@ -13,7 +13,7 @@ module.exports = function (document, localStorage, XMLHttpRequest) {
         this.view = new View();
         this.events = events;
 
-        this.view.bind("showNextPage",(function(){
+        this.view.bind('showNextPage',(function(){
             this.getNextCars();
         }).bind(this));
 	}
@@ -37,10 +37,14 @@ module.exports = function (document, localStorage, XMLHttpRequest) {
         },
 
 		showCars: function(carIds) {
-            if(!Array.isArray(carIds))throw new Error('carIds is not Array in CarListController.showCars');
-            carGets = [];
+            if(!Array.isArray(carIds)){
+                throw new Error('carIds is not Array in CarListController.showCars');
+            }
+            var carGets = [];
             carIds.forEach((function(carId){
-                if(isNaN(+carId))throw new Error('carIds must contain Array of numbers in CarListController.showCars');
+                if(isNaN(+carId)){
+                    throw new Error('carIds must contain Array of numbers in CarListController.showCars');
+                }
                 var car = new Car(this.service,this.events);
                 carGets.push(car.showCar(carId));
             }).bind(this));
@@ -50,10 +54,8 @@ module.exports = function (document, localStorage, XMLHttpRequest) {
                     var cars=[];
                     console.log(data,'data');
                     data.forEach(function(result){
-                        if (result.state === "fulfilled") {
+                        if (result.state === 'fulfilled') {
                             cars.push(result.value);
-                        } else {
-                          //  var reason = result.reason;
                         }
                     });
                     console.log(cars,'cars');

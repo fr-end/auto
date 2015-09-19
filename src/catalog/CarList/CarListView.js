@@ -38,8 +38,9 @@ module.exports = function (document) {
 	};
 
 	View.prototype.bind = function (event, handler) {
-        if(event === "showNextPage"){
-            //this.$viewPort.addEventListener("click",handler);
+        if(event === 'showNextPage'){
+           // this.$viewPort.querySelector('.search-results__more').addEventListener("click",handler);
+            var dum = 1;
         }
 	};
 
