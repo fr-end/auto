@@ -1,4 +1,4 @@
-module.exports = function (XMLHttpRequest){
+module.exports = function (XMLHttpRequest, Q){
 
 	function getXmlHttp(){
 
@@ -22,8 +22,10 @@ module.exports = function (XMLHttpRequest){
 
 	var ajax = {
 		get: 
-			function (url,deferred) {
+			function (url) {
+				var deferred = Q.defer();
 				var xmlhttp = getXmlHttp();
+
 				xmlhttp.open('GET', url, true);
 		      	xmlhttp.onreadystatechange = function() {
 			        if (xmlhttp.readyState === 4) {
@@ -35,7 +37,7 @@ module.exports = function (XMLHttpRequest){
 			        }
 			    };
 	      		xmlhttp.send(null);
-                return xmlhttp;
+                return deferred.promise;
 			}
 	};
 

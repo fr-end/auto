@@ -2,7 +2,7 @@
 var env = require('../../libs_spec/test_config.js');
 
 //console.log(env.library.commonService);
-
+/*
 describe('commonService', function(){
 
 
@@ -54,7 +54,7 @@ describe('commonService', function(){
     });
 
 });
-
+*/
 
 //module.exports = (function(){
 //
