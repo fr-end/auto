@@ -1,22 +1,22 @@
 
 //var Q;
-
-
+//
+//
 //Q = function(){};
 //
 //Q.prototype.defer = function(){
 //	console.log('in Q.prototype.defer');
-//	deferred = this;
 //
-//	this.prototype.resolve = function(){
+//	var deferred = function(){};
+//	deferred.prototype.resolve = function(){
 //		this.resolved = true;
 //	};
-//	this.prototype.reject = function(){
+//	deferred.prototype.reject = function(){
 //		this.rejected = true;
 //	};
-//	this.prototype.promise = {};
+//	deferred.prototype.promise = {};
 //
-//	return this;
+//	return deferred;
 //};
 
 
