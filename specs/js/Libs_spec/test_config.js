@@ -8,14 +8,12 @@ env.window.document.querySelector = function(){
 
 env.closestPathToSrcFolder = '../../../src/';
 env.furtherPathToSrcFolder = '../../../../src/';
-env.closestPathToNodeModules = '../../../node_modules/';
 
 env.library = {};
-env.library.Q = require(env.closestPathToNodeModules + 'q/q.js');
+env.library.Q = require('q');
 
-env.library.commonService = require( env.closestPathToSrcFolder + 'library/auto/autoService.js')(env.window.XMLHttpRequest);
-
-
+//env.library.commonService = require( env.closestPathToSrcFolder + 'library/auto/autoService.js')(env.window.XMLHttpRequest);
+/*
 env.deferredSuccess = function (args) {
         var deferred = env.library.Q.defer();
         deferred.resolve(args);
@@ -28,5 +26,5 @@ env.deferredFailure = function (args) {
     return deferred.promise;
 };
 
-
+*/
 module.exports = env;
