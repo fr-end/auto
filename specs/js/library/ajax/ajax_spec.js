@@ -23,11 +23,8 @@ Q.reject = function(){
 	Q.rejected = true;
 };
 
-Q.then = function(data){
-	return data
-};
-
 Q.promise = {
+	then: function(data){return data},
 	resolved: Q.resolved,
 	rejected: Q.rejected
 };
