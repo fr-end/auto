@@ -1,30 +1,9 @@
 module.exports = function (XMLHttpRequest, Q){
 
-	function getXmlHttp(){
-
-		var xmlhttp;
-		try {
-		  xmlhttp = new ActiveXObject('Msxml2.XMLHTTP');
-		} catch (e) {
-		  try {
-		    xmlhttp = new ActiveXObject('Microsoft.XMLHTTP');
-		  } catch (E) {
-		    xmlhttp = false;
-		  }
-		}
-		if (!xmlhttp && typeof XMLHttpRequest!=='undefined') {
-		  xmlhttp = new XMLHttpRequest();
-		}
-
-		return xmlhttp;
-
-	}
-
 	var ajax = {
-		get: 
-			function (url) {
+		getPromise: function (url) {
 				var deferred = Q.defer();
-				var xmlhttp = getXmlHttp();
+				var xmlhttp = new XMLHttpRequest();
 
 				xmlhttp.open('GET', url, true);
 		      	xmlhttp.onreadystatechange = function() {

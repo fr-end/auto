@@ -14,7 +14,7 @@ module.exports = function(XMLHttpRequest){
 			//https://auto.ria.com/api/categories?langId=2
 			var langId = 2;
 			var url = config.autoRiaUaHost + '/api/categories?langId=' + langId;
-			return ajax.get(url);
+			return ajax.getPromise(url);
 		},
 		getMarks: function ( categoryId) {
 			//https://auto.ria.com/api/categories/1/marks/_with_active_ads/_with_count
@@ -23,7 +23,7 @@ module.exports = function(XMLHttpRequest){
 						'/marks' + 
 						'/_with_active_ads' + 
 						'/_with_count';
-			return ajax.get(url);
+			return ajax.getPromise(url);
 		},		
 		getModels: function ( categoryId, markaId ) {
 			//https://auto.ria.com/api/categories/1/marks/98/models/_with_count
@@ -32,7 +32,7 @@ module.exports = function(XMLHttpRequest){
 						'/marks/' + markaId +
 						'/models/' +
 						'/_with_count';
-			return ajax.get(url);
+			return ajax.getPromise(url);
 		},
 		getCarIds: function ( searchParams ) {
 			//https://auto.ria.com/blocks_search_ajax/search/?category_id=1&state[]=0&s_yers[]=0&po_yers[]=0&currency=1&marka_id[0]=98&model_id[0]=953&countpage=10
@@ -48,7 +48,7 @@ module.exports = function(XMLHttpRequest){
 						'&model_id[0]=' + searchParams.modelId +
 						'&countpage='   + searchParams.countPage +
 						page;
-			return ajax.get(url).then(function(data){
+			return ajax.getPromise(url).then(function(data){
 				var carIDs = JSON.parse(data).result.search_result.ids;
 				return carIDs;
 			});
@@ -67,7 +67,7 @@ module.exports = function(XMLHttpRequest){
 						'&model_id[0]=' + searchParams.modelId +
 						'&countpage='   + searchParams.countPage +
 						page;
-			ajax.get( url, success );
+			ajax.getPromise( url, success );
 		},
 		getCar: function ( carId ) {
 			//https://auto.ria.com/blocks_search_ajax/view/auto/14356030/?lang_id=2
@@ -75,7 +75,7 @@ module.exports = function(XMLHttpRequest){
 			var url = config.autoRiaUaHost + '/blocks_search_ajax/view/auto/'+
 						carId +
 						'/?lang_id=' + langId;
-			return ajax.get(url).then(function (data) {
+			return ajax.getPromise(url).then(function (data) {
 						var carInfo = JSON.parse(data);
 						var autoData = carInfo.result.auto_data;
 						var imgUrl = carInfo.result.photo_data.photo ? carInfo.result.photo_data.photo.url : '';
