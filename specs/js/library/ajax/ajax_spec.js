@@ -1,32 +1,29 @@
-
 var Q;
-var deferred;
-Q = function(){};
 
+Q = {};
 
 Q.defer = function(){
+
+	var deferred = this;
+
+	this.resolve = function(){
+		console.log('in Deferred.resolve');
+		deferred.resolved = true;
+	};
+	this.reject = function(){
+		console.log('in Deferred.reject');
+		deferred.rejected = true;
+	};
+
+	this.promise = {
+		then: function(data){return data},
+		resolved: deferred.resolved,
+		rejected: deferred.rejected
+	};
+
+	//console.log(deferred);
 	//console.log('in Q.defer');
-	return Q;
-};
-
-Q.resolved = false;
-
-Q.resolve = function(){
-	console.log('in Q.resolve');
-	Q.resolved = true;
-};
-
-Q.rejected = false;
-
-Q.reject = function(){
-	console.log('in Q.reject');
-	Q.rejected = true;
-};
-
-Q.promise = {
-	then: function(data){return data},
-	resolved: Q.resolved,
-	rejected: Q.rejected
+	return deferred;
 };
 
 var env = require('../../libs_spec/test_config.js');
@@ -37,32 +34,10 @@ describe('ajax.', function(){
 	var ajax;
 	var url1 = 'some url1';
 	var someJSONData = '{"method":"GET", "url":"some url", "boolean":"true"}';
-	//var deferred;
+	var deferred;
 	var promise;
 	var XMLHttpRequest;
 	var xmlHttpInstance;
-
-	XMLHttpRequest = function(){};
-	XMLHttpRequest.prototype.open = function(method, url, boolean){
-		xmlHttpInstance = this;
-		xmlHttpInstance.opened = true;
-		//self.responseText = '{' + '"method":"' + method + ',"url":"' + url + ',"boolean":"' + boolean +'"}';
-		xmlHttpInstance.responseText = someJSONData;
-	};
-
-	XMLHttpRequest.prototype.onreadystatechange = function(){
-		if (this.readyState === 4) {
-			if(this.status === 200) {
-				Q.resolve(this.responseText);
-			} else {
-				Q.reject('error');
-			}
-		}
-	};
-
-	XMLHttpRequest.prototype.send = function(){
-		return;
-	};
 
 	describe('get function', function(){
 
@@ -70,33 +45,61 @@ describe('ajax.', function(){
 
 			beforeEach(function() {
 
+				XMLHttpRequest = function(){
+
+					var xmlHttpInstance = this;
+
+					this.open = function(method, url, boolean){
+						xmlHttpInstance.opened = true;
+						//self.responseText = '{' + '"method":"' + method + ',"url":"' + url + ',"boolean":"' + boolean +'"}';
+						xmlHttpInstance.responseText = someJSONData;
+					};
+/*
+					this.onreadystatechange = function(){
+						if (xmlHttpInstance.readyState === 4) {
+							if(xmlHttpInstance.status === 200) {
+								console.log('status 200')
+								deferred.resolve(this.responseText);
+							} else {
+								console.log('status is not 200')
+								deferred.reject('error');
+							}
+						}
+					};
+*/
+					this.send = function(){
+						return;
+					};
+
+					//console.log('in XMLHttpRequest', this);
+
+					return this;
+				};
+
 				// why this spy isn't working?
-				spyOn(Q, 'defer');
+                spyOn(Q, 'defer');
 
 				ajax = require( env.furtherPathToSrcFolder + 'library/ajax/ajax.js')(XMLHttpRequest, Q);
-				spyOn(ajax, 'get');
 
-				ajax.get(url1);
+				spyOn(ajax, 'getPromise');
+				
+				ajax.getPromise(url1);
 			});
 
 			it('should exists and not throw exeptions', function(){
-				expect(ajax.get).toEqual(jasmine.any(Function));
+				expect(ajax.getPromise).toEqual(jasmine.any(Function));
 			});
 
 			it('should not throw exeptions', function(){
-				expect(ajax.get).not.toThrow();
+				expect(ajax.getPromise).not.toThrow();
 			});
 
 			it('should be called once', function(){
-				expect(ajax.get.calls.count()).toEqual(1);
+				expect(ajax.getPromise.calls.count()).toEqual(1);
 			});
 
 			it('should be called with some url', function(){
-				expect(ajax.get).toHaveBeenCalledWith(jasmine.any(String));
-			});
-
-			it('Q library should have defer function', function(){
-				expect(Q.defer).toEqual(jasmine.any(Function));
+				expect(ajax.getPromise).toHaveBeenCalledWith(jasmine.any(String));
 			});
 
 			it('Q library should have defer function', function(){
@@ -115,18 +118,37 @@ describe('ajax.', function(){
 
 		describe('after successful request', function(){
 
-
 			beforeEach(function(){
 
+				XMLHttpRequest = function(){
 
-				XMLHttpRequest.prototype.status = 200;
-				XMLHttpRequest.prototype.readyState = 4;
+					xmlHttpInstance = this;
+
+					this.open = function(method, url, boolean){
+						//console.log('in xmlHttpInstance.open() function')
+						xmlHttpInstance.opened = true;
+						//self.responseText = '{' + '"method":"' + method + ',"url":"' + url + ',"boolean":"' + boolean +'"}';
+						xmlHttpInstance.responseText = someJSONData;
+
+					};
+
+					this.send = function(){
+						return;
+					};
+
+					//console.log('in XMLHttpRequest', this)
+
+				};
 
 				ajax = require( env.furtherPathToSrcFolder + 'library/ajax/ajax.js')(XMLHttpRequest, Q);
 
 				//spyOn(deferred, 'resolve');
 
-				promise = ajax.get(url1);
+				promise = ajax.getPromise(url1);
+
+				xmlHttpInstance.status = 200;
+				xmlHttpInstance.readyState = 4;
+				//console.log('xmlHttpInstance.onreadystatechange', xmlHttpInstance.onreadystatechange);
 
 				//console.log('beforeEach "after successful request" running...')
 			});
@@ -159,7 +181,8 @@ describe('ajax.', function(){
 			it('should return resolved promise object', function(){
 
 
-				console.log(' resolved promise from ajax.get', promise);
+				//console.log(' resolved promise from ajax.getPromise', promise);
+
 				//console.log('promise.isPending()',promise.isPending())
 				//console.log('promise.isRejected()',promise.isRejected())
 				//console.log('promise.isFulfilled()',promise.isFulfilled())
@@ -177,18 +200,19 @@ describe('ajax.', function(){
 		describe('after unsuccessful request', function(){
 
 			beforeEach(function() {
-				XMLHttpRequest.prototype.status = 100500;
-				XMLHttpRequest.prototype.readyState = 4;
+				XMLHttpRequest.status = 100500;
+				XMLHttpRequest.readyState = 4;
 
 				ajax = require( env.furtherPathToSrcFolder + 'library/ajax/ajax.js')(XMLHttpRequest, Q);
 
-				promise = ajax.get(url1);
+				promise = ajax.getPromise(url1);
 			});
 
 
 			it('should return rejected promise object', function(){
 
-				console.log(' rejected promise from ajax.get', promise);
+				//console.log(' rejected promise from ajax.getPromise', promise);
+
 				//console.log('promise.isPending()',promise.isPending())
 				//console.log('promise.isRejected()',promise.isRejected())
 				//console.log('promise.isFulfilled()',promise.isFulfilled())
