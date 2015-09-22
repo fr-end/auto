@@ -28,7 +28,7 @@
     var bodyTemplate            = require('./body.handlebars');
     var bodyHtml                = bodyTemplate(data);
 
-    document.body.innerHTML     = bodyHtml;    
+    document.body.innerHTML     = bodyHtml;
 
     // describe classes for modules
 
@@ -51,5 +51,11 @@
     router.route('search', SearchPanelController, autoService, events);
     router.route('wishlist', SearchPanelController, localService, events);
 
+    // for testing serverNode
+    var Q = require('q');
+    var ajax = require('./library/ajax/ajax.js')(XMLHttpRequest, Q);
+    console.log(ajax);
+    ajax.getPromise('/db').then(function(data){console.log(data);})
+    // end testing serverNode
 
 })(window);
