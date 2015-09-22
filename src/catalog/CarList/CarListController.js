@@ -24,12 +24,10 @@ module.exports = function (document, localStorage, XMLHttpRequest) {
             this.view.render('showLoading');
             this.getCarIds()
                 .then((this.getCarPromices).bind(this))
-                .then((this.showCars).bind(this))
-                .then((this.getNextCars).bind(this));
+                .then((this.showCars).bind(this));
 		},
 
         getNextCars: function(){
-            console.log('getNextCars');
             this.view.render('showAddLoading');
             this.model.nextPage();
             this.getCarIds()

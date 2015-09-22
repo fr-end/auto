@@ -16,7 +16,7 @@ module.exports = function (document) {
 		if (viewPortElement instanceof HTMLElement) {
             this.$viewPort = viewPortElement;
 		} else {
-            this.$viewPort = document.createElement("div");
+            this.$viewPort = document.createElement('div');
 		}
 	}
 
