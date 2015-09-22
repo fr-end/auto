@@ -6,23 +6,22 @@ module.exports = function(localStorage, XMLHttpRequest){
     function ItemController(service){
         this.service = service;
         this.view = new View();
-
         this.view.bind('clickAddToWishListButton', (function () {
             var result = this.toggleWishList(this.carId);
             this.view.toggleClass(this.carId, result);
         }).bind(this));
-
     }
 
 
     ItemController.prototype = {
 		showCar: function(carId){
             this.carId = carId;
-			return this.service.getCar(carId)
+			var promise = this.service.getCar(carId)
 				.then((function(data){
 					data.inList = this.inList( carId );
 					return this.view.render(data);
 			}).bind(this));
+            return promise;
 		},
 		inList: function(carId){
 			return localService.inList(carId);

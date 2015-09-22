@@ -12,7 +12,6 @@ module.exports = function (document, localStorage, XMLHttpRequest) {
         this.model = new Model(service);
         this.view = new View();
         this.events = events;
-
         this.view.bind('showNextPage',(function(){
             this.getNextCars();
         }).bind(this));
@@ -22,51 +21,73 @@ module.exports = function (document, localStorage, XMLHttpRequest) {
 
 		getCarIDsFromURL: function(searchParams){
             this.model.setSearchParams(searchParams);
-            this.getCarIds();
+            this.view.render('showLoading');
+            this.getCarIds()
+                .then((this.getCarPromices).bind(this))
+                .then((this.showCars).bind(this))
+                .then((this.getNextCars).bind(this));
 		},
 
         getNextCars: function(){
+            console.log('getNextCars');
+            this.view.render('showAddLoading');
             this.model.nextPage();
-            this.getCarIds();
+            this.getCarIds()
+                .then((this.getCarPromices).bind(this))
+                .then((this.showAddCars).bind(this));
         },
 
         getCarIds: function(){
-            this.view.render('showLoading');
-            this.service.getCarIds(this.model.getSearchParams()).then((function(data){
-                this.showCars(data);
-            }).bind(this));
+            return this.service.getCarIds(this.model.getSearchParams());
         },
 
-		showCars: function(carIds) {
+        getCarPromices: function(carIds){
             if(!Array.isArray(carIds)){
                 throw new Error('carIds is not Array in CarListController.showCars');
             }
-            var carGets = [];
+            var carPromises = [];
             carIds.forEach((function(carId){
                 if(isNaN(+carId)){
                     throw new Error('carIds must contain Array of numbers in CarListController.showCars');
                 }
                 var car = new Car(this.service,this.events);
-                carGets.push(car.showCar(carId));
+                var carPromise = car.showCar(carId);
+                carPromises.push(carPromise);
             }).bind(this));
-            Q.allSettled(carGets)
-                .then(function(data){
-                    console.log('allSettled');
-                    var cars=[];
-                    console.log(data,'data');
-                    data.forEach(function(result){
+            return carPromises;
+        },
+
+        showCars: function(carPromises) {
+            Q.allSettled(carPromises)
+                .then(function(carPromises){
+                    var carHtmls = [];
+                    carPromises.forEach(function(result){
                         if (result.state === 'fulfilled') {
-                            cars.push(result.value);
+                            carHtmls.push(result.value);
                         }
                     });
-                    console.log(cars,'cars');
-                    return cars;
+                    return carHtmls;
                 })
-                .then((function(cars){
-                    console.log(cars,'cars');
-                    this.view.render('showCars', { cars : cars});
+                .then((function(carHtmls){
+                    this.view.render('showCars', { cars : carHtmls});
                 }).bind(this));
-		}
+        },
+        showAddCars: function(carPromises) {
+            Q.allSettled(carPromises)
+                .then(function(carPromises){
+                    var carHtmls = [];
+                    carPromises.forEach(function(result){
+                        if (result.state === 'fulfilled') {
+                            carHtmls.push(result.value);
+                        }
+                    });
+                    return carHtmls;
+                })
+                .then((function(carHtmls){
+                    this.view.render('showAddCars', { cars : carHtmls});
+                    this.view.render('hideAddLoading');
+                }).bind(this));
+        }
 	
 	};
 

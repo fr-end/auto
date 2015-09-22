@@ -207,7 +207,8 @@ module.exports = function(localStorage,XMLHttpRequest){
 			} else {
                 carsIds = wishlist;
             }
-			deferred.resolve(carsIds);
+            searchParams.page = searchParams.page || 0;
+			deferred.resolve(carsIds.slice(searchParams.page*10, searchParams.page*10+9));
 			return deferred.promise;
 		},
 		getCarCount: function ( searchParams, username  ) {

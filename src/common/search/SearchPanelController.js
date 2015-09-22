@@ -15,13 +15,10 @@ module.exports = (function(){
     Controller.prototype = {
 		init: function(searchParams){
             this.view.render('self');
-			console.log('searchPanel-init');
 			searchParams = searchParams || {};
 			var self = this;
 			self.service.getCategories()
 				.then((function(searchParams, data){
-					console.log('getCategories data');
-					console.log(data);
 					var categoriesArray = JSON.parse(data);
 					categoriesArray.forEach(function(item){
 						if(String(item.value) === String(searchParams.categoryId)){
