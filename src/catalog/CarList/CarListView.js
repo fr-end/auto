@@ -1,10 +1,13 @@
 module.exports = function (document) {
 
-    var template 	= require('./CarList.handlebars');
+    var templates = {
+            self : require('./CarList.handlebars'),
+            loading : require('../../common/loading/loading-window.handlebars')
+        }
 
 	function View() {
 
-        this.template = template;
+        this.templates = templates;
         this.loading = 'loading...';
 
 		var viewPortElement = document.querySelector('[class="search-results"]');
@@ -12,7 +15,7 @@ module.exports = function (document) {
 		if (viewPortElement instanceof HTMLElement) {
             this.$viewPort = viewPortElement;
 		} else {
-            this.$viewPort = document.createDocumentFragment();
+            this.$viewPort = document.createElement("div");
 		}
 	}
 
@@ -22,14 +25,14 @@ module.exports = function (document) {
 
 		var viewCommands = {
 			showLoading : function() {
-				self.$viewPort.innerHTML = self.loading;
+				self.$viewPort.innerHTML = self.templates.loading();
 			},
 			showCars : function(data){
 				console.log('render data');
 				console.dir(data);
 				console.log('viewPort');
 				console.dir(self.viewPort);
-				self.$viewPort.innerHTML = self.template(data);
+				self.$viewPort.innerHTML = self.templates.self(data);
 			}
 
     	};
@@ -39,7 +42,7 @@ module.exports = function (document) {
 
 	View.prototype.bind = function (event, handler) {
         if(event === 'showNextPage'){
-           // this.$viewPort.querySelector('.search-results__more').addEventListener("click",handler);
+            this.$viewPort.querySelector('.search-results__more').addEventListener("click",handler);
             var dum = 1;
         }
 	};

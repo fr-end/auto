@@ -31,6 +31,7 @@ module.exports = function (document, localStorage, XMLHttpRequest) {
         },
 
         getCarIds: function(){
+            this.view.render('showLoading');
             this.service.getCarIds(this.model.getSearchParams()).then((function(data){
                 this.showCars(data);
             }).bind(this));
