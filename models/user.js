@@ -1,5 +1,5 @@
 var mongoose = require('mongoose');
-var createdDate = require('../plugins/createdDate');
+//var createdDate = require('../plugins/createdDate');
 var validEmail = require('../helpers/validate/email');
 
 var schema = mongoose.Schema({
@@ -7,14 +7,15 @@ var schema = mongoose.Schema({
     , name: { first: String, last: String }
     , salt: { type: String, required: true }
     , hash: { type: String, required: true }
+    , created: { type: Date, default: Date.now }
 });
 
 // add created date property
-schema.plugin(createdDate);
+//schema.plugin(createdDate);
 
 // properties that do not get saved to the db
-schema.virtual('fullname').get(function () {
-    return this.name.first + ' ' + this.name.last;
-});
+//schema.virtual('fullname').get(function () {
+//    return this.name.first + ' ' + this.name.last;
+//});
 
 module.exports = mongoose.model('User', schema);

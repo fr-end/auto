@@ -15,6 +15,7 @@ mongoose.connect('mongodb://localhost:27017/auto', function (err) {
 
     var server = http.createServer(function (request, response) {
 
+        //User.create(user);
         User.findById("email@e.mail", function(err, user){
 
             var output = '';
@@ -30,8 +31,6 @@ mongoose.connect('mongodb://localhost:27017/auto', function (err) {
             response.end();
 
         });
-
-
 
     });
 
