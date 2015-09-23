@@ -63,7 +63,7 @@ module.exports = function (document) {
         if(event === 'showNextPage'){
             document.addEventListener('click',(function(evt){
                 this.$more = this.$more || document.querySelector(this.moreSelector);
-                if (evt.target === this.$more){
+                if (evt.target === this.$more || evt.target.parentElement == this.$more){
                     handler();
                 }
             }).bind(this));
