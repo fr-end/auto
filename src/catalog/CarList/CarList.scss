@@ -13,7 +13,21 @@
 	}
 
 	&__more {
+		cursor: pointer;
+		width: 250px;
+		margin: 20px auto;
 
+		&:hover {
+			color: #91cf26;
+		}
+	}
+
+	&__button {
+		display: inline-block;
+		height: 22px;
+		width: 32px;
+		margin-bottom: -3px;
+		background: url(img/sprite.png) 0 130px;
 	}
 }
 
