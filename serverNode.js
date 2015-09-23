@@ -1,4 +1,5 @@
 
+var util = require('util');
 var mongoose = require('mongoose');
 //var express = require('express');
 
@@ -9,7 +10,23 @@ var http = require('http');
 
 var port = 8888;
 
-mongoose.connect('mongodb://localhost:27017/auto', function (err) {
+var auth = {
+    user: 'fr-end',
+    pass: '<!!yourPassGoesHere!!>',
+    host: 'ds041693.mongolab.com',
+    port: 41693,
+    name: 'auto'
+};
+
+var url = util.format('mongodb://%s:%s@%s:%d/%s', auth.user, auth.pass, auth.host, auth.port, auth.name);
+console.log(url)
+
+// to connect via shell use the following command
+// mongo ds041693.mongolab.com:41693/auto -u fr-end -p '<yourPassGoesHere>'
+
+//'mongodb://localhost:27017/auto'
+//'mongodb://fr-end:<yourPassGoesHere>@ds041693.mongolab.com:41693/auto'
+mongoose.connect(url, function (err) {
 
     if(err) throw err;
 
