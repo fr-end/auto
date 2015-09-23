@@ -67,7 +67,11 @@ module.exports = function(XMLHttpRequest){
 						'&model_id[0]=' + searchParams.modelId +
 						'&countpage='   + searchParams.countPage +
 						page;
-			ajax.getPromise( url, success );
+			return ajax.getPromise( url, success)
+                .then(function (countJSON) {
+                        var count = JSON.parse(countJSON);
+                        return count.count || 0;
+                });
 		},
 		getCar: function ( carId ) {
 			//https://auto.ria.com/blocks_search_ajax/view/auto/14356030/?lang_id=2

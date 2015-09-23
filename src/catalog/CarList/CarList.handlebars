@@ -6,10 +6,10 @@
         </li>
 	{{/each}}
 	</ul>
-	<!--#if more-->
+	{{#if hasMore}}
 		<div class="search-results__more">
 			<span class="search-results__button"></span>
-			Показать еще {{more}} объявлений
+			Показать слудеющие из <span class="search-results__more-count">{{moreCount}}</span> объявлений
 		</div>
-	<!--/if-->
+    {{/if}}
 </div>

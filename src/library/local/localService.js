@@ -211,7 +211,7 @@ module.exports = function(localStorage,XMLHttpRequest){
 			deferred.resolve(carsIds.slice(searchParams.page*10, searchParams.page*10+9));
 			return deferred.promise;
 		},
-		getCarCount: function ( searchParams, username  ) {
+		getCarsCount: function ( searchParams, username  ) {
 			username = username || 'defaultUser';
 			var wishlist = JSON.parse( localStorage.getItem( username ));
 			var carsCount = 0;
