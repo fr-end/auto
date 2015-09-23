@@ -22,7 +22,7 @@ module.exports = function (document, localStorage, XMLHttpRequest) {
 		getCarIDsFromURL: function(searchParams){
             this.model.setSearchParams(searchParams);
             this.view.render('showLoading');
-            this.getCarIds()
+            this.model.getCarIds()
                 .then((this.getCarPromices).bind(this))
                 .then((this.showCars).bind(this));
 		},
@@ -30,13 +30,9 @@ module.exports = function (document, localStorage, XMLHttpRequest) {
         getNextCars: function(){
             this.view.render('showAddLoading');
             this.model.nextPage();
-            this.getCarIds()
+            this.model.getCarIds()
                 .then((this.getCarPromices).bind(this))
                 .then((this.showAddCars).bind(this));
-        },
-
-        getCarIds: function(){
-            return this.service.getCarIds(this.model.getSearchParams());
         },
 
         getCarPromices: function(carIds){
@@ -67,7 +63,7 @@ module.exports = function (document, localStorage, XMLHttpRequest) {
                     return carHtmls;
                 })
                 .then((function(carHtmls){
-                    this.view.render('showCars', { cars : carHtmls});
+                    this.view.render('showCars', { cars : carHtmls, hasMore: this.model.getHasMore(), moreCount: this.model.getMoreCount()});
                 }).bind(this));
         },
         showAddCars: function(carPromises) {
@@ -82,7 +78,7 @@ module.exports = function (document, localStorage, XMLHttpRequest) {
                     return carHtmls;
                 })
                 .then((function(carHtmls){
-                    this.view.render('showAddCars', { cars : carHtmls});
+                    this.view.render('showAddCars', { cars : carHtmls, hasMore: this.model.getHasMore(), moreCount: this.model.getMoreCount()});
                     this.view.render('hideAddLoading');
                 }).bind(this));
         }
