@@ -7,6 +7,7 @@ var url = require('url');                   //  url tool
 var proxy = require('proxy-middleware');    //  proxy
 var sass = require('gulp-sass');            //  module for SASS->CSS convertion
 var concatCss = require('gulp-concat-css')  //  module for concatenation CSS files into one file
+var nodemon = require('gulp-nodemon');
 
 // unit testing
 //var jasminePhantomJs = require('gulp-jasmine2-phantomjs');
@@ -88,7 +89,7 @@ gulp.task('browserify', ['js_check'],  function() {
         .pipe(connect.reload());
 });
 
-gulp.task('server', function(){
+gulp.task('serverGulp', function(){
     connect.server({
         port: 8080,                                 // Server started at http://localhost:8080
         root: 'build',                              // place where our main files are
@@ -100,13 +101,32 @@ gulp.task('server', function(){
                 var options = url.parse(config.proxy.pathto);
                 options.route = config.proxy.path;
                 return proxy(options);
-            })() ];                     
+            })(),(function() {
+                var url = require('url');
+                var proxy = require('proxy-middleware');
+                var options = url.parse(config.proxy.pathtoDB);
+                options.route = config.proxy.pathDB;
+                return proxy(options);
+            })() ];
         }
     })
 });
 
+gulp.task('serverNode', function(){
+    nodemon({
+        script: 'serverNode.js',
+        ext: 'js',
+        env: {
+            PORT:8888
+        },
+        ignore: ['./node_modules/**']
+    })
+        .on('restart', function(){
+            console.log('Restarting serverNode.js');
+        });
+});
 
-gulp.task('default', [ 'html', 'img', 'css', 'specs', 'browserify', 'server' ], function(){
+gulp.task('default', [ 'html', 'img', 'css', 'specs', 'browserify', 'serverGulp', 'serverNode' ], function(){
     gulp.watch( config.alljs, ['browserify']);       // Watch for changes in all js files in 'src' folder
     gulp.watch( config.allsass, ['css']);
     gulp.watch( config.allhtml, ['html']);
