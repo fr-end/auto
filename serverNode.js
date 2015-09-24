@@ -12,19 +12,19 @@ var port = 8888;
 
 var auth = {
     user: 'fr-end',
-    pass: '<!!yourPassGoesHere!!>',
+    pass: '<yourPassGoesHere>',
     host: 'ds041693.mongolab.com',
     port: 41693,
     name: 'auto'
 };
 
-var url = util.format('mongodb://%s:%s@%s:%d/%s', auth.user, auth.pass, auth.host, auth.port, auth.name);
+//var url = util.format('mongodb://%s:%s@%s:%d/%s', auth.user, auth.pass, auth.host, auth.port, auth.name);
+var url = 'mongodb://localhost:27017/auto';
 console.log(url)
 
 // to connect via shell use the following command
 // mongo ds041693.mongolab.com:41693/auto -u fr-end -p '<yourPassGoesHere>'
 
-//'mongodb://localhost:27017/auto'
 //'mongodb://fr-end:<yourPassGoesHere>@ds041693.mongolab.com:41693/auto'
 mongoose.connect(url, function (err) {
 
