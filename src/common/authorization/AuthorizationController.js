@@ -1,6 +1,8 @@
 module.exports = function(){
 
-    var UserModel = require('./AuthorizationModel.js');
+    var mongoose = require('mongoose');
+
+    var UserModel = require('./AuthorizationModel.js')(mongoose);
 
     var View 		= require('./AuthorizationView.js')();
 
@@ -13,7 +15,6 @@ module.exports = function(){
     AuthorizationController.prototype = {
         init: function(){
 
-            // why mongoose is not undefined in this scope? ))
             console.log(this.model);
             var user = new mongoose.Document(
                 {
