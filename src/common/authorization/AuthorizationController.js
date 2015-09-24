@@ -7,18 +7,13 @@ module.exports = function(){
     function AuthorizationController(){
         this.model = UserModel;
         this.view = new View();
-
-        //this.view.bind('clickSignUpButton', (function () {
-        //    var result = this.toggleWishList(this.carId);
-        //    this.view.toggleClass(this.carId, result);
-        //}).bind(this));
     }
 
 
     AuthorizationController.prototype = {
         init: function(){
 
-            // why mongoose is defined here? ))
+            // why mongoose is not undefined in this scope? ))
             console.log(this.model);
             var user = new mongoose.Document(
                 {

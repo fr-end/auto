@@ -11,15 +11,10 @@ module.exports = function () {
 
         var self = this;
 
-
         var viewCommands = {
 
             showAuthMenu : function(data){
-
-                //var html = this.template(data);
                 self.$container.innerHTML = self.template(data)
-                //return html;
-                //self.$viewPort.innerHTML = self.templates.self(data);
             }
         };
 
@@ -60,12 +55,7 @@ module.exports = function () {
         }
 
     };
- /*
-    View.prototype.toggleClass = function (carId, result){
-        this.$viewPort = this.$viewPort || document.querySelector(this.viewPortSelector);
-        this.$viewPort.classList.toggle('in-list', result);
-    };
-  */
+
     return View;
 
 };
