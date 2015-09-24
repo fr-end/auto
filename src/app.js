@@ -43,7 +43,7 @@
     window.app.buttonSearch = document.getElementById('header-menu-item__search');
     window.app.buttonWishList = document.getElementById('header-menu-item__wish-list');
 
-    var HeaderController = require('./header/HeaderController.js')();
+    var HeaderController = require('./common/authorization/AuthorizationController.js')();
 
     var router = require('./common/router/router.js')(HeaderController);
 

@@ -117,9 +117,9 @@ gulp.task('serverNode', function(){
         script: 'serverNode.js',
         ext: 'js',
         env: {
-            PORT:8888
+            PORT:8800
         },
-        ignore: ['./node_modules/**']
+        ignore: ['./**/*.js']
     })
         .on('restart', function(){
             console.log('Restarting serverNode.js');

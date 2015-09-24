@@ -30,7 +30,7 @@ console.log(url);
 mongoose.connect(url, function (err) {
 
     if(err) throw err;
-    console.log('connected');
+    //console.log('connected');
     var server = http.createServer(function (request, response) {
 
         //User.create(user);
@@ -49,7 +49,6 @@ mongoose.connect(url, function (err) {
             response.end();
 
         });
-
     });
 
     server.listen(port , function () {
