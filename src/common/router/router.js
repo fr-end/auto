@@ -1,4 +1,4 @@
-module.exports = (function(){
+module.exports = function(HeaderController){
 
     function Router(){
         this.routes = {};
@@ -25,6 +25,9 @@ module.exports = (function(){
 
             var routeController = new route.Controller(route.params, route.events);
 
+            var headerController = new HeaderController();
+            headerController.init();
+
             routeController.init(searchParams);
 
             if (routeName === '/'){
@@ -48,4 +51,4 @@ module.exports = (function(){
 
     return router;
 
-})();
+};

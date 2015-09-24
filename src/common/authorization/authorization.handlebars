@@ -1,0 +1,6 @@
+{{#if session.isLoggedIn}}
+    <a href="#" data-auth="logout">Logout</a>
+{{else}}
+    <a href="#" data-auth="login">Login</a>
+    <a href="#" data-auth="signUp">SignUp</a>
+{{/if}}
