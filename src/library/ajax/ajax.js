@@ -32,8 +32,8 @@ module.exports = function (XMLHttpRequest, Q){
                     }
                 }
             };
-            xmlhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-            xmlhttp.send('data=' + encodeURIComponent(JSON.stringify(postJSONData)));
+            //xmlhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            xmlhttp.send(JSON.stringify(postJSONData));
             return deferred.promise;
         }
 	};
