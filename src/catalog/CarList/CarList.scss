@@ -15,6 +15,7 @@
 	&__more {
 		cursor: pointer;
 		text-align: center;
+		margin-bottom: 50px;
 
 		&:hover {
 			color: #91cf26;
@@ -26,7 +27,7 @@
 		height: 22px;
 		width: 32px;
 		margin-bottom: -3px;
-		background: url(img/sprite.png) 0 130px;
+		background: url(img/sprite.png) no-repeat 0 -539px;
 	}
 }
 
