@@ -11,8 +11,9 @@ npm install
 download and install mongoDB from https://www.mongodb.org/downloads
 
 Run server from the terminal using the "mongod" command.
-I mongod command is not available from your terminal add the default path
+If mongod command is not available from your terminal add the default path
 "C:\Program Files\MongoDB\Server\3.0\bin" to your PATH variable on Windows.
+If there are some troubles - google it :)
 
 Successful output might be like "waiting for connections on port 27017"
 

@@ -57,7 +57,12 @@
     var Q = require('q');
     var ajax = require('./library/ajax/ajax.js')(XMLHttpRequest, Q);
     console.log(ajax);
-    ajax.getPromise('/db').then(function(data){console.log(data);})
+
+    //ajax.getPromise('/db');
+
+    ajax
+        .getPromise('/db/user/email@e.mail?data=newdata&something=something#hash')
+        .then(function(data){console.log(data);});
     // end testing serverNode
 
 })(window);
