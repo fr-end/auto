@@ -57,7 +57,7 @@ gulp.task('css', function () {
 });
 
 
-gulp.task('specs', function(){
+gulp.task('test', function(){
     // Test JS
     return gulp.src(['specs/js/**/*_spec.js'])  //'test/*.html' ///*, 'specs/spec/lib/*.js'
         .pipe(gulpif(args.verbose, gulpprint()))
@@ -126,7 +126,7 @@ gulp.task('serverNode', function(){
         });
 });
 
-gulp.task('default', [ 'html', 'img', 'css', 'specs', 'browserify', 'serverGulp', 'serverNode' ], function(){
+gulp.task('default', [ 'html', 'img', 'css', 'browserify', 'serverGulp', 'serverNode' ], function(){
     gulp.watch( config.alljs, ['browserify']);       // Watch for changes in all js files in 'src' folder
     gulp.watch( config.allsass, ['css']);
     gulp.watch( config.allhtml, ['html']);
