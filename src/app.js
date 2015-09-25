@@ -63,6 +63,10 @@
     ajax
         .getPromise('/db/user/email@e.mail?data=newdata&something=something#hash')
         .then(function(data){console.log(data);});
+    ajax
+        .getPromisePost('/db/user', {_id: '%20@e.mail', wishlist: [12,123, 'asdasd', {a: 13}]})
+        .then(function(data){console.log(data);});
+
     // end testing serverNode
 
 })(window);

@@ -42,6 +42,7 @@ mongoose.connect(urlMongo, function (err) {
         console.log('parsedUrl',parsedUrl);
 
         var pathname = parsedUrl.pathname;
+        /*
         if (pathname.search(/^\/user\/?/) != '-1' && request.method === 'GET'){
 
             console.log(pathname);
@@ -63,15 +64,24 @@ mongoose.connect(urlMongo, function (err) {
             });
 
         }
-/*
+*/
         if (pathname.search(/^\/user\/?/) != '-1' && request.method === 'POST') {
-
             console.log(pathname);
             var userName = pathname.slice(6);
             console.log(userName);
+            console.log('request.body', request.body);
+            request.on('data', function (query){
 
+                console.log(query);
+                response.end();
+                //output = countries.appendCountry(query)
+                //writeResponseAndEnd(output);
+            });
+            request.on('end', function (){
+                response.end();
+            });
         }
-*/
+
 
         function writeResponseAndEnd(result){
             response.writeHead(200, {"Content-Type": "application/json;charset=UTF-8"});
