@@ -1,0 +1,155 @@
+@import "../../const";
+
+
+.dark{
+	width: $wrapper-big-width + 400*2;
+	min-height:100%;
+	margin: 0 -400px;
+	background-color: rgba(0,0,0,0.7);
+	overflow: hidden;
+	position:fixed;
+	top:0px;
+}
+
+.authorization{
+	background: $background-color;
+	width: 320px;
+	height: 230px;
+	overflow: hidden;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	margin: -115px 0 0 -160px;
+	z-index: 3;
+	border-radius: $border-radius-small;
+	
+	& input{
+		outline: none;
+	}
+
+	&-reg-form{
+		display: block;
+		width: 320px;
+		height: 230px;
+		box-sizing: border-box;
+		padding: 20px;
+		font-size: 12px;
+		font-family: $font-family;
+
+
+		&-header{
+			color: $text-color;
+			font-size: 14px;
+			line-height: 14px;
+			margin: 0;
+			font-weight: normal;
+			margin-bottom: 15px;
+		}
+
+		&-sign-in{
+			text-decoration: none;
+			color: $price-color;
+			float: right;
+			margin-top: -2px;
+		}
+
+		&-input{
+			height: 42px;
+			width: 100%;
+			border: none;
+			border-top: 1px dashed #e5e5e5;
+			&.last{
+				border-bottom: 1px dashed #e5e5e5;
+				margin-bottom: 17px;
+			}
+		}
+
+		&-checkbox{
+			display: block;
+			float: left;
+			margin-top: 7px;
+		}
+
+		&-checklabel{
+			display: block;
+			float: left;
+			height: 28px;
+			line-height: 28px;
+		}
+
+
+		&-submit{
+			height: 28px;
+			line-height: 28px;
+			width: 100px;
+			background: $border-color;
+			color: $background-color;
+			border: none;
+			border-radius: $border-radius-small;
+			float: right;
+		}
+	}
+
+	&-sign-in-form{
+		display: block;
+		width: 320px;
+		height: 230px;
+		box-sizing: border-box;
+		padding: 20px;
+		font-size: 12px;
+		font-family: $font-family;
+		display: none;
+
+		&-header{
+			color: $text-color;
+			font-size: 14px;
+			line-height: 14px;
+			margin: 0;
+			font-weight: normal;
+			margin-bottom: 15px;
+		}
+
+		&-reg{
+			text-decoration: none;
+			color: $price-color;
+			float: right;
+			margin-top: -2px;
+		}
+
+		&-input{
+			height: 42px;
+			width: 100%;
+			border: none;
+			border-top: 1px dashed #e5e5e5;
+			&.last{
+				border-bottom: 1px dashed #e5e5e5;
+				margin-bottom: 59px;
+			}
+		}
+
+		&-checkbox{
+			display: block;
+			float: left;
+			margin-top: 7px;
+		}
+
+		&-checklabel{
+			display: block;
+			float: left;
+			height: 28px;
+			line-height: 28px;
+		}
+
+
+		&-submit{
+			height: 28px;
+			line-height: 28px;
+			width: 100px;
+			background: $border-color;
+			color: $background-color;
+			border: none;
+			border-radius: $border-radius-small;
+			float: right;
+		}
+	}
+}
