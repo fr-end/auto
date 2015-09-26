@@ -37,10 +37,25 @@ module.exports = function(){
                 console.log('click', this)
             }).bind(this));
 */
+            var self = this;
             this.view.bind('clickSomeAuthButton',(function(action, target){
+
+                if (action === 'login'){
+                    this.view.showAuthFormWrapper(action, target);
+                    this.view.showFormLogIn(action, target);
+
+                } else if (action === 'signUp'){
+                    this.view.showAuthFormWrapper(action, target);
+                    this.view.showFormSignUp(action, target);
+                }
+
                 console.log(action, target);
-                console.log('click', this)
+                console.log('click', this);
+
             }).bind(this));
+
+
+
         }
     };
 

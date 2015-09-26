@@ -3,7 +3,7 @@
 
 .dark{
 	width: $wrapper-big-width + 400*2;
-	min-height:100%;
+	min-height: 100%;
 	margin: 0 -400px;
 	background-color: rgba(0,0,0,0.7);
 	overflow: hidden;
@@ -98,7 +98,7 @@
 		padding: 20px;
 		font-size: 12px;
 		font-family: $font-family;
-		display: none;
+		display: block;
 
 		&-header{
 			color: $text-color;
@@ -152,4 +152,8 @@
 			float: right;
 		}
 	}
+}
+
+.is-not-displayed{
+  display: none !important;
 }

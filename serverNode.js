@@ -72,7 +72,7 @@ mongoose.connect(urlMongo, function (err) {
             console.log('request.body', request.body);
             request.on('data', function (query){
 
-                console.log(query);
+                console.log(query.toString());
                 response.end();
                 //output = countries.appendCountry(query)
                 //writeResponseAndEnd(output);
