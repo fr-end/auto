@@ -47,9 +47,9 @@
     window.app.buttonSearch = document.getElementById('header-menu-item__search');
     window.app.buttonWishList = document.getElementById('header-menu-item__wish-list');
 
-    var HeaderController = require('./common/authorization/AuthorizationController.js')();
+    var AuthorizationController = require('./common/authorization/AuthorizationController.js')();
 
-    var router = require('./common/router/router.js')(HeaderController);
+    var router = require('./common/router/router.js')(AuthorizationController);
 
     var SearchPanelController = require('./common/search/SearchPanelController.js');
 
@@ -61,7 +61,16 @@
     var Q = require('q');
     var ajax = require('./library/ajax/ajax.js')(XMLHttpRequest, Q);
     console.log(ajax);
-    ajax.getPromise('/db').then(function(data){console.log(data);})
+
+    //ajax.getPromise('/db');
+
+    ajax
+        .getPromise('/db/user/email@e.mail?data=newdata&something=something#hash')
+        .then(function(data){console.log(data);});
+    ajax
+        .getPromisePost('/db/user', {_id: '%20@e.mail', wishlist: [12,123, 'asdasd', {a: 13}]})
+        .then(function(data){console.log(data);});
+
     // end testing serverNode
 
 })(window);
