@@ -15,7 +15,7 @@ module.exports = function () {
 
         var viewCommands = {
             showAuthMenu: function (data) {
-                self.$container.innerHTML = self.template(data)
+                self.$container.innerHTML = self.template(data);
             }
         };
 
@@ -57,8 +57,8 @@ module.exports = function () {
 
         function isDescendant(parent, child) {
             var node = child.parentNode;
-            while (node != null) {
-                if (node == parent) {
+            while (node !== null) {
+                if (node === parent) {
                     return true;
                 }
                 node = node.parentNode;

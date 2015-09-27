@@ -21,8 +21,7 @@ module.exports = function(){
                     _id: 'newmail@new.mail',
                     name: 'Vasya Pupkin',
                     password: 111
-                }
-                , this.model);
+                }, this.model);
 
             console.log('user', user);
             console.log('user.toJSON', user.toJSON());
