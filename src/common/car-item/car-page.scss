@@ -73,8 +73,7 @@
 
 	&-slider {
 		width: 580px;
-		height: 445px; //385px;
-		border: 1px solid #cecece;
+		height: 445px; 
 
 		&-bigimg {
 
@@ -84,39 +83,47 @@
 				position: absolute;
 				height: 60px;
 				width: 45px;
+				margin-top: 162px;
 
 				&__arrow {
-					background: url($sprite) no-repeat 0 -261px;
+					background: url($sprite) no-repeat 0 -800px;
 					display: block; 
-					height: 35px;
-					width: 35px;
+					height: 34px;
+					width: 32px;
+					margin: 14px auto 0;
 				}
 			}
 
 			&-previous {
 				border-radius: 6px 0 0 6px;
-
-				&__arrow {	
-
-				}
-			}
-
-			&-next {
-				border-radius: 0 6px 6px 0;
+				margin-left: 535px;
 
 				&__arrow {	
 					transform: rotate(180deg);
-				}
+				}				
+			}
+
+			&-next {
+				border-radius: 0 6px 6px 0;			
 			}
 		}
-// background: url($sprite) no-repeat 0 -250px;
+
 		&-carousel {
-			display: none;
 
 			&-cars {
 				margin: 0;
 				padding: 0;
 				list-style: none;
+
+				&-item {
+					display: inline-block;
+					text-align: justify;
+					margin: 10px 0 0 9px;
+
+					&:first-child {
+						margin: 10px 1px 0 0;
+					}
+				}
 			}
 		}
 	}

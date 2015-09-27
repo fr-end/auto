@@ -17,12 +17,16 @@
     var footerTemplate          = require('./footer/footer.handlebars');
     var footerHtml              = footerTemplate();
 
+    var carpageTemplate          = require('./common/car-item/car-page.handlebars');
+    var carpageHtml              = carpageTemplate();
+
     var data = {
         header          : headerHtml,
         searchPanel     : searchPanelHtml,
         searchResults   : searchResultsHtml,
         main            : mainpageHtml,
-        footer          : footerHtml
+        footer          : footerHtml,
+        carpage          : carpageHtml
     };
 
     var bodyTemplate            = require('./body.handlebars');
