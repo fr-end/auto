@@ -8,7 +8,7 @@ var templates		= {
 	optionsWithCount: 	require('./templates/optionsWithCount.handlebars')
 };
 
-var CarListController  = require('../../catalog/CarList/CarListController.js');
+var CarListController  = require('../../catalog/carList/CarListController.js');
 
 */
 /*
@@ -20,7 +20,7 @@ module.exports = (function(){
         optionsWithCount: 	require('./templates/optionsWithCount.handlebars')
     };
 
-    var CarListController  = require('../../catalog/CarList/CarListController.js');
+    var CarListController  = require('../../catalog/carList/CarListController.js');
 
     function Controller(service, events){
         this.service = service;
