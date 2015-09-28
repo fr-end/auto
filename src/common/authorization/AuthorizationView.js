@@ -1,9 +1,11 @@
 module.exports = function () {
 
-    var template = require('./Authorization.handlebars');
+    var template = require('./authorization.handlebars');
+    var template_popup = require('./authorization_popup.handlebars');
 
     function View() {
         this.template = template;
+        this.template_popup = template_popup;
         this.$container = document.querySelector('[data-auth=wrapper]');
 
 
@@ -16,6 +18,9 @@ module.exports = function () {
         var viewCommands = {
             showAuthMenu: function (data) {
                 self.$container.innerHTML = self.template(data);
+                var popup = document.createElement('div');
+                popup.innerHTML = self.template_popup();
+                document.body.appendChild(popup.firstElementChild);
             }
         };
 
