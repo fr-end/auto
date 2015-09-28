@@ -1,6 +1,6 @@
 {{#if session.isLoggedIn}}
-    <a href="#" data-auth="logout">Logout</a>
+    <button href="#" data-auth="logout" class="header-authorization-button">Logout</button>
 {{else}}
-    <a href="#" data-auth="login">Login</a>
-    <a href="#" data-auth="signUp">SignUp</a>
+    <button href="#" data-auth="login" class="header-authorization-button">Login</button>
+    <button href="#" data-auth="signUp" class="header-authorization-button">SignUp</button>
 {{/if}}

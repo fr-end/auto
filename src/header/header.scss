@@ -14,6 +14,30 @@
 		width: $wrapper-small-width;
 	}
 
+	&-authorization{
+
+		&-button{
+			background: $header-menu-item-color;
+			border-radius: 0 0 $border-radius-small $border-radius-small;
+			color: $background-color;
+			cursor: pointer;
+			display: inline-block;
+			vertical-align: top;
+			font-size: $font-size-main-text;
+			height: 20px;
+			line-height: 20px;
+			margin-right: 10px;
+			padding: 0 20px;
+			border: none;
+			outline: none;
+			&:hover{
+				background: $border-color;
+			}
+		}
+
+
+	}
+
 	&-logo{
 		position: absolute;
 		top: 30px;
@@ -36,7 +60,7 @@
 			margin-left: 20px;
 			padding: 5px 20px;
 			text-align: center;
-		  	text-decoration: none;
+			text-decoration: none;
 
 			&-wishlist{
 				padding-right: 40px;
