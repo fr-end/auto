@@ -40,7 +40,8 @@ module.exports = function(){
                 console.log('click', this)
             }).bind(this));
 */
-            var self = this;
+            var typeOfAuthForm;
+
             this.view.bind('clickSomeAuthButton',(function(action, target){
 
                 if (action === 'login'){
@@ -52,12 +53,14 @@ module.exports = function(){
                     this.view.showFormSignUp(action, target);
                 }
 
+                typeOfAuthForm = action;
+
                 console.log(action, target);
                 console.log('click', this);
 
             }).bind(this));
 
-
+            this.view.bind('clickBackground');
 
         }
     };

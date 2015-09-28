@@ -2,7 +2,7 @@
 
     /*render body*/
 
-    var headerTemplate          = require('./header/header.handlebars');
+    var headerTemplate          = require('./common/header/header.handlebars');
     var headerHtml              = headerTemplate();
 
     var searchPanelTemplate     = require('./common/search/templates/searchPanel.handlebars');
@@ -47,7 +47,7 @@
     window.app.buttonSearch = document.getElementById('header-menu-item__search');
     window.app.buttonWishList = document.getElementById('header-menu-item__wish-list');
 
-    var AuthorizationController = require('./common/authorization/AuthorizationController.js')();
+    var AuthorizationController = require('./common/header/authorization/AuthorizationController.js')();
 
     var router = require('./common/router/router.js')(AuthorizationController);
 

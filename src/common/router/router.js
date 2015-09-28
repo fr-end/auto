@@ -1,4 +1,4 @@
-module.exports = function(HeaderController){
+module.exports = function(AuthorizationController){
 
     function Router(){
         this.routes = {};
@@ -25,8 +25,8 @@ module.exports = function(HeaderController){
 
             var routeController = new route.Controller(route.params, route.events);
 
-            var headerController = new HeaderController();
-            headerController.init();
+            var authorizationController = new AuthorizationController();
+            authorizationController.init();
 
             routeController.init(searchParams);
 
