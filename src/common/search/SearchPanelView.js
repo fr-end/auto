@@ -9,12 +9,12 @@ module.exports = function(window, document) {
     function View() {
 
         this.templates = templates;
+        this.$viewPort = document.querySelector('.main');
         this.init();
 
     }
 
-    View.prototype.init = function(){
-        this.$viewPort              = document.querySelector('.search');
+    View.prototype.init = function(viewPortSelector){
         this.$searchForm        = document.querySelector('[data-search=form]');
         this.$selectCategory    = document.querySelector('[data-select=category]');
         this.$selectMark        = document.querySelector('[data-select=mark]');
@@ -25,10 +25,7 @@ module.exports = function(window, document) {
         var self = this;
         var viewCommands = {
             self: function (data) {
-                var html = self.templates.self(data);
-                var selfFragment = document.createElement('div');
-                selfFragment.innerHTML = html;
-                self.$viewPort.parentNode.replaceChild(selfFragment.firstElementChild,self.$viewPort);
+                self.$viewPort.innerHTML = self.templates.self(data);
                 self.init();
             },
             showCategories: function (data) {

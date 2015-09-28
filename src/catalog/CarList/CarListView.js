@@ -11,7 +11,7 @@ module.exports = function (document) {
         this.loading = 'loading...';
         this.moreSelector = '.search-results__more';
 
-		var viewPortElement = document.querySelector('.search-results');
+		var viewPortElement = document.querySelector('.search-results-wrapper');
 
 		if (viewPortElement instanceof HTMLElement) {
             this.$viewPort = viewPortElement;
