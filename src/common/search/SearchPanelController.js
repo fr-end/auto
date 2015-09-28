@@ -3,13 +3,10 @@ module.exports = (function(){
 
     var View 			= require('./SearchPanelView.js')(window, window.document);
 
-    var CarList  = require('../../catalog/CarList/CarListController.js')(document, localStorage, XMLHttpRequest);
-
     function Controller(service, events){
         this.service = service;
         this.view = new View();
         this.started = false;
-        this.carList = new CarList(service, events);
     }
 
     Controller.prototype = {
@@ -28,7 +25,6 @@ module.exports = (function(){
 					this.view.render('showCategories', categoriesArray);
 					this.loadMarks(searchParams);
 				}).bind(this,searchParams));
-            this.carList.getCarIDsFromURL(searchParams);
 			self.started = true;
 			self.view.bind('changeCategory',function(){
 				self.loadMarks({});
@@ -69,8 +65,6 @@ module.exports = (function(){
 			self.service.getModels(category, mark)
                 .then(function(data) {
                     var models = JSON.parse(data);
-					console.log('getModels');
-					console.log(data);
 					models.forEach(function(item){
 						if(String(item.value) === String(searchParams.modelId)){
 							item.selected = true;

@@ -16,16 +16,16 @@ module.exports = function(localStorage,XMLHttpRequest){
 			var user = JSON.parse( localStorage.getItem( username ) );
 			if ( !user ) {
 				localStorage.setItem( username, JSON.stringify( [] ) );
-				console.log( 'User added ' + username );
-			} 
+				//console.log( 'User added ' + username );
+			}
 			var users = JSON.parse( localStorage.getItem( 'users' ) );
 			if ( users.indexOf(username) === -1){
 				users.push(username);
 				localStorage.setItem( 'users', JSON.stringify( users ) );
-				console.log( 'User added to userslist' );
+				//console.log( 'User added to userslist' );
 			}
 			
-			console.log( username + ' has wishlist and in userslist' );
+			//console.log( username + ' has wishlist and in userslist' );
 			return false;
 		},
 		inList: function (carId, username) {
@@ -40,37 +40,37 @@ module.exports = function(localStorage,XMLHttpRequest){
 					username = username || 'defaultUser';
 					if ( !localStorage.getItem( String(car.carId) ) ){
 						localStorage[String(car.carId)] = JSON.stringify( car );
-						console.log('Car added to storage');
+						//console.log('Car added to storage');
 					}
-					console.log('Car in storage');
+					//console.log('Car in storage');
 
 					var wishlist = JSON.parse( localStorage.getItem( username ) );
 
 					if (wishlist.indexOf(String(car.carId)) === -1){
 						wishlist.push( String(car.carId) );
 						localStorage.setItem( username, JSON.stringify( wishlist ) );
-						console.log('Car added to wishlist');
+						//console.log('Car added to wishlist');
 					}
-					console.log('Car in wishlist');
+					//console.log('Car in wishlist');
 				});
 		},
 		delCar: function ( carId, username ) {
 			username = username || 'defaultUser';
 			var wishlist = JSON.parse( localStorage.getItem( username ) );
 			var carIndex = wishlist.indexOf( carId );
-			console.log(carIndex);
+			//console.log(carIndex);
 			if (carIndex !== -1){
 				wishlist.splice( carIndex, 1 );
 				localStorage.setItem( username, JSON.stringify( wishlist ) );
-				console.log('Car deleted from wishlist');
+				//console.log('Car deleted from wishlist');
 			}
 
 			var userslist = JSON.parse( localStorage.getItem( 'users' ) );
 			if ( userslist.some(function(user){
-				console.log(user);
-				console.log(JSON.parse( localStorage.getItem( user )));
+				//console.log(user);
+				//console.log(JSON.parse( localStorage.getItem( user )));
 				if ( JSON.parse( localStorage.getItem( user )).indexOf( carId ) !== -1 ){
-					console.log('Car not deleted from storage');
+					//console.log('Car not deleted from storage');
 					return true;
 				}
 			})) {
@@ -78,7 +78,7 @@ module.exports = function(localStorage,XMLHttpRequest){
 			}
 
 			localStorage.removeItem( String( carId ));
-			console.log('Deleted car from storage');
+			//console.log('Deleted car from storage');
 		},	
 		getCar: function ( carId ) {
             var deferred=Q.defer();
@@ -90,7 +90,7 @@ module.exports = function(localStorage,XMLHttpRequest){
         },
 		getCategories: function ( username ) {
 			var deferred=Q.defer();
-			console.log('localStorage-getCategories');
+			//console.log('localStorage-getCategories');
 			username = username || 'defaultUser';
 			var wishlist = JSON.parse( localStorage.getItem( username ));
 			var categoriesIds = [];
@@ -108,7 +108,7 @@ module.exports = function(localStorage,XMLHttpRequest){
 			});
 			var categoriesString = JSON.stringify(categories);
 			deferred.resolve(categoriesString);
-			console.log(categoriesString);
+			//console.log(categoriesString);
 			return deferred.promise;
 		},
 		getMarks: function ( categoryId, username ) {
@@ -140,7 +140,7 @@ module.exports = function(localStorage,XMLHttpRequest){
 			});
 			var marksString = JSON.stringify(marks);
 			deferred.resolve(marksString);
-			console.log(marksString);
+			//console.log(marksString);
 			return deferred.promise;
 		},
 		getModels: function ( categoryId, markaId, username ) {
@@ -172,7 +172,7 @@ module.exports = function(localStorage,XMLHttpRequest){
 			});
 			var modelsString = JSON.stringify(models);
 			deferred.resolve(modelsString);
-			console.log(modelsString);
+			//console.log(modelsString);
 			return deferred.promise;
 		},
 		getCarIds: function ( searchParams, username ) {
@@ -208,7 +208,7 @@ module.exports = function(localStorage,XMLHttpRequest){
                 carsIds = wishlist;
             }
             searchParams.page = searchParams.page || 0;
-			deferred.resolve(carsIds.slice(searchParams.page*10, searchParams.page*10+9));
+			deferred.resolve(carsIds.slice(searchParams.page*10, searchParams.page*10+10));
 			return deferred.promise;
 		},
 		getCarsCount: function ( searchParams, username  ) {
