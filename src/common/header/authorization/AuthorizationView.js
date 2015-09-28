@@ -12,7 +12,7 @@ module.exports = function () {
         this.$authFormSignUp = undefined;
         this.$authFormLogin = undefined;
         this.visibleElements = [];
-
+        console.log('new View()')
     }
 
     View.prototype.render = function (viewCmd, data) {
@@ -48,7 +48,7 @@ module.exports = function () {
         }
 
         if (event === 'clickSomeAuthButton') {
-            this.$container.addEventListener('click', listenClickSomeAuthButton);
+            this.$container.onclick = listenClickSomeAuthButton;
         }
 
         if (event === 'clickBackground') {
@@ -56,7 +56,7 @@ module.exports = function () {
 
             //document.body.addEventListener('click', listenClickBackground);
 
-            popupBackground.addEventListener('click', listenClickBackground);
+            popupBackground.onclick = listenClickBackground;
 
         }
 
@@ -92,12 +92,12 @@ module.exports = function () {
     };
 
     View.prototype.hideAuthFormWrapper = function(){
-        //console.log(this);
-        //console.log(this.$authForm);
-        //
-        //this.$authForm.classList.add('is-not-displayed');
-        //this.$authFormBackground.classList.add('is-not-displayed');
-        //target.classList.add('is-not-displayed');
+
+        //console.log(this.visibleElements);
+
+        //if (!this.visibleElements.length){
+        //    return;
+        //}
 
         for (var i = 0; i < this.visibleElements.length; i++){
             this.visibleElements[i].classList.add('is-not-displayed');

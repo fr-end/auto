@@ -15,10 +15,12 @@ module.exports = function(){
 
     AuthorizationController.prototype = {
         init: function(){
+
             if ( this.started ) {
                 return;
             }
             this.started = true;
+
             console.log(this.model);
             var user = new mongoose.Document(
                 {
@@ -40,7 +42,6 @@ module.exports = function(){
                 console.log('click', this)
             }).bind(this));
 */
-            var typeOfAuthForm;
 
             this.view.bind('clickSomeAuthButton',(function(action, target){
 
@@ -52,8 +53,6 @@ module.exports = function(){
                     this.view.showAuthFormWrapper(action, target);
                     this.view.showFormSignUp(action, target);
                 }
-
-                typeOfAuthForm = action;
 
                 console.log(action, target);
                 console.log('click', this);
