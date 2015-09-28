@@ -47,7 +47,7 @@ module.exports = function () {
         }
 
         function listenClickBackground(evt) {
-            //console.log(evt.target);
+            console.log(evt.target);
             var parent = document.querySelector('[data-auth=form]');
             console.log(!isDescendant(parent, evt.target));
             if (!isDescendant(parent, evt.target)) {

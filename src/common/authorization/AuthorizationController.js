@@ -9,12 +9,16 @@ module.exports = function(){
     function AuthorizationController(){
         this.model = UserModel;
         this.view = new View();
+        this.started = false;
     }
 
 
     AuthorizationController.prototype = {
         init: function(){
-
+            if ( this.started ) {
+                return;
+            }
+            this.started = true;
             console.log(this.model);
             var user = new mongoose.Document(
                 {
