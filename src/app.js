@@ -5,28 +5,12 @@
     var headerTemplate          = require('./common/header/header.handlebars');
     var headerHtml              = headerTemplate();
 
-    var searchPanelTemplate     = require('./common/search/templates/searchPanel.handlebars');
-    var searchPanelHtml         = searchPanelTemplate();
-
-    var searchResultsTemplate   = require('./catalog/CarList/CarList.handlebars');
-    var searchResultsHtml       = searchResultsTemplate();
-
-    var mainpageTemplate        = require('./mainpage/mainpage.handlebars');
-    var mainpageHtml            = mainpageTemplate();
-
     var footerTemplate          = require('./footer/footer.handlebars');
     var footerHtml              = footerTemplate();
 
-    var carpageTemplate          = require('./common/car-item/car-page.handlebars');
-    var carpageHtml              = carpageTemplate();
-
     var data = {
         header          : headerHtml,
-        searchPanel     : searchPanelHtml,
-        searchResults   : searchResultsHtml,
-        main            : mainpageHtml,
-        footer          : footerHtml,
-        carpage          : carpageHtml
+        footer          : footerHtml
     };
 
     var bodyTemplate            = require('./body.handlebars');
