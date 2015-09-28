@@ -19,6 +19,10 @@ module.exports = function (document, localStorage, XMLHttpRequest) {
 
     CarListController.prototype = {
 
+        init: function(searchParams){
+            this.getCarIDsFromURL(searchParams);
+        },
+
 		getCarIDsFromURL: function(searchParams){
             this.model.setSearchParams(searchParams);
             this.view.render('showLoading');

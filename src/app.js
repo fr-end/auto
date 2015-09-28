@@ -48,14 +48,22 @@
     window.app.buttonWishList = document.getElementById('header-menu-item__wish-list');
 
     var AuthorizationController = require('./common/header/authorization/AuthorizationController.js')();
+    var SearchPanelController = require('./common/search/SearchPanelController.js');
+    var CarListController = require('./catalog/CarList/CarListController.js')(document, localStorage, XMLHttpRequest);
 
     var router = require('./common/router/router.js')(AuthorizationController);
 
-    var SearchPanelController = require('./common/search/SearchPanelController.js');
-
+    router.route('/', AuthorizationController, localService, events);
     router.route('/', SearchPanelController, autoService, events);
+
+    router.route('search', AuthorizationController, localService, events);
     router.route('search', SearchPanelController, autoService, events);
+    router.route('search', CarListController, autoService, events);
+
+    router.route('wishlist', AuthorizationController, localService, events);
     router.route('wishlist', SearchPanelController, localService, events);
+    router.route('wishlist', CarListController, localService, events);
+
 
     // for testing serverNode
     var Q = require('q');

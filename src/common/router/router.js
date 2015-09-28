@@ -8,7 +8,8 @@ module.exports = function(AuthorizationController){
 
     Router.prototype = {
         route: function(path, Controller, params, events){
-            this.routes[path] = { Controller: Controller, params: params, events: events };
+            this.routes[path] = this.routes[path] || [];
+            this.routes[path].push({ Controller: Controller, params: params, events: events });
         },
         router: function(){
             var hashLessURL = location.hash.slice(1) || '/';
@@ -21,14 +22,12 @@ module.exports = function(AuthorizationController){
                 searchParams[hashLessURLArray[i]] = hashLessURLArray[i + 1];
             }
 
-            var route = this.routes[routeName];
+            var routeElements = this.routes[routeName];
 
-            var routeController = new route.Controller(route.params, route.events);
-
-            var authorizationController = new AuthorizationController();
-            authorizationController.init();
-
-            routeController.init(searchParams);
+            routeElements.forEach(function(route){
+                var routeController = new route.Controller(route.params, route.events);
+                routeController.init(searchParams);
+            });
 
             if (routeName === '/'){
                 window.app.buttonSearch.classList.toggle('active',true);
