@@ -1,0 +1,38 @@
+.search-results {
+
+	width: 100%;
+
+	&-list {
+		width: 100%;
+		list-style: none;
+		margin: 0;
+		padding: 0;
+		&__item {
+
+		}
+	}
+
+	&__more {
+		cursor: pointer;
+		text-align: center;
+		margin-bottom: 50px;
+
+		&:hover {
+			color: #91cf26;
+		}
+	}
+
+	&__button {
+		display: inline-block;
+		height: 22px;
+		width: 32px;
+		margin-bottom: -3px;
+		background: url(img/sprite.png) no-repeat 0 -539px;
+	}
+}
+
+@media screen and (max-width: 480px) {
+	.search-results {
+		width: 480px;
+	}
+}

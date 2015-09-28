@@ -1,0 +1,15 @@
+<div class="search-results"> 
+	<ul class="search-results-list">
+	{{#each cars}}
+		<li class="search-results-list__item">
+            {{{this}}}
+        </li>
+	{{/each}}
+	</ul>
+	{{#if hasMore}}
+		<div class="search-results__more">
+			<span class="search-results__button"></span>
+			Показать следующие из <span class="search-results__more-count">{{moreCount}}</span> объявлений
+		</div>
+    {{/if}}
+</div>

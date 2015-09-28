@@ -2,10 +2,10 @@
 
     /*render body*/
 
-    var headerTemplate          = require('./common/header/header.handlebars');
+    var headerTemplate          = require('./modules/header/header.handlebars');
     var headerHtml              = headerTemplate();
 
-    var footerTemplate          = require('./footer/footer.handlebars');
+    var footerTemplate          = require('./modules/footer/footer.handlebars');
     var footerHtml              = footerTemplate();
 
     var data = {
@@ -25,17 +25,17 @@
 
     var events = require('./library/events/events.js');
 
-    var autoService = require('./library/auto/autoService.js')(XMLHttpRequest);
-    var localService = require('./library/local/localService.js')(localStorage,XMLHttpRequest);
+    var autoService = require('./services/auto/autoService.js')(XMLHttpRequest);
+    var localService = require('./services/local/localService.js')(localStorage,XMLHttpRequest);
 
     window.app.buttonSearch = document.getElementById('header-menu-item__search');
     window.app.buttonWishList = document.getElementById('header-menu-item__wish-list');
 
-    var AuthorizationController = require('./common/header/authorization/AuthorizationController.js')();
-    var SearchPanelController = require('./common/search/SearchPanelController.js');
-    var CarListController = require('./catalog/CarList/CarListController.js')(document, localStorage, XMLHttpRequest);
+    var AuthorizationController = require('./modules/authorization/AuthorizationController.js')();
+    var SearchPanelController = require('./modules/searchPanel/SearchPanelController.js');
+    var CarListController = require('./modules/carList/CarListController.js')(document, localStorage, XMLHttpRequest);
 
-    var router = require('./common/router/router.js')(AuthorizationController);
+    var router = require('./library/router/router.js')(AuthorizationController);
 
     router.route('/', AuthorizationController, localService, events);
     router.route('/', SearchPanelController, autoService, events);
@@ -52,7 +52,6 @@
     // for testing serverNode
     var Q = require('q');
     var ajax = require('./library/ajax/ajax.js')(XMLHttpRequest, Q);
-    console.log(ajax);
 
     //ajax.getPromise('/db');
 

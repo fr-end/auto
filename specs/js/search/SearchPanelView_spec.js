@@ -2,7 +2,7 @@
 
 var env = require('./../libs_spec/test_config.js');
 
-var View = require(env.closestPathToSrcFolder + 'common/search/SearchPanelView.js')(env.window, env.window.document);
+var View = require(env.closestPathToSrcFolder + 'modules/searchPanel/SearchPanelView.js')(env.window, env.window.document);
 
 describe('View', function(){
     /*
