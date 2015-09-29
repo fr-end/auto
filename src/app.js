@@ -36,11 +36,13 @@
     var AuthorizationController = require('./modules/authorization/AuthorizationController.js')();
     var SearchPanelController = require('./modules/searchPanel/SearchPanelController.js');
     var CarListController = require('./modules/carList/CarListController.js')(document, localStorage, XMLHttpRequest);
+    var TopCarsController = require('./modules/topCars/TopCarsController.js');
 
     var router = require('./library/router/router.js')(AuthorizationController);
 
     router.route('/', AuthorizationController, localService, events);
     router.route('/', SearchPanelController, autoService, events);
+    router.route('/', TopCarsController, autoService, events);
 
     router.route('search', AuthorizationController, localService, events);
     router.route('search', SearchPanelController, autoService, events);
