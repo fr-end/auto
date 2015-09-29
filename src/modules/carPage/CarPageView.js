@@ -5,10 +5,9 @@ module.exports = (function () {
     }
 
     View.prototype.render = function (data) {
-        console.log("view");
         this.$viewPort.innerHTML = data;
     };
 
-    return View
+    return View;
 
 })();
