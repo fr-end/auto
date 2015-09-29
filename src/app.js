@@ -33,7 +33,18 @@
     window.app.buttonSearch = document.getElementById('header-menu-item__search');
     window.app.buttonWishList = document.getElementById('header-menu-item__wish-list');
 
-    var AuthorizationController = require('./modules/authorization/AuthorizationController.js')();
+    // for testing serverNode
+    var ajax = require('./library/ajax/ajax.js');
+
+    //ajax.getPromise('/db');
+
+    ajax
+        .getPromise('/db/user/email@e.mail?data=newdata&something=something#hash')
+        .then(function(data){console.log(data);});
+
+    // end testing serverNode
+
+    var AuthorizationController = require('./modules/authorization/AuthorizationController.js')(ajax);
     var SearchPanelController = require('./modules/searchPanel/SearchPanelController.js');
     var CarListController = require('./modules/carList/CarListController.js')(document, localStorage, XMLHttpRequest);
     var TopCarsController = require('./modules/topCars/TopCarsController.js');
@@ -53,18 +64,6 @@
     router.route('wishlist', CarListController, localService, events);
 
 
-    // for testing serverNode
-    var ajax = require('./library/ajax/ajax.js');
 
-    //ajax.getPromise('/db');
-
-    ajax
-        .getPromise('/db/user/email@e.mail?data=newdata&something=something#hash')
-        .then(function(data){console.log(data);});
-    ajax
-        .getPromisePost('/db/user', {_id: '%20@e.mail', wishlist: [12,123, 'asdasd', {a: 13}]})
-        .then(function(data){console.log(data);});
-
-    // end testing serverNode
 
 })(window);
