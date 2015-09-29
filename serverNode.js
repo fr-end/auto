@@ -36,13 +36,12 @@ mongoose.connect(urlMongo, function (err) {
         // url module reference https://www.npmjs.com/package/url
         var parsedUrl = url.parse(request.url, true);
 
-        console.log('request.url', request.url);
-        console.log('request.method', request.method);
-        console.log('request.body', request.body)
-        console.log('parsedUrl',parsedUrl);
+        //console.log('request.url', request.url);
+        //console.log('request.method', request.method);
+        //console.log('parsedUrl',parsedUrl);
 
         var pathname = parsedUrl.pathname;
-
+        /*
         if (pathname.search(/^\/user\/?/) != '-1' && request.method === 'GET'){
 
             console.log(pathname);
@@ -64,19 +63,30 @@ mongoose.connect(urlMongo, function (err) {
             });
 
         }
-         /**/
+        */
         if (pathname.search(/^\/user\/?/) != '-1' && request.method === 'POST') {
             console.log(pathname);
             var userName = pathname.slice(6);
             console.log(userName);
-            console.log('request.body', request.body);
-            request.on('data', function (user){
-                User.create(user);
+            request.on('data', function (userData){
+                var stringifiedUser = userData.toString();
+                var parsedUser = JSON.parse(stringifiedUser);
 
-                console.log(user.toString());
+                var newUser = new User(parsedUser);
+                newUser.save(function (err) {
+                    if (err) throw err;
+                    console.log('newUser saved!', newUser);
+                });
+
+                /*
+                User.create(parsedUser, function (err, userSaved) {
+                    if (err) throw err;
+                    console.log('saved user', userSaved);
+                });
+                */
+
                 response.end();
-                //output = countries.appendCountry(query)
-                //writeResponseAndEnd(output);
+
             });
             request.on('end', function (){
                 response.end();

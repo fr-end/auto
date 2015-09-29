@@ -1,10 +1,10 @@
-module.exports = function(){
+module.exports = function(ajax){
 
     var mongoose = require('mongoose');
 
     var UserModel = require('./AuthorizationModel.js')(mongoose);
 
-    var View 		= require('./AuthorizationView.js')();
+    var View 		= require('./AuthorizationView.js')(ajax);
 
     function AuthorizationController(){
         this.model = UserModel;
@@ -19,8 +19,8 @@ module.exports = function(){
                 return;
             }
             this.started = true;
-            console.log('in init');
 
+            /*
             console.log(this.model);
             var user = new mongoose.Document(
                 {
@@ -31,6 +31,7 @@ module.exports = function(){
 
             console.log('user', user);
             console.log('user.toJSON', user.toJSON());
+            */
 
             this.view.render('showAuthMenu', {session: { isLoggedIn: false}});
 
@@ -51,6 +52,10 @@ module.exports = function(){
             }).bind(this));
 
             this.view.bind('clickBackground');
+
+            this.view.bind('clickLoginSubmitButton');
+
+            this.view.bind('clickSignUpSubmitButton');
 
         }
     };

@@ -1,4 +1,4 @@
-module.exports = function () {
+module.exports = function (ajax) {
 
     var template = require('./authorization.handlebars');
     var template_popup = require('./authorization_popup.handlebars');
@@ -11,6 +11,12 @@ module.exports = function () {
         this.$authFormBackground = undefined;
         this.$authFormSignUp = undefined;
         this.$authFormLogin = undefined;
+
+        this.$signUpSubmitButton = undefined;
+        this.$signUpInputEmail = undefined;
+        this.$signUpInputPassword = undefined;
+        this.$signUpInputPasswordRepeat = undefined;
+
         this.visibleElements = [];
 
     }
@@ -41,7 +47,7 @@ module.exports = function () {
                 evt.target.getAttribute('data-auth') === 'login' ||
                 evt.target.getAttribute('data-auth') === 'logout') {
                 evt.preventDefault();
-                action = evt.target.getAttribute('data-auth');
+                var action = evt.target.getAttribute('data-auth');
                 handler(action, evt.target);
             }
         }
@@ -70,6 +76,31 @@ module.exports = function () {
             //document.body.addEventListener('click', listenClickBackground);
 
             popupBackground.onclick = listenClickBackground;
+        }
+
+        if (event === 'clickSignUpSubmitButton') {
+
+            this.$signUpSubmitButton = document.querySelector('[data-auth=form-signup-submit]');
+            this.$signUpInputEmail = document.querySelector('[data-auth=form-signup-input-email]');
+            this.$signUpInputPassword = document.querySelector('[data-auth=form-signup-input-pass]');
+            this.$signUpInputPasswordRepeat = document.querySelector('[data-auth=form-signup-input-pass-repeat]');
+
+            this.$signUpSubmitButton.onclick = function(evt){
+                evt.preventDefault();
+                var email = self.$signUpInputEmail.value;
+                var password = self.$signUpInputPassword.value;
+                var passwordRepeat = self.$signUpInputPasswordRepeat.value;
+
+                console.log(email, password, passwordRepeat);
+
+                if (password !== passwordRepeat){
+                    console.log ('PASSWORDS AREN"T EQUAL!');
+                    return;
+                }
+
+                ajax.getPromisePost('/db/user', {_id: email, password: password})
+                    .then(function(data){console.log(data);});
+            }
         }
 
         function listenClickBackground(evt) {
