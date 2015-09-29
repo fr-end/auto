@@ -2,7 +2,6 @@ var gulp = require('gulp');                 //  main gulp module
 var args = require('yargs').argv;           //  tool for getting the arguments (file paths) in a stream
 var concat = require('gulp-concat');        //  module for concatenation files into one file
 var connect = require('gulp-connect');      //  allow livereload our files in webbrowser
-var connect_for_proxy = require('connect'); //  coonect for proxy
 var url = require('url');                   //  url tool
 var proxy = require('proxy-middleware');    //  proxy
 var sass = require('gulp-sass');            //  module for SASS->CSS convertion
