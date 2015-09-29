@@ -84,9 +84,9 @@ mongoose.connect(urlMongo, function (err) {
                     console.log('saved user', userSaved);
                 });
                 */
+
                 response.end();
-                //output = countries.appendCountry(query)
-                //writeResponseAndEnd(output);
+
             });
             request.on('end', function (){
                 response.end();
