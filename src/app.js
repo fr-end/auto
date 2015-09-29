@@ -37,14 +37,14 @@
 
     var router = require('./library/router/router.js')(AuthorizationController);
 
-    router.route('/', AuthorizationController, localService, events);
+    var authorization = new AuthorizationController();
+    authorization.init();
+
     router.route('/', SearchPanelController, autoService, events);
 
-    router.route('search', AuthorizationController, localService, events);
     router.route('search', SearchPanelController, autoService, events);
     router.route('search', CarListController, autoService, events);
 
-    router.route('wishlist', AuthorizationController, localService, events);
     router.route('wishlist', SearchPanelController, localService, events);
     router.route('wishlist', CarListController, localService, events);
 
