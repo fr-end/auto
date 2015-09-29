@@ -1,7 +1,7 @@
 <div class="carpage-wraper">
 	<header class="carpage-title">
-		<h1 class="carpage-title__caption">Новый Mercedes-Benz M-Class ML 350 2013</h1>
-		<h2 class="carpage-title__price">1 514 100 грн.</h2>
+		<h1 class="carpage-title__caption">{{title}}</h1>
+		<h2 class="carpage-title__price">{{price.uah}}</h2>
 	</header>
 	<div class="carpage">
 		<div class="carpage-star">
@@ -85,19 +85,19 @@
 					<div class="sidebar-characteristic">
 						<h3 class="sidebar-characteristic__caption">Технические характеристики</h3>
 						<ul class="sidebar-characteristic-list">
-							<li class="sidebar-characteristic-list__item">Коробка передач: Автомат</li>
+							<li class="sidebar-characteristic-list__item">Коробка передач: {{gearBox}}</li>
 							<li class="sidebar-characteristic-list__item">Привод: Передний</li>
 							<li class="sidebar-characteristic-list__item">Количество дверей: 4</li>
 							<li class="sidebar-characteristic-list__item">Количество мест: 5</li>
 							<li class="sidebar-characteristic-list__item">Цвет: Черный</li>
 							<li class="sidebar-characteristic-list__item">Топливо: Бензин</li>
-							<li class="sidebar-characteristic-list__item">Объем двигателя: 2 л</li>
+							<li class="sidebar-characteristic-list__item">Объем двигателя: {{volume}} л</li>
 						</ul>
 					</div>
 					<ul class="sidebar-views">
 						<li class="sidebar-views__item">Размещено:17 часов назад</li>
 						<li class="sidebar-views__item">Всего просмотров: 3480</li>
-						<li class="sidebar-views__item">ID автомобиля: 16233805</li>
+						<li class="sidebar-views__item">ID автомобиля: {{carId}}</li>
 					</ul>
 					<div class="sidebar-phone">
 						<span class="sidebar-phone__icon"></span>
@@ -110,7 +110,7 @@
 							Aleksandr
 						</strong>
 						<span class="sidebar-seller__city">	
-							г. Днепропетровск
+							г. {{city}}
 						</span>
 					</div>
 				</aside>
