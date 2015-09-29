@@ -1,4 +1,4 @@
-module.exports = function (XMLHttpRequest, Q){
+module.exports = (function (XMLHttpRequest, Q){
 
 	var ajax = {
 		getPromise: function (url) {
@@ -40,5 +40,5 @@ module.exports = function (XMLHttpRequest, Q){
 
 	return ajax;
 
-};
+})(XMLHttpRequest, Q);
 
