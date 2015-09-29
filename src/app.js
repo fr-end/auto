@@ -1,5 +1,7 @@
 (function(window) {
 
+    Q = require('q');
+
     /*render body*/
 
     var headerTemplate          = require('./modules/header/header.handlebars');
@@ -25,8 +27,8 @@
 
     var events = require('./library/events/events.js');
 
-    var autoService = require('./services/auto/autoService.js')(XMLHttpRequest);
-    var localService = require('./services/local/localService.js')(localStorage,XMLHttpRequest);
+    var autoService = require('./services/auto/autoService.js');
+    var localService = require('./services/local/localService.js');
 
     window.app.buttonSearch = document.getElementById('header-menu-item__search');
     window.app.buttonWishList = document.getElementById('header-menu-item__wish-list');
@@ -50,8 +52,7 @@
 
 
     // for testing serverNode
-    var Q = require('q');
-    var ajax = require('./library/ajax/ajax.js')(XMLHttpRequest, Q);
+    var ajax = require('./library/ajax/ajax.js');
 
     //ajax.getPromise('/db');
 

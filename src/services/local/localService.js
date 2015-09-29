@@ -1,6 +1,6 @@
-module.exports = function(localStorage,XMLHttpRequest){
+module.exports = (function(localStorage,XMLHttpRequest,Q){
 
-	var autoService = require('../auto/autoService')(XMLHttpRequest);
+	var autoService = require('../auto/autoService');
 	var Q = require('../../../node_modules/q/q.js');
 	
 	var auto = {
@@ -250,4 +250,4 @@ module.exports = function(localStorage,XMLHttpRequest){
     auto.init();
 
 	return auto;
-};
+})(localStorage,XMLHttpRequest);
