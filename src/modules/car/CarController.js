@@ -1,6 +1,6 @@
 module.exports = function(localStorage, XMLHttpRequest){
 
-	var localService = require('../../services/local/localService')(localStorage, XMLHttpRequest);
+	var localService = require('../../services/local/localService');
     var View 		= require('./CarView.js');
 
     function CarController(service){

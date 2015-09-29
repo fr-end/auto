@@ -1,5 +1,7 @@
 (function(window) {
 
+    Q = require('q');
+
     /*render body*/
 
     var headerTemplate          = require('./modules/header/header.handlebars');
@@ -25,8 +27,8 @@
 
     var events = require('./library/events/events.js');
 
-    var autoService = require('./services/auto/autoService.js')(XMLHttpRequest);
-    var localService = require('./services/local/localService.js')(localStorage,XMLHttpRequest);
+    var autoService = require('./services/auto/autoService.js');
+    var localService = require('./services/local/localService.js');
 
     window.app.buttonSearch = document.getElementById('header-menu-item__search');
     window.app.buttonWishList = document.getElementById('header-menu-item__wish-list');
@@ -34,6 +36,7 @@
     var AuthorizationController = require('./modules/authorization/AuthorizationController.js')();
     var SearchPanelController = require('./modules/searchPanel/SearchPanelController.js');
     var CarListController = require('./modules/carList/CarListController.js')(document, localStorage, XMLHttpRequest);
+    var TopCarsController = require('./modules/topCars/TopCarsController.js');
 
     var router = require('./library/router/router.js')(AuthorizationController);
 
@@ -41,6 +44,7 @@
     authorization.init();
 
     router.route('/', SearchPanelController, autoService, events);
+    router.route('/', TopCarsController, autoService, events);
 
     router.route('search', SearchPanelController, autoService, events);
     router.route('search', CarListController, autoService, events);
@@ -50,8 +54,7 @@
 
 
     // for testing serverNode
-    var Q = require('q');
-    var ajax = require('./library/ajax/ajax.js')(XMLHttpRequest, Q);
+    var ajax = require('./library/ajax/ajax.js');
 
     //ajax.getPromise('/db');
 
