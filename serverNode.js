@@ -38,7 +38,6 @@ mongoose.connect(urlMongo, function (err) {
 
         console.log('request.url', request.url);
         console.log('request.method', request.method);
-        console.log('request.body', request.body)
         console.log('parsedUrl',parsedUrl);
 
         var pathname = parsedUrl.pathname;
@@ -69,10 +68,12 @@ mongoose.connect(urlMongo, function (err) {
             console.log(pathname);
             var userName = pathname.slice(6);
             console.log(userName);
-            console.log('request.body', request.body);
             request.on('data', function (user){
-                User.create(user);
 
+                User.create(user, function (err, saved) {
+                    if (err) throw err;
+                    console.log('saved user', saved);
+                });
                 console.log(user.toString());
                 response.end();
                 //output = countries.appendCountry(query)

@@ -41,7 +41,7 @@ module.exports = function () {
                 evt.target.getAttribute('data-auth') === 'login' ||
                 evt.target.getAttribute('data-auth') === 'logout') {
                 evt.preventDefault();
-                action = evt.target.getAttribute('data-auth');
+                var action = evt.target.getAttribute('data-auth');
                 handler(action, evt.target);
             }
         }
