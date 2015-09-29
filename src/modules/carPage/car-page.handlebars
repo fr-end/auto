@@ -1,7 +1,7 @@
 <div class="carpage-wraper">
 	<header class="carpage-title">
-		<h1 class="carpage-title__caption">{{title}}</h1>
-		<h2 class="carpage-title__price">{{price.uah}}</h2>
+		<h1 class="carpage-title__caption">{{title}} {{year}}</h1>
+		<h2 class="carpage-title__price">{{price.uah}} грн.</h2>
 	</header>
 	<div class="carpage">
 		<div class="carpage-star">
@@ -77,7 +77,7 @@
 							<span class="carpage-info-paragraph__capture">Состояние:</span> Гаражное хранение, Не бит, Не крашен, Сервисная книжка
 						</p>
 						<p class="carpage-info-paragraph">
-							Машина в идеальном состоянии, без ДТП и прочих неприятностей. В машине крашено одно крыло и то после царапины. Ходовые качества на отлично, салон в хорошем состоянии. Все стекла и оптика родные. 2 ключа, все книжки, Днепропетровская регистрация.
+							{{description}}
 						</p>
 					</section>
 				</div>
@@ -86,17 +86,17 @@
 						<h3 class="sidebar-characteristic__caption">Технические характеристики</h3>
 						<ul class="sidebar-characteristic-list">
 							<li class="sidebar-characteristic-list__item">Коробка передач: {{gearBox}}</li>
-							<li class="sidebar-characteristic-list__item">Привод: Передний</li>
-							<li class="sidebar-characteristic-list__item">Количество дверей: 4</li>
-							<li class="sidebar-characteristic-list__item">Количество мест: 5</li>
-							<li class="sidebar-characteristic-list__item">Цвет: Черный</li>
-							<li class="sidebar-characteristic-list__item">Топливо: Бензин</li>
+							<li class="sidebar-characteristic-list__item">Привод: {{drive}}</li>
+							<li class="sidebar-characteristic-list__item">Количество дверей: {{door}}</li>
+							<li class="sidebar-characteristic-list__item">Количество мест: {{seats}}</li>
+							<li class="sidebar-characteristic-list__item">Цвет: {{color}}</li>
+							<li class="sidebar-characteristic-list__item">Топливо: {{fuel}}</li>
 							<li class="sidebar-characteristic-list__item">Объем двигателя: {{volume}} л</li>
 						</ul>
 					</div>
 					<ul class="sidebar-views">
-						<li class="sidebar-views__item">Размещено:17 часов назад</li>
-						<li class="sidebar-views__item">Всего просмотров: 3480</li>
+						<li class="sidebar-views__item">Размещено: {{date}}</li>
+						<li class="sidebar-views__item">Всего просмотров: {{q}}</li>
 						<li class="sidebar-views__item">ID автомобиля: {{carId}}</li>
 					</ul>
 					<div class="sidebar-phone">
@@ -107,7 +107,7 @@
 					</div>
 					<div class="sidebar-seller">
 						<strong class="sidebar-seller__name">
-							Aleksandr
+							{{author}}
 						</strong>
 						<span class="sidebar-seller__city">	
 							г. {{city}}
