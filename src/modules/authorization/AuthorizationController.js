@@ -2,18 +2,20 @@ module.exports = function(ajax){
 
     var mongoose = require('mongoose');
 
-    var UserModel = require('./AuthorizationModel.js')(mongoose);
+    var UserModel = require('./AuthorizationModel.js')(ajax);
 
-    var View 		= require('./AuthorizationView.js')(ajax);
+    var View 		= require('./AuthorizationView.js')();
 
     function AuthorizationController(){
-        this.model = UserModel;
+        this.model = new UserModel();
         this.view = new View();
         this.started = false;
     }
 
     AuthorizationController.prototype = {
         init: function(){
+
+            var self = this;
 
             if ( this.started ) {
                 return;
@@ -23,6 +25,12 @@ module.exports = function(ajax){
             this.view.render('showAuthMenu', {session: { isLoggedIn: false}});
             this.view.init();
 
+
+            //this.bind('clickLoginSubmitButton');
+
+            this.view.bind('clickSignUpSubmitButton', function(user){
+                self.model.checkAndPostUser(user);
+            });
             /*
             console.log(this.model);
             var user = new mongoose.Document(

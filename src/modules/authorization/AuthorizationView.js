@@ -22,8 +22,7 @@ module.exports = function (ajax) {
         this.init = function(){
             this.bind('clickSomeAuthButton');
             this.bind('clickBackground');
-            this.bind('clickLoginSubmitButton');
-            this.bind('clickSignUpSubmitButton');
+
         };
     }
 
@@ -84,12 +83,22 @@ module.exports = function (ajax) {
                 console.log(email, password, passwordRepeat);
 
                 if (password !== passwordRepeat){
+                    // implement this properly
                     console.log ('PASSWORDS AREN"T EQUAL!');
                     return;
                 }
 
-                ajax.getPromisePost('/db/user', {_id: email, password: password})
-                    .then(function(data){console.log(data);});
+                // implement client side validation
+
+                var newUser = {};
+                newUser._id = email;
+                newUser.password = password;
+
+                handler(newUser);
+
+                //
+                //ajax.getPromisePost('/db/user', {_id: email, password: password})
+                //    .then(function(data){console.log(data);});
 
                 //self.hideAuthFormWrapper();
             }
