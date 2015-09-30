@@ -83,11 +83,16 @@ module.exports = (function(){
 						var autoData = carInfo.result.auto_data;
 						var imgUrl = carInfo.result.photo_data.photo ? carInfo.result.photo_data.photo.url : '';
 						imgUrl = imgUrl.replace('.','f.');
-						
+						var carPhotos = [];
+						carInfo.result.photo_data.photos.forEach(function(photo){
+							carPhotos.push('https://cdn.riastatic.com/photosnew/'+photo.seo_link.replace('.','f.'));
+						});
+
 						var carInfoNeeded = {
 							carId 		: autoData.auto_id,
 							title 		: autoData.marka_data.name + ' ' + autoData.model_data.name +
-								 ' ' + autoData.version,							
+								 ' ' + autoData.version,
+							year		: autoData.years,
 							categoryId 	: carInfo.result.category_data.category_id,
 							categoryName : carInfo.result.category_data.category_name,
 							markaId 	: autoData.marka_id,
@@ -99,6 +104,10 @@ module.exports = (function(){
 							fuel 		: autoData.fuel_data ? autoData.fuel_data.name : '---',
 							volume 		: autoData.engineVolume || '---',
 							gearBox 	: autoData.gearbox_data ? autoData.gearbox_data.name : '---',
+							door		: autoData.door,
+							drive		: autoData.drive_data.name,
+							seats		: autoData.seats,
+							color		: autoData.color_data.name,
 							price 		: {
 											usd : carInfo.result.price_data.prices[1],
 											uah : Math.round(carInfo.result.price_data.prices[3])
@@ -110,7 +119,9 @@ module.exports = (function(){
 								carInfo.result.date_data.date_add.year,
 							description : autoData.description,
 							phone 		: carInfo.result.user_phones[0].phone_formatted,
+							author		: carInfo.result.user_data.firstName,
 							city 		: carInfo.result.location_data.state.region_name,
+							photos		: carPhotos
 						};						
 						return carInfoNeeded;
 					});

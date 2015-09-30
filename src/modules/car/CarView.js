@@ -1,9 +1,9 @@
 module.exports = (function () {
 
-    var template	= require('./car.handlebars');
+    var defaultTemplate	= require('./car.handlebars');
 
-	function View() {
-		this.template = template;
+	function View(template) {
+		this.template = template || defaultTemplate;
         this.viewPortSelector = undefined;
         this.$viewPort = undefined;
         this.inListSelector = undefined;

@@ -48,7 +48,7 @@ module.exports = function (document, localStorage, XMLHttpRequest) {
                 if(isNaN(+carId)){
                     throw new Error('carIds must contain Array of numbers in CarListController.showCars');
                 }
-                var car = new Car(this.service,this.events);
+                var car = new Car(this.service);
                 var carPromise = car.showCar(carId);
                 carPromises.push(carPromise);
             }).bind(this));

@@ -43,6 +43,11 @@ module.exports = function(AuthorizationController){
                 window.app.buttonSearch.classList.toggle('active',false);
                 window.app.buttonWishList.classList.toggle('active',true);
             }
+
+            if (routeName === 'car'){
+                window.app.buttonSearch.classList.toggle('active',false);
+                window.app.buttonWishList.classList.toggle('active',false);
+            }
         }
     };
 

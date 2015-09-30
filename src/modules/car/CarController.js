@@ -3,9 +3,9 @@ module.exports = function(localStorage, XMLHttpRequest){
 	var localService = require('../../services/local/localService');
     var View 		= require('./CarView.js');
 
-    function CarController(service){
+    function CarController(service, template){
         this.service = service;
-        this.view = new View();
+        this.view = new View(template);
         this.view.bind('clickAddToWishListButton', (function () {
             var result = this.toggleWishList(this.carId);
             this.view.toggleClass(this.carId, result);

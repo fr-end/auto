@@ -47,6 +47,7 @@
     var AuthorizationController = require('./modules/authorization/AuthorizationController.js')(ajax);
     var SearchPanelController = require('./modules/searchPanel/SearchPanelController.js');
     var CarListController = require('./modules/carList/CarListController.js')(document, localStorage, XMLHttpRequest);
+    var CarPageController = require('./modules/carPage/CarPageController.js');
     var TopCarsController = require('./modules/topCars/TopCarsController.js');
 
     var router = require('./library/router/router.js')(AuthorizationController);
@@ -63,6 +64,8 @@
     router.route('wishlist', SearchPanelController, localService, events);
     router.route('wishlist', CarListController, localService, events);
 
+    router.route('car', AuthorizationController, localService, events);
+    router.route('car', CarPageController, autoService, events);
 
 
 
