@@ -47,7 +47,6 @@
 			cursor: pointer;
 			background: url(img/sprite.png) no-repeat 9px -140px;
 			width: 33px;
-			height: 33px;
 			border: 1px solid #cecece;
 		}
 	}
@@ -73,7 +72,6 @@
 
 	&-slider {
 		width: 580px;
-		height: 445px; 
 
 		&-bigimg {
 
@@ -109,19 +107,26 @@
 		}
 
 		&-carousel {
+			width: 580px;
+			text-align: justify;
+			margin-top: 6px;
 
 			&-cars {
+				width: 100%;
 				margin: 0;
 				padding: 0;
-				list-style: none;
 
 				&-item {
 					display: inline-block;
-					text-align: justify;
-					margin: 10px 0 0 9px;
+					margin: 0 2px 2px  0;
+					width: 24%;
+					list-style: none;
+					&-link {
 
-					&:first-child {
-						margin: 10px 1px 0 0;
+						&__img {
+							height: auto;
+							width: 100%;
+						}
 					}
 				}
 			}
@@ -133,7 +138,8 @@
 		text-align: justify;
 
 		&-paragraph {
-
+			@extend %clearfix;
+			
 			&__capture {
 				color: $border-color;
 			}
@@ -152,6 +158,10 @@
 
 			&__city {
 				display: block;
+			}
+
+			&__add-note {
+				display: none;
 			}
 
 		}
@@ -232,4 +242,27 @@
   &:after {
     clear: both;
   }
+}
+
+// for items in wishlist
+
+.in-list {
+
+	& .carpage-star {
+		width: 33px;
+		border: 1px solid #cecece;		
+		background: url(img/sprite.png) no-repeat 9px -140px;
+		background-color: #686868;	
+		cursor: pointer;
+	}
+
+	& .sidebar-seller__add-note {
+		display: block;
+		width: 160px;
+		margin-top: 10px;
+		cursor: pointer;
+		font-size: $font-size-header;
+		color: $course-color;	
+	}
+
 }
