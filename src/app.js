@@ -38,13 +38,14 @@
 
     //ajax.getPromise('/db');
 
-    ajax
-        .getPromise('/db/user/email@e.mail?data=newdata&something=something#hash')
-        .then(function(data){console.log(data);});
+    //ajax
+    //    .getPromise('/db/user/email@e.mail?data=newdata&something=something#hash')
+    //    .then(function(data){console.log(data);});
 
     // end testing serverNode
 
     var AuthorizationController = require('./modules/authorization/AuthorizationController.js')(ajax);
+
     var SearchPanelController = require('./modules/searchPanel/SearchPanelController.js');
     var CarListController = require('./modules/carList/CarListController.js')(document, localStorage, XMLHttpRequest);
     var CarPageController = require('./modules/carPage/CarPageController.js');

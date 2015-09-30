@@ -2,12 +2,12 @@ module.exports = function(ajax){
 
     var mongoose = require('mongoose');
 
-    var UserModel = require('./AuthorizationModel.js')(mongoose);
+    var UserModel = require('./AuthorizationModel.js')(ajax);
 
-    var View 		= require('./AuthorizationView.js')(ajax);
+    var View 		= require('./AuthorizationView.js')();
 
     function AuthorizationController(){
-        this.model = UserModel;
+        this.model = new UserModel();
         this.view = new View();
         this.started = false;
     }
@@ -15,11 +15,22 @@ module.exports = function(ajax){
     AuthorizationController.prototype = {
         init: function(){
 
+            var self = this;
+
             if ( this.started ) {
                 return;
             }
             this.started = true;
 
+            this.view.render('showAuthMenu', {session: { isLoggedIn: false}});
+            this.view.init();
+
+
+            //this.bind('clickLoginSubmitButton');
+
+            this.view.bind('clickSignUpSubmitButton', function(user){
+                self.model.checkAndPostUser(user);
+            });
             /*
             console.log(this.model);
             var user = new mongoose.Document(
@@ -33,29 +44,7 @@ module.exports = function(ajax){
             console.log('user.toJSON', user.toJSON());
             */
 
-            this.view.render('showAuthMenu', {session: { isLoggedIn: false}});
 
-            this.view.bind('clickSomeAuthButton',(function(action, target){
-
-                if (action === 'login'){
-                    this.view.showAuthFormWrapper(action, target);
-                    this.view.toggleFormLogIn(action, target);
-
-                } else if (action === 'signUp'){
-                    this.view.showAuthFormWrapper(action, target);
-                    this.view.toggleFormSignUp(action, target);
-                }
-
-                console.log(action, target);
-                console.log('click', this);
-
-            }).bind(this));
-
-            this.view.bind('clickBackground');
-
-            this.view.bind('clickLoginSubmitButton');
-
-            this.view.bind('clickSignUpSubmitButton');
 
         }
     };
