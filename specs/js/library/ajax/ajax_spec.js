@@ -26,7 +26,7 @@ Q.defer = function(){
 	return deferred;
 };
 
-var env = require('../../libs_spec/test_config.js');
+var env = require('../../../Libs_spec/test_config.js');
 
 //var Q = require('q');
 
