@@ -13,7 +13,6 @@ module.exports = (function () {
 
     Controller.prototype = {
         init: function(searchParams){
-            console.log('init');
             //console.log(this.carController.showCar(searchParams.carId));
             this.carController.showCar(searchParams.carId)
                 .then((function(data){

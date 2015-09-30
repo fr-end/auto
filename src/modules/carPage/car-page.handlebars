@@ -17,49 +17,20 @@
 							<a href="#" class="carpage-slider-bigimg-next">
 								<span class="carpage-slider-bigimg-next__arrow"></span>
 							</a>
-							<img src="https://cdn.riastatic.com/photosnew/auto/photo/nissan_qashqai__134842664fx.jpg" alt="" class="carpage-slider-bigimg__img" height="385px" width="580px">
+							<img src="" alt="" class="carpage-slider-bigimg__img" height="385px" width="580px">
 						</div>
 						<div class="carpage-slider-carousel">
 							<ul class="carpage-slider-carousel-cars">
+                                {{#each photos}}
 								<li class="carpage-slider-carousel-cars-item">
 									<a href="#" class="carpage-slider-carousel-cars-item-link">
-										<img src="https://cdn.riastatic.com/photosnew/auto/photo/nissan_qashqai__134842494fx.jpg" alt="" height="50px" width="75px" class="carpage-slider-carousel-cars-item-link__img"> 
+										<img src="{{this}}" alt="" height="50px" width="75px" class="carpage-slider-carousel-cars-item-link__img">
 									</a>
-								</li
-								><li class="carpage-slider-carousel-cars-item">
-									<a href="#" class="carpage-slider-carousel-cars-item-link">
-										<img src="https://cdn.riastatic.com/photosnew/auto/photo/nissan_qashqai__134842639fx.jpg" alt="" height="50px" width="75px" class="carpage-slider-carousel-cars-item-link__img"> 
-									</a>
-								</li
-								><li class="carpage-slider-carousel-cars-item">
-									<a href="#" class="carpage-slider-carousel-cars-item-link">
-										<img src="https://cdn.riastatic.com/photos/auto/photo/13484/1348426/134842642/134842642fx.jpg" alt="" height="50px" width="75px" class="carpage-slider-carousel-cars-item-link__img"> 
-									</a>
-								</li
-								><li class="carpage-slider-carousel-cars-item">
-									<a href="#" class="carpage-slider-carousel-cars-item-link">
-										<img src="https://cdn.riastatic.com/photos/auto/photo/13484/1348426/134842648/134842648fx.jpg" alt="" height="50px" width="75px" class="carpage-slider-carousel-cars-item-link__img"> 
-									</a>
-								</li
-								><li class="carpage-slider-carousel-cars-item">
-									<a href="#" class="carpage-slider-carousel-cars-item-link">
-										<img src="https://cdn.riastatic.com/photos/auto/photo/13484/1348426/134842649/134842649fx.jpg" alt="" height="50px" width="75px" class="carpage-slider-carousel-cars-item-link__img"> 
-									</a>
-								</li
-								><li class="carpage-slider-carousel-cars-item">
-									<a href="#" class="carpage-slider-carousel-cars-item-link">
-										<img src="https://cdn.riastatic.com/photos/auto/photo/13484/1348426/134842655/134842655fx.jpg" alt="" height="50px" width="75px" class="carpage-slider-carousel-cars-item-link__img"> 
-									</a>
-								</li
-								><li class="carpage-slider-carousel-cars-item">
-									<a href="#" class="carpage-slider-carousel-cars-item-link">
-										<img src="https://cdn.riastatic.com/photos/auto/photo/13484/1348426/134842658/134842658fx.jpg" alt="" height="50px" width="75px" class="carpage-slider-carousel-cars-item-link__img"> 
-									</a>
-								</li>
+								</li>{{/each}}
 							</ul>
 						</div>
 					</div>
-					<section class="carpage-info">
+					<section class="carpage-info"><!--
 						<p class="carpage-info-paragraph">
 							<span class="carpage-info-paragraph__capture">Комфорт:</span>
 							Бортовой компьютер, Климат контроль, Кожаный салон, Круиз контроль, Омыватель фар, Парктроник, Подогрев зеркал, Подогрев сидений, Усилитель руля, Эл. стеклоподъемники, Электропакет.
@@ -75,7 +46,7 @@
 						</p>
 						<p class="carpage-info-paragraph">
 							<span class="carpage-info-paragraph__capture">Состояние:</span> Гаражное хранение, Не бит, Не крашен, Сервисная книжка
-						</p>
+						</p>-->
 						<p class="carpage-info-paragraph">
 							{{description}}
 						</p>
@@ -96,13 +67,14 @@
 					</div>
 					<ul class="sidebar-views">
 						<li class="sidebar-views__item">Размещено: {{date}}</li>
-						<li class="sidebar-views__item">Всего просмотров: {{q}}</li>
+						<!--<li class="sidebar-views__item">Всего просмотров: {{q}}</li>-->
 						<li class="sidebar-views__item">ID автомобиля: {{carId}}</li>
 					</ul>
 					<div class="sidebar-phone">
 						<span class="sidebar-phone__icon"></span>
 						<strong class="sidebar-phone-number">
-							+38 <span class="sidebar-phone-number__operatop">(067)</span> 601-78-96
+							<!--+38 <span class="sidebar-phone-number__operatop">(067)</span> 601-78-96-->
+                            {{phone}}
 						</strong>
 					</div>
 					<div class="sidebar-seller">

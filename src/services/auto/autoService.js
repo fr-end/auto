@@ -83,7 +83,11 @@ module.exports = (function(){
 						var autoData = carInfo.result.auto_data;
 						var imgUrl = carInfo.result.photo_data.photo ? carInfo.result.photo_data.photo.url : '';
 						imgUrl = imgUrl.replace('.','f.');
-						
+						var carPhotos = [];
+						carInfo.result.photo_data.photos.forEach(function(photo){
+							carPhotos.push('https://cdn.riastatic.com/photosnew/'+photo.seo_link.replace('.','f.'));
+						});
+
 						var carInfoNeeded = {
 							carId 		: autoData.auto_id,
 							title 		: autoData.marka_data.name + ' ' + autoData.model_data.name +
@@ -117,6 +121,7 @@ module.exports = (function(){
 							phone 		: carInfo.result.user_phones[0].phone_formatted,
 							author		: carInfo.result.user_data.firstName,
 							city 		: carInfo.result.location_data.state.region_name,
+							photos		: carPhotos
 						};						
 						return carInfoNeeded;
 					});
