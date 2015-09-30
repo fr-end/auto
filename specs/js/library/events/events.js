@@ -38,11 +38,11 @@ module.exports = (function(){
   return {
 
     subscribers: {
-    'searchPanel ids': [] // event type: 'searchPanel ids'
+    'search ids': [] // event type: 'search ids'
     },
 
     subscribe: function (type, fn) {
-      type = type || 'searchPanel ids';
+      type = type || 'search ids';
       if (typeof this.subscribers[type] === "undefined") {
         this.subscribers[type] = [];
       }
@@ -57,7 +57,7 @@ module.exports = (function(){
       this.visitSubscribers('publish', type, jsonArrayOfCarObjects);
     },
     visitSubscribers: function (action, type, arg) {
-     var pubtype = type || 'searchPanel ids',
+     var pubtype = type || 'search ids',
          subscribers = this.subscribers[pubtype],
          i,
          max = subscribers.length;

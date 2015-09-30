@@ -1,7 +1,7 @@
 module.exports = {
 
     subscribers: {
-    'search ids': [] // event type: 'searchPanel ids'
+    'search ids': [] // event type: 'search ids'
     },
 
     subscribe: function (type, fn) {

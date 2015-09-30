@@ -42,7 +42,7 @@ mongoose.connect(urlMongo, function (err) {
 
         var pathname = parsedUrl.pathname;
         /*
-        if (pathname.searchPanel(/^\/user\/?/) != '-1' && request.method === 'GET'){
+        if (pathname.search(/^\/user\/?/) != '-1' && request.method === 'GET'){
 
             console.log(pathname);
             var userName = pathname.slice(6);
