@@ -34,7 +34,7 @@
     window.app.buttonWishList = document.getElementById('header-menu-item__wish-list');
 
     // for testing serverNode
-    var ajax = require('./library/ajax/ajax.js');
+    var ajax = require('./library/ajax/ajax.js')(XMLHttpRequest, Q);
 
     //ajax.getPromise('/db');
 
