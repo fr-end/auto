@@ -6,7 +6,7 @@ module.exports = (function(){
         autoRiaUaHost: '/proxy'
     };
 
-    var ajax = require('../../library/ajax/ajax.js');
+    var ajax = require('../../library/ajax/ajax.js')(XMLHttpRequest, Q);
 
 	var auto = {
 		getCategories: function () {

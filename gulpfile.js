@@ -1,11 +1,10 @@
 var gulp = require('gulp');                 //  main gulp module
 var args = require('yargs').argv;           //  tool for getting the arguments (file paths) in a stream
-var concat = require('gulp-concat');        //  module for concatenation files into one file
 var connect = require('gulp-connect');      //  allow livereload our files in webbrowser
 var url = require('url');                   //  url tool
 var proxy = require('proxy-middleware');    //  proxy
 var sass = require('gulp-sass');            //  module for SASS->CSS convertion
-var concatCss = require('gulp-concat-css')  //  module for concatenation CSS files into one file
+var concatCss = require('gulp-concat-css'); //  module for concatenation CSS files into one file
 var nodemon = require('gulp-nodemon');
 
 // unit testing
@@ -95,14 +94,10 @@ gulp.task('serverGulp', function(){
         livereload: true,                           // livereload for our server
         middleware: function(connect, o) {
             return [ (function() {
-                var url = require('url');
-                var proxy = require('proxy-middleware');
                 var options = url.parse(config.proxy.pathto);
                 options.route = config.proxy.path;
                 return proxy(options);
             })(),(function() {
-                var url = require('url');
-                var proxy = require('proxy-middleware');
                 var options = url.parse(config.proxy.pathtoDB);
                 options.route = config.proxy.pathDB;
                 return proxy(options);
