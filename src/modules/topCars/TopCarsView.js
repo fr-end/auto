@@ -12,7 +12,7 @@ module.exports = (function(){
             var viewPort = document.querySelector('.search-results-wrapper');
             viewPort.innerHTML = this.template(data);
         }
-    }
+    };
 
     return TopCarsView;
 

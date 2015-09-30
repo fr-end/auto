@@ -125,7 +125,12 @@ module.exports = (function(){
 						};						
 						return carInfoNeeded;
 					});
-		}
+		},
+        getTopCars: function(){
+            //https://auto.ria.com/demo/bu/mainPage/rotator/main?page=0&type=all&limit=5&pakets=3
+            var url = config.autoRiaUaHost + '/demo/bu/mainPage/rotator/main?page=0&type=all&limit=5&pakets=3';
+            return ajax.getPromise(url);
+        }
 	};
 
 	return auto;
