@@ -19,6 +19,12 @@ module.exports = function (ajax) {
 
         this.visibleElements = [];
 
+        this.init = function(){
+            this.bind('clickSomeAuthButton');
+            this.bind('clickBackground');
+            this.bind('clickLoginSubmitButton');
+            this.bind('clickSignUpSubmitButton');
+        };
     }
 
     View.prototype.render = function (viewCmd, data) {
@@ -41,22 +47,6 @@ module.exports = function (ajax) {
     View.prototype.bind = function (event, handler) {
 
         var self = this;
-
-        function listenClickSomeAuthButton (evt){
-            if (evt.target.getAttribute('data-auth') === 'signUp' ||
-                evt.target.getAttribute('data-auth') === 'login' ||
-                evt.target.getAttribute('data-auth') === 'logout') {
-                evt.preventDefault();
-                var action = evt.target.getAttribute('data-auth');
-                handler(action, evt.target);
-            }
-        }
-
-        function clickInAuthFormTabs(evt){
-            self.toggleFormLogIn();
-            self.toggleFormSignUp();
-            evt.preventDefault();
-        }
 
         if (event === 'clickSomeAuthButton') {
             this.$container.onclick = listenClickSomeAuthButton;
@@ -100,7 +90,33 @@ module.exports = function (ajax) {
 
                 ajax.getPromisePost('/db/user', {_id: email, password: password})
                     .then(function(data){console.log(data);});
+
+                //self.hideAuthFormWrapper();
             }
+        }
+
+        function listenClickSomeAuthButton (evt){
+            if (evt.target.getAttribute('data-auth') === 'signUp' ||
+                evt.target.getAttribute('data-auth') === 'login' ||
+                evt.target.getAttribute('data-auth') === 'logout') {
+                evt.preventDefault();
+                var action = evt.target.getAttribute('data-auth');
+
+                if (action === 'login'){
+                    self.showAuthFormWrapper();
+                    self.toggleFormLogIn();
+
+                } else if (action === 'signUp'){
+                    self.showAuthFormWrapper();
+                    self.toggleFormSignUp();
+                }
+            }
+        }
+
+        function clickInAuthFormTabs(evt){
+            self.toggleFormLogIn();
+            self.toggleFormSignUp();
+            evt.preventDefault();
         }
 
         function listenClickBackground(evt) {

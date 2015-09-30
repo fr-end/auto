@@ -73,6 +73,7 @@ mongoose.connect(urlMongo, function (err) {
                 var parsedUser = JSON.parse(stringifiedUser);
 
                 var newUser = new User(parsedUser);
+                console.log(newUser)
                 newUser.save(function (err) {
                     if (err) throw err;
                     console.log('newUser saved!', newUser);
