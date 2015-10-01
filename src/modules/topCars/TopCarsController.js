@@ -13,35 +13,44 @@ module.exports = (function(){
     TopCarsController.prototype = {
         init : function(){
             this.view.render();
-            this.model.getTopCars()
-                .then((function(carIdsJSON){
-                    var carIds = JSON.parse(carIdsJSON);
-                    if(!Array.isArray(carIds)){
-                        throw new Error('carIds is not Array in CarListController.showCars');
-                    }
+            this.model.getTopCarIds()
+                .then((function(topCarIds){
                     var carPromises = [];
-                    carIds.forEach((function(carId){
-                        if(isNaN(+carId.id)){
+                    topCarIds.forEach((function(carIdAndType){
+                        if(isNaN(+carIdAndType.id)){
                             throw new Error('carIds must contain Array of numbers in CarListController.showCars');
                         }
-                        var car = new Car(this.service,this.events);
-                        var carPromise = car.showCar(carId.id);
+                        console.log(carIdAndType);
+                        var carPromise = this.model.getTopCarPromise(carIdAndType);
                         carPromises.push(carPromise);
                     }).bind(this));
                     console.log(carPromises,'carPromises');
                     Q.allSettled(carPromises)
                         .then(function(carPromises){
-                            var carHtmls = [];
+                            var carBigData;
+                            var carsSmallData = [];
                             carPromises.forEach(function(result){
+                                console.log(result.state);
                                 if (result.state === 'fulfilled') {
-                                    carHtmls.push(result.value);
+                                    var resultJSON = JSON.parse(result.value);
+                                    if(carBigData){
+                                        carsSmallData.push(resultJSON);
+                                    } else {
+                                        carBigData = resultJSON;
+                                    }
                                 }
                             });
-                            return carHtmls;
-                        });
-                }).bind(this))
-                .then((function(carHtmls){
-                    this.view.render();
+                            var carsData = {
+                                big: carBigData,
+                                small: carsSmallData
+                            };
+                            return carsData;
+                        })
+                        .then((function(carsData){
+                            console.log(carsData,'carsData');
+                            console.log(carsData.big['photoBig'],'big.photoBig')
+                            this.view.render(carsData);
+                        }).bind(this));
                 }).bind(this));
         }
     };
