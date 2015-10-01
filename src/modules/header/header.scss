@@ -15,23 +15,29 @@
 	}
 
 	&-authorization{
+	float: right;
 
 		&-button{
-			background: $header-menu-item-color;
-			border-radius: 0 0 $border-radius-small $border-radius-small;
-			color: $background-color;
+			background: none;
+			background: url($sprite) no-repeat 0 -736px;
+			border: none;
+			color: $text-color;
 			cursor: pointer;
 			display: inline-block;
-			vertical-align: top;
 			font-size: $font-size-main-text;
 			height: 20px;
 			line-height: 20px;
-			margin-right: 10px;
-			padding: 0 20px;
-			border: none;
+			margin-left: 10px;
+			margin-top: 40px;
 			outline: none;
-			&:hover{
-				background: $border-color;
+			padding: 0 0 0 20px;
+			text-align: right;
+			transition: 0.4s;
+			vertical-align: top;
+
+			&.login{
+				background-position: 0 -764px;
+				padding-left: 23px;
 			}
 		}
 
