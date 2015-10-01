@@ -36,12 +36,6 @@
     // for testing serverNode
     var ajax = require('./library/ajax/ajax.js')(XMLHttpRequest, Q);
 
-    //ajax.getPromise('/db');
-
-    //ajax
-    //    .getPromise('/db/user/email@e.mail?data=newdata&something=something#hash')
-    //    .then(function(data){console.log(data);});
-
     // end testing serverNode
 
     var AuthorizationController = require('./modules/authorization/AuthorizationController.js')(ajax);

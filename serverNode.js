@@ -2,6 +2,9 @@
 //var util = require('util');
 var mongoose = require('mongoose');
 //var express = require('express');
+var hash = require('./helpers/hash.js');
+var crypto = require('crypto');
+
 
 var User = require('./models/user.js');
 mongoose.model('User');
@@ -35,18 +38,13 @@ mongoose.connect(urlMongo, function (err) {
 
         // url module reference https://www.npmjs.com/package/url
         var parsedUrl = url.parse(request.url, true);
-
-        //console.log('request.url', request.url);
-        //console.log('request.method', request.method);
-        //console.log('parsedUrl',parsedUrl);
-
         var pathname = parsedUrl.pathname;
-        /*
+
         if (pathname.search(/^\/user\/?/) != '-1' && request.method === 'GET'){
 
-            console.log(pathname);
+            console.log('pathname', pathname);
             var userName = pathname.slice(6);
-            console.log(userName);
+            console.log('userName',userName);
 
             //User.create(user);
             User.findById(userName, function(err, user){
@@ -63,8 +61,52 @@ mongoose.connect(urlMongo, function (err) {
             });
 
         }
-        */
+
         if (pathname.search(/^\/user\/?/) != '-1' && request.method === 'POST') {
+
+/*
+            app.post('/signup', function (req, res, next) {
+                var email = cleanString(req.param('email'));
+                var pass = cleanString(req.param('pass'));
+                if (!(email && pass)) {
+                    return invalid();
+                }
+
+                User.findById(email, function (err, user) {
+                    if (err) return next(err);
+
+                    if (user) {
+                        return res.render('signup.jade', { exists: true });
+                    }
+
+                    crypto.randomBytes(16, function (err, bytes) {
+                        if (err) return next(err);
+
+                        var user = { _id: email };
+                        user.salt = bytes.toString('utf8');
+                        user.hash = hash(pass, user.salt);
+
+                        User.create(user, function (err, newUser) {
+                            if (err) {
+                                if (err instanceof mongoose.Error.ValidationError) {
+                                    return invalid();
+                                }
+                                return next(err);
+                            }
+
+                            // user created successfully
+                            req.session.isLoggedIn = true;
+                            req.session.user = email;
+                            console.log('created user: %s', email);
+                            return res.redirect('/');
+                        })
+                    })
+                })
+
+
+            });
+        */
+
             console.log(pathname);
             var userName = pathname.slice(6);
             console.log(userName);
@@ -72,13 +114,40 @@ mongoose.connect(urlMongo, function (err) {
                 var stringifiedUser = userData.toString();
                 var parsedUser = JSON.parse(stringifiedUser);
 
-                var newUser = new User(parsedUser);
-                console.log(newUser)
-                newUser.save(function (err) {
-                    if (err) throw err;
-                    console.log('newUser saved!', newUser);
+                User.findById(parsedUser._id, function (err, user) {
+                    if (err) return next(err);
+
+                    if (user) {
+                        return console.log('user already exists');//return res.render('signup.jade', { exists: true });
+                    }
+
+                    crypto.randomBytes(16, function (err, bytes) {
+                        if (err) return next(err);
+
+                        var user = { _id: parsedUser._id };
+                        user.salt = bytes.toString('utf8');
+                        user.hash = hash(parsedUser.password, user.salt);
+
+                        User.create(user, function (err, createdUser) {
+                            if (err) {
+                                if (err instanceof mongoose.Error.ValidationError) {
+                                    return invalid();
+                                }
+                                return next(err);
+                            }
+
+                            // user created successfully
+                            //req.session.isLoggedIn = true;
+                            //req.session.user = email;
+                            console.log('created user: %s', user);
+                            //return res.redirect('/');
+                        });
+                    })
                 });
 
+                function invalid(){
+                    console.log('invalid user data validation on the back end!');
+                }
                 /*
                 User.create(parsedUser, function (err, userSaved) {
                     if (err) throw err;

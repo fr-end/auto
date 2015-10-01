@@ -31,6 +31,10 @@ module.exports = function(ajax){
             this.view.bind('clickSignUpSubmitButton', function(user){
                 self.model.checkAndPostUser(user);
             });
+
+            this.view.bind('clickLoginSubmitButton', function(user){
+                self.model.checkAndGetUser(user);
+            });
             /*
             console.log(this.model);
             var user = new mongoose.Document(

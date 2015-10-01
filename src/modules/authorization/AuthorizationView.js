@@ -22,7 +22,6 @@ module.exports = function (ajax) {
         this.init = function(){
             this.bind('clickSomeAuthButton');
             this.bind('clickBackground');
-
         };
     }
 
@@ -67,6 +66,42 @@ module.exports = function (ajax) {
             popupBackground.onclick = listenClickBackground;
         }
 
+        function emptyFields(){
+            console.log('please fill in the fields!');
+        }
+
+        function notEmail(){
+            console.log('please provide email!');
+        }
+
+        function unCorrectEmail(){
+            console.log('please provide correct email address!');
+        }
+
+        function notPassword(){
+            console.log('please provide password!');
+        }
+
+        function checkAuthorizationFields(email, password){
+
+            if(!email && password){
+                return notEmail();
+            }  else if(!password && email){
+                return notPassword()
+            } else if (!(email && password)) {
+                return emptyFields();
+            }
+
+            var regexForEmailValidation = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
+
+            if(!regexForEmailValidation.test(email)){
+                return unCorrectEmail();
+            }
+
+            return true;
+
+        }
+
         if (event === 'clickSignUpSubmitButton') {
 
             this.$signUpSubmitButton = document.querySelector('[data-auth=form-signup-submit]');
@@ -82,13 +117,13 @@ module.exports = function (ajax) {
 
                 console.log(email, password, passwordRepeat);
 
+                checkAuthorizationFields(email, password);
+
                 if (password !== passwordRepeat){
                     // implement this properly
                     console.log ('PASSWORDS AREN"T EQUAL!');
                     return;
                 }
-
-                // implement client side validation
 
                 var newUser = {};
                 newUser._id = email;
@@ -103,6 +138,36 @@ module.exports = function (ajax) {
                 //self.hideAuthFormWrapper();
             }
         }
+
+
+
+        if (event === 'clickLoginSubmitButton') {
+
+            this.$loginSubmitButton = document.querySelector('[data-auth=form-login-submit]');
+            this.$loginInputEmail = document.querySelector('[data-auth=form-login-input-email]');
+            this.$loginInputPassword = document.querySelector('[data-auth=form-login-input-pass]');
+
+            this.$loginSubmitButton.onclick = function(evt){
+                evt.preventDefault();
+                var email = self.$loginInputEmail.value;
+                var password = self.$loginInputPassword.value;
+
+                if (checkAuthorizationFields(email, password) === true){
+                    console.log(email, password);
+
+                    var newUser = {};
+                    newUser._id = email;
+                    newUser.password = password;
+                    handler(newUser);
+                } else {
+                    return console.log('something wrong :(!')
+                }
+
+
+            }
+        }
+
+
 
         function listenClickSomeAuthButton (evt){
             if (evt.target.getAttribute('data-auth') === 'signUp' ||
