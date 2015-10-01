@@ -72,12 +72,23 @@ module.exports = (function(){
                     return count.count || 0;
                 });
         },
-        getCar: function (carId) {
+        getCar: function (carId, carType) {
+            //used
             //https://auto.ria.com/blocks_search_ajax/view/auto/14356030/?lang_id=2
+            //new
+            //https://auto.ria.com/newauto_blocks/search_ad?auto_id=1233918&lang_id=2
+            carType = carType || "bu";
             var langId = 2;
-            var url = config.autoRiaUaHost + '/blocks_search_ajax/view/auto/' +
-                carId +
-                '/?lang_id=' + langId;
+            var url;
+            if(carType === "bu"){
+                url = config.autoRiaUaHost + '/blocks_search_ajax/view/auto/' +
+                    carId +
+                    '/?lang_id=' + langId;
+            } else {
+                url = config.autoRiaUaHost + '/newauto_blocks/search_ad?auto_id=' +
+                    carId +
+                    '/?lang_id=' + langId;
+            }
             return ajax.getPromise(url).then(function (data) {
                 var carInfo = JSON.parse(data);
                 var autoData = carInfo.result.auto_data;
