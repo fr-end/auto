@@ -7,71 +7,34 @@
 			</div>
 			<div class="main-items">
 				<div class="main-big">
-					<a class="main-big-link" href="#">
-						<img class="main-big-img" src="https://cdn.riastatic.com/photos/auto/new_auto_storage/24/2401/240154/240154f.jpg" alt="bigCar" width="460" height="360">			
+					<a class="main-big-link" href="/#car/carId/{{big.autoId}}">
+						<img class="main-big-img" src="{{big.photoBig}}" alt="bigCar" width="460" height="360">
 						<div class="main-liner">
 							<h2 class="main-liner-name big">
-								Audi Q7
+								{{big.marka}} {{big.model}}
 							</h2>
 							<b class="main-liner-price big">
-								70000$
+								{{big.USD}}$
 							</b>
 						</div>
 					</a>	
 				</div>
 				<div class="main-small">
+                    {{#each small}}
 					<div class="main-small-container">
-						<a class="main-small-link" href="#">
-							<img class="main-small-img" src="https://cdn.riastatic.com/photos/auto/new_auto_storage/25/2512/251214/251214bx.jpg" alt="smallCar" width="220" height="170">
+						<a class="main-small-link" href="/#car/carId/{{autoId}}">
+							<img class="main-small-img" src="{{photoBig}}" alt="smallCar" width="220" height="170">
 							<div class="main-small-liner">
 								<h2 class="main-liner-name">
-									Subaru Legasy
+                                    {{marka}} {{model}}
 								</h2>
 								<b class="main-liner-price">
-									8950$
+									{{USD}}$
 								</b>
 							</div>
 						</a>
 					</div>
-					<div class="main-small-container">
-						<a class="main-small-link"  href="#">
-							<img class="main-small-img" src="https://cdn.riastatic.com/photosnew/auto/photo/mercedes-benz_e-class__134038002b.jpg" alt="smallCar" width="220" height="170">
-							<div class="main-small-liner">
-								<h2 class="main-liner-name">
-									Chevrole Aveo
-								</h2>
-								<b class="main-liner-price">
-									7500$
-								</b>
-							</div>
-						</a>
-					</div>
-					<div class="main-small-container">
-						<a class="main-small-link"  href="#">
-							<img class="main-small-img" src="https://cdn.riastatic.com/photosnew/auto/photo/kia_rio__133186620b.jpg" alt="smallCar" width="220" height="170">
-							<div class="main-small-liner">
-								<h2 class="main-liner-name">
-									Volkswagen Polo
-								</h2>
-								<b class="main-liner-price">
-									14000$
-								</b>
-							</div>
-						</a>	
-					</div>
-					<div class="main-small-container">
-						<a class="main-small-link"  href="#">	
-							<img class="main-small-img" src="https://cdn.riastatic.com/photos/auto/new_auto_storage/23/2345/234536/234536bx.jpg" alt="smallCar" width="220" height="170">
-							<div class="main-small-liner">
-								<h2 class="main-liner-name">
-									Mercedes Benz
-								</h2>
-								<b class="main-liner-price">
-									53900$
-								</b>
-							</div>
-						</a>
-					</div>
+                    {{/each}}
 				</div>
 			</div>
 			<div class="main-arrow">

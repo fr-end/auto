@@ -11,8 +11,6 @@ module.exports = (function () {
 	}
 
 	View.prototype.render = function (data) {
-        data.price.usd = data.price.usd.toFixed(0);
-        data.price.uah = data.price.uah.toFixed(0);
         this.viewPortSelector = '.item[data-car-id="' + data.carId + '"]';
         this.inListSelector = this.viewPortSelector + ' .item-header-like';
 	    var html = this.template(data);
