@@ -114,7 +114,7 @@ module.exports = (function(){
                         imgUrl : 'https://img.auto.ria.com/images/no-photo/no-photo-380x250.jpg',
                         date		: autoData.updatedAt,
                         description	: autoData.description,
-                        phone		: autoData.phones[0].phone_formatted,
+                        phone		: autoData.autosalon.phones[0].phone_formatted,
                         author		: autoData.phones[0].contactName,
                         city		: autoData.autosalon.city,
                         photos		: carPhotos
