@@ -115,7 +115,7 @@ module.exports = (function(){
                         date		: autoData.updatedAt,
                         description	: autoData.description,
                         phone		: autoData.autosalon.phones[0].phone_formatted,
-                        author		: autoData.phones[0].contactName,
+                        author		: autoData.autosalon.name,
                         city		: autoData.autosalon.city,
                         photos		: carPhotos
                     };
