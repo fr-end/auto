@@ -131,7 +131,6 @@ module.exports = (function(){
             var url = config.autoRiaUaHost + '/demo/bu/mainPage/rotator/main?page=0&type=all&limit=5&pakets=3';
             return ajax.getPromise(url)
                 .then(function(carIdsJSON){
-                    console.log(carIdsJSON);
                     var topCarIds = JSON.parse(carIdsJSON);
                     if(!Array.isArray(topCarIds)){
                         throw new Error('carIds is not Array in CarListController.showCars');
