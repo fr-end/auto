@@ -66,6 +66,9 @@
 
 		&-name.big {
 			float: left;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
 		}
 
 		&-price.big {
@@ -113,6 +116,12 @@
 		font-weight: 100;
 		color: $background-color;
 	}
+
+    &-liner-name {
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
 
 	&-liner-price {
 		color: $border-color;
