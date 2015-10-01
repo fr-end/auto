@@ -5,7 +5,7 @@ module.exports = function(ajax){
     }
 
     User.prototype.checkAndGetUser = function (user) {
-        var url = '/db/user/' + user._id;
+        var url = '/db/user/' + user._id + '?password=' + user.password;
         console.log('url', url);
 
         return ajax
