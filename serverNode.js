@@ -62,7 +62,7 @@ mongoose.connect(urlMongo, function (err) {
 
 
             User.findById(email, function (err, user) {
-                if (err) return next(err);
+                if (err) throw err; // return next(err)     in express
 
                 if (!user) {
                     return noSuchUserWithEmail(email);
@@ -73,10 +73,13 @@ mongoose.connect(urlMongo, function (err) {
                     return wrongPasswordForUser(email);
                 }
                 console.log('There is such user!', user);
+
                 //req.session.isLoggedIn = true;
                 //req.session.user = email;
                 //res.redirect('/');
             });
+
+            response.end();
  /*
 
             User.findById(userName, function(err, user){
