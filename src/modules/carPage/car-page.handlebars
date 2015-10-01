@@ -1,7 +1,7 @@
 <div class="carpage-wraper{{#if inList}} in-list{{/if}}">
 	<header class="carpage-title">
 		<h1 class="carpage-title__caption"><b>{{title}}</b> {{year}}</h1>
-		<h2 class="carpage-title__price">{{price.uah}} грн.</h2>
+		{{#if price.uah}}<h2 class="carpage-title__price">{{price.uah}} грн.</h2>{{/if}}
 	</header>
 	<div class="carpage">
 		<div class="carpage-star">
@@ -58,13 +58,13 @@
 					<div class="sidebar-characteristic">
 						<h3 class="sidebar-characteristic__caption">Технические характеристики</h3>
 						<ul class="sidebar-characteristic-list">
-							<li class="sidebar-characteristic-list__item">Коробка передач: {{gearBox}}</li>
-							<li class="sidebar-characteristic-list__item">Привод: {{drive}}</li>
-							<li class="sidebar-characteristic-list__item">Количество дверей: {{door}}</li>
-							<li class="sidebar-characteristic-list__item">Количество мест: {{seats}}</li>
-							<li class="sidebar-characteristic-list__item">Цвет: {{color}}</li>
-							<li class="sidebar-characteristic-list__item">Топливо: {{fuel}}</li>
-							<li class="sidebar-characteristic-list__item">Объем двигателя: {{volume}} л</li>
+							{{#if gearBox}}<li class="sidebar-characteristic-list__item">Коробка передач: {{gearBox}}</li>{{/if}}
+                            {{#if drive}}<li class="sidebar-characteristic-list__item">Привод: {{drive}}</li>{{/if}}
+                            {{#if door}}<li class="sidebar-characteristic-list__item">Количество дверей: {{door}}</li>{{/if}}
+                            {{#if seats}}<li class="sidebar-characteristic-list__item">Количество мест: {{seats}}</li>{{/if}}
+                            {{#if color}}<li class="sidebar-characteristic-list__item">Цвет: {{color}}</li>{{/if}}
+                            {{#if fuel}}<li class="sidebar-characteristic-list__item">Топливо: {{fuel}}</li>{{/if}}
+                            {{#if volume}}<li class="sidebar-characteristic-list__item">Объем двигателя: {{volume}} л</li>{{/if}}
 						</ul>
 					</div>
 					<ul class="sidebar-views">
