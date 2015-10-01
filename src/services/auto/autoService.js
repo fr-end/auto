@@ -108,11 +108,9 @@ module.exports = (function(){
 							drive		: autoData.drive_data.name,
 							seats		: autoData.seats,
 							color		: autoData.color_data.name,
-							price 		: {
-											usd : carInfo.result.price_data.prices[1],
-											uah : Math.round(carInfo.result.price_data.prices[3])
-										},
-							img 		: imgUrl ? 'https://cdn.riastatic.com/photos/' + 
+							priceUsd    : Math.round(carInfo.result.price_data.prices[1]),
+							priceUah 	: Math.round(carInfo.result.price_data.prices[3]),
+							img 		: imgUrl ? 'https://cdn.riastatic.com/photos/' +
 								imgUrl : 'https://img.auto.ria.com/images/no-photo/no-photo-380x250.jpg',
 							date 		: carInfo.result.date_data.date_add.day + '.' + 
 								carInfo.result.date_data.date_add.full_month + '.' + 
@@ -122,7 +120,7 @@ module.exports = (function(){
 							author		: carInfo.result.user_data.firstName,
 							city 		: carInfo.result.location_data.state.region_name,
 							photos		: carPhotos
-						};						
+						};
 						return carInfoNeeded;
 					});
 		},
