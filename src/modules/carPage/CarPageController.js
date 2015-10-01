@@ -4,20 +4,24 @@ module.exports = (function () {
     var template = require('./car-page.handlebars');
     var View = require('./CarPageView.js');
 
-	function Controller(service, events) {
+	function Controller(service) {
         this.service = service;
+        console.dir(service);
         this.view = new View();
         this.carController = new CarController(this.service, template);
-        this.events = events;
+        this.view.bind('clickAddToWishListButton', (function () {
+            var result = this.carController.toggleWishList(this.carId);
+            this.view.toggleClass(this.carId, result);
+        }).bind(this));
 	}
 
     Controller.prototype = {
         init: function(searchParams){
             //console.log(this.carController.showCar(searchParams.carId));
-            this.carController.showCar(searchParams.carId)
+            this.carId = searchParams.carId
+            this.carController.showCar(this.carId)
                 .then((function(data){
 
-                    console.log(this.view);
                     this.view.render(data);
                 }).bind(this));
         }

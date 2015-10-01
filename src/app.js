@@ -65,7 +65,6 @@
     router.route('wishlist', SearchPanelController, localService, events);
     router.route('wishlist', CarListController, localService, events);
 
-    router.route('car', AuthorizationController, localService, events);
     router.route('car', CarPageController, autoService, events);
 
 
