@@ -91,7 +91,7 @@ module.exports = (function(){
             }
             return ajax.getPromise(url).then(function (data) {
                 var carInfo = JSON.parse(data);
-                var autoData = carInfo.result.auto_data;
+				var autoData = carInfo.result.auto_data;
                 var imgUrl = carInfo.result.photo_data.photo ? carInfo.result.photo_data.photo.url : '';
                 imgUrl = imgUrl.replace('.', 'f.');
                 var carPhotos = [];
@@ -115,7 +115,7 @@ module.exports = (function(){
 					volume 		: autoData.engineVolume || '---',
 					gearBox 	: autoData.gearbox_data ? autoData.gearbox_data.name : '---',
 					door		: autoData.door,
-					drive		: autoData.drive_data.name,
+					drive		: autoData.drive_data ? autoData.drive_data.name : "",
 					seats		: autoData.seats,
 					color		: autoData.color_data.name,
 					priceUsd    : Math.round(carInfo.result.price_data.prices[1]),
