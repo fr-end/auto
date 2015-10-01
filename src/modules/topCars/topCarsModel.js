@@ -23,6 +23,7 @@ module.exports = (function(){
                             carPromises.forEach(function (result) {
                                 if (result.state === 'fulfilled') {
                                     var resultJSON = JSON.parse(result.value);
+                                    console.log(resultJSON);
                                     if (carBigData) {
                                         carsSmallData.push(resultJSON);
                                     } else {

@@ -17,13 +17,19 @@ module.exports = (function () {
 
     Controller.prototype = {
         init: function(searchParams){
-            //console.log(this.carController.showCar(searchParams.carId));
-            this.carId = searchParams.carId
-            this.carController.showCar(this.carId)
-                .then((function(data){
+            try { //console.log(this.carController.showCar(searchParams.carId));
+                this.carId = searchParams.carId;
+                this.carType = searchParams.type;
+                console.log(this.carType);
+                this.carController.showCar(this.carId, this.carType)
+                    .then((function(data){
+                        this.view.render(data);
+                    }).bind(this));
+            } catch (error) {
+                console.log(error);
+                alert('error: ' + error);
+            }
 
-                    this.view.render(data);
-                }).bind(this));
         }
 	};
 

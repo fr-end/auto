@@ -72,70 +72,121 @@ module.exports = (function(){
                     return count.count || 0;
                 });
         },
-        getCar: function (carId, carType) {
-            //used
-            //https://auto.ria.com/blocks_search_ajax/view/auto/14356030/?lang_id=2
+        getCarNew: function (carId) {
             //new
-            //https://auto.ria.com/newauto_blocks/search_ad?auto_id=1233918&lang_id=2
-            carType = carType || "bu";
+            //https://auto.ria.com/newauto_blocks/search_ad?auto_id=1312366
             var langId = 2;
             var url;
-            if(carType === "bu"){
-                url = config.autoRiaUaHost + '/blocks_search_ajax/view/auto/' +
-                    carId +
-                    '/?lang_id=' + langId;
-            } else {
-                url = config.autoRiaUaHost + '/newauto_blocks/search_ad?auto_id=' +
-                    carId +
-                    '/?lang_id=' + langId;
-            }
+            url = config.autoRiaUaHost + '/newauto_blocks/search_ad?auto_id=' + carId;
             return ajax.getPromise(url).then(function (data) {
-                var carInfo = JSON.parse(data);
-                var autoData = carInfo.result.auto_data;
-                var imgUrl = carInfo.result.photo_data.photo ? carInfo.result.photo_data.photo.url : '';
-                imgUrl = imgUrl.replace('.', 'f.');
-                var carPhotos = [];
-                carInfo.result.photo_data.photos.forEach(function (photo) {
-                    carPhotos.push('https://cdn.riastatic.com/photosnew/' + photo.seo_link.replace('.', 'f.'));
-                });
-				var carInfoNeeded = {
-					carId 		: autoData.auto_id,
-					title 		: autoData.marka_data.name + ' ' + autoData.model_data.name +
-								 ' ' + autoData.version,
-					year		: autoData.years,
-					categoryId 	: carInfo.result.category_data.category_id,
-					categoryName : carInfo.result.category_data.category_name,
-					markaId 	: autoData.marka_id,
-					markaName 	: autoData.marka_data.name,
-					modelId 	: autoData.model_id,
-					modelName 	: autoData.model_data.name,
-					version		: autoData.version,
-					race 		: autoData.race.race,
-					fuel 		: autoData.fuel_data ? autoData.fuel_data.name : '---',
-					volume 		: autoData.engineVolume || '---',
-					gearBox 	: autoData.gearbox_data ? autoData.gearbox_data.name : '---',
-					door		: autoData.door,
-					drive		: autoData.drive_data.name,
-					seats		: autoData.seats,
-					color		: autoData.color_data.name,
-					priceUsd    : Math.round(carInfo.result.price_data.prices[1]),
-					priceUah 	: Math.round(carInfo.result.price_data.prices[3]),
-                    img			: imgUrl ? 'https://cdn.riastatic.com/photos/' +
-                    				imgUrl : 'https://img.auto.ria.com/images/no-photo/no-photo-380x250.jpg',
-                    date		: carInfo.result.date_data.date_add.day + '.' +
-                    				carInfo.result.date_data.date_add.full_month + '.' +
-                    				carInfo.result.date_data.date_add.year,
-                    description	: autoData.description,
-                    phone		: carInfo.result.user_phones[0].phone_formatted,
-                    author		: carInfo.result.user_data.firstName,
-                    city		: carInfo.result.location_data.state.region_name,
-                    photos		: carPhotos
-                };
-                return carInfoNeeded;
+                try {
+                    var autoData = JSON.parse(data);
+                    console.log(url,'url');
+                    console.log(autoData,'carInfo');
+                    var imgUrl = autoData.photo;
+                    imgUrl = imgUrl.replace('.', 'f.');
+                    var carPhotos = [];
+                    autoData.photos.forEach(function (photo) {
+                        carPhotos.push('https://cdn.riastatic.com/photos/' + photo.src.replace('.', 'f.'));
+                    });
+                    var carInfoNeeded = {
+                        carId 		: autoData.auto_id,
+                        title 		: autoData.marka + ' ' + autoData.model,
+                        year		: autoData.years,
+                        categoryId 	: autoData.category_id,
+                        categoryName : '',
+                        markaId 	: autoData.marka_id,
+                        markaName 	: autoData.marka,
+                        modelId 	: autoData.model_id,
+                        modelName 	: autoData.model,
+                        version		: autoData.version,
+                        race 		: 0,
+                        fuel 		: autoData.fuel,
+                        volume 		: autoData.fuel_rate || '---',
+                        gearBox 	: autoData.gear,
+                        door		: autoData.door,
+                        drive		: autoData.drive,
+                        seats		: autoData.seats,
+                        color		: '',
+                        priceUsd    : Math.round(autoData.price_uah),
+                        priceUah 	: Math.round(autoData   ['price usd']),
+                        img			: imgUrl ? 'https://cdn.riastatic.com/photos/' +
+                        imgUrl : 'https://img.auto.ria.com/images/no-photo/no-photo-380x250.jpg',
+                        date		: autoData.updatedAt,
+                        description	: autoData.description,
+                        phone		: autoData.phones[0].phone_formatted,
+                        author		: autoData.phones[0].contactName,
+                        city		: autoData.autosalon.city,
+                        photos		: carPhotos
+                    };
+                    return carInfoNeeded;
+                } catch (error) {
+                    console.log(error);
+                }
+
+            });
+        },
+        getCar:function (carId, carType) {
+            if(carType === "new"){
+                return this.getCarNew(carId);
+            }
+            //used
+            //https://auto.ria.com/blocks_search_ajax/view/auto/14356030/?lang_id=2
+            var langId = 2;
+            var url;
+            url = config.autoRiaUaHost + '/blocks_search_ajax/view/auto/' +
+                carId + '/?lang_id=' + langId;
+            return ajax.getPromise(url).then(function (data) {
+                try {
+                    var carInfo = JSON.parse(data);
+                    var autoData = carInfo.result.auto_data;
+                    var imgUrl = carInfo.result.photo_data.photo ? carInfo.result.photo_data.photo.url : '';
+                    imgUrl = imgUrl.replace('.', 'f.');
+                    var carPhotos = [];
+                    carInfo.result.photo_data.photos.forEach(function (photo) {
+                        carPhotos.push('https://cdn.riastatic.com/photosnew/' + photo.seo_link.replace('.', 'f.'));
+                    });
+                    var carInfoNeeded = {
+                        carId 		: autoData.auto_id,
+                        title 		: autoData.marka_data.name + ' ' + autoData.model_data.name +
+                        ' ' + autoData.version,
+                        year		: autoData.years,
+                        categoryId 	: carInfo.result.category_data.category_id,
+                        categoryName : carInfo.result.category_data.category_name,
+                        markaId 	: autoData.marka_id,
+                        markaName 	: autoData.marka_data.name,
+                        modelId 	: autoData.model_id,
+                        modelName 	: autoData.model_data.name,
+                        version		: autoData.version,
+                        race 		: autoData.race.race,
+                        fuel 		: autoData.fuel_data ? autoData.fuel_data.name : '---',
+                        volume 		: autoData.engineVolume || '---',
+                        gearBox 	: autoData.gearbox_data ? autoData.gearbox_data.name : '---',
+                        door		: autoData.door,
+                        drive		: autoData.drive_data.name,
+                        seats		: autoData.seats,
+                        color		: autoData.color_data.name,
+                        priceUsd    : Math.round(carInfo.result.price_data.prices[1]),
+                        priceUah 	: Math.round(carInfo.result.price_data.prices[3]),
+                        img			: imgUrl ? 'https://cdn.riastatic.com/photos/' +
+                        imgUrl : 'https://img.auto.ria.com/images/no-photo/no-photo-380x250.jpg',
+                        date		: carInfo.result.date_data.date_add.day + '.' +
+                        carInfo.result.date_data.date_add.full_month + '.' +
+                        carInfo.result.date_data.date_add.year,
+                        description	: autoData.description,
+                        phone		: carInfo.result.user_phones[0].phone_formatted,
+                        author		: carInfo.result.user_data.firstName,
+                        city		: carInfo.result.location_data.state.region_name,
+                        photos		: carPhotos
+                    };
+                    return carInfoNeeded;
+                } catch (error) {
+                    console.log(error);
+                }
+
             });
         },
         getTopCarIds: function () {
-
             //https://auto.ria.com/demo/bu/mainPage/rotator/main?page=0&type=all&limit=5&pakets=3
             var url = config.autoRiaUaHost + '/demo/bu/mainPage/rotator/main?page=0&type=all&limit=5&pakets=3';
             return ajax.getPromise(url)
