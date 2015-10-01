@@ -15,7 +15,6 @@ module.exports = (function(){
             this.view.render();
             this.model.getTopCarsData()
                         .then((function(topCarsData){
-                            console.log(topCarsData);
                             this.view.render(topCarsData);
                         }).bind(this));
         }
