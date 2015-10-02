@@ -11,8 +11,13 @@ module.exports = (function () {
     View.prototype.render = function (data) {
         this.$viewPort.innerHTML = data;
         this.$sliderBigImg = document.querySelector('.carpage-slider-bigimg__img');
+        document.querySelector(this.sliderSmallImgSelector).classList.add('active');
         this.$sliderBigImg.src = document.querySelector(this.sliderSmallImgSelector).src;
-        this.$sliderUl = document.querySelector();
+        /*document.querySelector(this.sliderUlSelector).addEventListener("click",(function(){
+            this.toggleSliderBigImg(event.target);
+            event.preventDefault();
+        }).bind(this));*/
+        document.querySelector(this.sliderUlSelector).addEventListener("click",(this.clickOnSmallImg).bind(this));
     };
 
     View.prototype.bind = function (event, handler) {
@@ -35,9 +40,14 @@ module.exports = (function () {
     };
     
     View.prototype.toggleSliderBigImg = function ($nextImg) {
-        document.querySelector(this.sliderSmallImgSelector + ' .active').classList.toggle('active');
+        document.querySelector('.active').classList.toggle('active');
         $nextImg.classList.toggle('active');
         this.$sliderBigImg.src = $nextImg.src;
+    }
+
+    View.prototype.clickOnSmallImg = function(event){
+        this.toggleSliderBigImg(event.target);
+        event.preventDefault();
     }
 
     return View;
