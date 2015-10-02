@@ -4,20 +4,21 @@ module.exports = (function () {
         this.$viewPort = document.querySelector('.main');
         this.inListSelector = '.carpage-star';
         this.viewPortCarSelector = '.carpage-wraper';
+
         this.sliderSmallImgSelector = '.carpage-slider-carousel-cars-item-link__img';
-        this.sliderUlSelector = '.carpage-slider-carousel-cars';
+        this.sliderSelector = '.carpage-slider';
+        this.sliderBigImgClass = 'carpage-slider-bigimg__img';
+        this.sliderArrowPreviousClass = 'carpage-slider-bigimg-previous__arrow';
+        this.sliderArrowNextClass = 'carpage-slider-bigimg-next__arrow';
     }
 
     View.prototype.render = function (data) {
         this.$viewPort.innerHTML = data;
-        this.$sliderBigImg = document.querySelector('.carpage-slider-bigimg__img');
+
+        this.$sliderBigImg = document.querySelector('.'+this.sliderBigImgClass);
         document.querySelector(this.sliderSmallImgSelector).classList.add('active');
         this.$sliderBigImg.src = document.querySelector(this.sliderSmallImgSelector).src;
-        /*document.querySelector(this.sliderUlSelector).addEventListener("click",(function(){
-            this.toggleSliderBigImg(event.target);
-            event.preventDefault();
-        }).bind(this));*/
-        document.querySelector(this.sliderUlSelector).addEventListener("click",(this.clickOnSmallImg).bind(this));
+        document.querySelector(this.sliderSelector).addEventListener('click',(this.clickOnSlider).bind(this));
     };
 
     View.prototype.bind = function (event, handler) {
@@ -43,14 +44,27 @@ module.exports = (function () {
         document.querySelector('.active').classList.toggle('active');
         $nextImg.classList.toggle('active');
         this.$sliderBigImg.src = $nextImg.src;
-    }
+    };
 
-    View.prototype.clickOnSmallImg = function(event){
+    View.prototype.clickOnSlider = function(event){
         if (event.target.classList.contains(this.sliderSmallImgSelector.slice(1))) {
             this.toggleSliderBigImg(event.target);
-        }
+        } else
+            if (event.target.classList.contains(this.sliderArrowNextClass)||
+                event.target.classList.contains(this.sliderBigImgClass)){
+                var nextImg = document.querySelector('.active').parentElement.parentElement;
+                nextImg = nextImg.nextElementSibling ? nextImg.nextElementSibling.firstElementChild
+                        .firstElementChild : nextImg.parentElement.firstElementChild.firstElementChild.firstElementChild;
+                    this.toggleSliderBigImg(nextImg);
+            } else
+                if (event.target.classList.contains(this.sliderArrowPreviousClass)){
+                    var nextImg = document.querySelector('.active').parentElement.parentElement;
+                    nextImg = nextImg.previousElementSibling ? nextImg.previousElementSibling.firstElementChild
+                        .firstElementChild : nextImg.parentElement.lastElementChild.firstElementChild.firstElementChild;
+                    this.toggleSliderBigImg(nextImg);
+                }
         event.preventDefault();
-    }
+    };
 
     return View;
 
