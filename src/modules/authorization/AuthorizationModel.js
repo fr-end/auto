@@ -5,11 +5,8 @@ module.exports = function(ajax){
     }
 
     User.prototype.checkAndGetUser = function (user) {
-        var url = '/db/user/' + user._id + '?password=' + user.password;
-        console.log('url', url);
-
-        return ajax
-            .getPromise(url);
+        var url = '/db/user/check_user/';
+        return ajax.getPromisePost(url, user);
     };
 
     User.prototype.checkAndPostUser = function (user) {

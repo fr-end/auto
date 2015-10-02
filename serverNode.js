@@ -54,34 +54,47 @@ mongoose.connect(urlMongo, function (err) {
         console.log('parsedUrl',parsedUrl);
 
         // log in
-        if (pathname.search(/^\/user\/?\S/) != '-1' && request.method === 'GET'){
+        if (pathname.search(/^\/user\/check_user\/?$/) != '-1' && request.method === 'POST'){
+
             console.log('parsedUrl', parsedUrl);
             console.log('pathname', pathname);
-            var email = pathname.slice(6);
-            var pass = parsedUrl.query.password;
-            console.log('password', pass);
-            console.log('userName', email);
+            //var email = pathname.slice(6);
 
+            request.on('data', function (userData){
+                var stringifiedUser = userData.toString();
+                var parsedUser = JSON.parse(stringifiedUser);
 
-            User.findById(email, function (err, user) {
-                if (err) throw err; // return next(err)     in express
+                //var pass = parsedUrl.query.password;
 
-                if (!user) {
-                    return noSuchUserWithEmail(email);
-                }
+                var email = parsedUser._id;
+                console.log('userName', email);
+                var pass = parsedUser.password;
+                //console.log('password', pass);
 
-                // check pass
-                if (user.hash != hash(pass, user.salt)) {
-                    return wrongPasswordForUser(email);
-                }
-                console.log('There is such user!', user);
+                User.findById(email, function (err, user) {
+                    if (err) throw err; // return next(err)     in express
 
-                //req.session.isLoggedIn = true;
-                //req.session.user = email;
-                //res.redirect('/');
+                    if (!user) {
+                        return noSuchUserWithEmail(email);
+                    }
+
+                    // check pass
+                    if (user.hash != hash(pass, user.salt)) {
+                        return wrongPasswordForUser(email);
+                    }
+                    console.log('There is such user! He should be logged in!', user);
+
+                    //req.session.isLoggedIn = true;
+                    //req.session.user = email;
+                    //res.redirect('/');
+                });
+
+                response.end();
             });
 
-            response.end();
+            request.on('end', function (){
+                response.end();
+            });
  /*
 
             User.findById(userName, function(err, user){
