@@ -4,8 +4,11 @@
 
     /*render body*/
 
-    var headerTemplate          = require('./modules/header/header.handlebars');
-    var headerHtml              = headerTemplate();
+    var HeaderController = require('./modules/header/HeaderController.js')();
+
+    var header = new HeaderController();
+
+    var headerHtml              = header.init();
 
     var footerTemplate          = require('./modules/footer/footer.handlebars');
     var footerHtml              = footerTemplate();
