@@ -121,11 +121,16 @@
 					margin: 0 2px 2px  0;
 					width: 24%;
 					list-style: none;
+					background: #cecece;
+
+
 					&-link {
 
 						&__img {
-							height: auto;
+							max-height: 92px;
+							max-width: 100%;
 							width: 100%;
+							height: auto;
 						}
 					}
 				}
