@@ -4,12 +4,12 @@ module.exports = function(ajax){
         return this;
     }
 
-    User.prototype.checkAndGetUser = function (user) {
+    User.prototype.getUser = function (user) {
         var url = '/db/user/check_user/';
         return ajax.getPromisePost(url, user);
     };
 
-    User.prototype.checkAndPostUser = function (user) {
+    User.prototype.postUser = function (user) {
         var url = '/db/user/';
         return ajax.getPromisePost(url, user);
     };
