@@ -44,16 +44,6 @@
 @media screen and (max-width: 480px) {
 
 	.footer {
-
-		width: 480px;
-		margin-left: 0;
-		padding-left: 18px;
-
-		&-menu {
-
-			&-item {
-				display: block;
-			}
-		}
+		display: none;
 	}
 }

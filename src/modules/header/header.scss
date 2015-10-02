@@ -116,16 +116,16 @@ body{
 	&-wrapper{
 		margin: 0 auto;
 		position: relative;
-		width: 400px;
+		width: 100%;
 	}
 
 	&-logo{
-		top: 10px;
-
+		top: 5px;
 	}
+	
 
-	&-menu{
-		right: 0px;
+	&-menu, &-authorization{
+	margin-right: 7px;
 	}
 }
 }
