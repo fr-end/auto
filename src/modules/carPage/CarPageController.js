@@ -6,7 +6,6 @@ module.exports = (function () {
 
 	function Controller(service) {
         this.service = service;
-        console.dir(service);
         this.view = new View();
         this.carController = new CarController(this.service, template);
         this.view.bind('clickAddToWishListButton', (function () {
@@ -20,7 +19,6 @@ module.exports = (function () {
             try { //console.log(this.carController.showCar(searchParams.carId));
                 this.carId = searchParams.carId;
                 this.carType = searchParams.type;
-                console.log(this.carType);
                 this.carController.showCar(this.carId, this.carType)
                     .then((function(data){
                         this.view.render(data);
