@@ -159,11 +159,11 @@ module.exports = (function(){
                         modelName 	: autoData.model_data.name,
                         version		: autoData.version,
                         race 		: autoData.race.race,
-                        fuel 		: autoData.fuel_data ? autoData.fuel_data.name : '---',
-                        volume 		: autoData.engineVolume || '---',
-                        gearBox 	: autoData.gearbox_data ? autoData.gearbox_data.name : '---',
+                        fuel 		: autoData.fuel_data ? autoData.fuel_data.name : '',
+                        volume 		: autoData.engineVolume || '',
+                        gearBox 	: autoData.gearbox_data ? autoData.gearbox_data.name : '',
                         door		: autoData.door,
-                        drive		: autoData.drive_data.name,
+                        drive		: autoData.drive_data ? autoData.drive_data.name : '',
                         seats		: autoData.seats,
                         color		: autoData.color_data.name,
                         priceUsd    : Math.round(carInfo.result.price_data.prices[1]),
@@ -181,7 +181,7 @@ module.exports = (function(){
                     };
                     return carInfoNeeded;
                 } catch (error) {
-                    console.log(error);
+                    console.dir(error);
                 }
 
             });
