@@ -46,7 +46,9 @@ module.exports = (function () {
     }
 
     View.prototype.clickOnSmallImg = function(event){
-        this.toggleSliderBigImg(event.target);
+        if (event.target.classList.contains(this.sliderSmallImgSelector.slice(1))) {
+            this.toggleSliderBigImg(event.target);
+        }
         event.preventDefault();
     }
 
