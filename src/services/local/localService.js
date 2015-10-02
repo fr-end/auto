@@ -11,6 +11,7 @@ module.exports = (function(localStorage,XMLHttpRequest,Q){
 			if (!localStorage.getItem('users')){
 				localStorage.setItem('users', JSON.stringify(['defaultUser']));
 			}
+            this.dispatchWishListCount();
 		},
 		addUser: function ( username ) {
 			var user = JSON.parse( localStorage.getItem( username ) );
@@ -35,7 +36,7 @@ module.exports = (function(localStorage,XMLHttpRequest,Q){
 		},
 		addCar: function ( carId, username ) {
 			autoService.getCar(carId)
-				.then(function (data) {
+				.then((function (data) {
 					var car = data;
 					username = username || 'defaultUser';
 					if ( !localStorage.getItem( String(car.carId) ) ){
@@ -49,10 +50,11 @@ module.exports = (function(localStorage,XMLHttpRequest,Q){
 					if (wishlist.indexOf(String(car.carId)) === -1){
 						wishlist.push( String(car.carId) );
 						localStorage.setItem( username, JSON.stringify( wishlist ) );
+                        this.dispatchWishListCount(username);
 						//console.log('Car added to wishlist');
 					}
 					//console.log('Car in wishlist');
-				});
+				}).bind(this));
 		},
 		delCar: function ( carId, username ) {
 			username = username || 'defaultUser';
@@ -62,6 +64,7 @@ module.exports = (function(localStorage,XMLHttpRequest,Q){
 			if (carIndex !== -1){
 				wishlist.splice( carIndex, 1 );
 				localStorage.setItem( username, JSON.stringify( wishlist ) );
+                this.dispatchWishListCount(username);
 				//console.log('Car deleted from wishlist');
 			}
 
@@ -244,7 +247,14 @@ module.exports = (function(localStorage,XMLHttpRequest,Q){
 				return carsCount;
 			}
 			return wishlist.length;
-		}
+		},
+        dispatchWishListCount: function(username){
+            var wishListCount = this.getCarsCount({},username);
+            var evt = document.createEvent('Event');
+            evt.initEvent('wishListCount',true,true);
+            evt.wishListCount = wishListCount;
+            document.dispatchEvent(evt);
+        }
 	};
 
     auto.init();
