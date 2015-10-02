@@ -1,7 +1,9 @@
 
 //var util = require('util');
 var mongoose = require('mongoose');
-//var express = require('express');
+var express = require('express');
+var bodyParser = require("body-parser");
+
 var hash = require('./helpers/hash.js');
 var crypto = require('crypto');
 
@@ -45,59 +47,76 @@ function someUncorrectData(email){
 mongoose.connect(urlMongo, function (err) {
 
     if(err) throw err;
+
     //console.log('connected');
+
+    var app = express();
+    app.use(bodyParser.json());
+    app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
+        extended: true
+    }));
+
+    app.post(/^\/user\/check_user\/?$/, function(req, res, next){
+        console.log('req.body', req.body);
+        console.log('req.params', req.params);
+        //console.log('req', req);
+    });
+
+    app.listen(port);
     var server = http.createServer(function (request, response) {
 
         // url module reference https://www.npmjs.com/package/url
         var parsedUrl = url.parse(request.url, true);
         var pathname = parsedUrl.pathname;
+        //console.log('parsedUrl',parsedUrl);
 
-        if (pathname.search(/^\/user\/?/) != '-1' && request.method === 'GET'){
+
+
+        // log in
+        if (pathname.search(/^\/user\/check_user\/?$/) != '-1' && request.method === 'POST'){
+
             //console.log('parsedUrl', parsedUrl);
             //console.log('pathname', pathname);
-            var email = pathname.slice(6);
-            var pass = parsedUrl.query.password;
-            console.log('password', pass);
-            console.log('userName', email);
+            //var email = pathname.slice(6);
+
+            request.on('data', function (userData){
+                var stringifiedUser = userData.toString();
+                var parsedUser = JSON.parse(stringifiedUser);
+
+                var email = parsedUser._id;
+                console.log('userName', email);
+                var pass = parsedUser.password;
 
 
-            User.findById(email, function (err, user) {
-                if (err) throw err; // return next(err)     in express
+                User.findById(email, function (err, user) {
+                    if (err) throw err; // return next(err)     in express
 
-                if (!user) {
-                    return noSuchUserWithEmail(email);
-                }
+                    if (!user) {
+                        return noSuchUserWithEmail(email);
+                    }
 
-                // check pass
-                if (user.hash != hash(pass, user.salt)) {
-                    return wrongPasswordForUser(email);
-                }
-                console.log('There is such user!', user);
+                    // check pass
+                    if (user.hash != hash(pass, user.salt)) {
+                        return wrongPasswordForUser(email);
+                    }
+                    console.log('There is such user! He should be logged in!', user);
 
-                //req.session.isLoggedIn = true;
-                //req.session.user = email;
-                //res.redirect('/');
+                    //req.session.isLoggedIn = true;
+                    //req.session.user = email;
+                    //res.redirect('/');
+                });
+
+                response.end();
             });
 
-            response.end();
- /*
-
-            User.findById(userName, function(err, user){
-
-                var output = '';
-                if (err) next(err);
-
-                if (user) {
-                    output += user;
-                }
-
-                writeResponseAndEnd(output);
-
+            request.on('end', function (){
+                response.end();
             });
-            */
+
         }
 
-        if (pathname.search(/^\/user\/?/) != '-1' && request.method === 'POST') {
+        // signup
+        if (pathname.search(/^\/user\/?$/) != '-1' && request.method === 'POST') {
 
             console.log(pathname);
             var userName = pathname.slice(6);
@@ -137,7 +156,6 @@ mongoose.connect(urlMongo, function (err) {
                     })
                 });
 
-
                 /*
                 User.create(parsedUser, function (err, userSaved) {
                     if (err) throw err;
@@ -153,7 +171,6 @@ mongoose.connect(urlMongo, function (err) {
             });
         }
 
-
         function writeResponseAndEnd(result){
             response.writeHead(200, {"Content-Type": "application/json;charset=UTF-8"});
             response.write(result);
@@ -161,8 +178,9 @@ mongoose.connect(urlMongo, function (err) {
         }
 
     });
-
+/*
     server.listen(port , function () {
         console.log('now listening on http://localhost:' + port);
     });
+    */
 });
