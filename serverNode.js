@@ -3,6 +3,9 @@
 var mongoose = require('mongoose');
 var express = require('express');
 var bodyParser = require("body-parser");
+var cookieParser = require('cookie-parser');
+var expressSession = require('express-session');
+var MongoStore = require('connect-mongo')(expressSession);
 
 var hash = require('./helpers/hash.js');
 var crypto = require('crypto');
@@ -44,11 +47,12 @@ function someUncorrectData(email){
     console.log('there are some uncorrect data validation on the backend for', email, 'email');
 }
 
+
+
+
 mongoose.connect(urlMongo, function (err) {
 
     if(err) throw err;
-
-    //console.log('connected');
 
     var app = express();
     app.use(bodyParser.json());
@@ -56,10 +60,26 @@ mongoose.connect(urlMongo, function (err) {
         extended: true
     }));
 
+    app.use(cookieParser());
+    app.use(expressSession({
+        secret: 'secret',
+        store: new MongoStore(
+            {
+                url: urlMongo,
+                ttl: 14 * 24 * 60 * 60 // = 14 days. Default
+            }
+        ),
+        resave: false,
+        saveUninitialized: true /*,
+        cookie : {
+            maxAge : 60 * 1000 // 60 seconds
+        }*/
+    }));
+    //console.log('connected');
     // log in
     app.post(/^\/user\/check_user\/?$/, function(request, response, next){
         console.log('request.body', request.body);
-
+        console.log('request.session', request.session);
         // url module reference https://www.npmjs.com/package/url
         //var parsedUrl = url.parse(request.url, true);
         //var pathname = parsedUrl.pathname;
@@ -82,8 +102,8 @@ mongoose.connect(urlMongo, function (err) {
             }
             console.log('There is such user! He should be logged in!', user);
 
-            //req.session.isLoggedIn = true;
-            //req.session.user = email;
+            request.session.isLoggedIn = true;
+            request.session.user = email;
             //res.redirect('/');
         });
 
@@ -94,6 +114,7 @@ mongoose.connect(urlMongo, function (err) {
         var email = request.body._id;
         console.log('userName', email);
         var pass = request.body.password;
+        console.log('request.session', request.session);
 
         User.findById(email, function (err, user) {
             if (err) return next(err);
@@ -118,8 +139,8 @@ mongoose.connect(urlMongo, function (err) {
                     }
 
                     // user created successfully
-                    //req.session.isLoggedIn = true;
-                    //req.session.user = email;
+                    request.session.isLoggedIn = true;
+                    request.session.user = email;
                     console.log('created user: %s', createdUser);
                     //return res.redirect('/');
                 });
