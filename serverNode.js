@@ -51,10 +51,12 @@ mongoose.connect(urlMongo, function (err) {
         // url module reference https://www.npmjs.com/package/url
         var parsedUrl = url.parse(request.url, true);
         var pathname = parsedUrl.pathname;
+        console.log('parsedUrl',parsedUrl);
 
-        if (pathname.search(/^\/user\/?/) != '-1' && request.method === 'GET'){
-            //console.log('parsedUrl', parsedUrl);
-            //console.log('pathname', pathname);
+        // log in
+        if (pathname.search(/^\/user\/?\S/) != '-1' && request.method === 'GET'){
+            console.log('parsedUrl', parsedUrl);
+            console.log('pathname', pathname);
             var email = pathname.slice(6);
             var pass = parsedUrl.query.password;
             console.log('password', pass);
@@ -97,7 +99,8 @@ mongoose.connect(urlMongo, function (err) {
             */
         }
 
-        if (pathname.search(/^\/user\/?/) != '-1' && request.method === 'POST') {
+        // signup
+        if (pathname.search(/^\/user\/?$/) != '-1' && request.method === 'POST') {
 
             console.log(pathname);
             var userName = pathname.slice(6);
