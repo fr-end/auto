@@ -56,131 +56,78 @@ mongoose.connect(urlMongo, function (err) {
         extended: true
     }));
 
-    app.post(/^\/user\/check_user\/?$/, function(req, res, next){
-        console.log('req.body', req.body);
-        console.log('req.params', req.params);
-        //console.log('req', req);
+    // log in
+    app.post(/^\/user\/check_user\/?$/, function(request, response, next){
+        console.log('request.body', request.body);
+
+        // url module reference https://www.npmjs.com/package/url
+        //var parsedUrl = url.parse(request.url, true);
+        //var pathname = parsedUrl.pathname;
+        //console.log('parsedUrl',parsedUrl);
+
+        var email = request.body._id;
+        console.log('userName', email);
+        var pass = request.body.password;
+
+        User.findById(email, function (err, user) {
+            if (err) throw err; // return next(err)     in express
+
+            if (!user) {
+                return noSuchUserWithEmail(email);
+            }
+
+            // check pass
+            if (user.hash != hash(pass, user.salt)) {
+                return wrongPasswordForUser(email);
+            }
+            console.log('There is such user! He should be logged in!', user);
+
+            //req.session.isLoggedIn = true;
+            //req.session.user = email;
+            //res.redirect('/');
+        });
+
+    });
+
+    // signup
+    app.post(/^\/user\/?$/, function(request, response, next) {
+        var email = request.body._id;
+        console.log('userName', email);
+        var pass = request.body.password;
+
+        User.findById(email, function (err, user) {
+            if (err) return next(err);
+
+            if (user) {
+                return console.log('user already exists');//return res.render('signup.jade', { exists: true });
+            }
+
+            crypto.randomBytes(16, function (err, bytes) {
+                if (err) return next(err);
+
+                var user = { _id: email };
+                user.salt = bytes.toString('utf8');
+                user.hash = hash(pass, user.salt);
+
+                User.create(user, function (err, createdUser) {
+                    if (err) {
+                        if (err instanceof mongoose.Error.ValidationError) {
+                            return someUncorrectData(email);
+                        }
+                        return next(err);
+                    }
+
+                    // user created successfully
+                    //req.session.isLoggedIn = true;
+                    //req.session.user = email;
+                    console.log('created user: %s', createdUser);
+                    //return res.redirect('/');
+                });
+            })
+        });
+
     });
 
     app.listen(port);
-    var server = http.createServer(function (request, response) {
 
-        // url module reference https://www.npmjs.com/package/url
-        var parsedUrl = url.parse(request.url, true);
-        var pathname = parsedUrl.pathname;
-        //console.log('parsedUrl',parsedUrl);
-
-
-
-        // log in
-        if (pathname.search(/^\/user\/check_user\/?$/) != '-1' && request.method === 'POST'){
-
-            //console.log('parsedUrl', parsedUrl);
-            //console.log('pathname', pathname);
-            //var email = pathname.slice(6);
-
-            request.on('data', function (userData){
-                var stringifiedUser = userData.toString();
-                var parsedUser = JSON.parse(stringifiedUser);
-
-                var email = parsedUser._id;
-                console.log('userName', email);
-                var pass = parsedUser.password;
-
-
-                User.findById(email, function (err, user) {
-                    if (err) throw err; // return next(err)     in express
-
-                    if (!user) {
-                        return noSuchUserWithEmail(email);
-                    }
-
-                    // check pass
-                    if (user.hash != hash(pass, user.salt)) {
-                        return wrongPasswordForUser(email);
-                    }
-                    console.log('There is such user! He should be logged in!', user);
-
-                    //req.session.isLoggedIn = true;
-                    //req.session.user = email;
-                    //res.redirect('/');
-                });
-
-                response.end();
-            });
-
-            request.on('end', function (){
-                response.end();
-            });
-
-        }
-
-        // signup
-        if (pathname.search(/^\/user\/?$/) != '-1' && request.method === 'POST') {
-
-            console.log(pathname);
-            var userName = pathname.slice(6);
-            console.log(userName);
-            request.on('data', function (userData){
-                var stringifiedUser = userData.toString();
-                var parsedUser = JSON.parse(stringifiedUser);
-
-                User.findById(parsedUser._id, function (err, user) {
-                    if (err) return next(err);
-
-                    if (user) {
-                        return console.log('user already exists');//return res.render('signup.jade', { exists: true });
-                    }
-
-                    crypto.randomBytes(16, function (err, bytes) {
-                        if (err) return next(err);
-
-                        var user = { _id: parsedUser._id };
-                        user.salt = bytes.toString('utf8');
-                        user.hash = hash(parsedUser.password, user.salt);
-
-                        User.create(user, function (err, createdUser) {
-                            if (err) {
-                                if (err instanceof mongoose.Error.ValidationError) {
-                                    return someUncorrectData(parsedUser._id);
-                                }
-                                return next(err);
-                            }
-
-                            // user created successfully
-                            //req.session.isLoggedIn = true;
-                            //req.session.user = email;
-                            console.log('created user: %s', createdUser);
-                            //return res.redirect('/');
-                        });
-                    })
-                });
-
-                /*
-                User.create(parsedUser, function (err, userSaved) {
-                    if (err) throw err;
-                    console.log('saved user', userSaved);
-                });
-                */
-
-                response.end();
-
-            });
-            request.on('end', function (){
-                response.end();
-            });
-        }
-
-        function writeResponseAndEnd(result){
-            response.writeHead(200, {"Content-Type": "application/json;charset=UTF-8"});
-            response.write(result);
-            response.end();
-        }
-
-    });
-/*
-    server.listen(port , function () {
-        console.log('now listening on http://localhost:' + port);
-    });
-    */
 });

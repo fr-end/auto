@@ -32,7 +32,8 @@ module.exports = function (XMLHttpRequest, Q){
                     }
                 }
             };
-            xmlhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            xmlhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+            //xmlhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
             xmlhttp.send(JSON.stringify(postJSONData));
             return deferred.promise;
         }
