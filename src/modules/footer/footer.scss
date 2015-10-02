@@ -21,7 +21,12 @@
 		&-item{
 			display: inline-block;
 			margin-right: 20px;
-			cursor: pointer;
+
+			&__link {
+				display: inline-block;
+				text-decoration: none;
+				color: $footer-text-color;
+			}
 		}
 	}
 }
@@ -44,16 +49,6 @@
 @media screen and (max-width: 480px) {
 
 	.footer {
-
-		width: 480px;
-		margin-left: 0;
-		padding-left: 18px;
-
-		&-menu {
-
-			&-item {
-				display: block;
-			}
-		}
+		display: none;
 	}
 }

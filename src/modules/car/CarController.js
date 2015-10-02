@@ -14,9 +14,10 @@ module.exports = function(localStorage, XMLHttpRequest){
 
 
     CarController.prototype = {
-		showCar: function(carId){
+		showCar: function(carId, carType){
             this.carId = carId;
-			var promise = this.service.getCar(carId)
+            this.carType = carType;
+			var promise = this.service.getCar(carId, carType)
 				.then((function(data){
 					data.inList = this.inList( carId );
 					return this.view.render(data);

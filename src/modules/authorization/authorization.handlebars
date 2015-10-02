@@ -1,6 +1,7 @@
 {{#if session.isLoggedIn}}
-<button href="#" data-auth="logout" class="header-authorization-button">Logout</button>
+<button href="#" data-auth="logout" class="header-authorization-button">Выйти</button>
 {{else}}
-<button href="#" data-auth="login" class="header-authorization-button">Login</button>
-<button href="#" data-auth="signUp" class="header-authorization-button">SignUp</button>
+<button href="#" data-auth="signUp" class="header-authorization-button">Регистрация</button>
+<button href="#" data-auth="login" class="header-authorization-button login">Войти</button>
+
 {{/if}}

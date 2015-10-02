@@ -4,10 +4,19 @@ module.exports = function(ajax){
         return this;
     }
 
+    User.prototype.checkAndGetUser = function (user) {
+        var url = '/db/user/' + user._id + '?password=' + user.password;
+        console.log('url', url);
+
+        return ajax
+            .getPromise(url);
+    };
+
     User.prototype.checkAndPostUser = function (user) {
         var url = '/db/user/';
         return ajax.getPromisePost(url, user);
     };
+
 
 
     //var schema = new mongoose.Schema({
