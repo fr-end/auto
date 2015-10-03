@@ -9,6 +9,10 @@ var crypto = require('crypto');
 
 module.exports = function (app) {
 
+    //app.get('/', function(request, response){
+    //    console.log('request.session', request.session);
+    //});
+
     // log in
     app.post(/^\/user\/check_user\/?$/, function(request, response, next){
         console.log('request.body', request.body);
@@ -37,6 +41,11 @@ module.exports = function (app) {
 
             request.session.isLoggedIn = true;
             request.session.user = email;
+
+            request.session.reload(function(err) {
+                console.log('session reload in login');
+            });
+            response.send(request.session);
             //res.redirect('/');
         });
 
@@ -53,7 +62,7 @@ module.exports = function (app) {
             if (err) return next(err);
 
             if (user) {
-                return console.log('user already exists');//return res.render('signup.jade', { exists: true });
+                return response.send('user'  + email + ' already exists');//return res.render('signup.jade', { exists: true });
             }
 
             crypto.randomBytes(16, function (err, bytes) {
@@ -74,12 +83,26 @@ module.exports = function (app) {
                     // user created successfully
                     request.session.isLoggedIn = true;
                     request.session.user = email;
-                    console.log('created user: %s', createdUser);
+
+                    request.session.save(function(err) {
+                        console.log('session saved in signup');
+                    });
+                    response.send(request.session);
                     //return res.redirect('/');
                 });
             })
         });
 
+    });
+
+    app.post(/^\/user\/logout\/?$/, function (request, response) {
+        console.log('in logout');
+        console.log('request.session', request.session);
+        console.log('request.session.user', request.session.user);
+        request.session.isLoggedIn = false;
+        request.session.user = null;
+        response.send(request.session);
+        //request.redirect('/');
     });
 
 };

@@ -17,10 +17,13 @@ module.exports = function (ajax) {
         this.$signUpInputPassword = undefined;
         this.$signUpInputPasswordRepeat = undefined;
 
+        this.$logoutButton = undefined;
+
         this.visibleElements = [];
 
-        this.init = function(){
-            this.bind('clickSomeAuthButton');
+        this.init = function(handler){
+            // callback for user logout
+            this.bind('clickSomeAuthButton', handler);
             this.bind('clickBackground');
         };
     }
@@ -35,6 +38,10 @@ module.exports = function (ajax) {
                 var popup = document.createElement('div');
                 popup.innerHTML = self.template_popup();
                 document.body.appendChild(popup.firstElementChild);
+            },
+            renderAuthMenu: function (data){
+                console.log('data in renderAuthMenu', data);
+                self.$container.innerHTML = self.template(data);
             }
         };
 
@@ -56,6 +63,8 @@ module.exports = function (ajax) {
             this.$authFormLogintoSignUp = document.querySelector('[data-auth=form-login-to-signup]');
 
             this.$authFormLogintoSignUp.onclick = clickInAuthFormTabs;
+
+
         }
 
         if (event === 'clickBackground') {
@@ -167,8 +176,6 @@ module.exports = function (ajax) {
             }
         }
 
-
-
         function listenClickSomeAuthButton (evt){
             if (evt.target.getAttribute('data-auth') === 'signUp' ||
                 evt.target.getAttribute('data-auth') === 'login' ||
@@ -183,6 +190,8 @@ module.exports = function (ajax) {
                 } else if (action === 'signUp'){
                     self.showAuthFormWrapper();
                     self.toggleFormSignUp();
+                } else if (action === 'logout'){
+                    handler();
                 }
             }
         }
