@@ -14,6 +14,11 @@ module.exports = function(ajax){
         return ajax.getPromisePost(url, user);
     };
 
+    User.prototype.logout = function(user){
+        var url = '/db/user/logout/';
+        return ajax.getPromisePost(url, user);
+    };
+
 
 
     //var schema = new mongoose.Schema({

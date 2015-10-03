@@ -4,14 +4,13 @@ var expressSession = require('express-session');
 var MongoStore = require('connect-mongo')(expressSession);
 
 module.exports = function (app, urlMongo) {
-    //app.use(express.logger('dev'));
 
     app.use(bodyParser.json());
     app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
         extended: true
     }));
 
-    app.use(cookieParser());
+    //app.use(cookieParser());
     app.use(expressSession({
         secret: 'secret',
         store: new MongoStore(
