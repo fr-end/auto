@@ -29,11 +29,11 @@ module.exports = function(ajax){
             //this.bind('clickLoginSubmitButton');
 
             this.view.bind('clickSignUpSubmitButton', function(user){
-                self.model.checkAndPostUser(user);
+                self.model.postUser(user);
             });
 
             this.view.bind('clickLoginSubmitButton', function(user){
-                self.model.checkAndGetUser(user);
+                self.model.getUser(user);
             });
             /*
             console.log(this.model);

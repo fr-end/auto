@@ -108,7 +108,7 @@ gulp.task('serverGulp', function(){
 
 gulp.task('serverNode', function(){
     nodemon({
-        script: 'serverNode.js',
+        script: 'server/serverNode.js',
         ext: 'js',
         env: {
             PORT:8800
