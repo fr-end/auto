@@ -6,6 +6,7 @@ var hash = require('../helpers/hash.js');
 var crypto = require('crypto');
 //var http = require('http');
 //var url = require('url');
+
 module.exports = function (app) {
 
     // log in
@@ -81,4 +82,16 @@ module.exports = function (app) {
 
     });
 
+};
+
+function noSuchUserWithEmail(email){
+    console.log('there is no such user with the', email, 'email');
+}
+
+function wrongPasswordForUser(email){
+    console.log('there is uncorrect password for the user with ', email, 'email');
+}
+
+function someUncorrectData(email){
+    console.log('there are some uncorrect data validation on the backend for', email, 'email');
 }

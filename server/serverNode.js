@@ -46,19 +46,6 @@ var urlMongo = util.format('mongodb://%s:%s@%s/%s', auth.user, auth.password, au
 //var urlMongo = 'mongodb://localhost:27017/auto';
 //console.log(urlMongo);
 
-
-function noSuchUserWithEmail(email){
-    console.log('there is no such user with the', email, 'email');
-}
-
-function wrongPasswordForUser(email){
-    console.log('there is uncorrect password for the user with ', email, 'email');
-}
-
-function someUncorrectData(email){
-    console.log('there are some uncorrect data validation on the backend for', email, 'email');
-}
-
 mongoose.connect(urlMongo, function (err) {
 
     if(err) throw err;
