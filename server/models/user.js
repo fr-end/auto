@@ -1,6 +1,6 @@
 var mongoose = require('mongoose');
 //var createdDate = require('../plugins/createdDate');
-var validEmail = require('../helpers/validate/email');
+var validEmail = require('../helpers/validate/email.js');
 
 var schema = new mongoose.Schema({
     _id: { type: String, lowercase: true, trim: true, validate: validEmail },
@@ -8,7 +8,6 @@ var schema = new mongoose.Schema({
     hash: { type: String, required: true },
     created: { type: Date, default: Date.now }
 });
-
 
 // add created date property
 //schema.plugin(createdDate);

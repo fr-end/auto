@@ -2,10 +2,11 @@
 //var util = require('util');
 var mongoose = require('mongoose');
 var express = require('express');
-var bodyParser = require("body-parser");
-var cookieParser = require('cookie-parser');
-var expressSession = require('express-session');
-var MongoStore = require('connect-mongo')(expressSession);
+
+var middleware = require('./middleware/index.js');
+
+
+
 
 var hash = require('./helpers/hash.js');
 var crypto = require('crypto');
@@ -47,34 +48,14 @@ function someUncorrectData(email){
     console.log('there are some uncorrect data validation on the backend for', email, 'email');
 }
 
-
-
-
 mongoose.connect(urlMongo, function (err) {
 
     if(err) throw err;
 
     var app = express();
-    app.use(bodyParser.json());
-    app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
-        extended: true
-    }));
 
-    app.use(cookieParser());
-    app.use(expressSession({
-        secret: 'secret',
-        store: new MongoStore(
-            {
-                url: urlMongo,
-                ttl: 14 * 24 * 60 * 60 // = 14 days. Default
-            }
-        ),
-        resave: false,
-        saveUninitialized: true /*,
-        cookie : {
-            maxAge : 60 * 1000 // 60 seconds
-        }*/
-    }));
+    middleware(app, urlMongo);
+
     //console.log('connected');
     // log in
     app.post(/^\/user\/check_user\/?$/, function(request, response, next){
