@@ -10,7 +10,7 @@ var routes = require('./routes');
 var port = 8888;
 
 var password = require('../../pass.js');
-console.log(password);
+
 // for connection to the mongo hosted by Dima's server
 var auth = {
     user: 'admin',
