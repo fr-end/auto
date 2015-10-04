@@ -1,12 +1,15 @@
 module.exports = function (ajax) {
 
     var template = require('./authorization.handlebars');
+    var template_errors = require('./authorization_errors.handlebars');
     var template_popup = require('./authorization_popup.handlebars');
 
     function View() {
         this.template = template;
         this.template_popup = template_popup;
+        this.template_errors = template_errors;
         this.$container = document.querySelector('[data-auth=wrapper]');
+        this.$errors = undefined;
         this.$authForm = undefined;
         this.$authFormBackground = undefined;
         this.$authFormSignUp = undefined;
@@ -42,6 +45,12 @@ module.exports = function (ajax) {
             renderAuthMenu: function (data){
                 console.log('data in renderAuthMenu', data);
                 self.$container.innerHTML = self.template(data);
+            },
+            renderErrors: function(errors){
+                console.log('in renderErrors func');
+                console.log('errors', errors);
+                self.$errors = document.querySelector('[data-auth=errors-wrapper]');
+                self.$errors.innerHTML = self.template_errors(errors);
             }
         };
 
@@ -49,7 +58,7 @@ module.exports = function (ajax) {
 
     };
 
-    View.prototype.bind = function (event, handler) {
+    View.prototype.bind = function (event, handler, handlerInvalidData) {
 
         var self = this;
 
@@ -86,7 +95,7 @@ module.exports = function (ajax) {
             } else if (type === 'pass unequal') {
                 text = 'passwords aren\'t equal';
             }
-            console.log(text);
+            return text;
         }
 
         function checkAuthorizationFields(email, password){
@@ -122,16 +131,17 @@ module.exports = function (ajax) {
                 var password = self.$signUpInputPassword.value;
                 var passwordRepeat = self.$signUpInputPasswordRepeat.value;
 
-                console.log(email, password, passwordRepeat);
+                //console.log(email, password, passwordRepeat);
 
                 var checkedAuthorizationFields = checkAuthorizationFields(email, password);
 
                 if (checkedAuthorizationFields !== true){
-                    return checkedAuthorizationFields;
+                    console.log('invelod data');
+                    return handlerInvalidData(checkedAuthorizationFields);
                 }
 
                 if (password !== passwordRepeat){
-                    return invalidData('pass unequal');
+                    return handlerInvalidData(invalidData('pass unequal'));
                 }
 
                 var newUser = {};
@@ -158,7 +168,7 @@ module.exports = function (ajax) {
                 var checkedAuthorizationFields = checkAuthorizationFields(email, password);
 
                 if (checkedAuthorizationFields !== true){
-                    return checkedAuthorizationFields;
+                    return handlerInvalidData(checkedAuthorizationFields);
                 }
 
                 console.log(email, password);

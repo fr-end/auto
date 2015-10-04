@@ -42,20 +42,32 @@ module.exports = function(ajax){
             //    });
             //});
 
-            this.view.bind('clickSignUpSubmitButton', function(user){
-                self.model.postUser(user).then(function(sessionString) {
-                    var sessionObject = JSON.parse(sessionString);
-                    self.view.render('renderAuthMenu', {session: sessionObject});
-                });
-            });
+            this.view.bind(
+                'clickSignUpSubmitButton',
+                function(user){
+                    self.model.postUser(user).then(function(sessionString) {
+                        var sessionObject = JSON.parse(sessionString);
+                        self.view.render('renderAuthMenu', {session: sessionObject});
+                    });
+                },
+                function(errorMsg){
+                    self.view.render('renderErrors', { error: errorMsg })
+                }
+            );
 
-            this.view.bind('clickLoginSubmitButton', function(user){
-                self.model.getUser(user)
-                    .then(function(sessionString) {
-                    var sessionObject = JSON.parse(sessionString);
-                    self.view.render('renderAuthMenu', {session: sessionObject})
-                });
-            });
+            this.view.bind(
+                'clickLoginSubmitButton',
+                function(user) {
+                    self.model.getUser(user)
+                        .then(function (sessionString) {
+                            var sessionObject = JSON.parse(sessionString);
+                            self.view.render('renderAuthMenu', {session: sessionObject})
+                        });
+                },
+                function(errorMsg){
+                    self.view.render('renderErrors', { error: errorMsg })
+                }
+            );
             /*
             console.log(this.model);
             var user = new mongoose.Document(
