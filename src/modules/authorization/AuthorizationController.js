@@ -22,8 +22,6 @@ module.exports = function(ajax){
             }
             this.started = true;
 
-            this.view.render('showAuthMenu', {session: { isLoggedIn: false}});
-
             this.model
                 .checkSession()
                 .then(function(sessionString){
@@ -52,7 +50,8 @@ module.exports = function(ajax){
             });
 
             this.view.bind('clickLoginSubmitButton', function(user){
-                self.model.getUser(user).then(function(sessionString) {
+                self.model.getUser(user)
+                    .then(function(sessionString) {
                     var sessionObject = JSON.parse(sessionString);
                     self.view.render('renderAuthMenu', {session: sessionObject})
                 });
