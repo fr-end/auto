@@ -19,7 +19,10 @@ module.exports = function(ajax){
         return ajax.getPromisePost(url, user);
     };
 
-
+    User.prototype.checkSession = function(){
+        var url = '/db/session/check_user';
+        return ajax.getPromise(url);
+    };
 
     //var schema = new mongoose.Schema({
     //    _id: { type: String, lowercase: true, trim: true},
