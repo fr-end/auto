@@ -22,10 +22,18 @@ module.exports = function(ajax){
             }
             this.started = true;
 
-            this.renderView();
+            this.view.render('showAuthMenu', {session: { isLoggedIn: false}});
+
+            this.model
+                .checkSession()
+                .then(function(sessionString){
+                    var sessionObject = JSON.parse(sessionString);
+                    self.view.render('renderAuthMenu', {session: sessionObject});
+                });
+
             this.view.init(function(){
-                self.model.logout().then(function(session) {
-                    var sessionObject = JSON.parse(session);
+                self.model.logout().then(function(sessionString) {
+                    var sessionObject = JSON.parse(sessionString);
                     self.view.render('renderAuthMenu', {session: sessionObject});
                 });
             });
@@ -37,15 +45,15 @@ module.exports = function(ajax){
             //});
 
             this.view.bind('clickSignUpSubmitButton', function(user){
-                self.model.postUser(user).then(function(session) {
-                    var sessionObject = JSON.parse(session);
+                self.model.postUser(user).then(function(sessionString) {
+                    var sessionObject = JSON.parse(sessionString);
                     self.view.render('renderAuthMenu', {session: sessionObject});
                 });
             });
 
             this.view.bind('clickLoginSubmitButton', function(user){
-                self.model.getUser(user).then(function(session) {
-                    var sessionObject = JSON.parse(session);
+                self.model.getUser(user).then(function(sessionString) {
+                    var sessionObject = JSON.parse(sessionString);
                     self.view.render('renderAuthMenu', {session: sessionObject})
                 });
             });
@@ -61,10 +69,6 @@ module.exports = function(ajax){
             console.log('user', user);
             console.log('user.toJSON', user.toJSON());
             */
-        },
-        renderView: function(){
-
-            this.view.render('showAuthMenu', {session: { isLoggedIn: false}});
         }
     };
 

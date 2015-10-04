@@ -17,8 +17,6 @@ module.exports = function (ajax) {
         this.$signUpInputPassword = undefined;
         this.$signUpInputPasswordRepeat = undefined;
 
-        this.$logoutButton = undefined;
-
         this.visibleElements = [];
 
         this.init = function(handler){
@@ -33,8 +31,7 @@ module.exports = function (ajax) {
         var self = this;
 
         var viewCommands = {
-            showAuthMenu: function (data) {
-                self.$container.innerHTML = self.template(data);
+            showAuthMenu: function () {
                 var popup = document.createElement('div');
                 popup.innerHTML = self.template_popup();
                 document.body.appendChild(popup.firstElementChild);

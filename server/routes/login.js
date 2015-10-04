@@ -9,9 +9,11 @@ var crypto = require('crypto');
 
 module.exports = function (app) {
 
-    //app.get('/', function(request, response){
-    //    console.log('request.session', request.session);
-    //});
+    // check user session
+    app.get('/session/check_user', function(request, response){
+        console.log('request.session', request.session);
+        response.send(request.session);
+    });
 
     // log in
     app.post(/^\/user\/check_user\/?$/, function(request, response, next){
@@ -95,6 +97,7 @@ module.exports = function (app) {
 
     });
 
+    // logout
     app.post(/^\/user\/logout\/?$/, function (request, response) {
         console.log('in logout');
         console.log('request.session', request.session);
