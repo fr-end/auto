@@ -57,7 +57,7 @@ module.exports = function (document) {
                     viewPortMore.innerText = data.moreCount;
                 } else {
                     var viewPortHasMore = self.$viewPort.querySelector('.search-results__more');
-                    if(viewPortHasMore)viewPortHasMore.setAttribute('style','display:none');
+                    if (viewPortHasMore) {viewPortHasMore.setAttribute('style','display:none');}
                 }
             }
 

@@ -103,12 +103,13 @@ module.exports = function (ajax) {
             if(!email && password){
                 return invalidData('email');
             }  else if(!password && email){
-                return invalidData('pass')
+                return invalidData('pass');
             } else if (!(email && password)) {
                 return invalidData('email pass');
             }
 
-            var regexForEmailValidation = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
+            var regexForEmailValidation =
+                    /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
 
             if(!regexForEmailValidation.test(email)){
                 return invalidData('email wrong');
@@ -151,7 +152,7 @@ module.exports = function (ajax) {
                 handler(newUser);
 
                 self.hideAuthFormWrapper();
-            }
+            };
         }
 
         if (event === 'clickLoginSubmitButton') {
@@ -178,7 +179,7 @@ module.exports = function (ajax) {
                 oldUser.password = password;
                 handler(oldUser);
                 self.hideAuthFormWrapper();
-            }
+            };
         }
 
         function listenClickSomeAuthButton (evt){

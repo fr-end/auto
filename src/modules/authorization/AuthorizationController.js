@@ -51,7 +51,7 @@ module.exports = function(ajax){
                     });
                 },
                 function(errorMsg){
-                    self.view.render('renderErrors', { error: errorMsg })
+                    self.view.render('renderErrors', { error: errorMsg });
                 }
             );
 
@@ -61,11 +61,11 @@ module.exports = function(ajax){
                     self.model.getUser(user)
                         .then(function (sessionString) {
                             var sessionObject = JSON.parse(sessionString);
-                            self.view.render('renderAuthMenu', {session: sessionObject})
+                            self.view.render('renderAuthMenu', {session: sessionObject});
                         });
                 },
                 function(errorMsg){
-                    self.view.render('renderErrors', { error: errorMsg })
+                    self.view.render('renderErrors', { error: errorMsg });
                 }
             );
             /*

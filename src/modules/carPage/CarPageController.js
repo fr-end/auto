@@ -16,7 +16,7 @@ module.exports = (function () {
 
     Controller.prototype = {
         init: function(searchParams){
-            try { //console.log(this.carController.showCar(searchParams.carId));
+            try {
                 this.carId = searchParams.carId;
                 this.carType = searchParams.type;
                 this.carController.showCar(this.carId, this.carType)
@@ -25,7 +25,6 @@ module.exports = (function () {
                     }).bind(this));
             } catch (error) {
                 console.log(error);
-                alert('error: ' + error);
             }
 
         }
