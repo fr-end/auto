@@ -4,20 +4,25 @@ module.exports = function(ajax){
         return this;
     }
 
-    User.prototype.checkAndGetUser = function (user) {
-        var url = '/db/user/' + user._id + '?password=' + user.password;
-        console.log('url', url);
-
-        return ajax
-            .getPromise(url);
+    User.prototype.getUser = function (user) {
+        var url = '/db/user/check_user/';
+        return ajax.getPromisePost(url, user);
     };
 
-    User.prototype.checkAndPostUser = function (user) {
+    User.prototype.postUser = function (user) {
         var url = '/db/user/';
         return ajax.getPromisePost(url, user);
     };
 
+    User.prototype.logout = function(user){
+        var url = '/db/user/logout/';
+        return ajax.getPromisePost(url, user);
+    };
 
+    User.prototype.checkSession = function(){
+        var url = '/db/session/check_user';
+        return ajax.getPromise(url);
+    };
 
     //var schema = new mongoose.Schema({
     //    _id: { type: String, lowercase: true, trim: true},

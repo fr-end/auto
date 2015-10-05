@@ -22,19 +22,52 @@ module.exports = function(ajax){
             }
             this.started = true;
 
-            this.view.render('showAuthMenu', {session: { isLoggedIn: false}});
-            this.view.init();
+            this.model
+                .checkSession()
+                .then(function(sessionString){
+                    var sessionObject = JSON.parse(sessionString);
+                    self.view.render('renderAuthMenu', {session: sessionObject});
+                });
 
-
-            //this.bind('clickLoginSubmitButton');
-
-            this.view.bind('clickSignUpSubmitButton', function(user){
-                self.model.checkAndPostUser(user);
+            this.view.init(function(){
+                self.model.logout().then(function(sessionString) {
+                    var sessionObject = JSON.parse(sessionString);
+                    self.view.render('renderAuthMenu', {session: sessionObject});
+                });
             });
 
-            this.view.bind('clickLoginSubmitButton', function(user){
-                self.model.checkAndGetUser(user);
-            });
+            //this.view.bind('clickLogoutButton', function(user){
+            //    self.model.logout(user).then(function(data){
+            //        console.log(data);
+            //    });
+            //});
+
+            this.view.bind(
+                'clickSignUpSubmitButton',
+                function(user){
+                    self.model.postUser(user).then(function(sessionString) {
+                        var sessionObject = JSON.parse(sessionString);
+                        self.view.render('renderAuthMenu', {session: sessionObject});
+                    });
+                },
+                function(errorMsg){
+                    self.view.render('renderErrors', { error: errorMsg });
+                }
+            );
+
+            this.view.bind(
+                'clickLoginSubmitButton',
+                function(user) {
+                    self.model.getUser(user)
+                        .then(function (sessionString) {
+                            var sessionObject = JSON.parse(sessionString);
+                            self.view.render('renderAuthMenu', {session: sessionObject});
+                        });
+                },
+                function(errorMsg){
+                    self.view.render('renderErrors', { error: errorMsg });
+                }
+            );
             /*
             console.log(this.model);
             var user = new mongoose.Document(
@@ -47,9 +80,6 @@ module.exports = function(ajax){
             console.log('user', user);
             console.log('user.toJSON', user.toJSON());
             */
-
-
-
         }
     };
 

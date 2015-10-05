@@ -1,12 +1,15 @@
 module.exports = function (ajax) {
 
     var template = require('./authorization.handlebars');
+    var template_errors = require('./authorization_errors.handlebars');
     var template_popup = require('./authorization_popup.handlebars');
 
     function View() {
         this.template = template;
         this.template_popup = template_popup;
+        this.template_errors = template_errors;
         this.$container = document.querySelector('[data-auth=wrapper]');
+        this.$errors = undefined;
         this.$authForm = undefined;
         this.$authFormBackground = undefined;
         this.$authFormSignUp = undefined;
@@ -19,22 +22,35 @@ module.exports = function (ajax) {
 
         this.visibleElements = [];
 
-        this.init = function(){
-            this.bind('clickSomeAuthButton');
+        this.init = function(handler){
+            this.initShowAuthMenu();
+            // callback for user logout
+            this.bind('clickSomeAuthButton', handler);
             this.bind('clickBackground');
+
         };
     }
+
+    View.prototype.initShowAuthMenu = function () {
+        var popup = document.createElement('div');
+        popup.innerHTML = this.template_popup();
+        document.body.appendChild(popup.firstElementChild);
+    };
 
     View.prototype.render = function (viewCmd, data) {
 
         var self = this;
 
         var viewCommands = {
-            showAuthMenu: function (data) {
+            renderAuthMenu: function (data){
+                console.log('data in renderAuthMenu', data);
                 self.$container.innerHTML = self.template(data);
-                var popup = document.createElement('div');
-                popup.innerHTML = self.template_popup();
-                document.body.appendChild(popup.firstElementChild);
+            },
+            renderErrors: function(errors){
+                console.log('in renderErrors func');
+                console.log('errors', errors);
+                self.$errors = document.querySelector('[data-auth=errors-wrapper]');
+                self.$errors.innerHTML = self.template_errors(errors);
             }
         };
 
@@ -42,7 +58,7 @@ module.exports = function (ajax) {
 
     };
 
-    View.prototype.bind = function (event, handler) {
+    View.prototype.bind = function (event, handler, handlerInvalidData) {
 
         var self = this;
 
@@ -66,37 +82,37 @@ module.exports = function (ajax) {
             popupBackground.onclick = listenClickBackground;
         }
 
-        function emptyFields(){
-            console.log('please fill in the fields!');
-        }
-
-        function notEmail(){
-            console.log('please provide email!');
-        }
-
-        function unCorrectEmail(){
-            console.log('please provide correct email address!');
-        }
-
-        function notPassword(){
-            console.log('please provide password!');
+        function invalidData(type){
+            var text = '';
+            if (type === 'email'){
+                text = 'please provide email!';
+            } else if (type === 'pass') {
+                text = 'please provide password!';
+            } else if (type === 'email pass') {
+                text = 'please fill in the fields!';
+            } else if (type === 'email wrong') {
+                text = 'please provide correct email address!';
+            } else if (type === 'pass unequal') {
+                text = 'passwords aren\'t equal';
+            }
+            return text;
         }
 
         function checkAuthorizationFields(email, password){
 
             if(!email && password){
-                return notEmail();
+                return invalidData('email');
             }  else if(!password && email){
-                return notPassword();
+                return invalidData('pass');
             } else if (!(email && password)) {
-                return emptyFields();
+                return invalidData('email pass');
             }
 
             var regexForEmailValidation =
                     /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
 
             if(!regexForEmailValidation.test(email)){
-                return unCorrectEmail();
+                return invalidData('email wrong');
             }
 
             return true;
@@ -116,14 +132,17 @@ module.exports = function (ajax) {
                 var password = self.$signUpInputPassword.value;
                 var passwordRepeat = self.$signUpInputPasswordRepeat.value;
 
-                console.log(email, password, passwordRepeat);
+                //console.log(email, password, passwordRepeat);
 
-                checkAuthorizationFields(email, password);
+                var checkedAuthorizationFields = checkAuthorizationFields(email, password);
+
+                if (checkedAuthorizationFields !== true){
+                    console.log('invelod data');
+                    return handlerInvalidData(checkedAuthorizationFields);
+                }
 
                 if (password !== passwordRepeat){
-                    // implement this properly
-                    console.log ('PASSWORDS AREN"T EQUAL!');
-                    return;
+                    return handlerInvalidData(invalidData('pass unequal'));
                 }
 
                 var newUser = {};
@@ -132,15 +151,9 @@ module.exports = function (ajax) {
 
                 handler(newUser);
 
-                //
-                //ajax.getPromisePost('/db/user', {_id: email, password: password})
-                //    .then(function(data){console.log(data);});
-
-                //self.hideAuthFormWrapper();
+                self.hideAuthFormWrapper();
             };
         }
-
-
 
         if (event === 'clickLoginSubmitButton') {
 
@@ -153,22 +166,21 @@ module.exports = function (ajax) {
                 var email = self.$loginInputEmail.value;
                 var password = self.$loginInputPassword.value;
 
-                if (checkAuthorizationFields(email, password) === true){
-                    console.log(email, password);
+                var checkedAuthorizationFields = checkAuthorizationFields(email, password);
 
-                    var newUser = {};
-                    newUser._id = email;
-                    newUser.password = password;
-                    handler(newUser);
-                } else {
-                    return console.log('something wrong :(!');
+                if (checkedAuthorizationFields !== true){
+                    return handlerInvalidData(checkedAuthorizationFields);
                 }
 
+                console.log(email, password);
 
+                var oldUser = {};
+                oldUser._id = email;
+                oldUser.password = password;
+                handler(oldUser);
+                self.hideAuthFormWrapper();
             };
         }
-
-
 
         function listenClickSomeAuthButton (evt){
             if (evt.target.getAttribute('data-auth') === 'signUp' ||
@@ -184,6 +196,8 @@ module.exports = function (ajax) {
                 } else if (action === 'signUp'){
                     self.showAuthFormWrapper();
                     self.toggleFormSignUp();
+                } else if (action === 'logout'){
+                    handler();
                 }
             }
         }
