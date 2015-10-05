@@ -32,7 +32,7 @@ module.exports = function (app) {
             if (err) throw err; // return next(err)     in express
 
             if (!user) {
-                return noSuchUserWithEmail(email);
+                return response.send({ error: 'there is no such user with the' + email + ' email' });
             }
 
             // check pass
