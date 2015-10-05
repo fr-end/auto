@@ -8,14 +8,14 @@
 	overflow: hidden;
 	position:fixed;
 	top:0px;
-    z-index: 5000;
+	z-index: 5000;
 }
 
 .authorization{
 	background: $background-color;
 	width: 320px;
-	height: 230px;
-	overflow: hidden;
+	height: auto;
+	padding: 5px;
 	position: absolute;
 	top: 50%;
 	left: 50%;
@@ -30,7 +30,6 @@
 	&-reg-form{
 		display: block;
 		width: 320px;
-		height: 230px;
 		box-sizing: border-box;
 		padding: 20px;
 		font-size: 12px;
@@ -43,7 +42,8 @@
 			line-height: 14px;
 			margin: 0;
 			font-weight: normal;
-			margin-bottom: 15px;
+			padding-bottom: 15px;
+			border-bottom: 1px dashed #e5e5e5;
 		}
 
 		&-sign-in{
@@ -57,10 +57,30 @@
 			height: 42px;
 			width: 100%;
 			border: none;
-			border-top: 1px dashed #e5e5e5;
+			border-bottom: 1px dashed #e5e5e5;
 			&.last{
-				border-bottom: 1px dashed #e5e5e5;
 				margin-bottom: 17px;
+			}
+		}
+
+		&-error{
+			border-top: 1px dashed #e5e5e5;
+			border: 1px solid $border-color;
+			color:  $border-color;
+			font-weight: bold;
+			line-height: 25px;
+			font-size: 13px;
+			padding: 5px 5px;
+			margin: 7px 0;
+			position: relative;
+			&:after{
+				content: '';
+				display: block;
+				position: absolute;
+				width: 100%;
+				border-bottom: 1px dashed #e5e5e5;
+				bottom: -7px;
+				left: 0;
 			}
 		}
 
@@ -93,7 +113,6 @@
 	&-sign-in-form{
 		display: block;
 		width: 320px;
-		height: 230px;
 		box-sizing: border-box;
 		padding: 20px;
 		font-size: 12px;
@@ -106,7 +125,8 @@
 			line-height: 14px;
 			margin: 0;
 			font-weight: normal;
-			margin-bottom: 15px;
+			padding-bottom: 15px;
+			border-bottom: 1px dashed #e5e5e5;
 		}
 
 		&-reg{
@@ -120,10 +140,10 @@
 			height: 42px;
 			width: 100%;
 			border: none;
-			border-top: 1px dashed #e5e5e5;
+			border-bottom: 1px dashed #e5e5e5;
 			&.last{
 				border-bottom: 1px dashed #e5e5e5;
-				margin-bottom: 59px;
+				margin-bottom: 17px;
 			}
 		}
 
