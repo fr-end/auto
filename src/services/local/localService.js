@@ -1,7 +1,6 @@
 module.exports = (function(localStorage,XMLHttpRequest,Q){
 
 	var autoService = require('../auto/autoService');
-	var Q = require('../../../node_modules/q/q.js');
 	
 	var auto = {
 		init: function () {

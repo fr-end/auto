@@ -127,7 +127,7 @@ module.exports = (function(){
             });
         },
         getCar:function (carId, carType) {
-            if(carType === "new"){
+            if(carType === 'new'){
                 return this.getCarNew(carId);
             }
             //used
@@ -201,7 +201,8 @@ module.exports = (function(){
         getTopCarPromise: function (carIdAndType) {
             //https://auto.ria.com/demo/bu/mainPage/rotator/item/16274478?type=bu&langId=2&showCity=0
             //https://auto.ria.com/demo/bu/mainPage/rotator/item/65309?type=new&langId=2&showCity=0
-            var url = config.autoRiaUaHost + '/demo/bu/mainPage/rotator/item/' + carIdAndType.id + '?type=' + carIdAndType.type + '&langId=2&showCity=0';
+            var url = config.autoRiaUaHost + '/demo/bu/mainPage/rotator/item/' + carIdAndType.id + '?type=' +
+                        carIdAndType.type + '&langId=2&showCity=0';
             return ajax.getPromise(url);
         }
 	};

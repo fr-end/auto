@@ -47,18 +47,19 @@ module.exports = (function () {
     };
 
     View.prototype.clickOnSlider = function(event){
+        var nextImg;
         if (event.target.classList.contains(this.sliderSmallImgSelector.slice(1))) {
             this.toggleSliderBigImg(event.target);
         } else
             if (event.target.classList.contains(this.sliderArrowNextClass)||
                 event.target.classList.contains(this.sliderBigImgClass)){
-                var nextImg = document.querySelector('.active').parentElement.parentElement;
+                nextImg = document.querySelector('.active').parentElement.parentElement;
                 nextImg = nextImg.nextElementSibling ? nextImg.nextElementSibling.firstElementChild
-                        .firstElementChild : nextImg.parentElement.firstElementChild.firstElementChild.firstElementChild;
-                    this.toggleSliderBigImg(nextImg);
+                    .firstElementChild : nextImg.parentElement.firstElementChild.firstElementChild.firstElementChild;
+                this.toggleSliderBigImg(nextImg);
             } else
                 if (event.target.classList.contains(this.sliderArrowPreviousClass)){
-                    var nextImg = document.querySelector('.active').parentElement.parentElement;
+                    nextImg = document.querySelector('.active').parentElement.parentElement;
                     nextImg = nextImg.previousElementSibling ? nextImg.previousElementSibling.firstElementChild
                         .firstElementChild : nextImg.parentElement.lastElementChild.firstElementChild.firstElementChild;
                     this.toggleSliderBigImg(nextImg);

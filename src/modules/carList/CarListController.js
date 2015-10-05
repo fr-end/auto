@@ -67,7 +67,8 @@ module.exports = function (document, localStorage, XMLHttpRequest) {
                     return carHtmls;
                 })
                 .then((function(carHtmls){
-                    this.view.render('showCars', { cars : carHtmls, hasMore: this.model.getHasMore(), moreCount: this.model.getMoreCount()});
+                    this.view.render('showCars', { cars : carHtmls, hasMore: this.model.getHasMore(),
+                        moreCount: this.model.getMoreCount()});
                 }).bind(this));
         },
         showAddCars: function(carPromises) {
@@ -82,7 +83,8 @@ module.exports = function (document, localStorage, XMLHttpRequest) {
                     return carHtmls;
                 })
                 .then((function(carHtmls){
-                    this.view.render('showAddCars', { cars : carHtmls, hasMore: this.model.getHasMore(), moreCount: this.model.getMoreCount()});
+                    this.view.render('showAddCars', { cars : carHtmls, hasMore: this.model.getHasMore(),
+                        moreCount: this.model.getMoreCount()});
                     this.view.render('hideAddLoading');
                 }).bind(this));
         }

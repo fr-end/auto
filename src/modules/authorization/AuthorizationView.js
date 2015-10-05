@@ -87,12 +87,13 @@ module.exports = function (ajax) {
             if(!email && password){
                 return notEmail();
             }  else if(!password && email){
-                return notPassword()
+                return notPassword();
             } else if (!(email && password)) {
                 return emptyFields();
             }
 
-            var regexForEmailValidation = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
+            var regexForEmailValidation =
+                    /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
 
             if(!regexForEmailValidation.test(email)){
                 return unCorrectEmail();
@@ -136,7 +137,7 @@ module.exports = function (ajax) {
                 //    .then(function(data){console.log(data);});
 
                 //self.hideAuthFormWrapper();
-            }
+            };
         }
 
 
@@ -160,11 +161,11 @@ module.exports = function (ajax) {
                     newUser.password = password;
                     handler(newUser);
                 } else {
-                    return console.log('something wrong :(!')
+                    return console.log('something wrong :(!');
                 }
 
 
-            }
+            };
         }
 
 

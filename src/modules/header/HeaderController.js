@@ -11,7 +11,7 @@ module.exports = function (){
     HeaderController.prototype = {
         init: function (){
             document.addEventListener('wishListCount',(function(e){
-                if(e.hasOwnProperty("wishListCount")){
+                if(e.hasOwnProperty('wishListCount')){
                     this.view.setWishListCount(e.wishListCount);
                 }
             }).bind(this));
