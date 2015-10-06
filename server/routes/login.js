@@ -4,8 +4,6 @@ mongoose.model('User');
 
 var hash = require('../helpers/hash.js');
 var crypto = require('crypto');
-//var http = require('http');
-//var url = require('url');
 
 module.exports = function (app) {
 
@@ -19,10 +17,6 @@ module.exports = function (app) {
     app.post(/^\/user\/check_user\/?$/, function(request, response, next){
         console.log('request.body', request.body);
         console.log('request.session', request.session);
-        // url module reference https://www.npmjs.com/package/url
-        //var parsedUrl = url.parse(request.url, true);
-        //var pathname = parsedUrl.pathname;
-        //console.log('parsedUrl',parsedUrl);
 
         var email = request.body._id;
         console.log('userName', email);
@@ -48,7 +42,7 @@ module.exports = function (app) {
                 console.log('session reload in login');
             });
             response.send(request.session);
-            //res.redirect('/');
+            //response.redirect('/');
         });
 
     });
@@ -64,7 +58,7 @@ module.exports = function (app) {
             if (err) return next(err);
 
             if (user) {
-                return response.send(invalidData('user already exists', 'signup', email));//return res.render('signup.jade', { exists: true });
+                return response.send(invalidData('user already exists', 'signup', email));
             }
 
             crypto.randomBytes(16, function (err, bytes) {
@@ -90,7 +84,7 @@ module.exports = function (app) {
                         console.log('session saved in signup');
                     });
                     response.send(request.session);
-                    //return res.redirect('/');
+                    //return response.redirect('/');
                 });
             })
         });
