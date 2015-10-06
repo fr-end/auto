@@ -42,13 +42,24 @@ module.exports = function(ajax){
             //    });
             //});
 
+            function handleSessionOrErrors(sessionStringOrErrorsArray){
+                var parsedSessionOrErrors = JSON.parse(sessionStringOrErrorsArray);
+                console.log('in handleSessionOrErrors func');
+                if (parsedSessionOrErrors.hasOwnProperty('isLoggedIn')){
+                    self.view.render('renderAuthMenu', {session: parsedSessionOrErrors});
+                    self.view.hideAuthFormWrapper();
+                } else {
+                    //console.log('in else sessionStringOrErrorsArray', parsedSessionOrErrors);
+                    self.view.render('renderErrors', parsedSessionOrErrors);
+                }
+            }
+
             this.view.bind(
                 'clickSignUpSubmitButton',
                 function(user){
-                    self.model.postUser(user).then(function(sessionString) {
-                        var sessionObject = JSON.parse(sessionString);
-                        self.view.render('renderAuthMenu', {session: sessionObject});
-                    });
+                    self.model
+                        .postUser(user)
+                        .then(handleSessionOrErrors);
                 },
                 function(errorsArray){
                     if (errorsArray.length){
@@ -60,11 +71,9 @@ module.exports = function(ajax){
             this.view.bind(
                 'clickLoginSubmitButton',
                 function(user) {
-                    self.model.getUser(user)
-                        .then(function (sessionString) {
-                            var sessionObject = JSON.parse(sessionString);
-                            self.view.render('renderAuthMenu', {session: sessionObject});
-                        });
+                    self.model
+                        .getUser(user)
+                        .then(handleSessionOrErrors);
                 },
                 function(errorsArray){
                     if (errorsArray.length){

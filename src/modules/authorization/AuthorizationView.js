@@ -1,13 +1,11 @@
-module.exports = function (ajax) {
+module.exports = function () {
 
     var template = require('./authorization.handlebars');
-    var template_errors = require('./authorization_errors.handlebars');
     var template_popup = require('./authorization_popup.handlebars');
 
     function View() {
         this.template = template;
         this.template_popup = template_popup;
-        this.template_errors = template_errors;
         this.$container = document.querySelector('[data-auth=wrapper]');
         this.$errors = undefined;
         this.$authForm = undefined;
@@ -21,13 +19,14 @@ module.exports = function (ajax) {
         this.$signUpInputPasswordRepeat = undefined;
 
         this.visibleElements = [];
+        this.visibleErrors = [];
 
         this.init = function(handler){
             this.initShowAuthMenu();
             // callback for user logout
             this.bind('clickSomeAuthButton', handler);
             this.bind('clickBackground');
-
+            this.bind('clearErrorsOnInputData');
         };
     }
 
@@ -35,6 +34,17 @@ module.exports = function (ajax) {
         var popup = document.createElement('div');
         popup.innerHTML = this.template_popup();
         document.body.appendChild(popup.firstElementChild);
+    };
+
+    View.prototype.handleErrorAddition = function(node, currentError){
+        node.classList.remove('is-not-displayed');
+        node.innerHTML = currentError.text;
+        this.visibleErrors.push(node);
+    };
+
+    View.prototype.handleErrorRemoval = function(node){
+        node.classList.add('is-not-displayed');
+        node.innerHTML = '';
     };
 
     View.prototype.render = function (viewCmd, data) {
@@ -47,18 +57,77 @@ module.exports = function (ajax) {
                 self.$container.innerHTML = self.template(data);
             },
             renderErrors: function(errorsArray){
-                console.log('in renderErrors func');
-                console.log('errors', errorsArray);
+                var dataAuthLoginString = '[data-auth=form-login-input-';
+                var dataAuthSignUpString = '[data-auth=form-signup-input-';
+                var fullQueryString;
 
-                for (var i = 0; i < errorsArray.length; i++){
-                    console.log('errorsArray[i]', errorsArray[i]);
-                    if (errorsArray[i].type === 'email' || errorsArray[i].type === 'email wrong'){
-                        console.log('in email related error!', errorsArray[i]);
-                    }
+                if (!self.$errors){
+                    self.$errors = document.querySelector('[data-auth=errors-wrapper]');
                 }
 
-                //self.$errors = document.querySelector('[data-auth=errors-wrapper]');
-                //self.$errors.innerHTML = self.template_errors(errorsArray);
+                if (!self.$ErrorLoginEmail){
+                    fullQueryString = dataAuthLoginString + 'email-error]';
+                    self.$ErrorLoginEmail = document.querySelector(fullQueryString);
+                }
+
+                if (!self.$ErrorLoginPassword){
+                    fullQueryString = dataAuthLoginString + 'password-error]';
+                    self.$ErrorLoginPassword = document.querySelector(fullQueryString);
+                }
+
+                if (!self.$ErrorSignUpEmail){
+                    fullQueryString = dataAuthSignUpString + 'email-error]';
+                    self.$ErrorSignUpEmail = document.querySelector(fullQueryString);
+                }
+
+                if (!self.$ErrorSignUpPassword){
+                    fullQueryString = dataAuthSignUpString + 'password-error]';
+                    self.$ErrorSignUpPassword = document.querySelector(fullQueryString);
+                }
+
+                console.log('in renderErrors func');
+                for (var i = 0; i < errorsArray.length; i++){
+                    console.log('errorsArray[i]', errorsArray[i]);
+
+                    // errors from front end
+
+                    if (errorsArray[i].form === 'login'){
+                        if (errorsArray[i].type === 'email' || errorsArray[i].type === 'email wrong'){
+                            self.handleErrorAddition(self.$ErrorLoginEmail, errorsArray[i]);
+                        }
+                        if (errorsArray[i].type === 'pass'){
+                            self.handleErrorAddition(self.$ErrorLoginPassword, errorsArray[i]);
+                        }
+                    }
+
+                    if (errorsArray[i].form === 'signup'){
+
+                        if (errorsArray[i].type === 'email' || errorsArray[i].type === 'email wrong'){
+                            self.handleErrorAddition(self.$ErrorSignUpEmail, errorsArray[i]);
+                        }
+
+                        if (errorsArray[i].type === 'pass' || errorsArray[i].type === 'pass unequal'){
+                            self.handleErrorAddition(self.$ErrorSignUpPassword, errorsArray[i]);
+                        }
+
+                    }
+
+                    // errors from backend
+
+                    if (errorsArray[i].form === 'login'){
+                        if (errorsArray[i].type === 'no user'){
+                            self.handleErrorAddition(self.$ErrorLoginEmail, errorsArray[i]);
+                        } else if (errorsArray[i].type === 'wrong password'){
+                            self.handleErrorAddition(self.$ErrorLoginPassword, errorsArray[i]);
+                        }
+                    }
+
+                    if (errorsArray[i].form === 'signup'){
+                        if (errorsArray[i].type === 'user already exists'){
+                            self.handleErrorAddition(self.$ErrorSignUpEmail, errorsArray[i]);
+                        }
+                    }
+                }
             }
         };
 
@@ -69,6 +138,38 @@ module.exports = function (ajax) {
     View.prototype.bind = function (event, handler, handlerInvalidData) {
 
         var self = this;
+
+        function removeErrorsFromForm(){
+
+            if (self.visibleErrors.length){
+                var length = self.visibleErrors.length;
+                for (var i = length - 1; i >= 0; i--){
+                    self.handleErrorRemoval(self.visibleErrors[i]);
+                    self.visibleErrors.pop();
+                }
+            }
+        }
+
+        if (event === 'clearErrorsOnInputData'){
+
+            if (!this.$authFormSignUp) {
+                this.$authFormSignUp = document.querySelector('[data-auth=form-signup]');
+            }
+
+            this.$authFormSignUp.oninput = function (evt) {
+                removeErrorsFromForm();
+            };
+
+            if (!this.$authFormLogin){
+                this.$authFormLogin = document.querySelector('[data-auth=form-login]');
+            }
+
+            this.$authFormSignUptoLogin.oninput = function (evt) {
+                removeErrorsFromForm();
+            };
+
+        }
+
 
         if (event === 'clickSomeAuthButton') {
             this.$container.onclick = listenClickSomeAuthButton;
@@ -101,19 +202,19 @@ module.exports = function (ajax) {
             var text;
             if (type === 'email'){
                 text = 'please provide email!';
-                errors.push(new CustomError(type, text, form))
+                errors.push(new CustomError(type, text, form));
             } else if (type === 'pass') {
                 text = 'please provide password!';
-                errors.push(new CustomError(type, text, form))
+                errors.push(new CustomError(type, text, form));
             } else if (type === 'email pass') {
                 text = 'please fill in the fields!';
-                errors.push(new CustomError(type, text, form))
+                errors.push(new CustomError(type, text, form));
             } else if (type === 'email wrong') {
                 text = 'please provide correct email address!';
-                errors.push(new CustomError(type, text, form))
+                errors.push(new CustomError(type, text, form));
             } else if (type === 'pass unequal') {
                 text = 'passwords aren\'t equal';
-                errors.push(new CustomError(type, text, form))
+                errors.push(new CustomError(type, text, form));
             }
             console.log('errors in invalidData func',errors);
             return errors;
@@ -171,8 +272,6 @@ module.exports = function (ajax) {
                 newUser.password = password;
 
                 handler(newUser);
-
-                self.hideAuthFormWrapper();
             };
         }
 
@@ -200,7 +299,6 @@ module.exports = function (ajax) {
                 oldUser._id = email;
                 oldUser.password = password;
                 handler(oldUser);
-                self.hideAuthFormWrapper();
             };
         }
 
@@ -261,6 +359,7 @@ module.exports = function (ajax) {
     };
 
     View.prototype.hideAuthFormWrapper = function(){
+        var i;
 
         //console.log(this.visibleElements);
 
@@ -268,11 +367,45 @@ module.exports = function (ajax) {
         //    return;
         //}
 
-        for (var i = 0; i < this.visibleElements.length; i++){
+        for (i = 0; i < this.visibleElements.length; i++){
             this.visibleElements[i].classList.add('is-not-displayed');
         }
 
         this.visibleElements = [];
+        this.clearInputs();
+        this.clearErrors();
+    };
+
+    View.prototype.clearInputs = function(){
+        console.log('in clearInputs func');
+
+        var i;
+        var loginInputs = this.$authFormSignUp.getElementsByTagName('input');
+        var signUpInputs = this.$authFormLogin.getElementsByTagName('input');
+        console.log('loginInputs', loginInputs);
+
+        function loopThroughtInputs(inputs){
+            for (i = 0; i < inputs.length; i++){
+                if (inputs[i].value === 'OK'){
+                    continue;
+                } else {
+                    inputs[i].value = '';
+                }
+            }
+        }
+
+        loopThroughtInputs(loginInputs);
+        loopThroughtInputs(signUpInputs);
+
+    };
+
+    View.prototype.clearErrors = function(){
+        var i;
+        if (this.visibleErrors.length){
+            for (i = 0; i < this.visibleErrors.length; i++){
+                this.handleErrorRemoval(this.visibleErrors[i]);
+            }
+        }
     };
 
     View.prototype.toggleFormSignUp = function () {
