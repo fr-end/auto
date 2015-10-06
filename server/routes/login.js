@@ -4,8 +4,6 @@ mongoose.model('User');
 
 var hash = require('../helpers/hash.js');
 var crypto = require('crypto');
-//var http = require('http');
-//var url = require('url');
 
 module.exports = function (app) {
 
@@ -19,10 +17,6 @@ module.exports = function (app) {
     app.post(/^\/user\/check_user\/?$/, function(request, response, next){
         console.log('request.body', request.body);
         console.log('request.session', request.session);
-        // url module reference https://www.npmjs.com/package/url
-        //var parsedUrl = url.parse(request.url, true);
-        //var pathname = parsedUrl.pathname;
-        //console.log('parsedUrl',parsedUrl);
 
         var email = request.body._id;
         console.log('userName', email);
@@ -32,23 +26,23 @@ module.exports = function (app) {
             if (err) throw err; // return next(err)     in express
 
             if (!user) {
-                return response.send({ error: 'there is no such user with the' + email + ' email' });
+                return response.send(invalidData('no user', 'login', email));
             }
 
             // check pass
             if (user.hash != hash(pass, user.salt)) {
-                return wrongPasswordForUser(email);
+                return response.send(invalidData('wrong password', 'login', email));
             }
-            console.log('There is such user! He should be logged in!', user);
 
             request.session.isLoggedIn = true;
             request.session.user = email;
 
             request.session.reload(function(err) {
+                if (err) throw err;
                 console.log('session reload in login');
             });
             response.send(request.session);
-            //res.redirect('/');
+            //response.redirect('/');
         });
 
     });
@@ -64,7 +58,7 @@ module.exports = function (app) {
             if (err) return next(err);
 
             if (user) {
-                return response.send('user'  + email + ' already exists');//return res.render('signup.jade', { exists: true });
+                return response.send(invalidData('user already exists', 'signup', email));
             }
 
             crypto.randomBytes(16, function (err, bytes) {
@@ -90,7 +84,7 @@ module.exports = function (app) {
                         console.log('session saved in signup');
                     });
                     response.send(request.session);
-                    //return res.redirect('/');
+                    //return response.redirect('/');
                 });
             })
         });
@@ -110,14 +104,29 @@ module.exports = function (app) {
 
 };
 
-function noSuchUserWithEmail(email){
-    console.log('there is no such user with the', email, 'email');
-}
-
-function wrongPasswordForUser(email){
-    console.log('there is uncorrect password for the user with ', email, 'email');
-}
-
 function someUncorrectData(email){
     console.log('there are some uncorrect data validation on the backend for', email, 'email');
+}
+
+function CustomError(type, text, form){
+    this.type = type;
+    this.text = text;
+    this.form = form;
+}
+
+function invalidData(type, form, email){
+    var errors = [];
+    var text;
+    if (type === 'no user'){
+        text = 'there is no such user with the ' + email + ' email';
+        errors.push(new CustomError(type, text, form))
+    } else if (type === 'user already exists') {
+        text = 'user '  + email + ' already exists';
+        errors.push(new CustomError(type, text, form))
+    } else if (type === 'wrong password') {
+        text = 'wrong password for user ' +  email;
+        errors.push(new CustomError(type, text, form))
+    }
+    console.log('errors in invalidData func ',errors);
+    return errors;
 }
