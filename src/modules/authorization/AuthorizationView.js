@@ -46,11 +46,19 @@ module.exports = function (ajax) {
                 console.log('data in renderAuthMenu', data);
                 self.$container.innerHTML = self.template(data);
             },
-            renderErrors: function(errors){
+            renderErrors: function(errorsArray){
                 console.log('in renderErrors func');
-                console.log('errors', errors);
-                self.$errors = document.querySelector('[data-auth=errors-wrapper]');
-                self.$errors.innerHTML = self.template_errors(errors);
+                console.log('errors', errorsArray);
+
+                for (var i = 0; i < errorsArray.length; i++){
+                    console.log('errorsArray[i]', errorsArray[i]);
+                    if (errorsArray[i].type === 'email' || errorsArray[i].type === 'email wrong'){
+                        console.log('in email related error!', errorsArray[i]);
+                    }
+                }
+
+                //self.$errors = document.querySelector('[data-auth=errors-wrapper]');
+                //self.$errors.innerHTML = self.template_errors(errorsArray);
             }
         };
 
@@ -82,37 +90,50 @@ module.exports = function (ajax) {
             popupBackground.onclick = listenClickBackground;
         }
 
-        function invalidData(type){
-            var text = '';
-            if (type === 'email'){
-                text = 'please provide email!';
-            } else if (type === 'pass') {
-                text = 'please provide password!';
-            } else if (type === 'email pass') {
-                text = 'please fill in the fields!';
-            } else if (type === 'email wrong') {
-                text = 'please provide correct email address!';
-            } else if (type === 'pass unequal') {
-                text = 'passwords aren\'t equal';
-            }
-            return text;
+        function CustomError(type, text, form){
+            this.type = type;
+            this.text = text;
+            this.form = form;
         }
 
-        function checkAuthorizationFields(email, password){
+        function invalidData(type, form){
+            var errors = [];
+            var text;
+            if (type === 'email'){
+                text = 'please provide email!';
+                errors.push(new CustomError(type, text, form))
+            } else if (type === 'pass') {
+                text = 'please provide password!';
+                errors.push(new CustomError(type, text, form))
+            } else if (type === 'email pass') {
+                text = 'please fill in the fields!';
+                errors.push(new CustomError(type, text, form))
+            } else if (type === 'email wrong') {
+                text = 'please provide correct email address!';
+                errors.push(new CustomError(type, text, form))
+            } else if (type === 'pass unequal') {
+                text = 'passwords aren\'t equal';
+                errors.push(new CustomError(type, text, form))
+            }
+            console.log('errors in invalidData func',errors);
+            return errors;
+        }
+
+        function checkAuthorizationFields(email, password, form){
 
             if(!email && password){
-                return invalidData('email');
+                return invalidData('email', form);
             }  else if(!password && email){
-                return invalidData('pass');
+                return invalidData('pass', form);
             } else if (!(email && password)) {
-                return invalidData('email pass');
+                return invalidData('email pass', form);
             }
 
             var regexForEmailValidation =
                     /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
 
             if(!regexForEmailValidation.test(email)){
-                return invalidData('email wrong');
+                return invalidData('email wrong', form);
             }
 
             return true;
@@ -131,18 +152,18 @@ module.exports = function (ajax) {
                 var email = self.$signUpInputEmail.value;
                 var password = self.$signUpInputPassword.value;
                 var passwordRepeat = self.$signUpInputPasswordRepeat.value;
-
+                var form = 'signup';
                 //console.log(email, password, passwordRepeat);
 
-                var checkedAuthorizationFields = checkAuthorizationFields(email, password);
+                var checkedAuthorizationFields = checkAuthorizationFields(email, password, form);
 
                 if (checkedAuthorizationFields !== true){
-                    console.log('invelod data');
+                    console.log('invalid data');
                     return handlerInvalidData(checkedAuthorizationFields);
                 }
 
                 if (password !== passwordRepeat){
-                    return handlerInvalidData(invalidData('pass unequal'));
+                    return handlerInvalidData(invalidData('pass unequal', form));
                 }
 
                 var newUser = {};
@@ -165,8 +186,9 @@ module.exports = function (ajax) {
                 evt.preventDefault();
                 var email = self.$loginInputEmail.value;
                 var password = self.$loginInputPassword.value;
+                var form = 'login';
 
-                var checkedAuthorizationFields = checkAuthorizationFields(email, password);
+                var checkedAuthorizationFields = checkAuthorizationFields(email, password, form);
 
                 if (checkedAuthorizationFields !== true){
                     return handlerInvalidData(checkedAuthorizationFields);

@@ -50,8 +50,10 @@ module.exports = function(ajax){
                         self.view.render('renderAuthMenu', {session: sessionObject});
                     });
                 },
-                function(errorMsg){
-                    self.view.render('renderErrors', { error: errorMsg });
+                function(errorsArray){
+                    if (errorsArray.length){
+                        self.view.render('renderErrors', errorsArray);
+                    }
                 }
             );
 
@@ -64,8 +66,11 @@ module.exports = function(ajax){
                             self.view.render('renderAuthMenu', {session: sessionObject});
                         });
                 },
-                function(errorMsg){
-                    self.view.render('renderErrors', { error: errorMsg });
+                function(errorsArray){
+                    if (errorsArray.length){
+                        self.view.render('renderErrors', errorsArray);
+                    }
+
                 }
             );
             /*
