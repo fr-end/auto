@@ -26,7 +26,7 @@ module.exports = function () {
             // callback for user logout
             this.bind('clickSomeAuthButton', handler);
             this.bind('clickBackground');
-            this.bind('clearErrorsOnInputData');
+            //this.bind('clearErrorsOnInputData');
         };
     }
 
@@ -75,6 +75,11 @@ module.exports = function () {
                     self.$ErrorLoginPassword = document.querySelector(fullQueryString);
                 }
 
+                if (!self.$ErrorLoginGeneral){
+                    fullQueryString = dataAuthLoginString + 'general-error]';
+                    self.$ErrorLoginGeneral = document.querySelector(fullQueryString);
+                }
+
                 if (!self.$ErrorSignUpEmail){
                     fullQueryString = dataAuthSignUpString + 'email-error]';
                     self.$ErrorSignUpEmail = document.querySelector(fullQueryString);
@@ -83,6 +88,11 @@ module.exports = function () {
                 if (!self.$ErrorSignUpPassword){
                     fullQueryString = dataAuthSignUpString + 'password-error]';
                     self.$ErrorSignUpPassword = document.querySelector(fullQueryString);
+                }
+
+                if (!self.$ErrorSignUpGeneral){
+                    fullQueryString = dataAuthSignUpString + 'general-error]';
+                    self.$ErrorSignUpGeneral = document.querySelector(fullQueryString);
                 }
 
                 console.log('in renderErrors func');
@@ -98,6 +108,10 @@ module.exports = function () {
                         if (errorsArray[i].type === 'pass'){
                             self.handleErrorAddition(self.$ErrorLoginPassword, errorsArray[i]);
                         }
+
+                        if (errorsArray[i].type === 'email pass'){
+                            self.handleErrorAddition(self.$ErrorLoginGeneral, errorsArray[i]);
+                        }
                     }
 
                     if (errorsArray[i].form === 'signup'){
@@ -108,6 +122,10 @@ module.exports = function () {
 
                         if (errorsArray[i].type === 'pass' || errorsArray[i].type === 'pass unequal'){
                             self.handleErrorAddition(self.$ErrorSignUpPassword, errorsArray[i]);
+                        }
+
+                        if (errorsArray[i].type === 'email pass'){
+                            self.handleErrorAddition(self.$ErrorSignUpGeneral, errorsArray[i]);
                         }
 
                     }
@@ -139,37 +157,25 @@ module.exports = function () {
 
         var self = this;
 
-        function removeErrorsFromForm(){
-
-            if (self.visibleErrors.length){
-                var length = self.visibleErrors.length;
-                for (var i = length - 1; i >= 0; i--){
-                    self.handleErrorRemoval(self.visibleErrors[i]);
-                    self.visibleErrors.pop();
-                }
-            }
-        }
-
-        if (event === 'clearErrorsOnInputData'){
-
-            if (!this.$authFormSignUp) {
-                this.$authFormSignUp = document.querySelector('[data-auth=form-signup]');
-            }
-
-            this.$authFormSignUp.oninput = function (evt) {
-                removeErrorsFromForm();
-            };
-
-            if (!this.$authFormLogin){
-                this.$authFormLogin = document.querySelector('[data-auth=form-login]');
-            }
-
-            this.$authFormSignUptoLogin.oninput = function (evt) {
-                removeErrorsFromForm();
-            };
-
-        }
-
+        //if (event === 'clearErrorsOnInputData'){
+        //
+        //    if (!this.$authFormSignUp) {
+        //        this.$authFormSignUp = document.querySelector('[data-auth=form-signup]');
+        //    }
+        //
+        //    this.$authFormSignUp.oninput = function (evt) {
+        //        removeErrorsFromForm();
+        //    };
+        //
+        //    if (!this.$authFormLogin){
+        //        this.$authFormLogin = document.querySelector('[data-auth=form-login]');
+        //    }
+        //
+        //    this.$authFormSignUptoLogin.oninput = function (evt) {
+        //        removeErrorsFromForm();
+        //    };
+        //
+        //}
 
         if (event === 'clickSomeAuthButton') {
             this.$container.onclick = listenClickSomeAuthButton;
@@ -201,19 +207,19 @@ module.exports = function () {
             var errors = [];
             var text;
             if (type === 'email'){
-                text = 'please provide email!';
+                text = 'Пожалуйста, введите ваш емаил.';
                 errors.push(new CustomError(type, text, form));
             } else if (type === 'pass') {
-                text = 'please provide password!';
+                text = 'Пожалуйста, введите пароль.';
                 errors.push(new CustomError(type, text, form));
             } else if (type === 'email pass') {
-                text = 'please fill in the fields!';
+                text = 'Пожалуйста, заполните форму.';
                 errors.push(new CustomError(type, text, form));
             } else if (type === 'email wrong') {
-                text = 'please provide correct email address!';
+                text = 'Пожалуйста, введите корректный емаил адрес.';
                 errors.push(new CustomError(type, text, form));
             } else if (type === 'pass unequal') {
-                text = 'passwords aren\'t equal';
+                text = 'Пароли не соответствуют друг другу.';
                 errors.push(new CustomError(type, text, form));
             }
             console.log('errors in invalidData func',errors);
@@ -373,13 +379,22 @@ module.exports = function () {
 
         this.visibleElements = [];
         this.clearInputs();
-        this.clearErrors();
+        this.removeErrorsFromForm();
     };
 
     View.prototype.clearInputs = function(){
         console.log('in clearInputs func');
 
         var i;
+
+        if (!this.$authFormSignUp){
+            this.$authFormSignUp = document.querySelector('[data-auth=form-signup]');
+        }
+
+        if (!this.$authFormLogin){
+            this.$authFormLogin = document.querySelector('[data-auth=form-login]');
+        }
+
         var loginInputs = this.$authFormSignUp.getElementsByTagName('input');
         var signUpInputs = this.$authFormLogin.getElementsByTagName('input');
         console.log('loginInputs', loginInputs);
@@ -399,24 +414,32 @@ module.exports = function () {
 
     };
 
-    View.prototype.clearErrors = function(){
+    View.prototype.removeErrorsFromForm = function(){
+        console.log('in clear errors func');
+        console.log('this.visibleErrors', this.visibleErrors);
         var i;
         if (this.visibleErrors.length){
-            for (i = 0; i < this.visibleErrors.length; i++){
+            var length = this.visibleErrors.length;
+            for (i = length - 1; i >= 0; i--){
                 this.handleErrorRemoval(this.visibleErrors[i]);
+                this.visibleErrors.pop();
             }
         }
     };
 
     View.prototype.toggleFormSignUp = function () {
+        if (!this.$authFormSignUp){
+            this.$authFormSignUp = document.querySelector('[data-auth=form-signup]');
+        }
 
-        this.$authFormSignUp = document.querySelector('[data-auth=form-signup]');
         this.$authFormSignUp.classList.toggle('is-not-displayed');
         this.visibleElements.push(this.$authFormSignUp);
     };
 
     View.prototype.toggleFormLogIn = function () {
-        this.$authFormLogin = document.querySelector('[data-auth=form-login]');
+        if (!this.$authFormLogin){
+            this.$authFormLogin = document.querySelector('[data-auth=form-login]');
+        }
         this.$authFormLogin.classList.toggle('is-not-displayed');
         this.visibleElements.push(this.$authFormLogin);
     };

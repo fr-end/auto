@@ -58,9 +58,7 @@
 			width: 100%;
 			border: none;
 			border-bottom: 1px dashed #e5e5e5;
-			&.last{
-				margin-bottom: 17px;
-			}
+
 		}
 
 		&-error{
@@ -81,6 +79,9 @@
 				border-bottom: 1px dashed #e5e5e5;
 				bottom: -7px;
 				left: 0;
+			}
+			&.last{
+			  margin-bottom: 17px;
 			}
 		}
 
@@ -141,10 +142,7 @@
 			width: 100%;
 			border: none;
 			border-bottom: 1px dashed #e5e5e5;
-			&.last{
-				border-bottom: 1px dashed #e5e5e5;
-				margin-bottom: 17px;
-			}
+
 		}
 
 		&-checkbox{
