@@ -28,7 +28,21 @@ module.exports = function(window, document) {
     View.prototype.render = function (viewCmd, data) {
         var self = this;
         var viewCommands = {
-            self: function (data) {
+            self: function (searchParams) {
+                data = searchParams || {};
+                data._yearFrom = [];
+                data._yearTo = [];
+                var currentYear = new Date().getFullYear();
+                for(var i=currentYear;i>=1900;i--){
+                    data._yearFrom.push({
+                        value: i,
+                        selected: i==searchParams.yearFrom
+                    });
+                    data._yearTo.push({
+                        value: i,
+                        selected: i==searchParams.yearTo
+                    });
+                }
                 self.$viewPort.innerHTML = self.templates.self(data);
                 self.init();
             },

@@ -11,10 +11,9 @@ module.exports = (function(){
 
     Controller.prototype = {
 		init: function(searchParams){
-            this.view.render('self');
-			searchParams = searchParams || {};
-			var self = this;
-			self.service.getCategories()
+            searchParams = searchParams || {};
+            this.view.render('self',searchParams);
+			this.service.getCategories()
 				.then((function(searchParams, data){
 					var categoriesArray = JSON.parse(data);
 					categoriesArray.forEach(function(item){
@@ -25,18 +24,18 @@ module.exports = (function(){
 					this.view.render('showCategories', categoriesArray);
 					this.loadMarks(searchParams);
 				}).bind(this,searchParams));
-			self.started = true;
-			self.view.bind('changeCategory',function(){
-				self.loadMarks({});
-			});
+			this.started = true;
+			this.view.bind('changeCategory',(function(){
+				this.loadMarks({});
+			}).bind(this));
 
-			self.view.bind('changeMark',function(){
-				self.loadModels({});
-			});
+			this.view.bind('changeMark',(function(){
+				this.loadModels({});
+			}).bind(this));
 
-			self.view.bind('clickSubmit',function(){
-				self.searchCars({});
-			});
+			this.view.bind('clickSubmit',(function(){
+				this.searchCars({});
+			}).bind(this));
 		},
 
 		loadMarks: function(searchParams){
