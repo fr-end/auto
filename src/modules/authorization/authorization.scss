@@ -143,6 +143,12 @@
 			border: none;
 			border-bottom: 1px dashed #e5e5e5;
 
+			&:invalid,
+			&:-moz-submit-invalid,
+			&:-moz-ui-invalid {
+				box-shadow:none;
+			}
+
 		}
 
 		&-checkbox{
