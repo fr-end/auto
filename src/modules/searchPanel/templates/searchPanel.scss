@@ -2,11 +2,11 @@
 
 .search {
 	position: relative;
-	margin: 0 auto $item-margin-bottom;
+	margin: 0 auto 10px;
 	padding: $item-padding;
 	width: $search-pannel-width;
 	/*height: $item-height;*/
-	background: url(img/shadow.png) no-repeat center;
+	background: url(img/shadow.png) no-repeat top 40px center;
 
 	&-criteria {
 		float: left;
@@ -54,6 +54,7 @@
 			background: url($sprite) no-repeat 230px -615px;
 			cursor: pointer;
 			outline: none;
+			overflow: hidden;
 			color: $select-color;
     			-webkit-appearance: none;
     			   -moz-appearance: none;
@@ -62,9 +63,7 @@
 
 		&__button {
 			padding: 8px 12px 7px 35px;
-			clear: both;
-			float: left; 
-			margin: 5px 0 0 173px;
+			margin: 5px 0 10px 174px;
 			border: none;
 			border-radius: $border-radius-small;
 			background: url($sprite) no-repeat 7px -645px $border-color;
@@ -74,12 +73,26 @@
 			text-transform: uppercase;
 			color: $background-color;
 		}
+		
+		&-year-from, &-year-to {
+			display: inline-block;
+		}
 
-        &-extended {
-          display: none;
-        }
+		&-show-extended {
+
+			&__button {
+				@extend .search-parameters__button;
+				width: 250px;
+				padding: 8px 12px 7px 10px;
+				background: $border-color;
+			}
+		}
+
+		&-extended {
+			display: none;
+		}
 	}
-	
+
 	&-info {
 		float: right;
 
@@ -95,6 +108,23 @@
 		}
 	}
 } 
+
+.search-select {
+	@extend .search-parameters__select;
+}
+
+.search-select-year {
+	@extend .search-parameters__select;
+	width: 121px;	
+	background: url($sprite) no-repeat 105px -615px;
+}
+
+.search-input {
+	@extend .search-parameters__select;
+	background: none;
+	width: 121px;
+	display: inline-block;
+}
 
 // Apple iPad/iPad Mini (portrait)
 @media (max-width: 768px) {
