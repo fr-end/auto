@@ -57,8 +57,13 @@
 			overflow: hidden;
 			color: $select-color;
     			-webkit-appearance: none;
-    			   -moz-appearance: none;
-    					appearance: none;
+    			    -moz-appearance: none;
+    			      -ms-appearance: none;
+    					 appearance: none;
+
+    			&::-ms-expand {
+				display: none;
+			}
 		}
 
 		&__button {
