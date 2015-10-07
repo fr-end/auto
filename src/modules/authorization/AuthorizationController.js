@@ -47,6 +47,11 @@ module.exports = function(ajax){
                 console.log('in handleSessionOrErrors func');
                 if (parsedSessionOrErrors.hasOwnProperty('isLoggedIn')){
                     self.view.render('renderAuthMenu', {session: parsedSessionOrErrors});
+                    console.log('parsedSessionOrErrors', parsedSessionOrErrors);
+                    console.log('parsedSessionOrErrors.cookie.originalMaxAge', parsedSessionOrErrors.cookie.originalMaxAge);
+
+                    //if ()
+                    //document.cookie = "name=; path=/; expires=" + date.toUTCString();
                     self.view.hideAuthFormWrapper();
                 } else {
                     //console.log('in else sessionStringOrErrorsArray', parsedSessionOrErrors);

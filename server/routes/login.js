@@ -52,6 +52,8 @@ module.exports = function (app) {
         var email = request.body._id;
         console.log('userName', email);
         var pass = request.body.password;
+        var unCheckedKeepLoggedIn = request.body.unCheckedKeepLoggedIn;
+        console.log('unCheckedKeepLoggedIn', unCheckedKeepLoggedIn)
         console.log('request.session', request.session);
 
         User.findById(email, function (err, user) {
@@ -79,7 +81,15 @@ module.exports = function (app) {
                     // user created successfully
                     request.session.isLoggedIn = true;
                     request.session.user = email;
+                    if (unCheckedKeepLoggedIn){
+                        console.log('unCheckedKeepLoggedIn', unCheckedKeepLoggedIn)
+                        request.session.cookie.maxAge = 0;
+                    } else {
+                        console.log('unCheckedKeepLoggedIn', unCheckedKeepLoggedIn)
+                        request.session.cookie.maxAge = 14 * 24 * 60 * 60 ; // 14 days
+                    }
 
+                    console.log('request.session.cookie', request.session.cookie);
                     request.session.save(function(err) {
                         console.log('session saved in signup');
                     });
@@ -118,7 +128,7 @@ function invalidData(type, form, email){
     var errors = [];
     var text;
     if (type === 'no user'){
-        text = 'Нет пользователя с таким ' + email + ' емаил';
+        text = 'Нет пользователя с таким ' + email + ' e-mail';
         errors.push(new CustomError(type, text, form))
     } else if (type === 'user already exists') {
         text = 'Пользователь ' + email + ' уже существует. Пожалуйста, войдите в аккаунт.';
