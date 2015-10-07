@@ -54,9 +54,11 @@
                                     <option value="0">
                                         от
                                     </option>
-                                    <option value="1900">
-                                        1900
-                                    </option>
+                                    {{#each _yearFrom}}
+                                        <option value="{{value}}"{{#if selected}} selected{{/if}}>
+                                            {{value}}
+                                        </option>
+                                    {{/each}}
                                 </select>
                             </div>
                             <div class="search-parameters-year-to">
@@ -64,16 +66,17 @@
                                     <option value="0">
                                         до
                                     </option>
-                                    <option value="2015">
-                                        2015
-                                    </option>
+                                    {{#each _yearTo}}
+                                    <option value="{{value}}"{{#if selected}} selected{{/if}}>
+                                        {{value}}                                    </option>
+                                    {{/each}}
                                 </select>
                             </div>
                         </div>
                         <div class="search-parameters-price">
                             Цена, грн:
-                            <input type="text" name="price-from" class="search-parameters-price__from" placeholder="от"/>
-                            <input type="text" name="price-to" class="search-parameters-price__to" placeholder="до"/>
+                            <input type="text" name="price-from" class="search-parameters-price__from" placeholder="от"/{{#if priceFrom}} value="{{priceFrom}}"{{/if}}>
+                            <input type="text" name="price-to" class="search-parameters-price__to" placeholder="до"/{{#if priceTo}} value="{{priceTo}}"{{/if}}>
                         </div>
                         <div class="search-parameters-fuel">
                             Тип топлива:
@@ -84,8 +87,8 @@
                         </div>
                         <div class="search-parameters-engine">
                             Объем двигателя, л:
-                            <input type="text" name="engine-from" class="search-parameters-engine__from" placeholder="от"/>
-                            <input type="text" name="engine-to" class="search-parameters-engine__to" placeholder="до"/>
+                            <input type="text" name="engine-from" class="search-parameters-engine__from" placeholder="от"/{{#if engineVolumeFrom}} value="{{engineVolumeFrom}}"{{/if}}>
+                            <input type="text" name="engine-to" class="search-parameters-engine__to" placeholder="до"/{{#if engineVolumeTo}} value="{{engineVolumeTo}}"{{/if}}>
                         </div>
                         <div class="search-parameters-gearbox-type">
                             Вид коробки передач:
@@ -96,13 +99,13 @@
                         </div>
                         <div class="search-parameters-race">
                             Пробег, тыс. км :
-                            <input type="text" name="race-from" class="search-parameters-race" placeholder="от"/>
-                            <input type="text" name="race-to" class="search-parameters-race" placeholder="до"/>
+                            <input type="text" name="race-from" class="search-parameters-race" placeholder="от"/{{#if raceFrom}} value="{{raceFrom}}"{{/if}}>
+                            <input type="text" name="race-to" class="search-parameters-race" placeholder="до"/{{#if raceTo}} value="{{raceTo}}"{{/if}}>
                         </div>
                         <div class="search-parameters-only-with-photo">
                             <label>
                                 Только с фото
-                                <input type="checkbox" name="only-with-photo"/>
+                                <input type="checkbox" name="only-with-photo"/{{#if withPhoto}} checked{{/if}}>
                             </label>
                         </div>
                     </div>
