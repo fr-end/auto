@@ -72,14 +72,11 @@
 						<input type="text" name="race-from" class="search-parameters-race search-input" placeholder="от"/{{#if raceFrom}} value="{{raceFrom}}"{{/if}}>
 						<input type="text" name="race-to" class="search-parameters-race search-input" placeholder="до"/{{#if raceTo}} value="{{raceTo}}"{{/if}}></div>
 					<div class="search-parameters-only-with-photo">
-						<label>
-							Только с фото
-							<input type="checkbox" name="only-with-photo"/{{#if withPhoto}} checked{{/if}}></label>
+						Только с фото
+						<input type="checkbox" class="only-with-photo"  id="only-with-photo" name="only-with-photo"/{{#if withPhoto}} checked{{/if}}>
+						<label for="only-with-photo" ></label>
 					</div>
 				</div>
-
-
-
 			</div>
 		</form>
 	</div>
