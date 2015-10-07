@@ -6,7 +6,7 @@ body {
 	padding: 0;
 }
 
-.content-wraper {
+.content-wrapper {
 	margin: 50px auto;
 	background: #fff;
 	width: 1280px;
@@ -15,7 +15,7 @@ body {
 // Apple iPad/iPad Mini (portrait)
 @media screen and (max-width: 768px) {
 	
-	.content-wraper {
+	.content-wrapper {
 		margin: 0;
 		width: 768px;
 	}
@@ -28,7 +28,7 @@ body {
 		background: none;
 	}
 
-	.content-wraper{
+	.content-wrapper{
 		margin: 0;
 		width: 100%;
 	}
