@@ -86,9 +86,9 @@ module.exports = function(window, document) {
             priceFrom: form.elements['price-from'].value,
             priceTo: form.elements['price-to'].value,
             fuelId: form.elements['fuel'].value,
-            engineFrom: form.elements['engine-from'].value,
-            engineTo: form.elements['engine-to'].value,
-            transmissionId: form.elements['transmission-type'].value,
+            engineVolumeFrom: form.elements['engine-from'].value,
+            engineVolumeTo: form.elements['engine-to'].value,
+            gearboxId: form.elements['gearbox-type'].value,
             raceFrom: form.elements['race-from'].value,
             raceTo: form.elements['race-to'].value,
             withPhoto: form.elements['only-with-photo'].checked ? 1 : 0

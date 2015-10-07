@@ -36,21 +36,33 @@ module.exports = (function(){
         getCarIds: function (searchParams) {
             //https://auto.ria.com/blocks_search_ajax/search/?category_id=1&state[]=0&s_yers[]=0&po_yers[]=0&currency=1&marka_id[0]=98&model_id[0]=953&countpage=10
             searchParams.countPage = searchParams.countPage || 10;
-            var page = '';
-            if (searchParams.page) {
-                page = '&page=' + searchParams.page;
-            }
-            var url = config.autoRiaUaHost + '/blocks_search_ajax/search/' +
-                '?category_id=' + searchParams.categoryId +
-                '&state[]=0&s_yers[]=0&po_yers[]=0&currency=1' +
-                '&marka_id[0]=' + searchParams.markaId +
-                '&model_id[0]=' + searchParams.modelId +
-                '&countpage=' + searchParams.countPage +
-                page;
+            var url = config.autoRiaUaHost + '/blocks_search_ajax/search/';
+            url += '?category_id=' + searchParams.categoryId;
+            url += urlParam('state[]', '0');
+            url += urlParam('s_yers[]', searchParams.yearFrom);
+            url += urlParam('po_yers[]', searchParams.yearTo);
+            url += urlParam('price_ot', searchParams.priceFrom);
+            url += urlParam('price_do', searchParams.priceTo);
+            url += urlParam('type[' + (searchParams.fuelId - 1) +']', searchParams.fuelId);
+            url += urlParam('engineVolumeFrom', searchParams.engineVolumeFrom);
+            url += urlParam('engineVolumeTo', searchParams.engineVolumeTo);
+            url += urlParam('gearbox[' + (searchParams.gearboxId - 1) +']', searchParams.gearboxId);
+            url += urlParam('raceFrom', searchParams.raceFrom);
+            url += urlParam('raceTo', searchParams.raceTo);
+            url += urlParam('with_photo', searchParams.withPhoto);
+            url += urlParam('currency',1);
+            url += urlParam('marka_id[0]', searchParams.markaId);
+            url += urlParam('model_id[0]', searchParams.modelId);
+            url += urlParam('countpage', searchParams.countPage);
+            url += urlParam('page',searchParams.page);
+            console.log(url);
             return ajax.getPromise(url).then(function (data) {
                 var carIDs = JSON.parse(data).result.search_result.ids;
                 return carIDs;
             });
+            function urlParam(name, value){
+                return value ? '&' + name + '=' + value : '';
+            }
         },
         getCarsCount: function (searchParams, success) {
             //https://auto.ria.com/blocks_search_ajax/search/?category_id=1&state[]=0&s_yers[]=0&po_yers[]=0&currency=1&marka_id[0]=98&model_id[0]=953&countpage=10
