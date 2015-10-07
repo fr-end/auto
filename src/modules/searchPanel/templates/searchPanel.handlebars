@@ -1,4 +1,4 @@
-	<div class="search">
+	<div class="search clearfix">
 		<div class="search-criteria">
 			<form class="search-form" name="autoSearch" data-search="form">
 				<h1 class="search-form__caption">
@@ -41,12 +41,77 @@
 							</option>
 						</select>
 					</div>
-					<div class="search-parameters-button">
-						<button class="search-parameters__button" data-submit="search" type="submit">
-							поиск
-						</button>
-					</div>
+                    <div class="search-parameters-show-extended">
+                        <button class="search-parameters-show-extended__button" data-submit="search" type="submit">
+                            дополнительные параметры
+                        </button>
+                    </div>
+                    <div class="search-parameters-extended">
+                        <div class="search-parameters-year">
+                            Год:
+                            <div class="search-parameters-year-from">
+                                <select name="year-from" id="" class="search-parameters-year-from__select">
+                                    <option value="0">
+                                        от
+                                    </option>
+                                    <option value="1900">
+                                        1900
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="search-parameters-year-to">
+                                <select name="year-to" id="" class="search-parameters-year-to__select">
+                                    <option value="0">
+                                        до
+                                    </option>
+                                    <option value="2015">
+                                        2015
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="search-parameters-price">
+                            Цена, грн:
+                            <input type="text" name="price-from" class="search-parameters-price__from" placeholder="от"/>
+                            <input type="text" name="price-to" class="search-parameters-price__to" placeholder="до"/>
+                        </div>
+                        <div class="search-parameters-fuel">
+                            Тип топлива:
+                            <select name="fuel" id="" class="search-parameters-fuel__select">
+                                <option value="">
+                                </option>
+                            </select>
+                        </div>
+                        <div class="search-parameters-engine">
+                            Объем двигателя, л:
+                            <input type="text" name="engine-from" class="search-parameters-engine__from" placeholder="от"/>
+                            <input type="text" name="engine-to" class="search-parameters-engine__to" placeholder="до"/>
+                        </div>
+                        <div class="search-parameters-transmission-type">
+                            Вид коробки передач:
+                            <select name="transmission-type" id="" class="search-parameters-transmission-type__select">
+                                <option value="">
+                                </option>
+                            </select>
+                        </div>
+                        <div class="search-parameters-race">
+                            Пробег, тыс. км :
+                            <input type="text" name="race-from" class="search-parameters-race" placeholder="от"/>
+                            <input type="text" name="race-to" class="search-parameters-race" placeholder="до"/>
+                        </div>
+                        <div class="search-parameters-only-with-photo">
+                            <label>
+                                Только с фото
+                                <input type="checkbox" name="only-with-photo"/>
+                            </label>
+                        </div>
+                    </div>
 				</div>
+                <div class="search-parameters-button">
+                    <button class="search-parameters__button" data-submit="search" type="submit">
+                        поиск
+                    </button>
+                </div>
 			</form>
 		</div>
 		<div class="search-info">

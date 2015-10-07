@@ -74,8 +74,7 @@ module.exports = (function(){
             });
 		},
 		searchCars: function(){
-			var self = this;
-			var searchParams = self.view.getParams();
+			var searchParams = this.view.getParams();
 
 			var hashLessURL = location.hash.slice(1) || '/';
 
@@ -83,15 +82,9 @@ module.exports = (function(){
 			var routeName = hashLessURLArray[0] || 'search';
 
 			var href = '#' + routeName;
-			if (searchParams.categoryId !== '0') {
-				href += '/categoryId/' + searchParams.categoryId;
-			}
-			if (searchParams.markaId !== '0'){
-				href += '/markaId/' + searchParams.markaId;
-			}
-			if (searchParams.modelId !== '0'){
-				href += '/modelId/' + searchParams.modelId;
-			}
+            for(param in searchParams){
+                href += searchParams[param] && searchParams[param] !== '0' ? '/' + param + '/' + searchParams[param] : '';
+            }
 
 			window.location.href =  href;
 

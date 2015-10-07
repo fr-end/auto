@@ -10,15 +10,19 @@ module.exports = function(window, document) {
 
         this.templates = templates;
         this.$viewPort = document.querySelector('.main');
-        this.init();
+        //this.init();
 
     }
 
-    View.prototype.init = function(viewPortSelector){
-        this.$searchForm        = document.querySelector('[data-search=form]');
-        this.$selectCategory    = document.querySelector('[data-select=category]');
-        this.$selectMark        = document.querySelector('[data-select=mark]');
-        this.$selectModel       = document.querySelector('[data-select=model]');
+    View.prototype.init = function(viewPortSelector) {
+        this.$searchForm = document.querySelector('[data-search=form]');
+        this.$selectCategory = document.querySelector('[data-select=category]');
+        this.$selectMark = document.querySelector('[data-select=mark]');
+        this.$selectModel = document.querySelector('[data-select=model]');
+        document.querySelector('.search-parameters-show-extended__button').addEventListener('click', function (event) {
+            event.preventDefault();
+            document.querySelector('.search-parameters-extended').style.display = 'block';
+        });
     };
 
     View.prototype.render = function (viewCmd, data) {
@@ -71,28 +75,26 @@ module.exports = function(window, document) {
     };
 
     View.prototype.getParams = function(){
-        var self = this;
-        var categories = self.$selectCategory;
-        var category = categories.options[categories.selectedIndex].value;
-        var marks = self.$selectMark;
-        var mark = marks.options[marks.selectedIndex].value;
-        var models = self.$selectModel;
-        var model = models.options[models.selectedIndex].value;
-        var	searchParams = {
-            categoryId: category,
-            markaId: mark,
-            modelId: model
-        };
-        return searchParams;
+        var form = document.forms.autoSearch;
+        console.dir(form.elements);
+        return {
+            categoryId: form.elements['category'].value,
+            markaId: form.elements['mark'].value,
+            modelId: form.elements['model'].value,
+            yearFrom: form.elements['year-from'].value,
+            yearTo: form.elements['year-to'].value,
+            priceFrom: form.elements['price-from'].value,
+            priceTo: form.elements['price-to'].value,
+            fuelId: form.elements['fuel'].value,
+            engineFrom: form.elements['engine-from'].value,
+            engineTo: form.elements['engine-to'].value,
+            transmissionId: form.elements['transmission-type'].value,
+            raceFrom: form.elements['race-from'].value,
+            raceTo: form.elements['race-to'].value,
+            withPhoto: form.elements['only-with-photo'].checked ? 1 : 0
+        }
     };
-    /*
-    View.prototype._setFilter = function (currentPage) {
-        document.querySelector('.selected').className = '';
-        document.querySelector('[href="#/' + currentPage + '"]').className = 'selected';
-    };
-    */
 
-    //refactor the following piece of code
 
  
 
