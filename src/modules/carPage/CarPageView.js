@@ -3,7 +3,7 @@ module.exports = (function () {
     function View() {
         this.$viewPort = document.querySelector('.main');
         this.inListSelector = '.carpage-star';
-        this.viewPortCarSelector = '.carpage-wraper';
+        this.viewPortCarSelector = '.carpage-wrapper';
 
         this.sliderSmallImgSelector = '.carpage-slider-carousel-cars-item-link__img';
         this.sliderSelector = '.carpage-slider';
