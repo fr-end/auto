@@ -22,6 +22,7 @@ module.exports = function(window, document) {
         document.querySelector('.search-parameters-show-extended__button').addEventListener('click', function (event) {
             event.preventDefault();
             document.querySelector('.search-parameters-extended').style.display = 'block';
+            document.querySelector('.search-parameters-show-extended').style.display = 'none';
         });
     };
 

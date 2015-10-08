@@ -4,7 +4,7 @@
 	</div>
 	<div class="item-content">
 		<header class="item-header">
-			<a href="/#car/carId/{{carId}}"><div class="item-header-text">{{title}}</div></a>
+			<a href="/#car/carId/{{carId}}"><div class="item-header-text" title="{{title}} {{year}}"><b>{{title}}</b> {{year}}</div></a>
 			<div class="item-header-like" data-item-id="{{carId}}"></div>
 		</header>
 		<div class="clearfix">
@@ -28,19 +28,19 @@
             {{/if}}
             {{#if fuel}}
                 {{#if volume}}
-			<div class="item-parameters item-motor">
+			<div class="item-parameters item-motor" title="{{fuel}}, {{volume}}.">
 				{{fuel}}, {{volume}}.
 			</div>
                 {{/if}}
             {{/if}}
             {{#if gearBox}}
-            <div class="item-parameters item-transmission">
+            <div class="item-parameters item-transmission" title="{{gearBox}}">
 				{{gearBox}}
 			</div>
             {{/if}}
     </div>
 		<div class="clearfix"> 
-			<div class="item-tel">{{phone}} / {{city}}</div>
+			<div class="item-tel" title="{{phone}} / {{city}}">{{phone}} / {{city}}</div>
 			<div class="item-add-note">Добавить заметку</div>
 		</div>
 
