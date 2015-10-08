@@ -5,6 +5,8 @@ mongoose.model('User');
 var hash = require('../helpers/hash.js');
 var crypto = require('crypto');
 
+var day = 24 * 60 * 60 * 1000;
+
 module.exports = function (app) {
 
     // check user session
@@ -52,6 +54,8 @@ module.exports = function (app) {
         var email = request.body._id;
         console.log('userName', email);
         var pass = request.body.password;
+        var checkedKeepLoggedIn = request.body.checkedKeepLoggedIn;
+        console.log('checkedKeepLoggedIn', checkedKeepLoggedIn)
         console.log('request.session', request.session);
 
         User.findById(email, function (err, user) {
@@ -79,7 +83,15 @@ module.exports = function (app) {
                     // user created successfully
                     request.session.isLoggedIn = true;
                     request.session.user = email;
+                    console.log('request.session.cookie', request.session.cookie)
+                    if (checkedKeepLoggedIn){
+                        request.session.cookie.maxAge = 14 * day ; // 14 days
+                    } else {
+                        //request.session.cookie.expires = false;
+                        request.session.cookie.maxAge = day; // day
+                    }
 
+                    console.log('request.session.cookie', request.session.cookie);
                     request.session.save(function(err) {
                         console.log('session saved in signup');
                     });
@@ -118,7 +130,7 @@ function invalidData(type, form, email){
     var errors = [];
     var text;
     if (type === 'no user'){
-        text = 'Нет пользователя с таким ' + email + ' емаил';
+        text = 'Нет пользователя с таким ' + email + ' e-mail';
         errors.push(new CustomError(type, text, form))
     } else if (type === 'user already exists') {
         text = 'Пользователь ' + email + ' уже существует. Пожалуйста, войдите в аккаунт.';

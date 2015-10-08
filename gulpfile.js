@@ -120,7 +120,7 @@ gulp.task('serverNode', function(){
         });
 });
 
-gulp.task('default', [ 'html', 'img', 'css', 'browserify', 'serverGulp', 'serverNode' ], function(){
+gulp.task('default', [ 'serverNode', 'html', 'img', 'css', 'browserify', 'serverGulp' ], function(){
     gulp.watch( config.alljs, ['browserify']);       // Watch for changes in all js files in 'src' folder
     gulp.watch( config.allsass, ['css']);
     gulp.watch( config.allhtml, ['html']);

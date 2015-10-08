@@ -15,15 +15,15 @@ module.exports = function (app, urlMongo) {
         secret: 'secret',
         store: new MongoStore(
             {
-                url: urlMongo,
-                ttl: 14 * 24 * 60 * 60 // = 14 days. Default
+                url: urlMongo
+                //ttl: 14 * 24 * 60 * 60 // = 14 days. Default
             }
         ),
         resave: false,
-        saveUninitialized: true /*,
-         cookie : {
-         maxAge : 60 * 1000 // 60 seconds
-         }*/
+        saveUninitialized: true
+        //cookie : {
+        //    expires : 0
+        //}
     }));
 
     // this is good enough for now but you'll

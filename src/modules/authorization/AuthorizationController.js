@@ -47,6 +47,16 @@ module.exports = function(ajax){
                 console.log('in handleSessionOrErrors func');
                 if (parsedSessionOrErrors.hasOwnProperty('isLoggedIn')){
                     self.view.render('renderAuthMenu', {session: parsedSessionOrErrors});
+                    console.log('parsedSessionOrErrors', parsedSessionOrErrors);
+                    console.log('parsedSessionOrErrors.cookie.originalMaxAge', parsedSessionOrErrors.cookie.originalMaxAge);
+
+                    // current session ends after user closes a browser
+                    console.log('parsedSessionOrErrors.cookie.originalMaxAge == 0', parsedSessionOrErrors.cookie.originalMaxAge == 0);
+                    //if (parsedSessionOrErrors.cookie.originalMaxAge == 0){
+                    //    console.log('self.view.setCookieToZero();');
+                    //    self.view.setCookieToZero();
+                    //}
+
                     self.view.hideAuthFormWrapper();
                 } else {
                     //console.log('in else sessionStringOrErrorsArray', parsedSessionOrErrors);
