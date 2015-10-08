@@ -7,16 +7,6 @@ module.exports = function () {
         this.template = template;
         this.template_popup = template_popup;
         this.$container = document.querySelector('[data-auth=wrapper]');
-        this.$errors = undefined;
-        this.$authForm = undefined;
-        this.$authFormBackground = undefined;
-        this.$authFormSignUp = undefined;
-        this.$authFormLogin = undefined;
-
-        this.$signUpSubmitButton = undefined;
-        this.$signUpInputEmail = undefined;
-        this.$signUpInputPassword = undefined;
-        this.$signUpInputPasswordRepeat = undefined;
 
         this.visibleElements = [];
         this.visibleErrors = [];
@@ -53,7 +43,7 @@ module.exports = function () {
 
         var viewCommands = {
             renderAuthMenu: function (data){
-                console.log('data in renderAuthMenu', data);
+                //console.log('data in renderAuthMenu', data);
                 self.$container.innerHTML = self.template(data);
             },
             renderErrors: function(errorsArray){
@@ -95,9 +85,9 @@ module.exports = function () {
                     self.$ErrorSignUpGeneral = document.querySelector(fullQueryString);
                 }
 
-                console.log('in renderErrors func');
+                //console.log('in renderErrors func');
                 for (var i = 0; i < errorsArray.length; i++){
-                    console.log('errorsArray[i]', errorsArray[i]);
+                    //console.log('errorsArray[i]', errorsArray[i]);
 
                     // errors from front end
 
@@ -222,7 +212,7 @@ module.exports = function () {
                 text = 'Пароли не соответствуют друг другу.';
                 errors.push(new CustomError(type, text, form));
             }
-            console.log('errors in invalidData func',errors);
+            //console.log('errors in invalidData func',errors);
             return errors;
         }
 
@@ -267,15 +257,15 @@ module.exports = function () {
                 var checkedAuthorizationFields = checkAuthorizationFields(email, password, form);
 
                 if (checkedAuthorizationFields !== true){
-                    console.log('invalid data');
+                    //console.log('invalid data');
                     return handlerInvalidData(checkedAuthorizationFields);
                 }
 
                 if (password !== passwordRepeat){
                     return handlerInvalidData(invalidData('pass unequal', form));
                 }
-                console.log('self.$signUpChekboxKeepLoggedIn', self.$signUpChekboxKeepLoggedIn);
-                console.log('checkedKeepLoggedIn', checkedKeepLoggedIn);
+                //console.log('self.$signUpChekboxKeepLoggedIn', self.$signUpChekboxKeepLoggedIn);
+                //console.log('checkedKeepLoggedIn', checkedKeepLoggedIn);
                 var newUser = {};
                 newUser._id = email;
                 newUser.password = password;
@@ -289,11 +279,13 @@ module.exports = function () {
             this.$loginSubmitButton = document.querySelector('[data-auth=form-login-submit]');
             this.$loginInputEmail = document.querySelector('[data-auth=form-login-input-email]');
             this.$loginInputPassword = document.querySelector('[data-auth=form-login-input-pass]');
-
+            this.$loginChekboxKeepLoggedIn = document.querySelector('[data-auth=form-login-input-remember-me]');
             this.$loginSubmitButton.onclick = function(evt){
                 evt.preventDefault();
                 var email = self.$loginInputEmail.value;
                 var password = self.$loginInputPassword.value;
+                var checkedKeepLoggedIn = self.$loginChekboxKeepLoggedIn.checked;
+                //console.log('checkedKeepLoggedIn', checkedKeepLoggedIn)
                 var form = 'login';
 
                 var checkedAuthorizationFields = checkAuthorizationFields(email, password, form);
@@ -302,11 +294,12 @@ module.exports = function () {
                     return handlerInvalidData(checkedAuthorizationFields);
                 }
 
-                console.log(email, password);
+                //console.log(email, password);
 
                 var oldUser = {};
                 oldUser._id = email;
                 oldUser.password = password;
+                oldUser.checkedKeepLoggedIn = checkedKeepLoggedIn;
                 handler(oldUser);
             };
         }
@@ -386,7 +379,7 @@ module.exports = function () {
     };
 
     View.prototype.clearInputs = function(){
-        console.log('in clearInputs func');
+        //console.log('in clearInputs func');
 
         var i;
 
@@ -400,18 +393,18 @@ module.exports = function () {
 
         var loginInputs = this.$authFormSignUp.getElementsByTagName('input');
         var signUpInputs = this.$authFormLogin.getElementsByTagName('input');
-        console.log('loginInputs', loginInputs);
+        //console.log('loginInputs', loginInputs);
 
 
         //here and in the template set default value. also handle values on server side.
         function loopThroughtInputs(inputs){
             for (i = 0; i < inputs.length; i++){
-                console.log('inputs[i]', inputs[i].type);
+                //console.log('inputs[i]', inputs[i].type);
                 if (inputs[i].value === 'OK'){
                     continue;
                 } else if (inputs[i].type === 'checkbox' && inputs[i].value === 'on'){
                     // checkbox "keep logged in"
-                    console.log('inputs[i].checked', inputs[i].checked);
+                    //console.log('inputs[i].checked', inputs[i].checked);
                     inputs[i].checked = false;
                 } else {
                     inputs[i].value = '';
@@ -425,8 +418,8 @@ module.exports = function () {
     };
 
     View.prototype.removeErrorsFromForm = function(){
-        console.log('in clear errors func');
-        console.log('this.visibleErrors', this.visibleErrors);
+        //console.log('in clear errors func');
+        //console.log('this.visibleErrors', this.visibleErrors);
         var i;
         if (this.visibleErrors.length){
             var length = this.visibleErrors.length;
@@ -458,6 +451,22 @@ module.exports = function () {
     //    console.log('in setCookieToZero func');
     //    document.cookie = "expires=0";
     //};
+
+    View.prototype.showSuccessfulPopup = function(text){
+        if (!this.$successfulWrapper){
+            this.$successfulWrapper = document.querySelector('[data-auth=success]');
+        }
+
+        if (!this.$successfulText){
+            this.$successfulText = document.querySelector('[data-auth=success-text]');
+        }
+
+        this.$successfulText.innerHTML = text;
+
+        this.$successfulWrapper.classList.remove('is-not-displayed');
+
+    };
+
 
     return View;
 

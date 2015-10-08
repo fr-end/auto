@@ -42,34 +42,35 @@ module.exports = function(ajax){
             //    });
             //});
 
-            function handleSessionOrErrors(sessionStringOrErrorsArray){
-                var parsedSessionOrErrors = JSON.parse(sessionStringOrErrorsArray);
-                console.log('in handleSessionOrErrors func');
-                if (parsedSessionOrErrors.hasOwnProperty('isLoggedIn')){
-                    self.view.render('renderAuthMenu', {session: parsedSessionOrErrors});
-                    console.log('parsedSessionOrErrors', parsedSessionOrErrors);
-                    console.log('parsedSessionOrErrors.cookie.originalMaxAge', parsedSessionOrErrors.cookie.originalMaxAge);
 
-                    // current session ends after user closes a browser
-                    console.log('parsedSessionOrErrors.cookie.originalMaxAge == 0', parsedSessionOrErrors.cookie.originalMaxAge == 0);
-                    //if (parsedSessionOrErrors.cookie.originalMaxAge == 0){
-                    //    console.log('self.view.setCookieToZero();');
-                    //    self.view.setCookieToZero();
-                    //}
-
-                    self.view.hideAuthFormWrapper();
-                } else {
-                    //console.log('in else sessionStringOrErrorsArray', parsedSessionOrErrors);
-                    self.view.render('renderErrors', parsedSessionOrErrors);
-                }
-            }
 
             this.view.bind(
                 'clickSignUpSubmitButton',
                 function(user){
                     self.model
                         .postUser(user)
-                        .then(handleSessionOrErrors);
+                        .then( function (sessionStringOrErrorsArray){
+                            var parsedSessionOrErrors = JSON.parse(sessionStringOrErrorsArray);
+                            if (parsedSessionOrErrors.hasOwnProperty('isLoggedIn')){
+                                self.view.render('renderAuthMenu', {session: parsedSessionOrErrors});
+                                //console.log('parsedSessionOrErrors', parsedSessionOrErrors);
+                                //console.log('parsedSessionOrErrors.cookie.originalMaxAge', parsedSessionOrErrors.cookie.originalMaxAge);
+
+                                // current session ends after user closes a browser
+                                //console.log('parsedSessionOrErrors.cookie.originalMaxAge == 0', parsedSessionOrErrors.cookie.originalMaxAge == 0);
+                                //if (parsedSessionOrErrors.cookie.originalMaxAge == 0){
+                                //    console.log('self.view.setCookieToZero();');
+                                //    self.view.setCookieToZero();
+                                //}
+
+                                self.view.showSuccessfulPopup('Приятного времяпровождения :)');
+
+                                self.view.hideAuthFormWrapper();
+                            } else {
+                                //console.log('in else sessionStringOrErrorsArray', parsedSessionOrErrors);
+                                self.view.render('renderErrors', parsedSessionOrErrors);
+                            }
+                        });
                 },
                 function(errorsArray){
                     if (errorsArray.length){
@@ -83,7 +84,19 @@ module.exports = function(ajax){
                 function(user) {
                     self.model
                         .getUser(user)
-                        .then(handleSessionOrErrors);
+                        .then( function (sessionStringOrErrorsArray){
+                            var parsedSessionOrErrors = JSON.parse(sessionStringOrErrorsArray);
+                            if (parsedSessionOrErrors.hasOwnProperty('isLoggedIn')){
+                                self.view.render('renderAuthMenu', {session: parsedSessionOrErrors});
+
+                                self.view.showSuccessfulPopup('Спасибо вам за регистрацию. Наслаждайтесь :)');
+
+                                self.view.hideAuthFormWrapper();
+                            } else {
+
+                                self.view.render('renderErrors', parsedSessionOrErrors);
+                            }
+                        });
                 },
                 function(errorsArray){
                     if (errorsArray.length){
