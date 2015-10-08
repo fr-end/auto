@@ -86,8 +86,7 @@ module.exports = function (app) {
                     console.log('request.session.cookie', request.session.cookie)
                     if (checkedKeepLoggedIn){
                         request.session.cookie.maxAge = 14 * day ; // 14 days
-                    }
-                    else {
+                    } else {
                         //request.session.cookie.expires = false;
                         request.session.cookie.maxAge = day; // day
                     }
