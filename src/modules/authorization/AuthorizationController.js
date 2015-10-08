@@ -50,8 +50,13 @@ module.exports = function(ajax){
                     console.log('parsedSessionOrErrors', parsedSessionOrErrors);
                     console.log('parsedSessionOrErrors.cookie.originalMaxAge', parsedSessionOrErrors.cookie.originalMaxAge);
 
-                    //if ()
-                    //document.cookie = "name=; path=/; expires=" + date.toUTCString();
+                    // current session ends after user closes a browser
+                    console.log('parsedSessionOrErrors.cookie.originalMaxAge == 0', parsedSessionOrErrors.cookie.originalMaxAge == 0);
+                    //if (parsedSessionOrErrors.cookie.originalMaxAge == 0){
+                    //    console.log('self.view.setCookieToZero();');
+                    //    self.view.setCookieToZero();
+                    //}
+
                     self.view.hideAuthFormWrapper();
                 } else {
                     //console.log('in else sessionStringOrErrorsArray', parsedSessionOrErrors);

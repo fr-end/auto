@@ -260,7 +260,7 @@ module.exports = function () {
                 var email = self.$signUpInputEmail.value;
                 var password = self.$signUpInputPassword.value;
                 var passwordRepeat = self.$signUpInputPasswordRepeat.value;
-                var unCheckedKeepLoggedIn = self.$signUpChekboxKeepLoggedIn.value;
+                var checkedKeepLoggedIn = self.$signUpChekboxKeepLoggedIn.checked;
                 var form = 'signup';
                 //console.log(email, password, passwordRepeat);
 
@@ -275,11 +275,11 @@ module.exports = function () {
                     return handlerInvalidData(invalidData('pass unequal', form));
                 }
                 console.log('self.$signUpChekboxKeepLoggedIn', self.$signUpChekboxKeepLoggedIn);
-                console.log('unCheckedKeepLoggedIn', unCheckedKeepLoggedIn);
+                console.log('checkedKeepLoggedIn', checkedKeepLoggedIn);
                 var newUser = {};
                 newUser._id = email;
                 newUser.password = password;
-                newUser.unCheckedKeepLoggedIn = unCheckedKeepLoggedIn;
+                newUser.checkedKeepLoggedIn = checkedKeepLoggedIn;
                 handler(newUser);
             };
         }
@@ -406,10 +406,13 @@ module.exports = function () {
         //here and in the template set default value. also handle values on server side.
         function loopThroughtInputs(inputs){
             for (i = 0; i < inputs.length; i++){
+                console.log('inputs[i]', inputs[i].type);
                 if (inputs[i].value === 'OK'){
                     continue;
-                } else if (inputs[i].type === 'checkbox'){
-                    inputs[i].value = 'on';
+                } else if (inputs[i].type === 'checkbox' && inputs[i].value === 'on'){
+                    // checkbox "keep logged in"
+                    console.log('inputs[i].checked', inputs[i].checked);
+                    inputs[i].checked = false;
                 } else {
                     inputs[i].value = '';
                 }
@@ -450,6 +453,11 @@ module.exports = function () {
         this.$authFormLogin.classList.toggle('is-not-displayed');
         this.visibleElements.push(this.$authFormLogin);
     };
+
+    //View.prototype.setCookieToZero = function(){
+    //    console.log('in setCookieToZero func');
+    //    document.cookie = "expires=0";
+    //};
 
     return View;
 

@@ -106,21 +106,21 @@ gulp.task('serverGulp', function(){
     })
 });
 
-gulp.task('serverNode', function(){
-    nodemon({
-        script: 'server/serverNode.js',
-        ext: 'js',
-        env: {
-            PORT:8800
-        },
-        ignore: ['./**/*.js']
-    })
-        .on('restart', function(){
-            console.log('Restarting serverNode.js');
-        });
-});
+//gulp.task('serverNode', function(){
+//    nodemon({
+//        script: 'server/serverNode.js',
+//        ext: 'js',
+//        env: {
+//            PORT:8800
+//        },
+//        ignore: ['./**/*.js']
+//    })
+//        .on('restart', function(){
+//            console.log('Restarting serverNode.js');
+//        });
+//});
 
-gulp.task('default', [ 'html', 'img', 'css', 'browserify', 'serverGulp', 'serverNode' ], function(){
+gulp.task('default', [ 'html', 'img', 'css', 'browserify', 'serverGulp' ], function(){
     gulp.watch( config.alljs, ['browserify']);       // Watch for changes in all js files in 'src' folder
     gulp.watch( config.allsass, ['css']);
     gulp.watch( config.allhtml, ['html']);

@@ -5,6 +5,8 @@ mongoose.model('User');
 var hash = require('../helpers/hash.js');
 var crypto = require('crypto');
 
+var day = 24 * 60 * 60 * 1000;
+
 module.exports = function (app) {
 
     // check user session
@@ -52,8 +54,8 @@ module.exports = function (app) {
         var email = request.body._id;
         console.log('userName', email);
         var pass = request.body.password;
-        var unCheckedKeepLoggedIn = request.body.unCheckedKeepLoggedIn;
-        console.log('unCheckedKeepLoggedIn', unCheckedKeepLoggedIn)
+        var checkedKeepLoggedIn = request.body.checkedKeepLoggedIn;
+        console.log('checkedKeepLoggedIn', checkedKeepLoggedIn)
         console.log('request.session', request.session);
 
         User.findById(email, function (err, user) {
@@ -81,12 +83,13 @@ module.exports = function (app) {
                     // user created successfully
                     request.session.isLoggedIn = true;
                     request.session.user = email;
-                    if (unCheckedKeepLoggedIn){
-                        console.log('unCheckedKeepLoggedIn', unCheckedKeepLoggedIn)
-                        request.session.cookie.maxAge = 0;
-                    } else {
-                        console.log('unCheckedKeepLoggedIn', unCheckedKeepLoggedIn)
-                        request.session.cookie.maxAge = 14 * 24 * 60 * 60 ; // 14 days
+                    console.log('request.session.cookie', request.session.cookie)
+                    if (checkedKeepLoggedIn){
+                        request.session.cookie.maxAge = 14 * day ; // 14 days
+                    }
+                    else {
+                        //request.session.cookie.expires = false;
+                        request.session.cookie.maxAge = day; // day
                     }
 
                     console.log('request.session.cookie', request.session.cookie);
