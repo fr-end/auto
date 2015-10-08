@@ -23,6 +23,9 @@ module.exports = function (app) {
         var email = request.body._id;
         console.log('userName', email);
         var pass = request.body.password;
+        var checkedKeepLoggedIn = request.body.checkedKeepLoggedIn;
+        console.log(checkedKeepLoggedIn);
+
 
         User.findById(email, function (err, user) {
             if (err) throw err; // return next(err)     in express
@@ -34,6 +37,13 @@ module.exports = function (app) {
             // check pass
             if (user.hash != hash(pass, user.salt)) {
                 return response.send(invalidData('wrong password', 'login', email));
+            }
+
+            if (checkedKeepLoggedIn){
+                request.session.cookie.maxAge = 14 * day ; // 14 days
+            } else {
+                //request.session.cookie.expires = false;
+                request.session.cookie.maxAge = day; // day
             }
 
             request.session.isLoggedIn = true;

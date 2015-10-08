@@ -7,16 +7,6 @@ module.exports = function () {
         this.template = template;
         this.template_popup = template_popup;
         this.$container = document.querySelector('[data-auth=wrapper]');
-        this.$errors = undefined;
-        this.$authForm = undefined;
-        this.$authFormBackground = undefined;
-        this.$authFormSignUp = undefined;
-        this.$authFormLogin = undefined;
-
-        this.$signUpSubmitButton = undefined;
-        this.$signUpInputEmail = undefined;
-        this.$signUpInputPassword = undefined;
-        this.$signUpInputPasswordRepeat = undefined;
 
         this.visibleElements = [];
         this.visibleErrors = [];
@@ -289,11 +279,13 @@ module.exports = function () {
             this.$loginSubmitButton = document.querySelector('[data-auth=form-login-submit]');
             this.$loginInputEmail = document.querySelector('[data-auth=form-login-input-email]');
             this.$loginInputPassword = document.querySelector('[data-auth=form-login-input-pass]');
-
+            this.$loginChekboxKeepLoggedIn = document.querySelector('[data-auth=form-login-input-remember-me]');
             this.$loginSubmitButton.onclick = function(evt){
                 evt.preventDefault();
                 var email = self.$loginInputEmail.value;
                 var password = self.$loginInputPassword.value;
+                var checkedKeepLoggedIn = self.$loginChekboxKeepLoggedIn.checked;
+                console.log('checkedKeepLoggedIn', checkedKeepLoggedIn)
                 var form = 'login';
 
                 var checkedAuthorizationFields = checkAuthorizationFields(email, password, form);
@@ -307,6 +299,7 @@ module.exports = function () {
                 var oldUser = {};
                 oldUser._id = email;
                 oldUser.password = password;
+                oldUser.checkedKeepLoggedIn = checkedKeepLoggedIn;
                 handler(oldUser);
             };
         }
