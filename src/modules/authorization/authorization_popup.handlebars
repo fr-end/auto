@@ -1,7 +1,7 @@
 <div id="popup" class="dark is-not-displayed" data-auth="popup-background">
 
     <div class="authorization is-not-displayed" data-auth="form">
-        <form class="authorization-reg-form is-not-displayed" data-auth="form-signup" action="" method="GET">
+        <form class="authorization-reg-form clearfix is-not-displayed" data-auth="form-signup" action="" method="GET">
             <a class="authorization-reg-form-sign-in" href="" data-auth="form-signup-to-login">Войти в аккаунт</a>
             <h2 class="authorization-reg-form-header">Регистрация</h2>
             <input  class="authorization-reg-form-input" data-auth="form-signup-input-email" type="email" placeholder="e-mail">
@@ -24,7 +24,7 @@
             </label>
             <input  class="authorization-reg-form-submit" data-auth="form-signup-submit" type="submit" value="OK">
         </form>
-        <form class="authorization-sign-in-form is-not-displayed" data-auth="form-login" action="" method="GET">
+        <form class="authorization-sign-in-form clearfix is-not-displayed" data-auth="form-login" action="" method="GET">
             <a class="authorization-sign-in-form-reg" href="" data-auth="form-login-to-signup">Регистрация</a>
             <h2 class="authorization-sign-in-form-header">Войти в аккаунт</h2>
             <input  class="authorization-sign-in-form-input"  data-auth="form-login-input-email" type="email" placeholder="e-mail">
@@ -44,10 +44,17 @@
             <input  class="authorization-sign-in-form-submit" data-auth="form-login-submit" type="submit" value="OK">
         </form>
         
-        <div class="authorization-success" data-auth="success">
+        <div class="authorization-success clearfix is-not-displayed" data-auth="success">
             <div class="authorization-success-text">Вы вошли в свой аккаунт.</div>
             <button class="authorization-success-submit">OK</button>
         </div>
+
+        <div class="authorization-question clearfix is-not-displayed" data-auth="question" >
+            <div class="authorization-question-text">Сохранить текужий список желаний в Ваш аккаунт?</div>
+            <button class="authorization-question-button yes">Да</button>
+            <button class="authorization-question-button no">Нет</button>
+        </div>
+
 
     </div>
 

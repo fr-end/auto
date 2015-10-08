@@ -204,6 +204,33 @@
 			margin-top: 17px;
 		}
 	}
+
+	&-question{
+		width: 320px;
+		height: auto;
+		box-sizing: border-box;
+		padding: 20px;
+		font-family: $font-family;
+
+		&-text{
+			font-size: $font-size-main-text;
+		}
+
+		&-button{
+			height: 28px;
+			line-height: 28px;
+			width: 100px;
+			background: $border-color;
+			color: $background-color;
+			border: none;
+			border-radius: $border-radius-small;
+			float: right;
+			margin-top: 17px;
+			margin-bottom: 15px;
+			display: inline-block;
+			margin: 17px 0 15px 20px;
+		}
+	}
 }
 
 .is-not-displayed{
