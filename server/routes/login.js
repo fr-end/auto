@@ -118,13 +118,13 @@ function invalidData(type, form, email){
     var errors = [];
     var text;
     if (type === 'no user'){
-        text = 'there is no such user with the ' + email + ' email';
+        text = 'Нет пользователя с таким ' + email + ' емаил';
         errors.push(new CustomError(type, text, form))
     } else if (type === 'user already exists') {
-        text = 'user '  + email + ' already exists';
+        text = 'Пользователь ' + email + ' уже существует. Пожалуйста, войдите в аккаунт.';
         errors.push(new CustomError(type, text, form))
     } else if (type === 'wrong password') {
-        text = 'wrong password for user ' +  email;
+        text = 'Неверный пароль для пользователя ' +  email;
         errors.push(new CustomError(type, text, form))
     }
     console.log('errors in invalidData func ',errors);
