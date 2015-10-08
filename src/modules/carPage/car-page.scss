@@ -118,19 +118,29 @@
 
 				&-item {
 					display: inline-block;
-					margin: 0 2px 2px  0;
+					margin: 0 2px 2px 0;
 					width: 24%;
 					list-style: none;
 					background: #cecece;
 
 
 					&-link {
+						position: relative;
+						background: #000;
+						height: 92px;
+						display: block;
 
 						&__img {
 							max-height: 92px;
 							max-width: 100%;
 							width: 100%;
 							height: auto;
+							opacity: 0.5;
+							//transition: opacity 0.2s;
+						}
+
+						&__img.active{
+							opacity: 1;
 						}
 					}
 				}
@@ -267,7 +277,7 @@
 		margin-top: 10px;
 		cursor: pointer;
 		font-size: $font-size-header;
-		color: $course-color;	
+		color: $course-color;
 	}
 
 }
