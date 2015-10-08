@@ -452,6 +452,22 @@ module.exports = function () {
     //    document.cookie = "expires=0";
     //};
 
+    View.prototype.showSuccessfulPopup = function(text){
+        if (!this.$successfulWrapper){
+            this.$successfulWrapper = document.querySelector('[data-auth=success]');
+        }
+
+        if (!this.$successfulText){
+            this.$successfulText = document.querySelector('[data-auth=success-text]');
+        }
+
+        this.$successfulText.innerHTML = text;
+
+        this.$successfulWrapper.classList.remove('is-not-displayed');
+
+    };
+
+
     return View;
 
 };
