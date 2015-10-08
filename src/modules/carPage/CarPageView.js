@@ -7,6 +7,7 @@ module.exports = (function () {
 
         this.sliderSmallImgSelector = '.carpage-slider-carousel-cars-item-link__img';
         this.sliderSelector = '.carpage-slider';
+        this.sliderContainer = 'carpage-slider-container';
         this.sliderBigImgClass = 'carpage-slider-bigimg__img';
         this.sliderArrowPreviousClass = 'carpage-slider-bigimg-previous__arrow';
         this.sliderArrowNextClass = 'carpage-slider-bigimg-next__arrow';
@@ -14,7 +15,7 @@ module.exports = (function () {
 
     View.prototype.render = function (data) {
         this.$viewPort.innerHTML = data;
-
+        this.$sliderContainer = document.querySelector('.' + this.sliderContainer);
         this.$sliderBigImg = document.querySelector('.'+this.sliderBigImgClass);
         document.querySelector(this.sliderSmallImgSelector).classList.add('active');
         this.$sliderBigImg.src = document.querySelector(this.sliderSmallImgSelector).src;
@@ -43,7 +44,23 @@ module.exports = (function () {
     View.prototype.toggleSliderBigImg = function ($nextImg) {
         document.querySelector('.active').classList.toggle('active');
         $nextImg.classList.toggle('active');
-        this.$sliderBigImg.src = $nextImg.src;
+
+        var toDelete = document.querySelector('.'+this.sliderBigImgClass);
+        toDelete.classList.add('toDelete');
+
+        var bigImg = document.createElement('div');
+        bigImg.className = "carpage-slider-bigimg left";
+        var img = document.createElement('img');
+        img.src = $nextImg.src;
+
+        bigImg.appendChild(img);
+        this.$sliderContainer.insertAdjacentElement('afterBegin', bigImg);
+        
+        bigImg.classList.remove('left');
+        toDelete.remove();
+        //this.$sliderContainer.remove(toDelete);
+
+        // this.$sliderBigImg.src = $nextImg.src;
     };
 
     View.prototype.clickOnSlider = function(event){
@@ -56,7 +73,7 @@ module.exports = (function () {
                 nextImg = document.querySelector('.active').parentElement.parentElement;
                 nextImg = nextImg.nextElementSibling ? nextImg.nextElementSibling.firstElementChild
                     .firstElementChild : nextImg.parentElement.firstElementChild.firstElementChild.firstElementChild;
-                this.toggleSliderBigImg(nextImg);
+                this.toggleSliderBigImg(nextImg, );
             } else
                 if (event.target.classList.contains(this.sliderArrowPreviousClass)){
                     nextImg = document.querySelector('.active').parentElement.parentElement;
