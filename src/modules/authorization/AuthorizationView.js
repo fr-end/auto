@@ -16,6 +16,7 @@ module.exports = function () {
             // callback for user logout
             this.bind('clickSomeAuthButton', handler);
             this.bind('clickBackground');
+            this.bind('clickOkButtonAfterSign');
             //this.bind('clearErrorsOnInputData');
         };
     }
@@ -166,6 +167,16 @@ module.exports = function () {
         //    };
         //
         //}
+
+        if (event === 'clickOkButtonAfterSign'){
+            if (!this.$sucessfulButton){
+                this.$sucessfulButton = document.querySelector('[data-auth=success-button]');
+            }
+            this.$sucessfulButton.onclick = function(evt){
+                evt.preventDefault();
+                self.hideAuthFormWrapper();
+            }
+        }
 
         if (event === 'clickSomeAuthButton') {
             this.$container.onclick = listenClickSomeAuthButton;
@@ -453,6 +464,8 @@ module.exports = function () {
     //};
 
     View.prototype.showSuccessfulPopup = function(text){
+        //console.log('in showSuccessfulPopup func');
+        //console.log('this.visibleElements', this.visibleElements)
         if (!this.$successfulWrapper){
             this.$successfulWrapper = document.querySelector('[data-auth=success]');
         }
@@ -462,11 +475,11 @@ module.exports = function () {
         }
 
         this.$successfulText.innerHTML = text;
-
+        this.$authFormBackground.classList.remove('is-not-displayed');
+        this.$authForm.classList.remove('is-not-displayed');
         this.$successfulWrapper.classList.remove('is-not-displayed');
-
+        this.visibleElements.push(this.$authFormBackground, this.$authForm, this.$successfulWrapper);
     };
-
 
     return View;
 

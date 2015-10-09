@@ -36,14 +36,6 @@ module.exports = function(ajax){
                 });
             });
 
-            //this.view.bind('clickLogoutButton', function(user){
-            //    self.model.logout(user).then(function(data){
-            //        console.log(data);
-            //    });
-            //});
-
-
-
             this.view.bind(
                 'clickSignUpSubmitButton',
                 function(user){
@@ -63,9 +55,9 @@ module.exports = function(ajax){
                                 //    self.view.setCookieToZero();
                                 //}
 
-                                self.view.showSuccessfulPopup('Приятного времяпровождения :)');
-
                                 self.view.hideAuthFormWrapper();
+                                self.view.showSuccessfulPopup('Спасибо вам за регистрацию. Наслаждайтесь :)');
+
                             } else {
                                 //console.log('in else sessionStringOrErrorsArray', parsedSessionOrErrors);
                                 self.view.render('renderErrors', parsedSessionOrErrors);
@@ -89,9 +81,9 @@ module.exports = function(ajax){
                             if (parsedSessionOrErrors.hasOwnProperty('isLoggedIn')){
                                 self.view.render('renderAuthMenu', {session: parsedSessionOrErrors});
 
-                                self.view.showSuccessfulPopup('Спасибо вам за регистрацию. Наслаждайтесь :)');
-
                                 self.view.hideAuthFormWrapper();
+
+                                self.view.showSuccessfulPopup('Приятного времяпровождения :)');
                             } else {
 
                                 self.view.render('renderErrors', parsedSessionOrErrors);
@@ -105,18 +97,6 @@ module.exports = function(ajax){
 
                 }
             );
-            /*
-            console.log(this.model);
-            var user = new mongoose.Document(
-                {
-                    _id: 'newmail@new.mail',
-                    name: 'Vasya Pupkin',
-                    password: 111
-                }, this.model);
-
-            console.log('user', user);
-            console.log('user.toJSON', user.toJSON());
-            */
         }
     };
 
