@@ -54,7 +54,7 @@ module.exports = (function () {
         newImg.src = $nextImg.src;
         newDiv.appendChild(newImg);
 
-        if (next){
+        if (!next){
             newDiv.classList.add('left');
             container.insertAdjacentElement('afterBegin', newDiv);
 
