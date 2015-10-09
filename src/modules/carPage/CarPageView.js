@@ -4,9 +4,10 @@ module.exports = (function () {
         this.$viewPort = document.querySelector('.main');
         this.inListSelector = '.carpage-star';
         this.viewPortCarSelector = '.carpage-wrapper';
-
         this.sliderSmallImgSelector = '.carpage-slider-carousel-cars-item-link__img';
         this.sliderSelector = '.carpage-slider';
+        this.sliderContainer = 'carpage-slider-container';
+        this.sliderBigImgDiv = 'carpage-slider-bigimg';
         this.sliderBigImgClass = 'carpage-slider-bigimg__img';
         this.sliderArrowPreviousClass = 'carpage-slider-bigimg-previous__arrow';
         this.sliderArrowNextClass = 'carpage-slider-bigimg-next__arrow';
@@ -14,7 +15,7 @@ module.exports = (function () {
 
     View.prototype.render = function (data) {
         this.$viewPort.innerHTML = data;
-
+        this.$sliderContainer = document.querySelector('.' + this.sliderContainer);
         this.$sliderBigImg = document.querySelector('.'+this.sliderBigImgClass);
         document.querySelector(this.sliderSmallImgSelector).classList.add('active');
         this.$sliderBigImg.src = document.querySelector(this.sliderSmallImgSelector).src;
@@ -40,10 +41,34 @@ module.exports = (function () {
         this.$viewPortCar.classList.toggle('in-list', result);
     };
     
-    View.prototype.toggleSliderBigImg = function ($nextImg) {
+    View.prototype.toggleSliderBigImg = function ($nextImg, next) {
         document.querySelector('.active').classList.toggle('active');
         $nextImg.classList.toggle('active');
-        this.$sliderBigImg.src = $nextImg.src;
+
+        var oldDiv = document.querySelector('.' + this.sliderBigImgDiv);
+        var newDiv = document.createElement('div');
+        newDiv.className = this.sliderBigImgDiv;
+        var container = document.querySelector('.' + this.sliderContainer);
+        var newImg = document.createElement('img');
+        newImg.className = this.sliderBigImgClass;
+        newImg.src = $nextImg.src;
+        newDiv.appendChild(newImg);
+
+        if (next){
+            newDiv.classList.add('left');
+            container.insertAdjacentElement('afterBegin', newDiv);
+
+            setTimeout(function(){
+                newDiv.classList.remove('left');
+            }, 1);
+        } else {
+            container.insertAdjacentElement('beforeEnd', newDiv);
+            oldDiv.classList.add('left');
+        }
+
+        setTimeout(function(){
+            container.removeChild(oldDiv);
+        }, 1000);
     };
 
     View.prototype.clickOnSlider = function(event){
@@ -56,13 +81,13 @@ module.exports = (function () {
                 nextImg = document.querySelector('.active').parentElement.parentElement;
                 nextImg = nextImg.nextElementSibling ? nextImg.nextElementSibling.firstElementChild
                     .firstElementChild : nextImg.parentElement.firstElementChild.firstElementChild.firstElementChild;
-                this.toggleSliderBigImg(nextImg);
+                this.toggleSliderBigImg(nextImg, true);
             } else
                 if (event.target.classList.contains(this.sliderArrowPreviousClass)){
                     nextImg = document.querySelector('.active').parentElement.parentElement;
                     nextImg = nextImg.previousElementSibling ? nextImg.previousElementSibling.firstElementChild
                         .firstElementChild : nextImg.parentElement.lastElementChild.firstElementChild.firstElementChild;
-                    this.toggleSliderBigImg(nextImg);
+                    this.toggleSliderBigImg(nextImg, false);
                 }
         event.preventDefault();
     };

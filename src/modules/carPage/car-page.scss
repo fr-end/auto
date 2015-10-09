@@ -1,6 +1,5 @@
 @import "../../_const";
 
-
 .carpage-wrapper {
 	margin: 0 auto;
 	width: 1160px;
@@ -27,7 +26,7 @@
 		}
 
 		&__price {
-			display: inline-block;			
+			display: inline-block;
 			color: #a3c644;
 			font-size: 30px;
 			font-weight: lighter;
@@ -72,16 +71,48 @@
 
 	&-slider {
 		width: 580px;
+		overflow: hidden;
+		position: relative;
+
+		&-container{
+		width: 1740px;
+		height: 436px;
+		overflow: hidden;
+		}
 
 		&-bigimg {
+			width: 580px;
+			height: 436px;
+			box-sizing: border-box;
+			border: 1px solid #ddd;
+			position: relative;
+			float: left;
+			transition: margin-left 0.8s;
+
+
+			&.left{
+				margin-left: -580px;
+			}
+
+			&__img{
+				position: absolute;
+				top: 0;
+				left: 0;
+				bottom: 0;
+				right: 0;
+				margin: auto;
+				max-width: 100%;
+				height: auto;
+				max-height: 100%;
+			}
 
 			&-next, &-previous {
-				background: rgba(0,0,0,.5);
+				background: rgba(0,0,0,.7);
 				display: block; 
 				position: absolute;
 				height: 60px;
 				width: 45px;
-				margin-top: 162px;
+				top: 180px;
 
 				&__arrow {
 					background: url($sprite) no-repeat 0 -800px;
@@ -94,7 +125,7 @@
 
 			&-next {
 				border-radius: 6px 0 0 6px;
-				margin-left: 535px;
+				left: 534px;
 
 				&__arrow {	
 					transform: rotate(180deg);
@@ -118,19 +149,29 @@
 
 				&-item {
 					display: inline-block;
-					margin: 0 2px 2px  0;
+					margin: 0 2px 2px 0;
 					width: 24%;
 					list-style: none;
 					background: #cecece;
 
 
 					&-link {
+						position: relative;
+						background: #000;
+						height: auto;
+						display: block;
 
 						&__img {
 							max-height: 92px;
 							max-width: 100%;
 							width: 100%;
 							height: auto;
+							opacity: 0.5;
+							transition: opacity 0.5s;
+						}
+
+						&__img.active{
+							opacity: 1;
 						}
 					}
 				}
@@ -267,7 +308,7 @@
 		margin-top: 10px;
 		cursor: pointer;
 		font-size: $font-size-header;
-		color: $course-color;	
+		color: $course-color;
 	}
 
 }
