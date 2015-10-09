@@ -4,7 +4,7 @@ var express = require('express');
 
 
 var middleware = require('./middleware/index.js');
-var routes = require('./routes');
+var routes = require('./routes/index.js');
 
 var port = 8888;
 
