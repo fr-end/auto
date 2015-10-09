@@ -1,29 +1,25 @@
 module.exports = function(window, document) {
 
-    var templates		= {
-        self:               require('./templates/searchPanel.handlebars'),
-        options: 			require('./templates/options.handlebars'),
-        optionsWithCount: 	require('./templates/optionsWithCount.handlebars')
-    };
+    var template = require('./templates/searchPanel.handlebars');
 
     function View() {
 
-        this.templates = templates;
-        this.$viewPort = document.querySelector('.main');
-        //this.init();
+        this.template = template;
+        this.$viewPort = document.querySelector('.main') || document.createElement('div');
 
     }
 
     View.prototype.init = function(viewPortSelector) {
-        this.$searchForm = document.querySelector('[data-search=form]');
-        this.$selectCategory = document.querySelector('[data-select=category]');
-        this.$selectMark = document.querySelector('[data-select=mark]');
-        this.$selectModel = document.querySelector('[data-select=model]');
-        document.querySelector('.search-parameters-show-extended__button').addEventListener('click', function (event) {
+        this.$searchForm = this.$viewPort.querySelector('[data-search=form]');
+        this.$selectCategory = this.$viewPort.querySelector('[data-select=category]');
+        this.$selectMark = this.$viewPort.querySelector('[data-select=mark]');
+        this.$selectModel = this.$viewPort.querySelector('[data-select=model]');
+        this.$selectGearbox = this.$viewPort.querySelector('.search-parameters-gearbox-type__select');
+        this.$viewPort.querySelector('.search-parameters-show-extended__button').addEventListener('click', (function (event) {
             event.preventDefault();
-            document.querySelector('.search-parameters-extended').style.display = 'block';
-            document.querySelector('.search-parameters-show-extended').style.display = 'none';
-        });
+            this.$viewPort.querySelector('.search-parameters-extended').style.display = 'block';
+            this.$viewPort.querySelector('.search-parameters-show-extended').style.display = 'none';
+        }).bind(this));
     };
 
     View.prototype.render = function (viewCmd, data) {
@@ -44,21 +40,25 @@ module.exports = function(window, document) {
                         selected: i==searchParams.yearTo
                     });
                 }
-                self.$viewPort.innerHTML = self.templates.self(data);
+                self.$viewPort.innerHTML = self.template(data);
                 self.init();
             },
             showCategories: function (data) {
-                self.$selectCategory.innerHTML = self.templates.options({default: 'Любой', items: data});
+                setOptions(self.$selectCategory, {default: 'Любой', items: data});
             },
             showMarks: function (data) {
-                self.$selectMark.innerHTML = self.templates.optionsWithCount({default: 'Марка', items: data});
+                setOptions(self.$selectMark, {default: 'Марка', items: data});
             },
             showModels: function (data) {
-                self.$selectModel.innerHTML = self.templates.optionsWithCount({default: 'Модель', items: data});
+                setOptions(self.$selectModel, {default: 'Модель', items: data})
+            },
+            showGearboxes: function (data) {
+                setOptions(self.$selectGearbox, {default: 'Любая', items: data});
             }
         };
 
         viewCommands[viewCmd](data);
+
     };
 
     View.prototype.bind = function (event, handler) {
@@ -90,7 +90,7 @@ module.exports = function(window, document) {
     };
 
     View.prototype.getParams = function(){
-        var form = document.forms.autoSearch;
+        form = this.$viewPort.querySelector('form[name="autoSearch"]');
         console.dir(form.elements);
         return {
             categoryId: form.elements['category'].value,
@@ -110,7 +110,13 @@ module.exports = function(window, document) {
         }
     };
 
+    var optionsTemplate = require('./templates/options.handlebars');
 
+    function setOptions( selectElement, data ){
+        if ( selectElement && selectElement instanceof HTMLSelectElement) {
+            selectElement.innerHTML = optionsTemplate(data);
+        }
+    }
  
 
     return View;

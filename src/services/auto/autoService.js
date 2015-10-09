@@ -30,7 +30,7 @@ module.exports = (function(){
                 '/categories/' + categoryId +
                 '/marks/' + markaId +
                 '/models/' +
-                '/_with_count';
+                '_with_count';
             return ajax.getPromise(url);
         },
         getCarIds: function (searchParams) {
@@ -216,6 +216,30 @@ module.exports = (function(){
             var url = config.autoRiaUaHost + '/demo/bu/mainPage/rotator/item/' + carIdAndType.id + '?type=' +
                         carIdAndType.type + '&langId=2&showCity=0';
             return ajax.getPromise(url);
+        },
+        getGearboxes: function (searchParams) {
+            //https://auto.ria.com/api/categories/1/gearboxes?langId=2
+            var url = config.autoRiaUaHost + '/api/categories/' + searchParams.categoryId + '/gearboxes?langId=2';
+            return ajax.getPromise(url)
+                .then(function(data){
+                    try {
+                        return JSON.parse(data);
+                    } catch (err) {
+                        return {};
+                    }
+                });
+        },
+        getFuels: function() {
+            //https://auto.ria.com/api/fuels?langId=2
+            var url = config.autoRiaUaHost + '/fuels?langId=2';
+            return ajax.getPromise(url)
+                .then(function(data){
+                    try {
+                        return JSON.parse(data);
+                    } catch (err) {
+                        return {};
+                    }
+                });
         }
 	};
 

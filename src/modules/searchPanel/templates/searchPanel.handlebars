@@ -61,7 +61,7 @@
                     <div class="search-parameters-gearbox-type">
                         Коробка передач:
                         <select name="gearbox-type" id="" class="search-parameters-gearbox-type__select search-select">
-                            <option value=""></option>
+                            {{#each gearboxes}}<option value="{{value}}">{{name}}</option>{{/each}}
                         </select>
                     </div>
                     <div class="search-parameters-race">
