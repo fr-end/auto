@@ -13,6 +13,10 @@ module.exports = (function(){
 		init: function(searchParams){
             searchParams = searchParams || {};
             this.view.render('self',searchParams);
+            this.service.getGearboxes(searchParams)
+                .then((function(data){
+                    this.view.render('showGearboxes',data);
+                }).bind(this));
 			this.service.getCategories()
 				.then((function(searchParams, data){
 					var categoriesArray = JSON.parse(data);
@@ -60,6 +64,10 @@ module.exports = (function(){
             var categories = self.view.$selectCategory;
             var category = categories.options[categories.selectedIndex].value;
             var mark = self.view.$selectMark.options[self.view.$selectMark.selectedIndex].value;
+
+            if(category == 0 || mark == 0){
+                return
+            }
 
 			self.service.getModels(category, mark)
                 .then(function(data) {

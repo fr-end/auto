@@ -23,59 +23,59 @@
 						<option value="0">Модель</option>
 					</select>
 				</div>
-				<div class="search-parameters-button">
+                <div class="search-parameters-show-extended clearfix">
+                    <button class="search-parameters-show-extended__button" data-submit="search" type="submit">Дополнительные параметры</button>
+                </div>
+                <div class="search-parameters-extended clearfix">
+                    <div class="search-parameters-year">
+
+                        <div class="search-parameters-year-from">
+                            Год:
+                            <select name="year-from" id="" class="search-parameters-year-from__select search-select-year">
+                                <option value="0">от</option>{{#each _yearFrom}}<option value="{{value}}"{{#if selected}} selected{{/if}}>{{value}}</option>{{/each}}
+                            </select>
+                        </div>
+                        <div class="search-parameters-year-to">
+                            <select name="year-to" id="" class="search-parameters-year-to__select  search-select-year">
+                                <option value="0">до</option>
+                                {{#each _yearTo}}
+                                    <option value="{{value}}"{{#if selected}} selected{{/if}}>{{value}}</option>
+                                {{/each}}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="search-parameters-price">
+                        Цена, грн:
+                        <input type="text" name="price-from" class="search-parameters-price__from search-input" placeholder="от"/{{#if priceFrom}} value="{{priceFrom}}"{{/if}}>
+                        <input type="text" name="price-to" class="search-parameters-price__to search-input" placeholder="до"/{{#if priceTo}} value="{{priceTo}}"{{/if}}></div>
+                    <div class="search-parameters-fuel">
+                        Тип топлива:
+                        <select name="fuel" id="" class="search-parameters-fuel__select search-select">
+                            <option value=""></option>
+                        </select>
+                    </div>
+                    <div class="search-parameters-engine">
+                        Объем двигателя, л:
+                        <input type="text" name="engine-from" class="search-parameters-engine__from search-input" placeholder="от"/{{#if engineVolumeFrom}} value="{{engineVolumeFrom}}"{{/if}}>
+                        <input type="text" name="engine-to" class="search-parameters-engine__to search-input" placeholder="до"/{{#if engineVolumeTo}} value="{{engineVolumeTo}}"{{/if}}></div>
+                    <div class="search-parameters-gearbox-type">
+                        Коробка передач:
+                        <select name="gearbox-type" id="" class="search-parameters-gearbox-type__select search-select">
+                            {{#each gearboxes}}<option value="{{value}}">{{name}}</option>{{/each}}
+                        </select>
+                    </div>
+                    <div class="search-parameters-race">
+                        Пробег, тыс. км :
+                        <input type="text" name="race-from" class="search-parameters-race search-input" placeholder="от"/{{#if raceFrom}} value="{{raceFrom}}"{{/if}}>
+                        <input type="text" name="race-to" class="search-parameters-race search-input" placeholder="до"/{{#if raceTo}} value="{{raceTo}}"{{/if}}></div>
+                    <div class="search-parameters-only-with-photo">
+                        Только с фото
+                        <input type="checkbox" class="only-with-photo"  id="only-with-photo" name="only-with-photo"/{{#if withPhoto}} checked{{/if}}>
+                        <label for="only-with-photo" ></label>
+                    </div>
+                </div>
+                <div class="search-parameters-button">
 					<button class="search-parameters__button" data-submit="search" type="submit">поиск</button>
-				</div>
-				<div class="search-parameters-show-extended clearfix">
-					<button class="search-parameters-show-extended__button" data-submit="search" type="submit">Дополнительные параметры</button>
-				</div>
-				<div class="search-parameters-extended clearfix">
-					<div class="search-parameters-year">
-						
-						<div class="search-parameters-year-from">
-						Год:
-							<select name="year-from" id="" class="search-parameters-year-from__select search-select-year">
-								<option value="0">от</option>{{#each _yearFrom}}<option value="{{value}}"{{#if selected}} selected{{/if}}>{{value}}</option>{{/each}}
-							</select>
-						</div>
-						<div class="search-parameters-year-to">
-							<select name="year-to" id="" class="search-parameters-year-to__select  search-select-year">
-								<option value="0">до</option>
-								{{#each _yearTo}}
-								<option value="{{value}}"{{#if selected}} selected{{/if}}>{{value}}</option>
-								{{/each}}
-							</select>
-						</div>
-					</div>
-					<div class="search-parameters-price">
-						Цена, грн:
-						<input type="text" name="price-from" class="search-parameters-price__from search-input" placeholder="от"/{{#if priceFrom}} value="{{priceFrom}}"{{/if}}>
-						<input type="text" name="price-to" class="search-parameters-price__to search-input" placeholder="до"/{{#if priceTo}} value="{{priceTo}}"{{/if}}></div>
-					<div class="search-parameters-fuel">
-						Тип топлива:
-						<select name="fuel" id="" class="search-parameters-fuel__select search-select">
-							<option value=""></option>
-						</select>
-					</div>
-					<div class="search-parameters-engine">
-						Объем двигателя, л:
-						<input type="text" name="engine-from" class="search-parameters-engine__from search-input" placeholder="от"/{{#if engineVolumeFrom}} value="{{engineVolumeFrom}}"{{/if}}>
-						<input type="text" name="engine-to" class="search-parameters-engine__to search-input" placeholder="до"/{{#if engineVolumeTo}} value="{{engineVolumeTo}}"{{/if}}></div>
-					<div class="search-parameters-gearbox-type">
-						Коробка передач:
-						<select name="gearbox-type" id="" class="search-parameters-gearbox-type__select search-select">
-							<option value=""></option>
-						</select>
-					</div>
-					<div class="search-parameters-race">
-						Пробег, тыс. км :
-						<input type="text" name="race-from" class="search-parameters-race search-input" placeholder="от"/{{#if raceFrom}} value="{{raceFrom}}"{{/if}}>
-						<input type="text" name="race-to" class="search-parameters-race search-input" placeholder="до"/{{#if raceTo}} value="{{raceTo}}"{{/if}}></div>
-					<div class="search-parameters-only-with-photo">
-						Только с фото
-						<input type="checkbox" class="only-with-photo"  id="only-with-photo" name="only-with-photo"/{{#if withPhoto}} checked{{/if}}>
-						<label for="only-with-photo" ></label>
-					</div>
 				</div>
 			</div>
 		</form>
