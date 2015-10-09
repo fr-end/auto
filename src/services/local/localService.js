@@ -254,6 +254,9 @@ module.exports = (function(localStorage,XMLHttpRequest,Q){
             evt.initEvent('wishListCount',true,true);
             evt.wishListCount = wishListCount;
             document.dispatchEvent(evt);
+        }        ,
+        getGearboxes: function(){
+            return Q.fcall();
         }
 	};
 
