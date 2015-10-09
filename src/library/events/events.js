@@ -1,7 +1,8 @@
 module.exports = {
 
     subscribers: {
-    'search ids': [] // event type: 'search ids'
+    'search ids': [], // event type: 'search ids'
+    'user': []
     },
 
     subscribe: function (type, fn) {
@@ -10,6 +11,7 @@ module.exports = {
         this.subscribers[type] = [];
       }
       this.subscribers[type].push(fn);
+        console.log('subscribe')
     },
 
      unsubscribe: function (type, fn) {
@@ -17,6 +19,7 @@ module.exports = {
      },
 
     publish: function(type, jsonArrayOfCarObjects){
+        console.log('publish')
       this.visitSubscribers('publish', type, jsonArrayOfCarObjects);
     },
     visitSubscribers: function (action, type, arg) {

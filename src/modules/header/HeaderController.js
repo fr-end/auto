@@ -15,6 +15,7 @@ module.exports = function (){
                     this.view.setWishListCount(e.wishListCount);
                 }
             }).bind(this));
+            console.log('(this.model.data)',this.model.data)
             return this.view.render(this.model.data);
         }
     };
