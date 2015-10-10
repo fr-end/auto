@@ -1,4 +1,4 @@
-module.exports = function(ajax){
+module.exports = function(ajax, events){
 
     var mongoose = require('mongoose');
 
@@ -26,12 +26,22 @@ module.exports = function(ajax){
                 .checkSession()
                 .then(function(sessionString){
                     var sessionObject = JSON.parse(sessionString);
+
+                    //var evt = document.createEvent('Event');
+                    //evt.initEvent('userLoggedIn',true,true);
+                    //evt.wishListCount = sessionObject.user;
+                    //document.dispatchEvent(evt);
+
+                    //console.log('events', events)
+                    //console.log('sessionObject.user', sessionObject.user);
+                    events.publish('user', sessionObject.user);
                     self.view.render('renderAuthMenu', {session: sessionObject});
                 });
 
             this.view.init(function(){
                 self.model.logout().then(function(sessionString) {
                     var sessionObject = JSON.parse(sessionString);
+                    events.publish('user', sessionObject.user);
                     self.view.render('renderAuthMenu', {session: sessionObject});
                 });
             });
@@ -54,7 +64,7 @@ module.exports = function(ajax){
                                 //    console.log('self.view.setCookieToZero();');
                                 //    self.view.setCookieToZero();
                                 //}
-
+                                events.publish('user', parsedSessionOrErrors.user);
                                 self.view.hideAuthFormWrapper();
                                 self.view.showSuccessfulPopup('Спасибо вам за регистрацию. Наслаждайтесь :)');
 
@@ -80,7 +90,7 @@ module.exports = function(ajax){
                             var parsedSessionOrErrors = JSON.parse(sessionStringOrErrorsArray);
                             if (parsedSessionOrErrors.hasOwnProperty('isLoggedIn')){
                                 self.view.render('renderAuthMenu', {session: parsedSessionOrErrors});
-
+                                events.publish('user', parsedSessionOrErrors.user);
                                 self.view.hideAuthFormWrapper();
 
                                 self.view.showSuccessfulPopup('Приятного времяпровождения :)');
@@ -97,7 +107,7 @@ module.exports = function(ajax){
 
                 }
             );
-        }
+         }
     };
 
     return AuthorizationController;

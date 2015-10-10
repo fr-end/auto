@@ -55,7 +55,7 @@ module.exports = (function(){
             url += urlParam('model_id[0]', searchParams.modelId);
             url += urlParam('countpage', searchParams.countPage);
             url += urlParam('page',searchParams.page);
-            console.log(url);
+            //console.log(url);
             return ajax.getPromise(url).then(function (data) {
                 var carIDs = JSON.parse(data).result.search_result.ids;
                 return carIDs;
@@ -93,8 +93,8 @@ module.exports = (function(){
             return ajax.getPromise(url).then(function (data) {
                 try {
                     var autoData = JSON.parse(data);
-                    console.log(url,'url');
-                    console.log(autoData,'carInfo');
+                    //console.log(url,'url');
+                    //console.log(autoData,'carInfo');
                     var imgUrl = autoData.photo;
                     imgUrl = imgUrl.replace('.', 'f.');
                     var carPhotos = [];
