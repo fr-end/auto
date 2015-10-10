@@ -21,6 +21,19 @@ module.exports = function () {
         };
     }
 
+    View.prototype.setLocalStorageIsLoggedIn = function(boolean){
+        window.localStorage.setItem('isLoggedIn', boolean);
+    };
+
+    View.prototype.setLocalStorageCurrentUser = function(user){
+        window.localStorage.setItem('user', user);
+    };
+
+    View.prototype.getLocalStorageCurrentUser = function(){
+        //console.log('window.localStorage.getItem(user);', window.localStorage.getItem('user'));
+        return window.localStorage.getItem('user');
+    };
+
     View.prototype.initShowAuthMenu = function () {
         var popup = document.createElement('div');
         popup.innerHTML = this.template_popup();
@@ -167,6 +180,10 @@ module.exports = function () {
         //    };
         //
         //}
+
+        if (event === 'setStorageEvent'){
+            window.addEventListener('storage', handler);
+        }
 
         if (event === 'clickOkButtonAfterSign'){
             if (!this.$sucessfulButton){
@@ -457,11 +474,6 @@ module.exports = function () {
         this.$authFormLogin.classList.toggle('is-not-displayed');
         this.visibleElements.push(this.$authFormLogin);
     };
-
-    //View.prototype.setCookieToZero = function(){
-    //    console.log('in setCookieToZero func');
-    //    document.cookie = "expires=0";
-    //};
 
     View.prototype.showSuccessfulPopup = function(text){
         //console.log('in showSuccessfulPopup func');
