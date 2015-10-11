@@ -31,7 +31,7 @@
     var events = require('./library/events/events.js');
 
     var autoService = require('./services/auto/autoService.js');
-    var localService = require('./services/local/localService.js');
+
 
     window.app.buttonSearch = document.getElementById('header-menu-item__search');
     window.app.buttonWishList = document.getElementById('header-menu-item__wish-list');
@@ -41,7 +41,7 @@
 
     // end testing serverNode
 
-    var AuthorizationController = require('./modules/authorization/AuthorizationController.js')(ajax);
+    var AuthorizationController = require('./modules/authorization/AuthorizationController.js')(ajax, events);
 
     var SearchPanelController = require('./modules/searchPanel/SearchPanelController.js');
     var CarListController = require('./modules/carList/CarListController.js')(document, localStorage, XMLHttpRequest);
@@ -52,6 +52,30 @@
 
     var authorization = new AuthorizationController();
     authorization.init();
+
+    var localService = require('./services/local/localService.js');
+    events.subscribe('user', function(user){
+        console.log('user', user);
+        /*
+        if (user){
+            var localService = require('./services/mongo/mongodbService.js')(localStorage, XMLHttpRequest,Q, events);
+        }
+        else {
+            var localService = require('./services/local/localService.js');
+        }
+
+        router.route('/', SearchPanelController, autoService, events);
+        router.route('/', TopCarsController, autoService, events);
+
+        router.route('search', SearchPanelController, autoService, events);
+        router.route('search', CarListController, autoService, events);
+
+        router.route('wishlist', SearchPanelController, localService, events);
+        router.route('wishlist', CarListController, localService, events);
+
+        router.route('car', CarPageController, autoService, events);
+        */
+    });
 
     router.route('/', SearchPanelController, autoService, events);
     router.route('/', TopCarsController, autoService, events);

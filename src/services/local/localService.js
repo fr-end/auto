@@ -251,9 +251,9 @@ module.exports = (function(localStorage,XMLHttpRequest,Q){
         dispatchWishListCount: function(username){
             var wishListCount = this.getCarsCount({},username);
             var evt = document.createEvent('Event');
-            evt.initEvent('wishListCount',true,true);
-            evt.wishListCount = wishListCount;
-            document.dispatchEvent(evt);
+			evt.initEvent('wishListCount',true,true);
+			evt.wishListCount = wishListCount;
+			document.dispatchEvent(evt);
         }        ,
         getGearboxes: function(){
             return Q.fcall();
