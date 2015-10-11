@@ -6,6 +6,8 @@ var schema = new mongoose.Schema({
     _id: { type: String, lowercase: true, trim: true, validate: validEmail },
     salt: { type: String, required: true },
     hash: { type: String, required: true },
+    wishlistIDs : { type : Array , "default" : [] },
+    wishlistObjects: { type : Array , "default" : [] },
     created: { type: Date, default: Date.now }
 });
 

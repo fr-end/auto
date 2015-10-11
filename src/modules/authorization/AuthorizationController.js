@@ -16,6 +16,8 @@ module.exports = function(ajax, events){
     AuthorizationController.prototype = {
         init: function(){
 
+            var self = this;
+
             if ( this.started ) {
                 return;
             }
@@ -23,21 +25,17 @@ module.exports = function(ajax, events){
 
             this.checkUserSession();
 
-            this.view.init(this.handleLogout);
+            this.view.init(function(){
+                self.model.logout().then(function(sessionString) {
+                    var sessionObject = JSON.parse(sessionString);
+                    self.view.setLocalStorageIsLoggedIn(false);
+                    self.view.setLocalStorageCurrentUser(null);
+                    events.publish('user', sessionObject.user);
+                    self.view.render('renderAuthMenu', {session: sessionObject});
+                });
+            });
 
             this.bindEventsToView();
-        },
-        handleLogout: function(){
-            var self = this;
-
-            this.model.logout().then(function(sessionString) {
-                var sessionObject = JSON.parse(sessionString);
-
-                self.view.setLocalStorageIsLoggedIn(false);
-                self.view.setLocalStorageCurrentUser(null);
-                events.publish('user', sessionObject.user);
-                self.view.render('renderAuthMenu', {session: sessionObject});
-            });
         },
         checkUserSession: function(){
             var self = this;

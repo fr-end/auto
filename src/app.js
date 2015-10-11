@@ -54,28 +54,64 @@
     authorization.init();
 
     var localService = require('./services/local/localService.js');
-    events.subscribe('user', function(user){
-        console.log('user', user);
-        /*
-        if (user){
-            var localService = require('./services/mongo/mongodbService.js')(localStorage, XMLHttpRequest,Q, events);
-        }
-        else {
-            var localService = require('./services/local/localService.js');
-        }
 
-        router.route('/', SearchPanelController, autoService, events);
-        router.route('/', TopCarsController, autoService, events);
+    //events.subscribe('user', function(user){
+    //    console.log('user', user);
+    //
+    //    if (user){
+    //        var localService = require('./services/mongo/mongoService.js')(localStorage, XMLHttpRequest,Q);
+    //    }
+    //    else {
+    //        var localService = require('./services/local/localService.js');
+    //    }
+    //
+    //    router.route('/', SearchPanelController, autoService, events);
+    //    router.route('/', TopCarsController, autoService, events);
+    //
+    //    router.route('search', SearchPanelController, autoService, events);
+    //    router.route('search', CarListController, autoService, events);
+    //
+    //    router.route('wishlist', SearchPanelController, localService, events);
+    //    router.route('wishlist', CarListController, localService, events);
+    //
+    //    router.route('car', CarPageController, autoService, events);
+    //
+    //});
 
-        router.route('search', SearchPanelController, autoService, events);
-        router.route('search', CarListController, autoService, events);
+    var gottenUser = localStorage.getItem('user');
+    console.log('gottenUser', gottenUser);
+    try {
+        var parsedUser = JSON.parse(gottenUser);
+    } catch(e) {
+        console.log(e);
+        var parsedUser = gottenUser;
+    }
 
-        router.route('wishlist', SearchPanelController, localService, events);
-        router.route('wishlist', CarListController, localService, events);
+    console.log('parsedUser', parsedUser);
+    if (parsedUser){
+        (function init() {
 
-        router.route('car', CarPageController, autoService, events);
-        */
-    });
+            var url = '/db/wishlist/';
+
+            ajax.getPromise(url)
+                .then(function (response) {
+                    console.log('response in mongoService get', response);
+                });
+
+        })();
+
+        (function addCar() {
+
+            var url = '/db/wishlist/';
+            var wishlist = {};
+            wishlist.carID = Math.floor(Math.random() * 10000000);
+
+            ajax.getPromisePost(url, wishlist)
+                .then(function (response) {
+                    console.log('response in mongoService post', response);
+                });
+        })();
+    }
 
     router.route('/', SearchPanelController, autoService, events);
     router.route('/', TopCarsController, autoService, events);
@@ -87,7 +123,5 @@
     router.route('wishlist', CarListController, localService, events);
 
     router.route('car', CarPageController, autoService, events);
-
-
 
 })(window);
