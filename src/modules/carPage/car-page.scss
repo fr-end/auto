@@ -170,11 +170,14 @@
 							height: 104px;
 							margin: auto;
 							opacity: 0.5;
+							-webkit-filter: grayscale(70%);
+							transition: -webkit-filter 1.5s;
 							transition: opacity 0.5s;
 						}
 
 						&__img.active{
 							opacity: 1;
+							-webkit-filter: grayscale(0);
 						}
 					}
 				}
