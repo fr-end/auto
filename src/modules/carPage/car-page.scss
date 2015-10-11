@@ -182,6 +182,7 @@
 	&-info {
 		width: 580px;
 		text-align: justify;
+		word-wrap: break-word;
 
 		&-paragraph {
 			@extend %clearfix;
