@@ -4,21 +4,9 @@ git clone https://github.com/fr-end/auto.git
 
 cd auto
 
-npm install
-
-if you want to #install mongoDB locally
-
-download and install mongoDB from https://www.mongodb.org/downloads
-
-Run server from the terminal using the "mongod" command.
-If mongod command is not available from your terminal add the default path
-"C:\Program Files\MongoDB\Server\3.0\bin" to your PATH variable on Windows.
-If there are some troubles - google it :)
-
-Successful output might be like "waiting for connections on port 27017"
-
 ##Run
 
+gulp serverNode
 gulp
 
 ##Test
@@ -51,3 +39,17 @@ http://frontender.info/gulp-browserify-starter-faq/
 npm install frend-auto
 
 cd node_modules/frend-auto
+
+npm install
+
+# p.s
+if you want to install mongoDB locally
+
+download and install mongoDB from https://www.mongodb.org/downloads
+
+Run server from the terminal using the "mongod" command.
+If mongod command is not available from your terminal add the default path
+"C:\Program Files\MongoDB\Server\3.0\bin" to your PATH variable on Windows.
+If there are some troubles - google it :)
+
+Successful output might be like "waiting for connections on port 27017"
