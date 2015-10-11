@@ -138,40 +138,46 @@
 		}
 
 		&-carousel {
-			width: 580px;
-			text-align: justify;
 			margin-top: 6px;
 
 			&-cars {
-				width: 100%;
+				width: 580px;
 				margin: 0;
 				padding: 0;
+				text-align: justify;
 
 				&-item {
 					display: inline-block;
-					margin: 0 2px 2px 0;
-					width: 24%;
+					margin-left: 3px;
 					list-style: none;
-					background: #cecece;
-
+					max-width: 24%;
+					&:first-child, &:nth-child(4n+1) {
+						margin-left: 0;
+					}
 
 					&-link {
-						position: relative;
-						background: #000;
-						height: auto;
+						position: relative; 
 						display: block;
+						height: auto;
+						width: 138px;
+						border: 1px solid #ddd;
+						background: #000;	
 
 						&__img {
-							max-height: 92px;
-							max-width: 100%;
-							width: 100%;
-							height: auto;
+							display: block;
+							width: auto;
+							max-width: 138px;
+							height: 104px;
+							margin: auto;
 							opacity: 0.5;
+							-webkit-filter: grayscale(70%);
+							transition: -webkit-filter 1.5s;
 							transition: opacity 0.5s;
 						}
 
 						&__img.active{
 							opacity: 1;
+							-webkit-filter: grayscale(0);
 						}
 					}
 				}
@@ -182,6 +188,7 @@
 	&-info {
 		width: 580px;
 		text-align: justify;
+		word-wrap: break-word;
 
 		&-paragraph {
 			@extend %clearfix;
