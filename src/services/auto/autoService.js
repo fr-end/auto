@@ -8,7 +8,7 @@ module.exports = (function(){
 
     var ajax = require('../../library/ajax/ajax.js')(XMLHttpRequest, Q);
 
-	var auto = {
+    var auto = {
         getCategories: function () {
             //https://auto.ria.com/api/categories?langId=2
             var langId = 2;
@@ -60,24 +60,18 @@ module.exports = (function(){
                 var carIDs = JSON.parse(data).result.search_result.ids;
                 return carIDs;
             });
-            function urlParam(name, value){
-                return value ? '&' + name + '=' + value : '';
-            }
         },
         getCarsCount: function (searchParams, success) {
             //https://auto.ria.com/blocks_search_ajax/search/?category_id=1&state[]=0&s_yers[]=0&po_yers[]=0&currency=1&marka_id[0]=98&model_id[0]=953&countpage=10
             searchParams.countPage = searchParams.countPage || 10;
-            var page = '';
-            if (searchParams.page) {
-                page = '&page=' + searchParams.page;
-            }
-            var url = config.autoRiaUaHost + '/blocks_search_ajax/count/' +
-                '?category_id=' + searchParams.categoryId +
-                '&state[]=0&s_yers[]=0&po_yers[]=0&currency=1' +
-                '&marka_id[0]=' + searchParams.markaId +
-                '&model_id[0]=' + searchParams.modelId +
-                '&countpage=' + searchParams.countPage +
-                page;
+
+            var url = config.autoRiaUaHost + '/blocks_search_ajax/count/';
+            url += '?category_id=' + searchParams.categoryId;
+            url += '&state[]=0&s_yers[]=0&po_yers[]=0&currency=1';
+            url += '&marka_id[0]=' + searchParams.markaId;
+            url += '&model_id[0]=' + searchParams.modelId;
+            url += '&countpage=' + searchParams.countPage;
+            url += '&page=' + searchParams.page;
             return ajax.getPromise(url, success)
                 .then(function (countJSON) {
                     var count = JSON.parse(countJSON);
@@ -244,6 +238,10 @@ module.exports = (function(){
 	};
 
 	return auto;
+
+    function urlParam(name, value){
+        return value ? '&' + name + '=' + value : '';
+    }
 
 })();
 
