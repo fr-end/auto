@@ -7,6 +7,7 @@ cd auto
 ##Run
 
 gulp serverNode
+
 gulp
 
 ##Test
