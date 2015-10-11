@@ -29,6 +29,9 @@ module.exports = function(ajax, events){
         },
         handleLogout: function(){
             var self = this;
+            console.log('in handleLogout');
+            console.log('this', this);
+            console.log('this.model', this.model);
 
             this.model.logout().then(function(sessionString) {
                 var sessionObject = JSON.parse(sessionString);
