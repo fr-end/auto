@@ -6,7 +6,7 @@ cd auto
 
 npm install
 
-# install mongoDB 
+if you want to #install mongoDB locally
 
 download and install mongoDB from https://www.mongodb.org/downloads
 
