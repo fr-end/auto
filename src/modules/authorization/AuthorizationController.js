@@ -28,8 +28,8 @@ module.exports = function(ajax, events){
             this.view.init(function(){
                 self.model.logout().then(function(sessionString) {
                     var sessionObject = JSON.parse(sessionString);
-                    self.view.setLocalStorageIsLoggedIn(false);
-                    self.view.setLocalStorageCurrentUser(null);
+                    window.localStorage.setItem('isLoggedIn', false);
+                    window.localStorage.setItem('user', null);
                     events.publish('user', sessionObject.user);
                     self.view.render('renderAuthMenu', {session: sessionObject});
                 });
@@ -54,18 +54,18 @@ module.exports = function(ajax, events){
                     //console.log('sessionObject.user', sessionObject.user);
 
                     if (sessionObject.isLoggedIn) {
-                        self.view.setLocalStorageIsLoggedIn(true);
+                        window.localStorage.setItem('isLoggedIn', true);
 
                     } else {
-                        self.view.setLocalStorageIsLoggedIn(false);
+                        window.localStorage.setItem('isLoggedIn', false);
                     }
 
                     if (!sessionObject.user){
-                        self.view.setLocalStorageCurrentUser(null);
+                        window.localStorage.setItem('user', null);
                         events.publish('user', null);
                     } else {
                         events.publish('user', sessionObject.user);
-                        self.view.setLocalStorageCurrentUser(sessionObject.user);
+                        window.localStorage.setItem('user', sessionObject.user)
                     }
 
                     self.view.render('renderAuthMenu', {session: sessionObject});
@@ -115,7 +115,7 @@ module.exports = function(ajax, events){
                     var parsedNewValue = JSON.parse(event.newValue);
                     var currentUser;
                     if (parsedNewValue === true){
-                        currentUser = self.view.getLocalStorageCurrentUser();
+                        currentUser = window.localStorage.getItem('user');
                     } else {
                         currentUser = null;
                     }
@@ -136,8 +136,8 @@ module.exports = function(ajax, events){
             var parsedSessionOrErrors = JSON.parse(sessionStringOrErrorsArray);
             if (parsedSessionOrErrors.hasOwnProperty('isLoggedIn')){
                 this.view.render('renderAuthMenu', {session: parsedSessionOrErrors});
-                this.view.setLocalStorageIsLoggedIn(true);
-                this.view.setLocalStorageCurrentUser(parsedSessionOrErrors.user);
+                window.localStorage.setItem('isLoggedIn', true);
+                window.localStorage.setItem('user', parsedSessionOrErrors.user);
                 events.publish('user', parsedSessionOrErrors.user);
                 this.view.hideAuthFormWrapper();
 

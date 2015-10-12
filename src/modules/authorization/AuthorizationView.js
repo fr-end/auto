@@ -21,19 +21,6 @@ module.exports = function () {
         };
     }
 
-    View.prototype.setLocalStorageIsLoggedIn = function(boolean){
-        window.localStorage.setItem('isLoggedIn', boolean);
-    };
-
-    View.prototype.setLocalStorageCurrentUser = function(user){
-        window.localStorage.setItem('user', user);
-    };
-
-    View.prototype.getLocalStorageCurrentUser = function(){
-        //console.log('window.localStorage.getItem(user);', window.localStorage.getItem('user'));
-        return window.localStorage.getItem('user');
-    };
-
     View.prototype.initShowAuthMenu = function () {
         var popup = document.createElement('div');
         popup.innerHTML = this.template_popup();
