@@ -65,9 +65,9 @@ module.exports = function(ajax, events){
                         events.publish('user', null);
                     } else {
                         events.publish('user', sessionObject.user);
+                        self.view.setLocalStorageCurrentUser(sessionObject.user);
                     }
 
-                    self.view.setLocalStorageCurrentUser(sessionObject.user);
                     self.view.render('renderAuthMenu', {session: sessionObject});
                 });
         },

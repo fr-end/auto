@@ -108,6 +108,7 @@
         (function addCar() {
             var url = '/db/wishlist/';
             var wishlist = {};
+            wishlist.action = "addCar";
             wishlist.carID = Math.floor(Math.random() * 10000000);
 
             ajax.getPromisePost(url, wishlist)
