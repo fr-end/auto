@@ -43,7 +43,7 @@
 			margin: 0;
 			font-weight: normal;
 			padding-bottom: 15px;
-			border-bottom: 1px dashed #e5e5e5;
+			margin-bottom: 25px;
 		}
 
 		&-sign-in{
@@ -54,21 +54,29 @@
 		}
 
 		&-input{
-			height: 42px;
+			height: 40px;
 			width: 100%;
 			border: none;
 			border-bottom: 1px dashed #e5e5e5;
+			margin-bottom: 25px;
+
+			&:invalid,
+			&:-moz-submit-invalid,
+			&:-moz-ui-invalid {
+				box-shadow:none;
+			}
 		}
 
 		&-error{
-			border-top: 1px dashed #e5e5e5;
+			box-sizing: border-box;
+			height: 22px;
 			border: 1px solid $border-color;
 			color:  $border-color;
 			font-weight: bold;
-			line-height: 25px;
-			font-size: 13px;
-			padding: 5px 5px;
-			margin: 7px 0;
+			line-height: 22px;
+			font-size: 12px;
+			padding: 0 5px;
+			margin: -22px 0 0;
 			position: relative;
 			&:after{
 				content: '';
@@ -125,8 +133,7 @@
 			line-height: 14px;
 			margin: 0;
 			font-weight: normal;
-			padding-bottom: 15px;
-			border-bottom: 1px dashed #e5e5e5;
+			margin-bottom: 25px;
 		}
 
 		&-reg{
@@ -137,10 +144,11 @@
 		}
 
 		&-input{
-			height: 42px;
+			height: 40px;
 			width: 100%;
 			border: none;
 			border-bottom: 1px dashed #e5e5e5;
+			margin-bottom: 25px;
 
 			&:invalid,
 			&:-moz-submit-invalid,

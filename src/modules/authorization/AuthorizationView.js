@@ -225,16 +225,16 @@ module.exports = function () {
             var errors = [];
             var text;
             if (type === 'email'){
-                text = 'Пожалуйста, введите ваш e-mail.';
+                text = 'Введите e-mail.';
                 errors.push(new CustomError(type, text, form));
             } else if (type === 'pass') {
-                text = 'Пожалуйста, введите пароль.';
+                text = 'Введите пароль.';
                 errors.push(new CustomError(type, text, form));
             } else if (type === 'email pass') {
-                text = 'Пожалуйста, заполните форму.';
+                text = 'Заполните форму.';
                 errors.push(new CustomError(type, text, form));
             } else if (type === 'email wrong') {
-                text = 'Пожалуйста, введите корректный e-mail адрес.';
+                text = 'Некорректный e-mail.';
                 errors.push(new CustomError(type, text, form));
             } else if (type === 'pass unequal') {
                 text = 'Пароли не соответствуют друг другу.';
