@@ -59,8 +59,15 @@ module.exports = function(ajax, events){
                     } else {
                         self.view.setLocalStorageIsLoggedIn(false);
                     }
-                    self.view.setLocalStorageCurrentUser(sessionObject.user);
-                    events.publish('user', sessionObject.user);
+
+                    if (!sessionObject.user){
+                        self.view.setLocalStorageCurrentUser(null);
+                        events.publish('user', null);
+                    } else {
+                        events.publish('user', sessionObject.user);
+                        self.view.setLocalStorageCurrentUser(sessionObject.user);
+                    }
+
                     self.view.render('renderAuthMenu', {session: sessionObject});
                 });
         },

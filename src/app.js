@@ -79,15 +79,20 @@
     //});
 
     var gottenUser = localStorage.getItem('user');
-    console.log('gottenUser', gottenUser);
+    var parsedUser;
+
     try {
-        var parsedUser = JSON.parse(gottenUser);
-    } catch(e) {
+        parsedUser = JSON.parse(gottenUser);
+    } catch (e){
         console.log(e);
-        var parsedUser = gottenUser;
+        parsedUser = gottenUser;
     }
 
+
+    console.log('parsedUser === gottenUser', parsedUser === gottenUser);
     console.log('parsedUser', parsedUser);
+    console.log('typeof parsedUser', typeof parsedUser);
+
     if (parsedUser){
         (function init() {
 
@@ -101,9 +106,9 @@
         })();
 
         (function addCar() {
-
             var url = '/db/wishlist/';
             var wishlist = {};
+            wishlist.action = "addCar";
             wishlist.carID = Math.floor(Math.random() * 10000000);
 
             ajax.getPromisePost(url, wishlist)
