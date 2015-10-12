@@ -134,6 +134,7 @@
 
 			&-previous {
 				border-radius: 0 6px 6px 0;			
+				left: 1px;
 			}
 		}
 
@@ -318,4 +319,32 @@
 		color: $course-color;
 	}
 
+}
+
+@media (max-width: 768px) {
+	.carpage-wrapper{
+		width: 768px;
+	}
+
+	.carpage-star {
+		margin-left: 25px;
+	}
+
+	.carpage-title {
+		margin: 0 20px 15px 25px;
+		&__caption {
+			margin-bottom: 0;
+			margin-right: 20px;
+		}
+		&__price {
+			margin: 0;
+		}
+	}
+
+	.carpage-content {
+		width: 300px;
+		&-sidebar {
+			margin-left: 0;
+		}
+	}
 }
