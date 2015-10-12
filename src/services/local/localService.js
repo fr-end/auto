@@ -1,7 +1,7 @@
 module.exports = (function(localStorage,XMLHttpRequest,Q){
 
 	var autoService = require('../auto/autoService');
-	var ajax = require('../../library/ajax/ajax.js');
+	var ajax = require('../../library/ajax/ajax.js')(XMLHttpRequest, Q);
 	//var Q = require('../../../node_modules/q/q.js');
 	
 	var auto = {
@@ -31,6 +31,11 @@ module.exports = (function(localStorage,XMLHttpRequest,Q){
 			return false;
 		},
 		inList: function (carId, username) {
+			var user = localStorage.getItem('user');
+			if (user !== 'null') {
+				var wishlist = JSON.parse( localStorage.getItem( 'wishlist' ) );
+				return wishlist.indexOf(carId) !== -1;
+			}
 			username = username || 'defaultUser';
 			var wishlist = JSON.parse( localStorage.getItem( username ) );
 			return wishlist.indexOf(carId) !== -1;
@@ -212,7 +217,7 @@ module.exports = (function(localStorage,XMLHttpRequest,Q){
 			var user = localStorage.getItem('user');
 			if (user !== 'null'){
 				var url = '/db/wishlist/';
-
+				console.dir(ajax,'ajax');
 				return ajax.getPromise(url)
 					.then(function (response) {
 						localStorage.setItem('wishlist', response);
