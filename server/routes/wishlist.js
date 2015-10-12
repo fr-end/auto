@@ -11,7 +11,7 @@ module.exports = function (app) {
         console.log('request.session.user in get', request.session.user);
 
         User.findById({_id: email}, function (err, user) {
-            if (err) throw err; // return next(err)     in express
+            if (err) console.log(err); // return next(err)     in express
 
             if (!user) {
                 return response.send(invalidData('no user', 'login', email));
