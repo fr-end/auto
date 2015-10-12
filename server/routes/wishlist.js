@@ -39,7 +39,7 @@ module.exports = function (app) {
             var index = doc.wishlistIDs.indexOf(carID);
             if (request.body.action === "addCar" && index ===  -1) {
                 doc.wishlistIDs.push(carID);
-            } else if (request.body.action === "removeCar"  && index !== -1){
+            } else if (request.body.action === "delCar"  && index !== -1){
                 doc.wishlistIDs.splice(index, 1);
             }
             doc.save();
