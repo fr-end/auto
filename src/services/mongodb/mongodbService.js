@@ -15,7 +15,7 @@ module.exports = function(localStorage,XMLHttpRequest,Q){
 					console.log('user in mongoService', user);
 				});
 
-            //this.dispatchWishListCount();
+            this.dispatchWishListCount();
 		},
 		inList: function (carId, username) {
 			username = username || 'defaultUser';

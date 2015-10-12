@@ -1,6 +1,7 @@
 module.exports = (function(localStorage,XMLHttpRequest,Q){
 
 	var autoService = require('../auto/autoService');
+	var ajax = require('../../library/ajax/ajax.js')(XMLHttpRequest, Q);
 	//var Q = require('../../../node_modules/q/q.js');
 	
 	var auto = {
@@ -30,11 +31,30 @@ module.exports = (function(localStorage,XMLHttpRequest,Q){
 			return false;
 		},
 		inList: function (carId, username) {
+			var user = localStorage.getItem('user');
+			if (user !== 'null') {
+				var wishlist = JSON.parse( localStorage.getItem( 'wishlist' ) );
+				return wishlist.indexOf(carId) !== -1;
+			}
 			username = username || 'defaultUser';
 			var wishlist = JSON.parse( localStorage.getItem( username ) );
 			return wishlist.indexOf(carId) !== -1;
 		},
-		addCar: function ( carId, username ) {
+		addCar: function (carId) {
+			var user = localStorage.getItem('user');
+			if (user !== 'null'){
+				var url = '/db/wishlist/';
+				var wishlist = {};
+				wishlist.carID = carId;
+				wishlist.action = 'addCar';
+
+				ajax.getPromisePost(url, wishlist)
+					.then(function (response) {
+						localStorage.setItem('wishlist', response);
+						console.log('response in mongoService post', response);
+					});
+				return;
+			}
 			autoService.getCar(carId)
 				.then((function (data) {
 					var car = data;
@@ -57,6 +77,21 @@ module.exports = (function(localStorage,XMLHttpRequest,Q){
 				}).bind(this));
 		},
 		delCar: function ( carId, username ) {
+			var user = localStorage.getItem('user');
+			if (user !== 'null'){
+				var url = '/db/wishlist/';
+				var wishlist = {};
+				wishlist.carID = carId;
+				wishlist.action = 'delCar';
+
+				ajax.getPromisePost(url, wishlist)
+					.then(function (response) {
+						localStorage.setItem('wishlist', response);
+						console.log('response in mongoService post', response);
+					});
+				return;
+			}
+
 			username = username || 'defaultUser';
 			var wishlist = JSON.parse( localStorage.getItem( username ) );
 			var carIndex = wishlist.indexOf( carId );
@@ -179,6 +214,18 @@ module.exports = (function(localStorage,XMLHttpRequest,Q){
 			return deferred.promise;
 		},
 		getCarIds: function ( searchParams, username ) {
+			var user = localStorage.getItem('user');
+			if (user !== 'null'){
+				var url = '/db/wishlist/';
+				console.dir(ajax,'ajax');
+				return ajax.getPromise(url)
+					.then(function (response) {
+						localStorage.setItem('wishlist', response);
+						console.log('response in mongoService post', response);
+						return JSON.parse(response).slice(searchParams.page*10, searchParams.page*10+10);
+					});
+
+			}
 			var deferred=Q.defer();
 			username = username || 'defaultUser';
 			var wishlist = JSON.parse( localStorage.getItem( username ));
