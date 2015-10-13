@@ -75,9 +75,10 @@
 		position: relative;
 
 		&-container{
-		width: 1740px;
+		width: 580px;
 		height: 436px;
 		overflow: hidden;
+		position: relative;
 		}
 
 		&-bigimg {
@@ -85,13 +86,16 @@
 			height: 436px;
 			box-sizing: border-box;
 			border: 1px solid #ddd;
-			position: relative;
+			position: absolute;
 			float: left;
-			transition: margin-left 0.8s;
+			transition: transform 0.8s;
 
 
 			&.left{
-				margin-left: -580px;
+				transform: translateX(-580px);
+			}
+			&.right{
+				transform: translateX(580px);
 			}
 
 			&__img{
@@ -134,44 +138,51 @@
 
 			&-previous {
 				border-radius: 0 6px 6px 0;			
+				left: 1px;
 			}
 		}
 
 		&-carousel {
-			width: 580px;
-			text-align: justify;
 			margin-top: 6px;
 
 			&-cars {
-				width: 100%;
+				width: 580px;
 				margin: 0;
 				padding: 0;
+				text-align: justify;
 
 				&-item {
 					display: inline-block;
-					margin: 0 2px 2px 0;
-					width: 24%;
+					margin-left: 3px;
 					list-style: none;
-					background: #cecece;
-
+					max-width: 24%;
+					&:first-child, &:nth-child(4n+1) {
+						margin-left: 0;
+					}
 
 					&-link {
-						position: relative;
-						background: #000;
-						height: auto;
+						position: relative; 
 						display: block;
+						height: auto;
+						width: 138px;
+						border: 1px solid #ddd;
+						background: #000;	
 
 						&__img {
-							max-height: 92px;
-							max-width: 100%;
-							width: 100%;
-							height: auto;
+							display: block;
+							width: auto;
+							max-width: 138px;
+							height: 104px;
+							margin: auto;
 							opacity: 0.5;
+							-webkit-filter: grayscale(70%);
+							transition: -webkit-filter 1.5s;
 							transition: opacity 0.5s;
 						}
 
 						&__img.active{
 							opacity: 1;
+							-webkit-filter: grayscale(0);
 						}
 					}
 				}
@@ -182,6 +193,7 @@
 	&-info {
 		width: 580px;
 		text-align: justify;
+		word-wrap: break-word;
 
 		&-paragraph {
 			@extend %clearfix;
@@ -311,4 +323,32 @@
 		color: $course-color;
 	}
 
+}
+
+@media (max-width: 768px) {
+	.carpage-wrapper{
+		width: 768px;
+	}
+
+	.carpage-star {
+		margin-left: 25px;
+	}
+
+	.carpage-title {
+		margin: 0 20px 15px 25px;
+		&__caption {
+			margin-bottom: 0;
+			margin-right: 20px;
+		}
+		&__price {
+			margin: 0;
+		}
+	}
+
+	.carpage-content {
+		width: 300px;
+		&-sidebar {
+			margin-left: 0;
+		}
+	}
 }

@@ -1,11 +1,9 @@
-module.exports = function (document, localStorage, XMLHttpRequest) {
+module.exports = function (document, localStorage, XMLHttpRequest, Q, CarController) {
 
     var Model       = require('./CarListModel.js');
     var View        = require('./CarListView.js')(document);
 
-    var Car = require('../car/CarController.js')(localStorage, XMLHttpRequest);
 
-    var Q = require('../../../node_modules/q/q.js');
 
 	function CarListController(service, events) {
         this.service = service;
@@ -48,7 +46,7 @@ module.exports = function (document, localStorage, XMLHttpRequest) {
                 if(isNaN(+carId)){
                     throw new Error('carIds must contain Array of numbers in CarListController.showCars');
                 }
-                var car = new Car(this.service);
+                var car = new CarController(this.service);
                 var carPromise = car.showCar(carId);
                 carPromises.push(carPromise);
             }).bind(this));

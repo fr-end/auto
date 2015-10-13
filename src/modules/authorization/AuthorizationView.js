@@ -21,19 +21,6 @@ module.exports = function () {
         };
     }
 
-    View.prototype.setLocalStorageIsLoggedIn = function(boolean){
-        window.localStorage.setItem('isLoggedIn', boolean);
-    };
-
-    View.prototype.setLocalStorageCurrentUser = function(user){
-        window.localStorage.setItem('user', user);
-    };
-
-    View.prototype.getLocalStorageCurrentUser = function(){
-        //console.log('window.localStorage.getItem(user);', window.localStorage.getItem('user'));
-        return window.localStorage.getItem('user');
-    };
-
     View.prototype.initShowAuthMenu = function () {
         var popup = document.createElement('div');
         popup.innerHTML = this.template_popup();
@@ -225,16 +212,16 @@ module.exports = function () {
             var errors = [];
             var text;
             if (type === 'email'){
-                text = 'Пожалуйста, введите ваш e-mail.';
+                text = 'Введите e-mail.';
                 errors.push(new CustomError(type, text, form));
             } else if (type === 'pass') {
-                text = 'Пожалуйста, введите пароль.';
+                text = 'Введите пароль.';
                 errors.push(new CustomError(type, text, form));
             } else if (type === 'email pass') {
-                text = 'Пожалуйста, заполните форму.';
+                text = 'Заполните форму.';
                 errors.push(new CustomError(type, text, form));
             } else if (type === 'email wrong') {
-                text = 'Пожалуйста, введите корректный e-mail адрес.';
+                text = 'Некорректный e-mail.';
                 errors.push(new CustomError(type, text, form));
             } else if (type === 'pass unequal') {
                 text = 'Пароли не соответствуют друг другу.';
@@ -281,7 +268,7 @@ module.exports = function () {
                 var checkedKeepLoggedIn = self.$signUpChekboxKeepLoggedIn.checked;
                 var form = 'signup';
                 //console.log(email, password, passwordRepeat);
-
+                self.removeErrorsFromForm();
                 var checkedAuthorizationFields = checkAuthorizationFields(email, password, form);
 
                 if (checkedAuthorizationFields !== true){
@@ -315,6 +302,8 @@ module.exports = function () {
                 var checkedKeepLoggedIn = self.$loginChekboxKeepLoggedIn.checked;
                 //console.log('checkedKeepLoggedIn', checkedKeepLoggedIn)
                 var form = 'login';
+
+                self.removeErrorsFromForm();
 
                 var checkedAuthorizationFields = checkAuthorizationFields(email, password, form);
 

@@ -11,6 +11,7 @@ module.exports = (function () {
         this.sliderBigImgClass = 'carpage-slider-bigimg__img';
         this.sliderArrowPreviousClass = 'carpage-slider-bigimg-previous__arrow';
         this.sliderArrowNextClass = 'carpage-slider-bigimg-next__arrow';
+
     }
 
     View.prototype.render = function (data) {
@@ -20,6 +21,7 @@ module.exports = (function () {
         document.querySelector(this.sliderSmallImgSelector).classList.add('active');
         this.$sliderBigImg.src = document.querySelector(this.sliderSmallImgSelector).src;
         document.querySelector(this.sliderSelector).addEventListener('click',(this.clickOnSlider).bind(this));
+        this.available = true;
     };
 
     View.prototype.bind = function (event, handler) {
@@ -42,6 +44,7 @@ module.exports = (function () {
     };
     
     View.prototype.toggleSliderBigImg = function ($nextImg, next) {
+        this.available = false;
         document.querySelector('.active').classList.toggle('active');
         $nextImg.classList.toggle('active');
 
@@ -54,44 +57,54 @@ module.exports = (function () {
         newImg.src = $nextImg.src;
         newDiv.appendChild(newImg);
 
-        if (!next){
-            newDiv.classList.add('left');
-            container.insertAdjacentElement('afterBegin', newDiv);
-
-            setTimeout(function(){
-                newDiv.classList.remove('left');
-            }, 1);
+        if (next){
+            newDiv.classList.add('right');
+            container.appendChild(newDiv);
+            requestAnimationFrame(function(){
+                newDiv.classList.remove('right');
+                oldDiv.classList.add('left');
+            });
         } else {
-            container.insertAdjacentElement('beforeEnd', newDiv);
-            oldDiv.classList.add('left');
+             newDiv.classList.add('left');
+             container.insertBefore(newDiv, oldDiv);
+
+             requestAnimationFrame(function(){
+                newDiv.classList.remove('left');
+                oldDiv.classList.add('right');
+             });
         }
 
-        setTimeout(function(){
-            container.removeChild(oldDiv);
-        }, 1000);
+        setTimeout((function(){
+            requestAnimationFrame((function(){
+                container.removeChild(oldDiv);
+                this.available = true;
+            }).bind(this));
+        }).bind(this), 800);
+
     };
 
     View.prototype.clickOnSlider = function(event){
         var nextImg;
-        if (event.target.classList.contains(this.sliderSmallImgSelector.slice(1))) {
-            this.toggleSliderBigImg(event.target);
-        } else
-            if (event.target.classList.contains(this.sliderArrowNextClass)||
-                event.target.classList.contains(this.sliderBigImgClass)){
-                nextImg = document.querySelector('.active').parentElement.parentElement;
-                nextImg = nextImg.nextElementSibling ? nextImg.nextElementSibling.firstElementChild
-                    .firstElementChild : nextImg.parentElement.firstElementChild.firstElementChild.firstElementChild;
-                this.toggleSliderBigImg(nextImg, true);
-            } else
-                if (event.target.classList.contains(this.sliderArrowPreviousClass)){
-                    nextImg = document.querySelector('.active').parentElement.parentElement;
-                    nextImg = nextImg.previousElementSibling ? nextImg.previousElementSibling.firstElementChild
-                        .firstElementChild : nextImg.parentElement.lastElementChild.firstElementChild.firstElementChild;
-                    this.toggleSliderBigImg(nextImg, false);
-                }
-        event.preventDefault();
-    };
 
+            if (event.target.classList.contains(this.sliderSmallImgSelector.slice(1))&&this.available) {
+                this.toggleSliderBigImg(event.target, true);
+            } else
+                if (this.available&&(event.target.classList.contains(this.sliderArrowNextClass)||
+                    event.target.classList.contains(this.sliderBigImgClass))){
+                    nextImg = document.querySelector('.active').parentElement.parentElement;
+                    nextImg = nextImg.nextElementSibling ? nextImg.nextElementSibling.firstElementChild
+                        .firstElementChild : nextImg.parentElement.firstElementChild.firstElementChild.firstElementChild;
+                    this.toggleSliderBigImg(nextImg, true);
+                } else
+                    if (this.available&&event.target.classList.contains(this.sliderArrowPreviousClass)){
+                        nextImg = document.querySelector('.active').parentElement.parentElement;
+                        nextImg = nextImg.previousElementSibling ? nextImg.previousElementSibling.firstElementChild
+                            .firstElementChild : nextImg.parentElement.lastElementChild.firstElementChild.firstElementChild;
+                        this.toggleSliderBigImg(nextImg, false);
+                    }
+
+            event.preventDefault();
+        };
     return View;
 
 })();

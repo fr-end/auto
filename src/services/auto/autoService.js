@@ -1,14 +1,10 @@
-//https://auto.ria.com/api/categories
-
-module.exports = (function(){
+module.exports = function(ajax){
 
     var config = {
         autoRiaUaHost: '/proxy'
     };
 
-    var ajax = require('../../library/ajax/ajax.js')(XMLHttpRequest, Q);
-
-    var auto = {
+	var auto = {
         getCategories: function () {
             //https://auto.ria.com/api/categories?langId=2
             var langId = 2;
@@ -67,11 +63,21 @@ module.exports = (function(){
 
             var url = config.autoRiaUaHost + '/blocks_search_ajax/count/';
             url += '?category_id=' + searchParams.categoryId;
-            url += '&state[]=0&s_yers[]=0&po_yers[]=0&currency=1';
-            url += '&marka_id[0]=' + searchParams.markaId;
-            url += '&model_id[0]=' + searchParams.modelId;
-            url += '&countpage=' + searchParams.countPage;
-            url += '&page=' + searchParams.page;
+            url += urlParam('state[]', '0');
+            url += urlParam('s_yers[]', searchParams.yearFrom);
+            url += urlParam('po_yers[]', searchParams.yearTo);
+            url += urlParam('price_ot', searchParams.priceFrom);
+            url += urlParam('price_do', searchParams.priceTo);
+            url += urlParam('type[' + (searchParams.fuelId - 1) +']', searchParams.fuelId);
+            url += urlParam('engineVolumeFrom', searchParams.engineVolumeFrom);
+            url += urlParam('engineVolumeTo', searchParams.engineVolumeTo);
+            url += urlParam('gearbox[' + (searchParams.gearboxId - 1) +']', searchParams.gearboxId);
+            url += urlParam('raceFrom', searchParams.raceFrom);
+            url += urlParam('raceTo', searchParams.raceTo);
+            url += urlParam('with_photo', searchParams.withPhoto);
+            url += urlParam('currency',1);
+            url += urlParam('marka_id[0]', searchParams.markaId);
+            url += urlParam('model_id[0]', searchParams.modelId);
             return ajax.getPromise(url, success)
                 .then(function (countJSON) {
                     var count = JSON.parse(countJSON);
@@ -152,6 +158,9 @@ module.exports = (function(){
                     carInfo.result.photo_data.photos.forEach(function (photo) {
                         carPhotos.push('https://cdn.riastatic.com/photosnew/' + photo.seo_link.replace('.', 'f.'));
                     });
+                    if (!carPhotos.length){
+                        carPhotos.push('https://img.auto.ria.com/images/no-photo/no-photo-380x250.jpg');
+                    }
                     var carInfoNeeded = {
                         carId 		: autoData.auto_id,
                         title 		: autoData.marka_data.name + ' ' + autoData.model_data.name +
@@ -243,6 +252,6 @@ module.exports = (function(){
         return value ? '&' + name + '=' + value : '';
     }
 
-})();
+};
 
 

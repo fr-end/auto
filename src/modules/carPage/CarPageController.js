@@ -1,6 +1,5 @@
-module.exports = (function () {
+module.exports = function (CarController) {
 
-    var CarController = require('../car/CarController')(localStorage, XMLHttpRequest);
     var template = require('./car-page.handlebars');
     var View = require('./CarPageView.js');
 
@@ -32,4 +31,4 @@ module.exports = (function () {
 
 	return Controller;
 
-})();
+};

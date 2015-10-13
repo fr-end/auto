@@ -16,6 +16,8 @@ module.exports = function(ajax, events){
     AuthorizationController.prototype = {
         init: function(){
 
+            var self = this;
+
             if ( this.started ) {
                 return;
             }
@@ -23,20 +25,21 @@ module.exports = function(ajax, events){
 
             this.checkUserSession();
 
-            this.view.init(this.handleLogout);
+            this.view.init(function(){
+                self.model.logout().then(function(sessionString) {
+                    var sessionObject = JSON.parse(sessionString);
+                    window.localStorage.setItem('isLoggedIn', false);
+                    window.localStorage.setItem('user', null);
+                    events.publish('user', sessionObject.user);
+                    self.view.render('renderAuthMenu', {session: sessionObject});
+                });
+            });
 
             this.bindEventsToView();
-        },
-        handleLogout: function(){
-            var self = this;
 
-            this.model.logout().then(function(sessionString) {
-                var sessionObject = JSON.parse(sessionString);
-
-                self.view.setLocalStorageIsLoggedIn(false);
-                self.view.setLocalStorageCurrentUser(null);
-                events.publish('user', sessionObject.user);
-                self.view.render('renderAuthMenu', {session: sessionObject});
+            events.subscribe('user', function () {
+                var event = new Event('hashchange');
+                window.dispatchEvent(event);
             });
         },
         checkUserSession: function(){
@@ -56,13 +59,20 @@ module.exports = function(ajax, events){
                     //console.log('sessionObject.user', sessionObject.user);
 
                     if (sessionObject.isLoggedIn) {
-                        self.view.setLocalStorageIsLoggedIn(true);
+                        window.localStorage.setItem('isLoggedIn', true);
 
                     } else {
-                        self.view.setLocalStorageIsLoggedIn(false);
+                        window.localStorage.setItem('isLoggedIn', false);
                     }
-                    self.view.setLocalStorageCurrentUser(sessionObject.user);
-                    events.publish('user', sessionObject.user);
+
+                    if (!sessionObject.user){
+                        window.localStorage.setItem('user', null);
+                        events.publish('user', null);
+                    } else {
+                        events.publish('user', sessionObject.user);
+                        window.localStorage.setItem('user', sessionObject.user)
+                    }
+
                     self.view.render('renderAuthMenu', {session: sessionObject});
                 });
         },
@@ -105,12 +115,13 @@ module.exports = function(ajax, events){
             );
 
             this.view.bind('setStorageEvent', function(event){
+                console.log('event.key in auth module storage event ', event.key);
                 if (event.key === 'isLoggedIn') {
                     var parsedOldValue = JSON.parse(event.oldValue);
                     var parsedNewValue = JSON.parse(event.newValue);
                     var currentUser;
                     if (parsedNewValue === true){
-                        currentUser = self.view.getLocalStorageCurrentUser();
+                        currentUser = window.localStorage.getItem('user');
                     } else {
                         currentUser = null;
                     }
@@ -131,8 +142,8 @@ module.exports = function(ajax, events){
             var parsedSessionOrErrors = JSON.parse(sessionStringOrErrorsArray);
             if (parsedSessionOrErrors.hasOwnProperty('isLoggedIn')){
                 this.view.render('renderAuthMenu', {session: parsedSessionOrErrors});
-                this.view.setLocalStorageIsLoggedIn(true);
-                this.view.setLocalStorageCurrentUser(parsedSessionOrErrors.user);
+                window.localStorage.setItem('isLoggedIn', true);
+                window.localStorage.setItem('user', parsedSessionOrErrors.user);
                 events.publish('user', parsedSessionOrErrors.user);
                 this.view.hideAuthFormWrapper();
 

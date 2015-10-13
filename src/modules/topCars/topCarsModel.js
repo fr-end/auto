@@ -1,4 +1,4 @@
-module.exports = (function(){
+module.exports = function(Q){
 
     var TopCarsModel = function (service){
         this.service = service;
@@ -43,4 +43,4 @@ module.exports = (function(){
 
     return TopCarsModel;
 
-})();
+};
