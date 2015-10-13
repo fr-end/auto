@@ -27,6 +27,7 @@ module.exports = function(localStorage,Q,events,ajax,autoService){
 							localStorage.setItem(String(car.carId), JSON.stringify(car));
 						});
 					}));
+				//window.dispatchEvent(new Event('hashchange'));
 			}else {
 				for (var key in localStorage){
 					if (!isNaN(Number(key))){
@@ -42,6 +43,7 @@ module.exports = function(localStorage,Q,events,ajax,autoService){
 							localStorage[String(carId)] = JSON.stringify(data);
 						})
 				});
+				//window.dispatchEvent(new Event('hashchange'));
 			}
         });
         storageEventsInited = true;
