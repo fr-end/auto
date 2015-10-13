@@ -40,17 +40,13 @@ module.exports = function(localStorage,Q,events,ajax,autoService){
 			//console.log( username + ' has wishlist and in userslist' );
 			return false;
 		},
-		inList: function (carId, username) {
-            console.log('inlist?');
+		inList: function (carId) {
 			var user = localStorage.getItem('user');
 			if (user !== 'null') {
-                console.log('user not null');
 				var wishlist = JSON.parse( localStorage.getItem( 'wishlist' ) || "[]");
 				return wishlist.indexOf(carId) !== -1;
 			}
-            console.log('user null');
-			username = username || 'defaultUser';
-			var wishlist = JSON.parse( localStorage.getItem( username ) || "[]");
+			var wishlist = JSON.parse( localStorage.getItem( 'defaultUser' ) || "[]");
 			return wishlist.indexOf(carId) !== -1;
 		},
 		addCar: function (carId) {
@@ -95,6 +91,7 @@ module.exports = function(localStorage,Q,events,ajax,autoService){
 				}).bind(this));
 		},
 		delCar: function ( carId, username ) {
+            console.log('delCar');
 			var user = localStorage.getItem('user');
 			if (user !== 'null'){
 				var url = '/db/wishlist/';

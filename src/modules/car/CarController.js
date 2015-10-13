@@ -27,13 +27,10 @@ module.exports = function(localStorage, XMLHttpRequest, localService){
 			return localService.inList(carId);
 		},
 		toggleWishList: function(carId){
-            console.log('wl');
 			if(this.inList(carId)){
-                console.log('inList');
 				localService.delCar(carId);
 				return false;
 			} else {
-                console.log('not In List');
 				localService.addCar(carId);
 				return true;
 			}

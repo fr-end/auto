@@ -3,9 +3,8 @@ module.exports = function (document, localStorage, XMLHttpRequest, Q, CarControl
     var Model       = require('./CarListModel.js');
     var View        = require('./CarListView.js')(document);
 
-
-
 	function CarListController(service, events) {
+        this._inited = false;
         this.service = service;
         this.model = new Model(service);
         this.view = new View();
@@ -17,8 +16,12 @@ module.exports = function (document, localStorage, XMLHttpRequest, Q, CarControl
 
     CarListController.prototype = {
 
-        init: function(searchParams){
-            this.getCarIDsFromURL(searchParams);
+        init: function(searchParams) {
+            if (!this._inited) {
+                this.getCarIDsFromURL(searchParams);
+                this._inited = true;
+                console.log('CarListController.init()');
+            }
         },
 
 		getCarIDsFromURL: function(searchParams){
@@ -38,6 +41,7 @@ module.exports = function (document, localStorage, XMLHttpRequest, Q, CarControl
         },
 
         getCarPromices: function(carIds){
+            console.log('getCarPromices');
             if(!Array.isArray(carIds)){
                 throw new Error('carIds is not Array in CarListController.showCars');
             }

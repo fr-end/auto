@@ -100,7 +100,7 @@ module.exports = function(window, document) {
             yearTo: form.elements['year-to'].value,
             priceFrom: form.elements['price-from'].value,
             priceTo: form.elements['price-to'].value,
-            fuelId: form.elements['fuel'].value,
+           // fuelId: form.elements['fuel'].value,
             engineVolumeFrom: form.elements['engine-from'].value,
             engineVolumeTo: form.elements['engine-to'].value,
             gearboxId: form.elements['gearbox-type'].value,
