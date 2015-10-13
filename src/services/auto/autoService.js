@@ -189,7 +189,7 @@ module.exports = function(ajax){
                         carInfo.result.date_data.date_add.full_month + '.' +
                         carInfo.result.date_data.date_add.year,
                         description	: autoData.description,
-                        phone		: carInfo.result.user_phones[0].phone_formatted,
+                        phone		: carInfo.result.user_phones.length > 0 ? carInfo.result.user_phones[0].phone_formatted : '',
                         author		: carInfo.result.user_data.firstName,
                         city		: carInfo.result.location_data.state.region_name,
                         photos		: carPhotos
@@ -197,6 +197,7 @@ module.exports = function(ajax){
                     return carInfoNeeded;
                 } catch (error) {
                     console.dir(error);
+                    console.dir(carInfo,'carInfo');
                 }
 
             });
