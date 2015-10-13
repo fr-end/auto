@@ -18,7 +18,8 @@ module.exports = function (app) {
             }
 
             console.log('user', user);
-            response.send(user.wishlistIDs);
+            console.log('response',{wishlistIDs: user.wishlistIDs, wishlistObjects: user.wishlistObjects});
+            response.send({wishlistIDs: user.wishlistIDs, wishlistObjects: user.wishlistObjects});
         });
 
     });
@@ -27,7 +28,7 @@ module.exports = function (app) {
         console.log('request.url', request.url);
         var email = request.session.user;
         var carID = request.body.carID;
-
+        var carObject = request.body.carObject;
         //request.body.action = "addCar" | "removeCar"
 
         console.log('request.session.user in post', request.session.user)
@@ -39,8 +40,11 @@ module.exports = function (app) {
             var index = doc.wishlistIDs.indexOf(carID);
             if (request.body.action === "addCar" && index ===  -1) {
                 doc.wishlistIDs.push(carID);
+                doc.wishlistObjects.push(carObject);
             } else if (request.body.action === "delCar"  && index !== -1){
                 doc.wishlistIDs.splice(index, 1);
+                index = doc.wishlistObjects.indexOf(carObject);
+                doc.wishlistObjects.splice(index, 1);
             }
             doc.save();
             response.send(doc.wishlistIDs);

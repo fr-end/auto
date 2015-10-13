@@ -11,6 +11,38 @@ module.exports = function(localStorage,Q,events,ajax,autoService){
         });
         events.subscribe('user', function () {
             auto.dispatchWishListCount();
+			var user = localStorage.getItem('user');
+			if (user !== 'null') {
+				for (var key in localStorage){
+					if (!isNaN(Number(key))){
+						localStorage.removeItem(key);
+					}
+				}
+				var url = '/db/wishlist/';
+				ajax.getPromise(url)
+					.then((function (response) {
+						response = JSON.parse(response)
+						localStorage.setItem('wishlist', JSON.stringify(response.wishlistIDs));
+						response.wishlistObjects.forEach(function(car){
+							localStorage.setItem(String(car.carId), JSON.stringify(car));
+						});
+					}));
+			}else {
+				for (var key in localStorage){
+					if (!isNaN(Number(key))){
+						localStorage.removeItem(key);
+					}
+				}
+				console.log("!!!!");
+				JSON.parse(localStorage['defaultUser']).forEach(function(carId){
+					autoService.getCar(carId)
+						.then(function(data) {
+							console.log("!!!!", carId, typeof carId);
+							console.log("!!!", data);
+							localStorage[String(carId)] = JSON.stringify(data);
+						})
+				});
+			}
         });
         storageEventsInited = true;
     }
@@ -51,26 +83,28 @@ module.exports = function(localStorage,Q,events,ajax,autoService){
 		},
 		addCar: function (carId) {
             console.log('addCar');
-			var user = localStorage.getItem('user');
-			if (user !== 'null'){
-                console.log('user not null');
-				var url = '/db/wishlist/';
-				var wishlist = {};
-				wishlist.carID = carId;
-				wishlist.action = 'addCar';
-
-				ajax.getPromisePost(url, wishlist)
-					.then((function (response) {
-						localStorage.setItem('wishlist', response);
-						console.log('response in mongoService post', response);
-                        this.dispatchWishListCount();
-					}).bind(this));
-
-				return;
-			}
-            console.log('user null');
 			autoService.getCar(carId)
 				.then((function (data) {
+					var user = localStorage.getItem('user');
+					if (user !== 'null'){
+						console.log('user not null');
+						var url = '/db/wishlist/';
+						var wishlist = {};
+						wishlist.carID = carId;
+						wishlist.action = 'addCar';
+						wishlist.carObject = data;
+
+						ajax.getPromisePost(url, wishlist)
+							.then((function (response) {
+								localStorage.setItem('wishlist', response);
+								console.log('response in mongoService post', response);
+								localStorage[String(data.carId)] = JSON.stringify(data);
+								this.dispatchWishListCount();
+							}).bind(this));
+						return;
+					}
+					console.log('user null');
+
 					var car = data;
 					var username = 'defaultUser';
 					if ( !localStorage.getItem( String(car.carId) ) ){
@@ -102,6 +136,7 @@ module.exports = function(localStorage,Q,events,ajax,autoService){
 				ajax.getPromisePost(url, wishlist)
 					.then((function (response) {
 						localStorage.setItem('wishlist', response);
+						localStorage.removeItem( String( carId ));
 						console.log('response in mongoService post', response);
                         this.dispatchWishListCount();
 					}).bind(this));
@@ -136,7 +171,6 @@ module.exports = function(localStorage,Q,events,ajax,autoService){
 			//console.log('Deleted car from storage');
 		},	
 		getCar: function ( carId ) {
-            return autoService.getCar(carId);
             var deferred=Q.defer();
             deferred.resolve(this.readCar(carId));
             return deferred.promise;
@@ -145,10 +179,16 @@ module.exports = function(localStorage,Q,events,ajax,autoService){
             return JSON.parse( localStorage.getItem( carId ) );
         },
 		getCategories: function ( username ) {
+			console.log('getCategories');
+			var user = localStorage.getItem('user');
+			if (user !== 'null'){
+				var wishlist = JSON.parse( localStorage.getItem('wishlist'));
+			} else {
+				username = username || 'defaultUser';
+				var wishlist = JSON.parse( localStorage.getItem( username ));
+			}
 			var deferred=Q.defer();
 			//console.log('localStorage-getCategories');
-			username = username || 'defaultUser';
-			var wishlist = JSON.parse( localStorage.getItem( username ));
 			var categoriesIds = [];
 			var categories = [];
 
@@ -168,9 +208,15 @@ module.exports = function(localStorage,Q,events,ajax,autoService){
 			return deferred.promise;
 		},
 		getMarks: function ( categoryId, username ) {
+			console.log('getMarks');
+			var user = localStorage.getItem('user');
+			if (user !== 'null'){
+				var wishlist = JSON.parse( localStorage.getItem('wishlist'));
+			} else {
+				username = username || 'defaultUser';
+				var wishlist = JSON.parse( localStorage.getItem( username ));
+			}
 			var deferred=Q.defer();
-			username = username || 'defaultUser';
-			var wishlist = JSON.parse( localStorage.getItem( username ));
 			var marksIds = [];
 			var marks = [];
 
@@ -200,9 +246,15 @@ module.exports = function(localStorage,Q,events,ajax,autoService){
 			return deferred.promise;
 		},
 		getModels: function ( categoryId, markaId, username ) {
+			console.log('getModels');
+			var user = localStorage.getItem('user');
+			if (user !== 'null'){
+				var wishlist = JSON.parse( localStorage.getItem('wishlist'));
+			} else {
+				username = username || 'defaultUser';
+				var wishlist = JSON.parse( localStorage.getItem( username ));
+			}
 			var deferred=Q.defer();
-			username = username || 'defaultUser';
-			var wishlist = JSON.parse( localStorage.getItem( username ));
 			var modelsIds = [];
 			var models = [];
 
@@ -238,9 +290,9 @@ module.exports = function(localStorage,Q,events,ajax,autoService){
 				console.dir(ajax,'ajax');
 				return ajax.getPromise(url)
 					.then(function (response) {
-						localStorage.setItem('wishlist', response);
+						localStorage.setItem('wishlist', JSON.stringify(JSON.parse(response).wishlistIDs));
 						console.log('response in mongoService post', response);
-						return JSON.parse(response).slice(searchParams.page*10, searchParams.page*10+10);
+						return JSON.parse(response).wishlistIDs.slice(searchParams.page*10, searchParams.page*10+10);
 					});
 
 			}
