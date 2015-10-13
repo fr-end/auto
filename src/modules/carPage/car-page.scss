@@ -75,9 +75,10 @@
 		position: relative;
 
 		&-container{
-		width: 1740px;
+		width: 580px;
 		height: 436px;
 		overflow: hidden;
+		position: relative;
 		}
 
 		&-bigimg {
@@ -85,13 +86,16 @@
 			height: 436px;
 			box-sizing: border-box;
 			border: 1px solid #ddd;
-			position: relative;
+			position: absolute;
 			float: left;
-			transition: margin-left 0.8s;
+			transition: transform 0.8s;
 
 
 			&.left{
-				margin-left: -580px;
+				transform: translateX(-580px);
+			}
+			&.right{
+				transform: translateX(580px);
 			}
 
 			&__img{
