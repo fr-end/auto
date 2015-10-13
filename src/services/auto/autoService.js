@@ -156,6 +156,9 @@ module.exports = function(ajax){
                     carInfo.result.photo_data.photos.forEach(function (photo) {
                         carPhotos.push('https://cdn.riastatic.com/photosnew/' + photo.seo_link.replace('.', 'f.'));
                     });
+                    if (!carPhotos.length){
+                        carPhotos.push('https://img.auto.ria.com/images/no-photo/no-photo-380x250.jpg');
+                    }
                     var carInfoNeeded = {
                         carId 		: autoData.auto_id,
                         title 		: autoData.marka_data.name + ' ' + autoData.model_data.name +
