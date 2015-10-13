@@ -1,6 +1,5 @@
-module.exports = function(localStorage, XMLHttpRequest){
+module.exports = function(localStorage, XMLHttpRequest, localService){
 
-	var localService = require('../../services/local/localService');
     var View 		= require('./CarView.js');
 
     function CarController(service, template){
@@ -28,10 +27,13 @@ module.exports = function(localStorage, XMLHttpRequest){
 			return localService.inList(carId);
 		},
 		toggleWishList: function(carId){
+            console.log('wl');
 			if(this.inList(carId)){
+                console.log('inList');
 				localService.delCar(carId);
 				return false;
 			} else {
+                console.log('not In List');
 				localService.addCar(carId);
 				return true;
 			}

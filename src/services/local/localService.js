@@ -1,9 +1,19 @@
-module.exports = (function(localStorage,XMLHttpRequest,Q){
+module.exports = function(localStorage,Q,events,ajax,autoService){
 
-	var autoService = require('../auto/autoService');
-	var ajax = require('../../library/ajax/ajax.js')(XMLHttpRequest, Q);
-	//var Q = require('../../../node_modules/q/q.js');
-	
+    var storageEventsInited = false;
+
+    if( !storageEventsInited ) {
+        window.addEventListener('storage', function (event) {
+            console.log(event, 'storage');
+            if (event.key === 'wishlist' || event.key === 'defaultUser' || event.key === 'user') {
+                auto.dispatchWishListCount();
+            }
+        });
+        events.subscribe('user', function () {
+            auto.dispatchWishListCount();
+        });
+        storageEventsInited = true;
+    }
 	var auto = {
 		init: function () {
 			if (!localStorage.getItem('defaultUser')){
@@ -31,34 +41,42 @@ module.exports = (function(localStorage,XMLHttpRequest,Q){
 			return false;
 		},
 		inList: function (carId, username) {
+            console.log('inlist?');
 			var user = localStorage.getItem('user');
 			if (user !== 'null') {
+                console.log('user not null');
 				var wishlist = JSON.parse( localStorage.getItem( 'wishlist' ) );
 				return wishlist.indexOf(carId) !== -1;
 			}
+            console.log('user null');
 			username = username || 'defaultUser';
 			var wishlist = JSON.parse( localStorage.getItem( username ) );
 			return wishlist.indexOf(carId) !== -1;
 		},
 		addCar: function (carId) {
+            console.log('addCar');
 			var user = localStorage.getItem('user');
 			if (user !== 'null'){
+                console.log('user not null');
 				var url = '/db/wishlist/';
 				var wishlist = {};
 				wishlist.carID = carId;
 				wishlist.action = 'addCar';
 
 				ajax.getPromisePost(url, wishlist)
-					.then(function (response) {
+					.then((function (response) {
 						localStorage.setItem('wishlist', response);
 						console.log('response in mongoService post', response);
-					});
+                        this.dispatchWishListCount();
+					}).bind(this));
+
 				return;
 			}
+            console.log('user null');
 			autoService.getCar(carId)
 				.then((function (data) {
 					var car = data;
-					username = username || 'defaultUser';
+					var username = 'defaultUser';
 					if ( !localStorage.getItem( String(car.carId) ) ){
 						localStorage[String(car.carId)] = JSON.stringify( car );
 						//console.log('Car added to storage');
@@ -85,10 +103,12 @@ module.exports = (function(localStorage,XMLHttpRequest,Q){
 				wishlist.action = 'delCar';
 
 				ajax.getPromisePost(url, wishlist)
-					.then(function (response) {
+					.then((function (response) {
 						localStorage.setItem('wishlist', response);
 						console.log('response in mongoService post', response);
-					});
+                        this.dispatchWishListCount();
+					}).bind(this));
+
 				return;
 			}
 
@@ -119,6 +139,7 @@ module.exports = (function(localStorage,XMLHttpRequest,Q){
 			//console.log('Deleted car from storage');
 		},	
 		getCar: function ( carId ) {
+            return autoService.getCar(carId);
             var deferred=Q.defer();
             deferred.resolve(this.readCar(carId));
             return deferred.promise;
@@ -262,41 +283,57 @@ module.exports = (function(localStorage,XMLHttpRequest,Q){
 			return deferred.promise;
 		},
 		getCarsCount: function ( searchParams, username  ) {
-			username = username || 'defaultUser';
-			var wishlist = JSON.parse( localStorage.getItem( username ));
-			var carsCount = 0;
-			if ((searchParams.categoryId)&&(searchParams.markaId)&&(searchParams.modelId)){
-				wishlist.forEach(function(carId, index){
-					var item = auto.readCar(carId);
-					if (( String(item.categoryId) === searchParams.categoryId ) && 
-						( String(item.markaId) === searchParams.markaId ) &&
-						( String(item.modelId) === searchParams.modelId )){
-							++carsCount;
-					}
-				});
-				return carsCount;
-			} else if((searchParams.categoryId)&&(searchParams.markaId)&&(!searchParams.modelId)){
-				wishlist.forEach(function(carId, index){
-					var item = auto.readCar(carId);
-					if (( String(item.categoryId) === searchParams.categoryId ) && 
-						( String(item.markaId) === searchParams.markaId )){
-							++carsCount;
-					}
-				});
-				return carsCount;
-			} else if((searchParams.categoryId)&&(!searchParams.markaId)&&(!searchParams.modelId)){
-				wishlist.forEach(function(carId, index){
-					var item = auto.readCar(carId);
-					if ( String(item.categoryId) === searchParams.categoryId ){
-							++carsCount;
-					}
-				});
-				return carsCount;
-			}
+            var user = localStorage.getItem('user');
+            var wishlist;
+            if (user !== 'null'){
+                console.log(wishlist,'wishlist');
+                wishlist = JSON.parse( localStorage.getItem( 'wishlist' ));
+                console.log(wishlist,'wishlist');
+            } else {
+                username = username || 'defaultUser';
+                wishlist = JSON.parse( localStorage.getItem( username ));
+                var carsCount = 0;
+                if ((searchParams.categoryId)&&(searchParams.markaId)&&(searchParams.modelId)){
+                    wishlist.forEach(function(carId, index){
+                        var item = auto.readCar(carId);
+                        if (( String(item.categoryId) === searchParams.categoryId ) &&
+                            ( String(item.markaId) === searchParams.markaId ) &&
+                            ( String(item.modelId) === searchParams.modelId )){
+                            ++carsCount;
+                        }
+                    });
+                    return carsCount;
+                } else if((searchParams.categoryId)&&(searchParams.markaId)&&(!searchParams.modelId)){
+                    wishlist.forEach(function(carId, index){
+                        var item = auto.readCar(carId);
+                        if (( String(item.categoryId) === searchParams.categoryId ) &&
+                            ( String(item.markaId) === searchParams.markaId )){
+                            ++carsCount;
+                        }
+                    });
+                    return carsCount;
+                } else if((searchParams.categoryId)&&(!searchParams.markaId)&&(!searchParams.modelId)){
+                    wishlist.forEach(function(carId, index){
+                        var item = auto.readCar(carId);
+                        if ( String(item.categoryId) === searchParams.categoryId ){
+                            ++carsCount;
+                        }
+                    });
+                    return carsCount;
+                }
+            }
 			return wishlist.length;
 		},
-        dispatchWishListCount: function(username){
-            var wishListCount = this.getCarsCount({},username);
+        dispatchWishListCount: function(){
+            var user = localStorage.getItem('user');
+            var wishlistName;
+            if( user !== 'null' ){
+                wishlistName = 'wishlist';
+            } else {
+                wishlistName = 'defaultUser'
+            }
+            var wishlist = JSON.parse( localStorage.getItem( wishlistName ));
+            var wishListCount = wishlist.length;
             var evt = document.createEvent('Event');
 			evt.initEvent('wishListCount',true,true);
 			evt.wishListCount = wishListCount;
@@ -310,4 +347,4 @@ module.exports = (function(localStorage,XMLHttpRequest,Q){
     auto.init();
 
 	return auto;
-})(localStorage,XMLHttpRequest,Q);
+};

@@ -110,6 +110,7 @@ module.exports = function(ajax, events){
             );
 
             this.view.bind('setStorageEvent', function(event){
+                console.log('event.key in auth module storage event ', event.key);
                 if (event.key === 'isLoggedIn') {
                     var parsedOldValue = JSON.parse(event.oldValue);
                     var parsedNewValue = JSON.parse(event.newValue);

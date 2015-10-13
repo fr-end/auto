@@ -1,6 +1,6 @@
 (function(window) {
 
-    Q = require('q');
+    var Q = require('q');
 
     /*render body*/
 
@@ -29,31 +29,32 @@
     window.app = {};
 
     var events = require('./library/events/events.js');
-
-    var autoService = require('./services/auto/autoService.js');
-
+    var ajax = require('./library/ajax/ajax.js')(XMLHttpRequest, Q);
+    var autoService = require('./services/auto/autoService.js')(ajax);
+    var localService = require('./services/local/localService.js')(localStorage,Q,events,ajax,autoService);
 
     window.app.buttonSearch = document.getElementById('header-menu-item__search');
     window.app.buttonWishList = document.getElementById('header-menu-item__wish-list');
 
     // for testing serverNode
-    var ajax = require('./library/ajax/ajax.js')(XMLHttpRequest, Q);
+
 
     // end testing serverNode
 
     var AuthorizationController = require('./modules/authorization/AuthorizationController.js')(ajax, events);
 
     var SearchPanelController = require('./modules/searchPanel/SearchPanelController.js');
-    var CarListController = require('./modules/carList/CarListController.js')(document, localStorage, XMLHttpRequest);
-    var CarPageController = require('./modules/carPage/CarPageController.js');
-    var TopCarsController = require('./modules/topCars/TopCarsController.js');
+    var CarController = require('./modules/car/CarController.js')(localStorage, XMLHttpRequest, localService);
+    var CarListController = require('./modules/carList/CarListController.js')(document, localStorage, XMLHttpRequest, Q, CarController);
+    var CarPageController = require('./modules/carPage/CarPageController.js')(CarController);
+    var TopCarsController = require('./modules/topCars/TopCarsController.js')(Q);
 
     var router = require('./library/router/router.js')(AuthorizationController);
 
     var authorization = new AuthorizationController();
     authorization.init();
 
-    var localService = require('./services/local/localService.js');
+
 
     //events.subscribe('user', function(user){
     //    console.log('user', user);
@@ -105,17 +106,17 @@
 
         })();
 
-        (function addCar() {
-            var url = '/db/wishlist/';
-            var wishlist = {};
-            wishlist.action = "addCar";
-            wishlist.carID = Math.floor(Math.random() * 10000000);
-
-            ajax.getPromisePost(url, wishlist)
-                .then(function (response) {
-                    console.log('response in mongoService post', response);
-                });
-        })();
+        //(function addCar() {
+        //    var url = '/db/wishlist/';
+        //    var wishlist = {};
+        //    wishlist.action = "addCar";
+        //    wishlist.carID = Math.floor(Math.random() * 10000000);
+        //
+        //    ajax.getPromisePost(url, wishlist)
+        //        .then(function (response) {
+        //            console.log('response in mongoService post', response);
+        //        });
+        //})();
     }
 
     router.route('/', SearchPanelController, autoService, events);
