@@ -3,7 +3,7 @@ module.exports = function(AuthorizationController){
     function Router(){
         this.routes = {};
         window.addEventListener('hashchange', (this.router).bind(this));
-        window.addEventListener('load', (this.router).bind(this));
+        //window.addEventListener('load', (this.router).bind(this));
     }
 
     Router.prototype = {
@@ -11,7 +11,7 @@ module.exports = function(AuthorizationController){
             this.routes[path] = this.routes[path] || [];
             this.routes[path].push({ Controller: Controller, params: params, events: events });
         },
-        router: function(){
+        router: function(event){
             var hashLessURL = location.hash.slice(1) || '/';
 
             var hashLessURLArray = hashLessURL.split('/');
