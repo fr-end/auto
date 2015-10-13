@@ -335,10 +335,11 @@ module.exports = function(localStorage,Q,events,ajax,autoService){
 			evt.initEvent('wishListCount',true,true);
 			evt.wishListCount = wishListCount;
 			document.dispatchEvent(evt);
-        }        ,
+        },
         getGearboxes: function(){
             return Q.fcall();
-        }
+        },
+        hasExtendedSearch: false
 	};
 
     auto.init();

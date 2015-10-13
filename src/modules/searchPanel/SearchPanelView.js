@@ -15,11 +15,13 @@ module.exports = function(window, document) {
         this.$selectMark = this.$viewPort.querySelector('[data-select=mark]');
         this.$selectModel = this.$viewPort.querySelector('[data-select=model]');
         this.$selectGearbox = this.$viewPort.querySelector('.search-parameters-gearbox-type__select');
-        this.$viewPort.querySelector('.search-parameters-show-extended__button').addEventListener('click', (function (event) {
-            event.preventDefault();
-            this.$viewPort.querySelector('.search-parameters-extended').style.display = 'block';
-            this.$viewPort.querySelector('.search-parameters-show-extended').style.display = 'none';
-        }).bind(this));
+        if(this.$viewPort.querySelector('.search-parameters-show-extended__button')!== null){
+            this.$viewPort.querySelector('.search-parameters-show-extended__button').addEventListener('click', (function (event) {
+                event.preventDefault();
+                this.$viewPort.querySelector('.search-parameters-extended').style.display = 'block';
+                this.$viewPort.querySelector('.search-parameters-show-extended').style.display = 'none';
+            }).bind(this));
+        }
     };
 
     View.prototype.render = function (viewCmd, data) {
@@ -29,6 +31,7 @@ module.exports = function(window, document) {
                 data = searchParams || {};
                 data._yearFrom = [];
                 data._yearTo = [];
+                data.hasExtendedSearch = searchParams.hasExtendedSearch;
                 var currentYear = new Date().getFullYear();
                 for(var i=currentYear;i>=1900;i--){
                     data._yearFrom.push({
