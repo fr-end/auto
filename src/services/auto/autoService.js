@@ -201,14 +201,20 @@ module.exports = function(ajax){
         },
         getTopCarIds: function () {
             //https://auto.ria.com/demo/bu/mainPage/rotator/main?page=0&type=all&limit=5&pakets=3
-            var url = config.autoRiaUaHost + '/demo/bu/mainPage/rotator/main?page=0&type=all&limit=5&pakets=3';
+            var url = config.autoRiaUaHost + '/demo/bu/mainPage/rotator/main?page=0&type=all&limit=50&pakets=3';
             return ajax.getPromise(url)
                 .then(function(carIdsJSON){
                     var topCarIds = JSON.parse(carIdsJSON);
                     if(!Array.isArray(topCarIds)){
                         throw new Error('carIds is not Array in CarListController.showCars');
                     }
-                    return topCarIds;
+                    var topCarBuIds = [];
+                    for( var i=0; i<topCarIds.length && topCarBuIds.length < 5; i++){
+                        if(topCarIds[i].type === "bu"){
+                            topCarBuIds.push(topCarIds[i]);
+                        }
+                    }
+                    return topCarBuIds;
                 });
         },
         getTopCarPromise: function (carIdAndType) {
