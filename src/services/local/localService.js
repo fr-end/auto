@@ -45,12 +45,12 @@ module.exports = function(localStorage,Q,events,ajax,autoService){
 			var user = localStorage.getItem('user');
 			if (user !== 'null') {
                 console.log('user not null');
-				var wishlist = JSON.parse( localStorage.getItem( 'wishlist' ) );
+				var wishlist = JSON.parse( localStorage.getItem( 'wishlist' ) || "[]");
 				return wishlist.indexOf(carId) !== -1;
 			}
             console.log('user null');
 			username = username || 'defaultUser';
-			var wishlist = JSON.parse( localStorage.getItem( username ) );
+			var wishlist = JSON.parse( localStorage.getItem( username ) || "[]");
 			return wishlist.indexOf(carId) !== -1;
 		},
 		addCar: function (carId) {
@@ -332,7 +332,7 @@ module.exports = function(localStorage,Q,events,ajax,autoService){
             } else {
                 wishlistName = 'defaultUser'
             }
-            var wishlist = JSON.parse( localStorage.getItem( wishlistName ));
+            var wishlist = JSON.parse( localStorage.getItem( wishlistName ) || "[]");
             var wishListCount = wishlist.length;
             var evt = document.createEvent('Event');
 			evt.initEvent('wishListCount',true,true);
