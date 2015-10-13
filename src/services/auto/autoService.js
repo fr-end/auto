@@ -250,7 +250,8 @@ module.exports = function(ajax){
                         return {};
                     }
                 });
-        }
+        },
+        hasExtendedSearch: true
 	};
 
 	return auto;

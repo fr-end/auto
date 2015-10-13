@@ -12,6 +12,8 @@ module.exports = (function(){
     Controller.prototype = {
 		init: function(searchParams){
             searchParams = searchParams || {};
+            searchParams.hasExtendedSearch = this.service.hasExtendedSearch;
+            console.dir(searchParams,'searchParams');
             this.view.render('self',searchParams);
             this.service.getGearboxes(searchParams)
                 .then((function(data){
