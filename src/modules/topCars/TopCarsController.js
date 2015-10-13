@@ -1,7 +1,7 @@
-module.exports = (function(){
+module.exports = function(Q){
 
     var View = require('./TopCarsView.js');
-    var Model = require('./TopCarsModel.js');
+    var Model = require('./TopCarsModel.js')(Q);
     var Car = require('../car/CarController.js')(localStorage, XMLHttpRequest);
 
     var TopCarsController = function (service){
@@ -15,6 +15,7 @@ module.exports = (function(){
             this.view.render();
             this.model.getTopCarsData()
                         .then((function(topCarsData){
+                            console.log(topCarsData,'topCarsData');
                             this.view.render(topCarsData);
                         }).bind(this));
         }
@@ -22,4 +23,4 @@ module.exports = (function(){
 
     return TopCarsController;
 
-})();
+};
