@@ -76,15 +76,13 @@ module.exports = (function () {
         setTimeout(function(){
             requestAnimationFrame(function(){
                 container.removeChild(oldDiv);
-                this.available = true;
             });
         }, 800);
     };
 
     View.prototype.clickOnSlider = function(event){
         var nextImg;
-        if (this.available){
-            this.available = false;
+
             if (event.target.classList.contains(this.sliderSmallImgSelector.slice(1))) {
                 this.toggleSliderBigImg(event.target);
             } else
@@ -103,7 +101,6 @@ module.exports = (function () {
                     }
             event.preventDefault();
         };
-        }
     return View;
 
 })();
