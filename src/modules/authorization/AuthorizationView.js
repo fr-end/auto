@@ -268,7 +268,7 @@ module.exports = function () {
                 var checkedKeepLoggedIn = self.$signUpChekboxKeepLoggedIn.checked;
                 var form = 'signup';
                 //console.log(email, password, passwordRepeat);
-
+                self.removeErrorsFromForm();
                 var checkedAuthorizationFields = checkAuthorizationFields(email, password, form);
 
                 if (checkedAuthorizationFields !== true){
@@ -302,6 +302,8 @@ module.exports = function () {
                 var checkedKeepLoggedIn = self.$loginChekboxKeepLoggedIn.checked;
                 //console.log('checkedKeepLoggedIn', checkedKeepLoggedIn)
                 var form = 'login';
+
+                self.removeErrorsFromForm();
 
                 var checkedAuthorizationFields = checkAuthorizationFields(email, password, form);
 
