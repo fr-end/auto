@@ -1,9 +1,11 @@
-module.exports = function(AuthorizationController){
+module.exports = function(AuthorizationController,events){
 
     function Router(){
         this.routes = {};
         window.addEventListener('hashchange', (this.router).bind(this));
         //window.addEventListener('load', (this.router).bind(this));
+        events.subscribe('loadedLocal', (this.router).bind(this));
+
     }
 
     Router.prototype = {
@@ -12,11 +14,12 @@ module.exports = function(AuthorizationController){
             this.routes[path].push({ Controller: Controller, params: params, events: events });
         },
         router: function(event){
+            console.dir(event);
             var hashLessURL = location.hash.slice(1) || '/';
 
             var hashLessURLArray = hashLessURL.split('/');
             var routeName = hashLessURLArray[0] || '/';
-
+            console.log(routeName,'route name');
             var searchParams = {};
             for (var i = 1; i < hashLessURLArray.length; i = i + 2){
                 searchParams[hashLessURLArray[i]] = hashLessURLArray[i + 1];

@@ -1,8 +1,9 @@
 module.exports = {
 
     subscribers: {
-    'search ids': [], // event type: 'search ids'
-    'user': []
+        'search ids': [], // event type: 'search ids'
+        'user': [],
+        'loadedLocal' : []
     },
 
     subscribe: function (type, fn) {
