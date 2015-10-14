@@ -382,20 +382,30 @@ module.exports = function () {
 
     View.prototype.hideAuthFormWrapper = function(){
         var i;
-
+        var self = this;
         //console.log(this.visibleElements);
 
         //if (!this.visibleElements.length){
         //    return;
-        //}
+        //}s
+        window.requestAnimationFrame(function(){
+            document.querySelector('[data-auth=popup-background]').classList.add('fadeOut');
+            document.querySelector('[data-auth=form]').classList.add('fadeOutUp');
 
-        for (i = 0; i < this.visibleElements.length; i++){
-            this.visibleElements[i].classList.add('is-not-displayed');
-        }
+        });
 
-        this.visibleElements = [];
-        this.clearInputs();
-        this.removeErrorsFromForm();
+        setTimeout(function(){
+            for (var i = 0; i < self.visibleElements.length; i++){
+                self.visibleElements[i].classList.add('is-not-displayed');
+            }
+
+            document.querySelector('[data-auth=popup-background]').classList.remove('fadeOut');
+            document.querySelector('[data-auth=form]').classList.remove('fadeOutUp');
+
+            self.visibleElements = [];
+            self.clearInputs();
+            self.removeErrorsFromForm();
+        }, 500);
     };
 
     View.prototype.clearInputs = function(){
