@@ -388,16 +388,13 @@ module.exports = function () {
         //if (!this.visibleElements.length){
         //    return;
         //}s
-        requestAnimationFrame(function(){
+        window.requestAnimationFrame(function(){
             document.querySelector('[data-auth=popup-background]').classList.add('fadeOut');
             document.querySelector('[data-auth=form]').classList.add('fadeOutUp');
+
         });
 
-        function func(index){
-            self.visibleElements[index].classList.add('is-not-displayed');
-        }
-
-        function clear(){
+        setTimeout(function(){
             for (var i = 0; i < self.visibleElements.length; i++){
                 self.visibleElements[i].classList.add('is-not-displayed');
             }
@@ -408,13 +405,7 @@ module.exports = function () {
             self.visibleElements = [];
             self.clearInputs();
             self.removeErrorsFromForm();
-        }
-        
-        setTimeout(clear, 500);
-
-
-
-
+        }, 500);
     };
 
     View.prototype.clearInputs = function(){
