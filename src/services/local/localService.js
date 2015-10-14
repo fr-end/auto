@@ -21,8 +21,8 @@ module.exports = function(localStorage,Q,events,ajax,autoService){
 				var url = '/db/wishlist/';
 				ajax.getPromise(url)
 					.then((function (response) {
-						response = JSON.parse(response)
-						localStorage.setItem('wishlist', JSON.stringify(response.wishlistIDs));
+						response = JSON.parse(response);
+						localStorage.setItem('wishlist', JSON.stringify(response.wishlistIDs || "[]"));
 						response.wishlistObjects.forEach(function(car){
 							localStorage.setItem(String(car.carId), JSON.stringify(car));
 						});
@@ -190,7 +190,7 @@ module.exports = function(localStorage,Q,events,ajax,autoService){
 			console.log('getCategories');
 			var user = localStorage.getItem('user');
 			if (user !== 'null'){
-				var wishlist = JSON.parse( localStorage.getItem('wishlist'));
+				var wishlist = JSON.parse( localStorage.getItem('wishlist') || "[]");
 			} else {
 				username = username || 'defaultUser';
 				var wishlist = JSON.parse( localStorage.getItem( username ));
@@ -219,7 +219,7 @@ module.exports = function(localStorage,Q,events,ajax,autoService){
 			console.log('getMarks');
 			var user = localStorage.getItem('user');
 			if (user !== 'null'){
-				var wishlist = JSON.parse( localStorage.getItem('wishlist'));
+				var wishlist = JSON.parse( localStorage.getItem('wishlist') || "[]");
 			} else {
 				username = username || 'defaultUser';
 				var wishlist = JSON.parse( localStorage.getItem( username ));
@@ -257,7 +257,7 @@ module.exports = function(localStorage,Q,events,ajax,autoService){
 			console.log('getModels');
 			var user = localStorage.getItem('user');
 			if (user !== 'null'){
-				var wishlist = JSON.parse( localStorage.getItem('wishlist'));
+				var wishlist = JSON.parse( localStorage.getItem('wishlist') || "[]");
 			} else {
 				username = username || 'defaultUser';
 				var wishlist = JSON.parse( localStorage.getItem( username ));
@@ -294,7 +294,7 @@ module.exports = function(localStorage,Q,events,ajax,autoService){
 		getCarIds: function ( searchParams, username ) {
 			var user = localStorage.getItem('user');
 			if (user !== 'null') {
-				var wishlist = JSON.parse( localStorage.getItem('wishlist'));
+				var wishlist = JSON.parse( localStorage.getItem('wishlist') || "[]");
 			}else{
 				username = username || 'defaultUser';
 				var wishlist = JSON.parse( localStorage.getItem( username ));
@@ -337,7 +337,7 @@ module.exports = function(localStorage,Q,events,ajax,autoService){
             var wishlist;
             if (user !== 'null'){
                 console.log(wishlist,'wishlist');
-                wishlist = JSON.parse( localStorage.getItem( 'wishlist' ));
+                wishlist = JSON.parse( localStorage.getItem( 'wishlist' ) || "[]");
                 console.log(wishlist,'wishlist');
             } else {
                 username = username || 'defaultUser';
