@@ -139,6 +139,7 @@ module.exports = function(localStorage,Q,events,ajax,autoService){
 				var wishlist = {};
 				wishlist.carID = carId;
 				wishlist.action = 'delCar';
+				wishlist.carObject = localStorage.getItem(carId);
 
 				ajax.getPromisePost(url, wishlist)
 					.then((function (response) {
