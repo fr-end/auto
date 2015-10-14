@@ -49,7 +49,7 @@
     var CarPageController = require('./modules/carPage/CarPageController.js')(CarController);
     var TopCarsController = require('./modules/topCars/TopCarsController.js')(Q);
 
-    var router = require('./library/router/router.js')(AuthorizationController);
+    var router = require('./library/router/router.js')(AuthorizationController,events);
 
     var authorization = new AuthorizationController();
     authorization.init();

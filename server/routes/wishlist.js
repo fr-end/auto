@@ -43,8 +43,12 @@ module.exports = function (app) {
                 doc.wishlistObjects.push(carObject);
             } else if (request.body.action === "delCar"  && index !== -1){
                 doc.wishlistIDs.splice(index, 1);
-                index = doc.wishlistObjects.indexOf(carObject);
-                doc.wishlistObjects.splice(index, 1);
+
+                doc.wishlistObjects.forEach(function(car, i){
+                    if (carID === car.carId) {
+                        doc.wishlistObjects.splice(i, 1);
+                    }
+                });
             }
             doc.save();
             response.send(doc.wishlistIDs);

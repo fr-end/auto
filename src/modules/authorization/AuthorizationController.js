@@ -37,10 +37,6 @@ module.exports = function(ajax, events){
 
             this.bindEventsToView();
 
-            events.subscribe('user', function () {
-                var event = new Event('hashchange');
-                window.dispatchEvent(event);
-            });
         },
         checkUserSession: function(){
             var self = this;

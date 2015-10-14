@@ -26,6 +26,7 @@ module.exports = function(localStorage,Q,events,ajax,autoService){
 						response.wishlistObjects.forEach(function(car){
 							localStorage.setItem(String(car.carId), JSON.stringify(car));
 						});
+						events.publish('loadedLocal');
 					}));
 				//window.dispatchEvent(new Event('hashchange'));
 			}else {
@@ -35,13 +36,17 @@ module.exports = function(localStorage,Q,events,ajax,autoService){
 					}
 				}
 				console.log("!!!!");
+				var promises = [];
 				JSON.parse(localStorage['defaultUser']).forEach(function(carId){
-					autoService.getCar(carId)
+					promises.push(autoService.getCar(carId)
 						.then(function(data) {
 							console.log("!!!!", carId, typeof carId);
 							console.log("!!!", data);
 							localStorage[String(carId)] = JSON.stringify(data);
-						})
+						}));
+				});
+				Q.all(promises).then(function(){
+					events.publish('loadedLocal');
 				});
 				//window.dispatchEvent(new Event('hashchange'));
 			}
