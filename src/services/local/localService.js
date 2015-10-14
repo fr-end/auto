@@ -287,20 +287,13 @@ module.exports = function(localStorage,Q,events,ajax,autoService){
 		},
 		getCarIds: function ( searchParams, username ) {
 			var user = localStorage.getItem('user');
-			if (user !== 'null'){
-				var url = '/db/wishlist/';
-				console.dir(ajax,'ajax');
-				return ajax.getPromise(url)
-					.then(function (response) {
-						localStorage.setItem('wishlist', JSON.stringify(JSON.parse(response).wishlistIDs));
-						console.log('response in mongoService post', response);
-						return JSON.parse(response).wishlistIDs.slice(searchParams.page*10, searchParams.page*10+10);
-					});
-
+			if (user !== 'null') {
+				var wishlist = JSON.parse( localStorage.getItem('wishlist'));
+			}else{
+				username = username || 'defaultUser';
+				var wishlist = JSON.parse( localStorage.getItem( username ));
 			}
 			var deferred=Q.defer();
-			username = username || 'defaultUser';
-			var wishlist = JSON.parse( localStorage.getItem( username ));
 			var carsIds = [];
 			if ((searchParams.categoryId)&&(searchParams.markaId)&&(searchParams.modelId)){
 				wishlist.forEach(function(carId, index){
