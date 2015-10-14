@@ -142,8 +142,11 @@ module.exports = function(ajax, events){
                 window.localStorage.setItem('user', parsedSessionOrErrors.user);
                 events.publish('user', parsedSessionOrErrors.user);
                 this.view.hideAuthFormWrapper();
-
-                this.view.showSuccessfulPopup(message);
+                var self = this;
+                setTimeout(function(){
+                    self.view.showSuccessfulPopup(message);
+                }, 600);
+                
             } else {
                 this.view.render('renderErrors', parsedSessionOrErrors);
             }
