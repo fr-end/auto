@@ -329,8 +329,11 @@ module.exports = function () {
                 var action = evt.target.getAttribute('data-auth');
 
                 if (action === 'login'){
+                    requestAnimationFrame(function(){
                     self.showAuthFormWrapper();
                     self.toggleFormLogIn();
+                });
+
 
                 } else if (action === 'signUp'){
                     self.showAuthFormWrapper();
