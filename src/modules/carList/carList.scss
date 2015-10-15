@@ -1,3 +1,5 @@
+@import "../../animate";
+
 .search-results {
 
 	width: 100%;
@@ -8,7 +10,8 @@
 		margin: 0;
 		padding: 0;
 		&__item {
-
+			@extend .animated;
+			@extend .fadeIn;
 		}
 	}
 

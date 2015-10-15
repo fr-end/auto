@@ -1,4 +1,5 @@
 @import "../../const";
+@import "../../animate";
 
 $car-color: $border-color;
 $spin-deg: 36deg;
@@ -58,6 +59,8 @@ $spin-deg: 36deg;
 	width: 300px;
 	font-family: "Carter One";
 	z-index: 99;
+	@extend .animated04;
+	@extend .fadeIn;
 
 	.text{
 		font-size: $font-size-header;
