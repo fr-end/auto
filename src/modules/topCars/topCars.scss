@@ -1,8 +1,11 @@
 @import "../../const";
+@import "../../animate";
 
 .main {
 	margin: 0 auto;
 	width: $wrapper-small-width;
+	@extend .animated;
+	@extend .fadeIn;
 
 	&-wrapper {
 		position: relative;
