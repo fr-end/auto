@@ -392,6 +392,14 @@
     &-container, &-bigimg {
       width: 440px;
       height: 320px;
+      
+      &-previous, &-next {
+        top: 140px;
+      }
+
+      &-next {
+        left: 394px;
+      }
     }
 
     &-carousel-cars {
@@ -407,7 +415,7 @@
   .carpage-star { 
     position: relative;
     top: 0;
-    margin: 10px 25px;
+    //margin: 10px 25px;
   }
 
   .carpage-content {
