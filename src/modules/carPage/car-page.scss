@@ -337,8 +337,13 @@
 	}
 
 	.carpage-star {
-		margin-left: 25px;
+		margin: 10px 35px 20px 25px;
 	}
+
+	.carpage-info {
+		padding-right: 10px;
+		text-align: left;
+	} 
 
 	.carpage-title {
 		margin: 0 20px 15px 25px;
@@ -354,7 +359,62 @@
 	.carpage-content {
 		width: 300px;
 		&-sidebar {
-			margin-left: 0;
+			margin: 30px 0;
 		}
 	}
+}
+
+@media screen and (max-width: 480px) {
+  .carpage, .carpage-wrapper {
+    width: 480px;
+
+    &-title {
+      margin-bottom: 0;
+
+      &__caption {
+        font-size: 20px;
+        margin-right: 5px;
+      }
+
+    &__price {
+      font-size: 20px;
+    }
+    }
+  }
+
+  .carpage-info-paragraph, .carpage-info, .carpage-content-details {
+    width: 440px;
+  }
+
+  .carpage-slider {
+    width: 440px;
+
+    &-container, &-bigimg {
+      width: 440px;
+      height: 320px;
+    }
+
+    &-carousel-cars {
+      width: 440px;
+    }
+
+    &-carousel-cars-item-link {
+      width: 102px;
+      height: 84px;
+    }
+  }
+
+  .carpage-star { 
+    position: relative;
+    top: 0;
+    margin: 10px 25px;
+  }
+
+  .carpage-content {
+    margin-left: 25px; 
+  }
+
+  .carpage-info-paragraph {
+    margin: 0;
+  }
 }
