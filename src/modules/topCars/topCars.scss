@@ -69,10 +69,10 @@
 
 		&-name.big {
 			float: left;
-            overflow: hidden;
-            white-space: nowrap;
-            text-overflow: ellipsis;
-            max-width: 75%;
+            		overflow: hidden;
+            		max-width: 65%;
+            		white-space: nowrap;
+            		text-overflow: ellipsis;
 		}
 
 		&-price.big {
