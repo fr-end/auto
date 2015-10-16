@@ -11,14 +11,11 @@ module.exports = function (app) {
         console.log('request.session.user in get', request.session.user);
 
         User.findById({_id: email}, function (err, user) {
-            if (err) console.log(err); // return next(err)     in express
-
+            if (err)
+                console.log(err); // return next(err)     in express
             if (!user) {
                 return response.send(invalidData('no user', 'login', email));
             }
-
-            console.log('user', user);
-            console.log('response',{wishlistIDs: user.wishlistIDs, wishlistObjects: user.wishlistObjects});
             response.send({wishlistIDs: user.wishlistIDs, wishlistObjects: user.wishlistObjects});
         });
 
@@ -29,10 +26,6 @@ module.exports = function (app) {
         var email = request.session.user;
         var carID = request.body.carID;
         var carObject = request.body.carObject;
-        //request.body.action = "addCar" | "removeCar"
-
-        console.log('request.session.user in post', request.session.user)
-        console.log('carId', carID);
 
         User.findOne({ _id: email }, function (err, doc){
             console.log('user._id', doc._id);
@@ -43,24 +36,16 @@ module.exports = function (app) {
                 doc.wishlistObjects.push(carObject);
             } else if (request.body.action === "delCar"  && index !== -1){
                 doc.wishlistIDs.splice(index, 1);
-                //index = doc.wishlistObjects.indexOf(JSON.stringify(request.body.carObject));
-                //doc.wishlistObjects.splice(index, 1);
                 for (var i=0; i < doc.wishlistObjects.length; i++){
                     if (doc.wishlistObjects[i].carId == carID){
                         doc.wishlistObjects.splice(i, 1);
                         break;
                     }
                 }
-
             }
             doc.save();
             response.send(doc.wishlistIDs);
         });
-
-        //User.update(email, {$addToSet: {wishlistIDs: carID}});
-
     });
-
-
 
 };

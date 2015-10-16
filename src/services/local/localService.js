@@ -8,9 +8,8 @@ module.exports = function(localStorage,Q,events,ajax,autoService){
             if (event.key === 'wishlist' || event.key === 'defaultUser' || event.key === 'user') {
                 auto.dispatchWishListCount();
             }
-        });
+	});
         events.subscribe('user', function () {
-            auto.dispatchWishListCount();
 			var user = localStorage.getItem('user');
 			if (user !== 'null') {
 				for (var key in localStorage){
@@ -27,6 +26,7 @@ module.exports = function(localStorage,Q,events,ajax,autoService){
 							localStorage.setItem(String(car.carId), JSON.stringify(car));
 						});
 						events.publish('loadedLocal');
+						auto.dispatchWishListCount();
 					}));
 				//window.dispatchEvent(new Event('hashchange'));
 			}else {
@@ -47,6 +47,7 @@ module.exports = function(localStorage,Q,events,ajax,autoService){
 				});
 				Q.all(promises).then(function(){
 					events.publish('loadedLocal');
+					auto.dispatchWishListCount();
 				});
 				//window.dispatchEvent(new Event('hashchange'));
 			}
