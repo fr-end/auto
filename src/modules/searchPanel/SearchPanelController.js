@@ -15,10 +15,6 @@ module.exports = (function(){
             searchParams.hasExtendedSearch = this.service.hasExtendedSearch;
             console.dir(searchParams,'searchParams');
             this.view.render('self',searchParams);
-            this.service.getGearboxes(searchParams)
-                .then((function(data){
-                    this.view.render('showGearboxes',data);
-                }).bind(this));
 			this.service.getCategories()
 				.then((function(searchParams, data){
 					var categoriesArray = JSON.parse(data);
@@ -29,10 +25,12 @@ module.exports = (function(){
 					});
 					this.view.render('showCategories', categoriesArray);
 					this.loadMarks(searchParams);
+                    this.loadGearboxes();
 				}).bind(this,searchParams));
 			this.started = true;
 			this.view.bind('changeCategory',(function(){
 				this.loadMarks({});
+                this.loadGearboxes();
 			}).bind(this));
 
 			this.view.bind('changeMark',(function(){
@@ -82,6 +80,14 @@ module.exports = (function(){
 					self.view.render('showModels', models);
             });
 		},
+        loadGearboxes: function () {
+            var categories = this.view.$selectCategory;
+            var categoryId = categories.options[categories.selectedIndex].value;
+            this.service.getGearboxes(categoryId)
+                .then((function(data){
+                    this.view.render('showGearboxes',data);
+                }).bind(this));
+        },
 		searchCars: function(){
 			var searchParams = this.view.getParams();
 
