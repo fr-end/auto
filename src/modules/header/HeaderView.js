@@ -12,7 +12,7 @@ module.exports = function (){
         },
         setWishListCount: function(count){
             var wishListCount = document.querySelector('.header-menu-item-wishlist-count');
-            wishListCount.innerText = count;
+            wishListCount.innerHTML = count;
         }
     };
 

@@ -22,14 +22,14 @@ module.exports = function (app) {
     });
 
     app.post('/wishlist/', function (request, response) {
-        console.log('request.url', request.url);
+        //console.log('request.url', request.url);
         var email = request.session.user;
         var carID = request.body.carID;
         var carObject = request.body.carObject;
 
         User.findOne({ _id: email }, function (err, doc){
-            console.log('user._id', doc._id);
-            console.log('user.wishlistIDs', doc.wishlistIDs);
+            //console.log('user._id', doc._id);
+            //console.log('user.wishlistIDs', doc.wishlistIDs);
             var index = doc.wishlistIDs.indexOf(carID);
             if (request.body.action === "addCar" && index ===  -1) {
                 doc.wishlistIDs.push(carID);
