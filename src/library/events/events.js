@@ -12,7 +12,7 @@ module.exports = {
         this.subscribers[type] = [];
       }
       this.subscribers[type].push(fn);
-        console.log('subscribe')
+        console.log('subscribe');
     },
 
      unsubscribe: function (type, fn) {
@@ -20,7 +20,6 @@ module.exports = {
      },
 
     publish: function(type, jsonArrayOfCarObjects){
-        console.log('publish')
       this.visitSubscribers('publish', type, jsonArrayOfCarObjects);
     },
     visitSubscribers: function (action, type, arg) {

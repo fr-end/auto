@@ -66,7 +66,7 @@ module.exports = function(ajax, events){
                         events.publish('user', null);
                     } else {
                         events.publish('user', sessionObject.user);
-                        window.localStorage.setItem('user', sessionObject.user)
+                        window.localStorage.setItem('user', sessionObject.user);
                     }
 
                     self.view.render('renderAuthMenu', {session: sessionObject});

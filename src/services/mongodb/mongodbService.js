@@ -251,4 +251,4 @@ module.exports = function(localStorage,XMLHttpRequest,Q){
     auto.init();
 
 	return auto;
-}
+};
