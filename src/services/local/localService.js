@@ -19,15 +19,15 @@ module.exports = function(localStorage,Q,events,ajax,autoService){
 				}
 				var url = '/db/wishlist/';
 				ajax.getPromise(url)
-					.then((function (response) {
+					.then(function (response) {
 						response = JSON.parse(response);
-						localStorage.setItem('wishlist', JSON.stringify(response.wishlistIDs || "[]"));
+						localStorage.setItem('wishlist', JSON.stringify(response.wishlistIDs || '[]'));
 						response.wishlistObjects.forEach(function(car){
 							localStorage.setItem(String(car.carId), JSON.stringify(car));
 						});
 						events.publish('loadedLocal');
 						auto.dispatchWishListCount();
-					}));
+					});
 				//window.dispatchEvent(new Event('hashchange'));
 			}else {
 				for (var key in localStorage){
@@ -35,13 +35,10 @@ module.exports = function(localStorage,Q,events,ajax,autoService){
 						localStorage.removeItem(key);
 					}
 				}
-				console.log("!!!!");
 				var promises = [];
 				JSON.parse(localStorage['defaultUser']).forEach(function(carId){
 					promises.push(autoService.getCar(carId)
 						.then(function(data) {
-							console.log("!!!!", carId, typeof carId);
-							console.log("!!!", data);
 							localStorage[String(carId)] = JSON.stringify(data);
 						}));
 				});
@@ -82,22 +79,24 @@ module.exports = function(localStorage,Q,events,ajax,autoService){
 		},
 		inList: function (carId) {
 			var user = localStorage.getItem('user');
+            var wishlist;
 			if (user !== 'null') {
-				var wishlist = JSON.parse( localStorage.getItem( 'wishlist' ) || "[]");
+				wishlist = JSON.parse( localStorage.getItem( 'wishlist' ) || '[]');
 				return wishlist.indexOf(carId) !== -1;
 			}
-			var wishlist = JSON.parse( localStorage.getItem( 'defaultUser' ) || "[]");
+			wishlist = JSON.parse( localStorage.getItem( 'defaultUser' ) || '[]');
 			return wishlist.indexOf(carId) !== -1;
 		},
 		addCar: function (carId) {
             console.log('addCar');
+            var wishlist;
 			autoService.getCar(carId)
 				.then((function (data) {
 					var user = localStorage.getItem('user');
 					if (user !== 'null'){
 						console.log('user not null');
 						var url = '/db/wishlist/';
-						var wishlist = {};
+						wishlist = {};
 						wishlist.carID = carId;
 						wishlist.action = 'addCar';
 						wishlist.carObject = data;
@@ -121,7 +120,7 @@ module.exports = function(localStorage,Q,events,ajax,autoService){
 					}
 					//console.log('Car in storage');
 
-					var wishlist = JSON.parse( localStorage.getItem( username ) );
+					wishlist = JSON.parse( localStorage.getItem( username ) );
 
 					if (wishlist.indexOf(String(car.carId)) === -1){
 						wishlist.push( String(car.carId) );
@@ -135,9 +134,9 @@ module.exports = function(localStorage,Q,events,ajax,autoService){
 		delCar: function ( carId, username ) {
             console.log('delCar');
 			var user = localStorage.getItem('user');
+            var wishlist = {};
 			if (user !== 'null'){
 				var url = '/db/wishlist/';
-				var wishlist = {};
 				wishlist.carID = carId;
 				wishlist.action = 'delCar';
 				wishlist.carObject = localStorage.getItem(carId);
@@ -154,22 +153,17 @@ module.exports = function(localStorage,Q,events,ajax,autoService){
 			}
 
 			username = username || 'defaultUser';
-			var wishlist = JSON.parse( localStorage.getItem( username ) );
+			wishlist = JSON.parse( localStorage.getItem( username ) );
 			var carIndex = wishlist.indexOf( carId );
-			//console.log(carIndex);
 			if (carIndex !== -1){
 				wishlist.splice( carIndex, 1 );
 				localStorage.setItem( username, JSON.stringify( wishlist ) );
                 this.dispatchWishListCount(username);
-				//console.log('Car deleted from wishlist');
 			}
 
 			var userslist = JSON.parse( localStorage.getItem( 'users' ) );
 			if ( userslist.some(function(user){
-				//console.log(user);
-				//console.log(JSON.parse( localStorage.getItem( user )));
 				if ( JSON.parse( localStorage.getItem( user )).indexOf( carId ) !== -1 ){
-					//console.log('Car not deleted from storage');
 					return true;
 				}
 			})) {
@@ -177,8 +171,7 @@ module.exports = function(localStorage,Q,events,ajax,autoService){
 			}
 
 			localStorage.removeItem( String( carId ));
-			//console.log('Deleted car from storage');
-		},	
+		},
 		getCar: function ( carId ) {
             var deferred=Q.defer();
             deferred.resolve(this.readCar(carId));
@@ -190,11 +183,12 @@ module.exports = function(localStorage,Q,events,ajax,autoService){
 		getCategories: function ( username ) {
 			console.log('getCategories');
 			var user = localStorage.getItem('user');
+            var wishlist;
 			if (user !== 'null'){
-				var wishlist = JSON.parse( localStorage.getItem('wishlist') || "[]");
+				wishlist = JSON.parse( localStorage.getItem('wishlist') || '[]');
 			} else {
 				username = username || 'defaultUser';
-				var wishlist = JSON.parse( localStorage.getItem( username ));
+				wishlist = JSON.parse( localStorage.getItem( username ));
 			}
 			var deferred=Q.defer();
 			//console.log('localStorage-getCategories');
@@ -219,11 +213,12 @@ module.exports = function(localStorage,Q,events,ajax,autoService){
 		getMarks: function ( categoryId, username ) {
 			console.log('getMarks');
 			var user = localStorage.getItem('user');
+            var wishlist;
 			if (user !== 'null'){
-				var wishlist = JSON.parse( localStorage.getItem('wishlist') || "[]");
+				wishlist = JSON.parse( localStorage.getItem('wishlist') || '[]');
 			} else {
 				username = username || 'defaultUser';
-				var wishlist = JSON.parse( localStorage.getItem( username ));
+				wishlist = JSON.parse( localStorage.getItem( username ));
 			}
 			var deferred=Q.defer();
 			var marksIds = [];
@@ -257,11 +252,12 @@ module.exports = function(localStorage,Q,events,ajax,autoService){
 		getModels: function ( categoryId, markaId, username ) {
 			console.log('getModels');
 			var user = localStorage.getItem('user');
+            var wishlist;
 			if (user !== 'null'){
-				var wishlist = JSON.parse( localStorage.getItem('wishlist') || "[]");
+				wishlist = JSON.parse( localStorage.getItem('wishlist') || '[]');
 			} else {
 				username = username || 'defaultUser';
-				var wishlist = JSON.parse( localStorage.getItem( username ));
+				wishlist = JSON.parse( localStorage.getItem( username ));
 			}
 			var deferred=Q.defer();
 			var modelsIds = [];
@@ -294,11 +290,12 @@ module.exports = function(localStorage,Q,events,ajax,autoService){
 		},
 		getCarIds: function ( searchParams, username ) {
 			var user = localStorage.getItem('user');
+            var wishlist;
 			if (user !== 'null') {
-				var wishlist = JSON.parse( localStorage.getItem('wishlist') || "[]");
+				wishlist = JSON.parse( localStorage.getItem('wishlist') || '[]');
 			}else{
 				username = username || 'defaultUser';
-				var wishlist = JSON.parse( localStorage.getItem( username ));
+				wishlist = JSON.parse( localStorage.getItem( username ));
 			}
 			var deferred=Q.defer();
 			var carsIds = [];
@@ -338,7 +335,7 @@ module.exports = function(localStorage,Q,events,ajax,autoService){
             var wishlist;
             if (user !== 'null'){
                 console.log(wishlist,'wishlist');
-                wishlist = JSON.parse( localStorage.getItem( 'wishlist' ) || "[]");
+                wishlist = JSON.parse( localStorage.getItem( 'wishlist' ) || '[]');
                 console.log(wishlist,'wishlist');
             } else {
                 username = username || 'defaultUser';
@@ -381,9 +378,9 @@ module.exports = function(localStorage,Q,events,ajax,autoService){
             if( user !== 'null' ){
                 wishlistName = 'wishlist';
             } else {
-                wishlistName = 'defaultUser'
+                wishlistName = 'defaultUser';
             }
-            var wishlist = JSON.parse( localStorage.getItem( wishlistName ) || "[]");
+            var wishlist = JSON.parse( localStorage.getItem( wishlistName ) || '[]');
             var wishListCount = wishlist.length;
             var evt = document.createEvent('Event');
 			evt.initEvent('wishListCount',true,true);

@@ -53,7 +53,7 @@ module.exports = function(window, document) {
                 setOptions(self.$selectMark, {default: 'Марка', items: data});
             },
             showModels: function (data) {
-                setOptions(self.$selectModel, {default: 'Модель', items: data})
+                setOptions(self.$selectModel, {default: 'Модель', items: data});
             },
             showGearboxes: function (data) {
                 setOptions(self.$selectGearbox, {default: 'Любая', items: data});
@@ -93,7 +93,7 @@ module.exports = function(window, document) {
     };
 
     View.prototype.getParams = function(){
-        form = this.$viewPort.querySelector('form[name="autoSearch"]');
+        var form = this.$viewPort.querySelector('form[name="autoSearch"]');
         console.dir(form.elements);
         return {
             categoryId: form.elements['category'].value,
@@ -110,7 +110,7 @@ module.exports = function(window, document) {
             raceFrom: form.elements['race-from'].value,
             raceTo: form.elements['race-to'].value,
             withPhoto: form.elements['only-with-photo'].checked ? 1 : 0
-        }
+        };
     };
 
     var optionsTemplate = require('./templates/options.handlebars');

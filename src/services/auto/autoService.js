@@ -189,7 +189,8 @@ module.exports = function(ajax){
                         carInfo.result.date_data.date_add.full_month + '.' +
                         carInfo.result.date_data.date_add.year,
                         description	: autoData.description,
-                        phone		: carInfo.result.user_phones.length > 0 ? carInfo.result.user_phones[0].phone_formatted : '',
+                        phone		:
+                            carInfo.result.user_phones.length > 0 ? carInfo.result.user_phones[0].phone_formatted : '',
                         author		: carInfo.result.user_data.firstName,
                         city		: carInfo.result.location_data.state.region_name,
                         photos		: carPhotos
@@ -213,7 +214,7 @@ module.exports = function(ajax){
                     }
                     var topCarBuIds = [];
                     for( var i=0; i<topCarIds.length && topCarBuIds.length < 5; i++){
-                        if(topCarIds[i].type === "bu"){
+                        if(topCarIds[i].type === 'bu'){
                             topCarBuIds.push(topCarIds[i]);
                         }
                     }

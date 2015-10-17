@@ -66,7 +66,7 @@ module.exports = (function(){
             var mark = self.view.$selectMark.options[self.view.$selectMark.selectedIndex].value;
 
             if(category == 0 || mark == 0){
-                return
+                return;
             }
 
 			self.service.getModels(category, mark)
@@ -97,7 +97,7 @@ module.exports = (function(){
 			var routeName = hashLessURLArray[0] || 'search';
 
 			var href = '#' + routeName;
-            for(param in searchParams){
+            for(var param in searchParams){
                 href += searchParams[param] && searchParams[param] !== '0' ? '/' + param + '/' + searchParams[param] : '';
             }
 
